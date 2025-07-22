@@ -16,7 +16,7 @@ This project explores the use of cutting-edge machine learning techniques, inclu
 
 ---
 
-## 🧠 Architecture
+## Architecture
 
 ![Architecture Diagram](docs/architecture.png)
 
@@ -24,8 +24,7 @@ This project explores the use of cutting-edge machine learning techniques, inclu
 
 ---
 
-## 📦 Installation
-
+## Installation
 ### Clone & Set Up Environment
 
 ```bash
@@ -34,3 +33,27 @@ cd ZeroTouch5G-AI
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+## Project Structure
+```
+zero-touch-5g-sec-ai/
+├── data/              # Preprocessed datasets and loaders
+├── models/            # ML/DL models 
+├── orchestrator/      # K8s plugins and CRDs
+├── helm/              # Kubernetes Helm charts
+├── monitor/           # Prometheus/Grafana config
+├── docs/              # Architecture and design docs
+├── train.py
+├── detect.py
+└── README.md
+```
+---
+
+## Usage
+
+---
+
+## Results
+
+
