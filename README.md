@@ -1,19 +1,18 @@
 # zero-touch-5g-sec-ai
 
-> **Intelligent, Zero-Touch Security and Management for 5G Networks using Deep Learning and Explainable AI**
+> **Intelligent, Zero-Touch Security and Management for 5G Networks using Deep Learning**
 
-This project explores the use of cutting-edge machine learning techniques, including BiLSTM with Attention and TimeSHAP, to automate anomaly detection in 5G network traffic—focusing on fronthaul security. It integrates AI models into a zero-touch network management workflow using Kubernetes and TM Forum-compliant orchestration tools.
+This project explores the use of cutting-edge machine learning techniques, including ..., to automate anomaly detection in 5G network traffic. It integrates AI models into a zero-touch network management workflow using Kubernetes.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- 🔍 Deep learning–based anomaly detection on 5G fronthaul traffic
-- 📊 Integration of TimeSHAP for model explainability
-- 🔁 Dataset support: Simulated testbed traffic + public 5G-NIDD dataset
-- ⚙️ Containerized and orchestratable via Kubernetes/OpenSlice
-- 📈 Monitoring and observability with Prometheus & Grafana
-- 🤖 Designed for Zero-Touch Operations (ZTO) in future mobile networks
+- Deep learning–based anomaly detection on 5G traffic
+- Dataset support: Simulated testbed traffic + public 5G-NIDD dataset
+- Containerized and orchestratable via Kubernetes
+- Monitoring and observability with Prometheus & Grafana
+- Designed for Zero-Touch Operations (ZTO) in future mobile networks
 
 ---
 
@@ -21,7 +20,7 @@ This project explores the use of cutting-edge machine learning techniques, inclu
 
 ![Architecture Diagram](docs/architecture.png)
 
-> **High-level architecture**: OSS/BSS → OpenSlice → Kubernetes → AI Inference (CNF) → Monitoring
+> **High-level architecture**: Kubernetes → AI Inference (CNF) → Monitoring
 
 ---
 
