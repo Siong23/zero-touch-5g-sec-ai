@@ -1,0 +1,58 @@
+@startuml
+title Closed-Loop Zero-Touch Security and Management for 5G Networks
+
+!define RECTANGLE class
+
+RECTANGLE OSS_BSS {
+  OSS/BSS
+  --
+  Service Portal
+  - Order Management
+  - Monitoring Dashboard
+}
+
+RECTANGLE Orchestrator {
+  Orchestration & Policy Management
+  --
+  NFV Orchestrator (OSM)
+  SDN Controller
+  Slice Manager (OpenSlice)
+  Policy Engine
+}
+
+RECTANGLE AI_Engine {
+  AI/ML Analytics & Decision Engine
+  --
+  Data Collector
+  Feature Extractor
+  ML Inference Engine
+  Anomaly/Threat Detection
+  Recommender/Actuator
+  TimeSHAP/XAI
+}
+
+RECTANGLE Infrastructure {
+  Infrastructure Layer
+  --
+  5G Core (Open5GS)
+  gNB (srsRAN)
+  UERANSIM
+  Edge Cloud (K8s/CNFs/VNFs)
+}
+
+RECTANGLE Monitoring {
+  Monitoring & Logging
+  --
+  Prometheus
+  ELK Stack
+  Grafana
+}
+
+OSS_BSS -down-> Orchestrator : Intent / Order (TMF APIs)
+Orchestrator -down-> AI_Engine : Policy/Trigger/Event
+AI_Engine -down-> Infrastructure : Recommended Actions
+Infrastructure -down-> Monitoring : Telemetry / Logs / Alerts
+Monitoring -down-> AI_Engine : Observability Data
+AI_Engine -up-> Orchestrator : Adapted Policies / Feedback
+Orchestrator -up-> OSS_BSS : Status / KPIs
+@enduml
