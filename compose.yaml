@@ -1,0 +1,6 @@
+services:
+  zerotouch5gsecai:
+    image: zerotouch5gsecai
+    build:
+      context: .
+      dockerfile: ./Dockerfile
