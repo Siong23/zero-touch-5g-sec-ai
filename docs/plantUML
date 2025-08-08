@@ -35,7 +35,6 @@ RECTANGLE Infrastructure {
   Infrastructure Layer
   --
   5G Core (Open5GS)
-  gNB (srsRAN)
   UERANSIM
   Edge Cloud (K8s/CNFs/VNFs)
 }
