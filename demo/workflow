@@ -1,0 +1,30 @@
+@startuml
+actor User
+
+participant "Traffic Generator\n(Simulated + Public Datasets)" as TG
+participant "Kubernetes Controller\n(Zero-Touch Ops)" as K8s
+participant "AI Model Pod\n(Anomaly Detector)" as AI
+participant "Model Registry\n(e.g., MLFlow)" as MR
+participant "Prometheus" as Prom
+participant "Grafana" as Graf
+participant "ZTO Orchestrator" as ZTO
+
+User -> TG: Start demo scenario
+TG -> TG: Generate 5G traffic (simulated + NIDD)
+TG -> Prom: Export metrics
+Prom -> Graf: Visualize metrics
+
+TG -> AI: Send 5G traffic data
+AI -> MR: Load latest model
+AI -> AI: Run anomaly detection
+AI -> ZTO: Report detection result
+
+alt Anomaly Detected
+    ZTO -> User: Alert / Mitigation Triggered
+else No Anomaly
+    ZTO -> User: Normal status
+end
+
+User -> Graf: Observe performance dashboard
+
+@enduml
