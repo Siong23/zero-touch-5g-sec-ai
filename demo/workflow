@@ -1,0 +1,45 @@
+@startuml
+title Zero-Touch Security Demo Workflow with ICMP Flood Detection & Mitigation
+
+actor User
+
+participant "UERANSIM\n(UE + gNB Sim)" as UERANSIM
+participant "Open5GS\n(Core Network)" as Core
+participant "Packet Capture\n(Wireshark/tcpdump)" as PCAP
+participant "Feature Extractor\n(PCAP to NetFlow)" as Extractor
+participant "AI Inference Pod\n(Anomaly Detector)" as AI
+participant "Model Registry\n(MLflow or custom)" as MR
+participant "ZTO Orchestrator\n(Python)" as Orchestrator
+participant "Mitigation Module\n(SDN/K8s Policy)" as Mitigator
+participant "Prometheus\n(Monitoring)" as Prom
+participant "Grafana\n(Dashboard)" as Graf
+
+== Attack Simulation ==
+User -> Orchestrator: Start ICMP flood test scenario
+Orchestrator -> UERANSIM: Trigger ICMP flood from UE
+UERANSIM -> Core: Send high-rate ICMP packets
+Core -> PCAP: Mirror & capture packets
+
+== AI Inference ==
+PCAP -> Extractor: Provide PCAP
+Extractor -> Extractor: Convert to flow features
+Extractor -> AI: Send features
+AI -> MR: Load latest trained model
+AI -> AI: Run inference (detect anomaly)
+AI -> Orchestrator: Anomaly: ICMP Flood detected
+
+== Mitigation ==
+Orchestrator -> Mitigator: Deploy mitigation (e.g., block ICMP)
+Mitigator -> Core: Apply policy (e.g., via SDN or K8s NetworkPolicy)
+Mitigator -> Orchestrator: Mitigation success/failure
+
+Orchestrator -> User: Notify: ICMP flood detected and mitigated
+
+== Monitoring ==
+UERANSIM -> Prom: Export metrics
+Core -> Prom: Export KPIs
+Prom -> Graf: Update dashboards
+Mitigator -> Prom: Log policy action (optional)
+User -> Graf: View anomaly + mitigation event
+
+@enduml
