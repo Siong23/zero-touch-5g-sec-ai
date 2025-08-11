@@ -52,8 +52,13 @@ class VanillaLSTM:
         if input_array.shape != (1, 1, 14):
             raise ValueError(f"Input array must be in shape of (1, 1, 14), but currently got {input_array.shape}")
 
-        predictions = self.model.predict(input_array)
-        return pd.Series(predictions.flatten())
+        return self.model.predict_proba(input_array)
+
+    def postprocessing(self, input_array):
+        """
+        Method that applies post-processing on prediction values.
+        """
+        return pd.Series(input_array.flatten())
 
     def compute_prediction(self, input_array):
         """

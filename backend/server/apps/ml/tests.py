@@ -36,7 +36,7 @@ class VanillaLSTMTests(TestCase):
         algorithm_name = "Vanilla LSTM"
         algorithm_status = "active"
         algorithm_version = "1.0"
-        algorithm_description = "Vanilla LSTM with simple pre-processing"
+        algorithm_description = "Vanilla LSTM with simple pre-processing."
         algorithm_code = inspect.getsource(VanillaLSTM)
 
         # Add to registry

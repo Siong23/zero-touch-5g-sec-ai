@@ -10,7 +10,7 @@ class MLRegistry:
 
     def add_algorithm(self, endpoint_name, algorithm_object, algorithm_name, algorithm_status, algorithm_version, algorithm_description, algorithm_code):
         # Get endpoint
-        endpoint, _ = Endpoint.objects.get_or_create(name=endpoint_name)
+        endpoint, _ = Endpoint.objects.get_or_create(id=endpoint_name)
 
         # Get algorithm
         database_object, algorithm_created = MLAlgorithm.objects.get_or_create(name=algorithm_name, description=algorithm_description, code=algorithm_code, version=algorithm_version, parent_endpoint=endpoint)
