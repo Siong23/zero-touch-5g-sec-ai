@@ -49,7 +49,7 @@ class MLRequestViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewset
 
 class PredictView(views.APIView):
     def post(self, request, endpoint_name, format=None):
-        algorithm_status = self.request.query_params.get("status", "production")
+        algorithm_status = self.request.query_params.get("status", "active")
 
         algorithm_version = self.request.query_params.get("version")
 
