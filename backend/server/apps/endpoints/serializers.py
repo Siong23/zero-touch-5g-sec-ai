@@ -7,7 +7,7 @@ from apps.endpoints.models import Endpoint, MLAlgorithm, MLAlgorithmStatus, MLRe
 class EndpointSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endpoint
-        read_only_fields = ("id", "name", "owner", "created_at")
+        read_only_fields = ("id", "name", "created_at")
         fields = read_only_fields
 
 class MLAlgorithmSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class MLAlgorithmSerializer(serializers.ModelSerializer):
     class Meta:
         model = MLAlgorithm
         # 'current_status' represents the latest status of ML algorithm
-        read_only_fields = ("id", "name", "description", "code", "version", "owner", "created_at", "parent_endpoint", "current_status")
+        read_only_fields = ("id", "name", "description", "code", "version", "created_at", "parent_endpoint", "current_status")
         fields = read_only_fields
 
 class MLAlgorithmStatusSerializer(serializers.ModelSerializer):

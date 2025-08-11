@@ -10,7 +10,6 @@ class MLAlgorithm(models.Model): # Keep information about ML algorithm used
     description = models.CharField(max_length=1000)
     code = models.CharField(max_length=50000)
     version = models.CharField(max_length=128)
-    owner = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     parent_endpoint = models.ForeignKey(Endpoint, on_delete=models.CASCADE)
 
