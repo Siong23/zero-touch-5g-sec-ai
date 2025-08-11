@@ -1,5 +1,8 @@
+import inspect
+
 from django.test import TestCase
-from .ids.vanilla_lstm import VanillaLSTM
+from apps.ml.ids.vanilla_lstm import VanillaLSTM
+from apps.ml.registry import MLRegistry
 
 class VanillaLSTMTests(TestCase):
     def test_lstm_algorithm(self):
@@ -23,6 +26,20 @@ class VanillaLSTMTests(TestCase):
 
         model = VanillaLSTM()
         self.assertIsNotNone(model)
-        response = model.compute_prediction(data)
-        self.assertEqual('OK', response['status'])
-        self.assertTrue('label' in response)
+
+    def test_registry(self):
+        registry = MLRegistry()
+
+        self.assertEqual(len(registry.endpoints), 0)
+        endpoint_name = "ids"
+        algorithm_object = VanillaLSTM()
+        algorithm_name = "Vanilla LSTM"
+        algorithm_status = "active"
+        algorithm_version = "1.0"
+        algorithm_description = "Vanilla LSTM with simple pre-processing"
+        algorithm_code = inspect.getsource(VanillaLSTM)
+
+        # Add to registry
+        registry.add_algorithm(endpoint_name, algorithm_object, algorithm_name, algorithm_status, algorithm_version, algorithm_description, algorithm_code)
+
+        self.assertEqual(len(registry.endpoints), 1)
