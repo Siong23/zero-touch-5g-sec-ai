@@ -16,6 +16,6 @@ RUN pip3 install gunicorn==19.9.0
 
 ADD ./backend /app/backend
 ADD ./docker /app/docker
-ADD ./research /app/research
+ADD ./research /app/models
 
 RUN mkdir -p /app/backend/server/static
