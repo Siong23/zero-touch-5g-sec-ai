@@ -1,8 +1,15 @@
+django
+django-filter
+djangorestframework
+joblib
+Markdown
+requests
 pandas
 numpy
 matplotlib.pyplot
 seaborn
 sklearn
+scikit-learn
 scikeras
 tensorflow
 keras
@@ -11,4 +18,5 @@ flask
 flask-cors
 flask-expects-json
 event
+nginx
 gunicorn

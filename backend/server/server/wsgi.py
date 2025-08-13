@@ -22,7 +22,9 @@ try:
     # Create ML Registry for Vanilla LSTM
     registry = MLRegistry()
     lstm = VanillaLSTM()
-    registry.add_algorithm(endpoint_name="ids", algorithm_object="lstm", algorithm_name="Vanilla LSTM", algorithm_status="active", algorithm_version="1.0", algorithm_description="Vanilla LSTM with simple pre-processing", algorithm_code=inspect.getsource(VanillaLSTM))
+    registry.add_algorithm(endpoint_name="ids", algorithm_object=lstm, algorithm_name="Vanilla LSTM", algorithm_status="active", algorithm_version="1.0", algorithm_description="Vanilla LSTM with simple pre-processing", algorithm_code=inspect.getsource(VanillaLSTM))
 
 except Exception as e:
     print("Exception while adding the algorithms to the registry, ", str(e))
+    import traceback
+    traceback.print_exc()
