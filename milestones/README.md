@@ -1,9 +1,10 @@
 # Milestones
-## 1. Build Machine Learning/Deep Learning Model
+## 1. Built Machine Learning/Deep Learning Model
 - Did a preprocessing on 5G-NIDD public dataset.
-- Design Vanilla LSTM model.
-- Train and test the model based on the preprocessed dataset.
+- Designed Vanilla LSTM model.
+- Trained and tested the model based on the preprocessed dataset.
 
-## 2. Deploy Machine Learning/Deep Learning Model into a Container.
+## 2. Built 5G Network
 
-## 3. Deploy 5G Network into a Container.
+## 3. Deployed the Machine/Learning Model into a Web System
+- 
