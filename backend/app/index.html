@@ -106,6 +106,10 @@
                     <button class="detect-btn" type="submit">Detect Attack</button>
                 </form>
 
+                <h3>Detection Results</h3>
+                <p>Attack Type: <strong>{{ detection }}</strong></p>
+                <p>Accuracy: <strong>{{ accuracy }}</strong></p>
+
                 {% if detection %}
                     <div class="box">
                         <strong>Detected Attack type: </strong><br>{{ detection }}
