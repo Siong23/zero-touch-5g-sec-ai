@@ -16,24 +16,38 @@
 
         .intro {
             position: relative;
-            height: 100vh;
             color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
+            height: 20vh;
         }
 
         .intro-content {
             position: relative;
-            z-index: 1;
+        }
+
+        .attack, .ml-inference {
+            background-color: white;
+            padding: 20px 20px 20px 20px;
+            box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
+            border-radius: 15px;
+            max-width: 90%;
+            height: 60vh;
+            margin: 30px 30px;
+        }
+
+        .detect {
+            margin-top: 20px;
+            line-height: 30px;
+        }
+
+        h1 {
+            color: #061629;
+            margin-bottom: 20px;
+            font-size: 30px;
         }
 
         h2 {
             color: #061629;
-            font-size: 2.5em;
-            margin-bottom: 30px;
         }
 
         a.button {
@@ -43,8 +57,12 @@
             background-color: #061629;
             text-decoration: none;
             border-radius: 6px;
-            margin: 10px;
+            margin-top: 80px;
+            position: center;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
         }
 
         a.button:hover {
@@ -57,10 +75,43 @@
 <body>
     <section class = "intro">
         <div class="intro-content">
-            <h2>Welcome to the 5G Network Intrusion Detection System</h2>
-            <a href="./attack.html" class="button">Deploy Attack</a>
-            <a href="./mlinference.html" class="button">Deploy ML Inference</a>
+            <h1>Welcome to the 5G Network Intrusion Detection System</h1>
         </div>
+    </section>
+
+    <section class="attack">
+        <h2>Trigger Attack</h2>
+            <form method="post">
+                <p>Status: </p><p>{{ status }}</p>
+                <a href="" class="button">Start</a>
+                <a href="" class="button">Stop</a>
+            </form>
+    </section>
+
+    <section class="ml-inference">
+        <h2>ML Inference</h2>
+            <form method="post">
+                <p>Status: </p><p>{{ status }}</p>
+                <a href="" class="button">Start</a>
+                <a href="" class="button">Stop</a>
+            </form>
+
+            <div class="detect">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_captured">Upload captured data:</label>
+                        <textarea name="captured_data" id="id_captured" required></textarea>
+                    </div>
+                    <button class="detect-btn" type="submit">Detect Attack</button>
+                </form>
+
+                {% if detection %}
+                    <div class="box">
+                        <strong>Detected Attack type: </strong><br>{{ detection }}
+                    </div>
+                {% endif %}
+            </div>
     </section>
 </body>
 </html>
