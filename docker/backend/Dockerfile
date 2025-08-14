@@ -1,18 +1,21 @@
-FROM ubuntu:xenial
+FROM python:3.12-slim
 
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y python3.12 python3.12-dev python3-pip
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        wget \
+        nginx \
+        ca-certificates \
+        npm && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY requirements.txt .
-RUN rm -f /usr/bin/python && ln -s /usr/bin/python3.12 /usr/bin/python
-RUN rm -f /usr/bin/python3 && ln -s /usr/bin/python3.12 /usr/bin/python3
 
-RUN pip3 install -r requirements.txt
-RUN pip3 install gunicorn==19.9.0
+RUN pip install --no-cache-dir --upgrade pip setuptools && \
+    pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn==19.9.0
 
 ADD ./backend /app/backend
 ADD ./docker /app/docker
