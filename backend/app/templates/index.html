@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>5G Network Intrusion Detection</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #d4f4f8;
+            padding: 40px;
+        }
+
+        .intro {
+            position: relative;
+            color: white;
+            text-align: center;
+            height: 20vh;
+        }
+
+        .intro-content {
+            position: relative;
+        }
+
+        .attack, .ml-inference {
+            background-color: white;
+            padding: 20px 20px 20px 20px;
+            box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
+            border-radius: 15px;
+            max-width: 90%;
+            height: auto;
+            margin: 30px 30px;
+        }
+
+        .detect {
+            margin-top: 20px;
+            line-height: 30px;
+        }
+
+        h1 {
+            color: #061629;
+            margin-bottom: 20px;
+            font-size: 30px;
+        }
+
+        h2 {
+            color: #061629;
+        }
+
+        h3 {
+            color: #061629;
+            margin-top: 30px;
+        }
+
+        a.button {
+            padding: 12px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #061629;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            display: inline-block;
+            text-align: center;
+        }
+
+        a.button:hover {
+            background-color: #0c3669;
+        }
+
+        .detect-btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 6px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .detect-btn:hover {
+            background-color: #218838;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .status-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .result-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .result-box p {
+            margin: 5px 0;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        .success {
+            color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="intro">
+        <div class="intro-content">
+            <h1>Welcome to the 5G Network Intrusion Detection System</h1>
+        </div>
+    </section>
+
+    <section class="attack">
+        <h2>Trigger Attack</h2>
+        <div class="status-info">
+            <p><strong>Status:</strong> {{ status|default:"Not Available" }}</p>
+        </div>
+        <a href="#" class="button">Start</a>
+        <a href="#" class="button">Stop</a>
+    </section>
+
+    <section class="ml-inference">
+        <h2>ML Inference</h2>
+        <div class="status-info">
+            <p><strong>Status:</strong> {{ status|default:"Not Available" }}</p>
+        </div>
+        <a href="#" class="button">Start</a>
+        <a href="#" class="button">Stop</a>
+
+        <div class="detect">
+            <h3>Network Data Analysis</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_captured_data">Upload captured data (JSON format):</label>
+                    <textarea name="captured_data" id="id_captured_data" placeholder='Enter data in JSON format, e.g.:
+{
+    "frame.time_relative": -1.909990713,
+    "ip.len": -0.720828222,
+    "tcp.flags.syn": -0.210455971,
+    "tcp.flags.ack": 0.17171146,
+    "tcp.flags.push": -0.363892373,
+    "tcp.flags.fin": -0.119927617,
+    "tcp.flags.reset": -0.125807304,
+    "ip.proto": -2.182787826,
+    "ip.ttl": -0.696464265,
+    "tcp.window_size_value": -0.212153377,
+    "tcp.hdr_len": -0.765434182,
+    "udp.length": -0.639727849,
+    "srcport": -0.843824564,
+    "dstport": -0.972929059
+}' required></textarea>
+                </div>
+                <button class="detect-btn" type="submit">Detect Attack</button>
+            </form>
+
+            {% if detection or accuracy %}
+            <div class="result-box">
+                <h3>Detection Results</h3>
+                <p><strong>Attack Type:</strong> 
+                    <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
+                        {{ detection|default:"No detection performed" }}
+                    </span>
+                </p>
+                <p><strong>Accuracy:</strong> 
+                    <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
+                        {{ accuracy|default:"N/A" }}
+                    </span>
+                </p>
+            </div>
+            {% endif %}
+
+            {% if messages %}
+                <div class="result-box">
+                    {% for message in messages %}
+                        <p class="error">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>
