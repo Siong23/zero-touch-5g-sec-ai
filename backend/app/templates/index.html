@@ -55,7 +55,7 @@
             margin-top: 30px;
         }
 
-        a.button {
+        button {
             padding: 12px 30px;
             font-size: 18px;
             color: white;
@@ -67,7 +67,7 @@
             text-align: center;
         }
 
-        a.button:hover {
+        button:hover {
             background-color: #0c3669;
         }
 
@@ -147,16 +147,35 @@
         <div class="status-info">
             <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
-        <a href="#" class="button">Start</a>
-        <a href="#" class="button">Stop</a>
+        <button class="button">Start</button>
+        <button class="button">Stop</button>
     </section>
 
     <section class="ml-inference">
         <h2>Machine Learning Inference</h2>
         <div class="status-info">
-            <p><strong>Status:</strong> {{ ml_status|default:"Not Available" }}</p>
+            <p><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</p>
         </div>
 
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="{% url 'start_ml' %}">
+                        {% csrf_token %}
+                        <button class="button" type="submit">Start</button>
+                     </form>
+                </td>
+
+                <td>
+                    <form method="post" action="{% url 'stop_ml' %}">
+                        {% csrf_token %}
+                        <button class="button" type="submit">Stop</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        {% if ml_status == "ML model is available and ready to be used." %}
         <div class="detect">
             <h3>5G Network Data Analysis</h3>
             <form method="post">
@@ -184,7 +203,7 @@
                 <button class="detect-btn" type="submit">Detect Attack</button>
             </form>
 
-            {% if detection or accuracy %}
+            {% if detection %}
             <div class="result-box">
                 <h3>Detection Results</h3>
                 <p><strong>Attack Type:</strong> 
@@ -192,15 +211,16 @@
                         {{ detection|default:"No detection performed" }}
                     </span>
                 </p>
-                <p><strong>Accuracy:</strong> 
+                <p><strong>Model Accuracy:</strong> 
                     <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
                         {{ accuracy|default:"N/A" }}
                     </span>
-                </p>
+                </p> 
             </div>
             {% endif %}
-
-            {% if messages %}
+        {% endif %}
+            
+            {% if ml_status == "ML model is stopped." %}
                 <div class="result-box">
                     {% for message in messages %}
                         <p class="error">{{ message }}</p>
