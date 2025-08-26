@@ -36,13 +36,14 @@ def home(request):
     attack_status = None
     ml_status = None
 
-    
     # Initialize status of ML model
     if os.path.exists(model_path):
         ml_status = "AI Model is ready to be used"
+        accuracy = "90.73%"
     
     else:
         ml_status = "AI Model is not available"
+        accuracy = "N/A"
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST)
@@ -52,7 +53,7 @@ def home(request):
 
             if model is None:
                 messages.error(request, "Model is not loaded.")
-                return render(request, 'index.html', {'form': form, 'detection': "Error: Model not loaded!", 'accuracy': "N/A", 'status': status})
+                return render(request, 'index.html', {'form': form, 'detection': "Error: Model not loaded!", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
 
             try:
                 # Parse the data to handle JSON format
@@ -84,7 +85,7 @@ def home(request):
                 # Ensure exactly 14 features are present
                 if len(data_list) != 14:
                     messages.error(request, "Invalid data format. Please provide exactly 14 features.")
-                    return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'accuracy': "N/A", 'status': status})
+                    return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
 
                 # Reshape the data into 3D array to fit in LSTM input format
                 data_array = np.array(data_list).reshape(1, 1, 14)
@@ -121,16 +122,19 @@ def home(request):
                 messages.error(request, "Invalid JSON format in input data.")
                 detection = "Error: Invalid JSON format!"
                 accuracy = "N/A"
+
             except ValueError as e:
                 logger.error(f"Value error: {e}")
                 messages.error(request, "Invalid number format in input data.")
                 detection = "Error: Invalid number format!"
                 accuracy = "N/A"
+
             except Exception as e:
                 logger.error(f"Prediction error: {e}")
                 messages.error(request, f"Error during prediction: {str(e)}")
                 detection = "Error: Prediction failed!"
-                accuracy = "N/A"
+                accuracy  = "N/A"
+
             pass
         
         else:
