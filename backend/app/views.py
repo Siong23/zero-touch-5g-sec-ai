@@ -9,41 +9,59 @@ from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.conf import settings
 
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 from .forms import CapturedDataForm
 
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Load trained model with error handling
-model = None
+model = None    
+detection = None
+accuracy = None
+attack_status = None
+ml_status = None 
 
-try:
+def start_ml(request):
+
+    global model, detection, accuracy, attack_status, ml_status
+
     # Adjust the path as needed to load the trained model
     model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
-    if os.path.exists(model_path):
-        model = joblib.load(model_path)
-        logger.info("Model loaded successfully!")
-    else:
-        logger.warning("Model file not found.")
 
-except Exception as e:
-    logger.error(f"Error loading model: {e}")
+    if os.path.exists(model_path):
+        if request.method == "POST":
+            model = joblib.load(model_path)
+            logger.info("Model loaded successfully!")
+
+            ml_status = "ML model is available and ready to be used."
+            accuracy = "90.73%"
+
+        else:
+            logger.warning("Model file not found.")
+
+            ml_status = "ML model is not available."
+            accuracy = "N/A"
+    
+    return HttpResponseRedirect(reverse('home'))
+    
+
+def stop_ml(request):
+
+    global model, detection, accuracy, attack_status, ml_status
+
+    messages.info(request, "Machine Learning model stopped.")
+
+    if request.method == "POST":
+        ml_status = "ML model is stopped."
+
+    return HttpResponseRedirect(reverse('home'))
 
 def home(request):
-    detection = None
-    accuracy = None
-    attack_status = None
-    ml_status = None
 
-    # Initialize status of ML model
-    if os.path.exists(model_path):
-        ml_status = "AI Model is ready to be used"
-        accuracy = "90.73%"
-    
-    else:
-        ml_status = "AI Model is not available"
-        accuracy = "N/A"
+    global model, detection, accuracy, attack_status, ml_status
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST)
