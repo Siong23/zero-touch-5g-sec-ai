@@ -182,9 +182,9 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="id_captured_data">Upload captured data (JSON format):</label>
-                    <textarea name="captured_data" id="id_captured_data" placeholder='Enter data in JSON format, e.g.:
+                    <textarea name="captured_data" rows="10" cols="50" placeholder='Enter data in JSON format, e.g.:
 {
-    "frame.time_relative": ,
+    "frame.time_relative": , 
     "ip.len": ,
     "tcp.flags.syn": ,
     "tcp.flags.ack": ,
@@ -198,7 +198,7 @@
     "udp.length": ,
     "srcport": ,
     "dstport": 
-}' required></textarea>
+}' required>{{ captured_data }}</textarea>
                 </div>
                 <button class="detect-btn" type="submit">Detect Attack</button>
             </form>
