@@ -5,7 +5,6 @@ RUN apt-get update -y && \
         build-essential \
         curl \
         wget \
-        nginx \
         ca-certificates \
         npm && \
     rm -rf /var/lib/apt/lists/*

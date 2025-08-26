@@ -29,7 +29,7 @@
             background-color: white;
             padding: 20px 20px 20px 20px;
             box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
-            border-radius: 15px;
+            border-radius: 6px;
             max-width: 90%;
             height: auto;
             margin: 30px 30px;
@@ -138,49 +138,47 @@
 <body>
     <section class="intro">
         <div class="intro-content">
-            <h1>Welcome to the 5G Network Intrusion Detection System</h1>
+            <h1>Welcome to the<br>5G Network Intrusion Detection System!</h1>
         </div>
     </section>
 
     <section class="attack">
         <h2>Trigger Attack</h2>
         <div class="status-info">
-            <p><strong>Status:</strong> {{ status|default:"Not Available" }}</p>
+            <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
         <a href="#" class="button">Start</a>
         <a href="#" class="button">Stop</a>
     </section>
 
     <section class="ml-inference">
-        <h2>ML Inference</h2>
+        <h2>Machine Learning Inference</h2>
         <div class="status-info">
-            <p><strong>Status:</strong> {{ status|default:"Not Available" }}</p>
+            <p><strong>Status:</strong> {{ ml_status|default:"Not Available" }}</p>
         </div>
-        <a href="#" class="button">Start</a>
-        <a href="#" class="button">Stop</a>
 
         <div class="detect">
-            <h3>Network Data Analysis</h3>
+            <h3>5G Network Data Analysis</h3>
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="id_captured_data">Upload captured data (JSON format):</label>
                     <textarea name="captured_data" id="id_captured_data" placeholder='Enter data in JSON format, e.g.:
 {
-    "frame.time_relative": -1.909990713,
-    "ip.len": -0.720828222,
-    "tcp.flags.syn": -0.210455971,
-    "tcp.flags.ack": 0.17171146,
-    "tcp.flags.push": -0.363892373,
-    "tcp.flags.fin": -0.119927617,
-    "tcp.flags.reset": -0.125807304,
-    "ip.proto": -2.182787826,
-    "ip.ttl": -0.696464265,
-    "tcp.window_size_value": -0.212153377,
-    "tcp.hdr_len": -0.765434182,
-    "udp.length": -0.639727849,
-    "srcport": -0.843824564,
-    "dstport": -0.972929059
+    "frame.time_relative": ,
+    "ip.len": ,
+    "tcp.flags.syn": ,
+    "tcp.flags.ack": ,
+    "tcp.flags.push": ,
+    "tcp.flags.fin": ,
+    "tcp.flags.reset": ,
+    "ip.proto": ,
+    "ip.ttl": ,
+    "tcp.window_size_value": ,
+    "tcp.hdr_len": ,
+    "udp.length": ,
+    "srcport": ,
+    "dstport": 
 }' required></textarea>
                 </div>
                 <button class="detect-btn" type="submit">Detect Attack</button>
