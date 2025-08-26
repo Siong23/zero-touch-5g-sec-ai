@@ -11,6 +11,7 @@ from django.conf import settings
 
 from .forms import CapturedDataForm
 
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 model = None
 
 try:
-    model_path = os.path.join(settings.BASE_DIR, 'models', 'lstm_model.pkl')
+    # Adjust the path as needed to load the trained model
+    model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
     if os.path.exists(model_path):
         model = joblib.load(model_path)
         logger.info("Model loaded successfully!")
@@ -31,7 +33,16 @@ except Exception as e:
 def home(request):
     detection = None
     accuracy = None
-    status = "Ready"
+    attack_status = None
+    ml_status = None
+
+    
+    # Initialize status of ML model
+    if os.path.exists(model_path):
+        ml_status = "AI Model is ready to be used"
+    
+    else:
+        ml_status = "AI Model is not available"
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST)
@@ -85,6 +96,9 @@ def home(request):
 
                 if len(prediction.shape) > 1:
                     predicted_class = np.argmax(prediction, axis=1)
+
+                    if isinstance(predicted_class, np.ndarray):
+                        predicted_class = int(predicted_class[0])
                 else:
                     predicted_class = int(prediction[0])
 
@@ -117,8 +131,12 @@ def home(request):
                 messages.error(request, f"Error during prediction: {str(e)}")
                 detection = "Error: Prediction failed!"
                 accuracy = "N/A"
+            pass
         
         else:
             form = CapturedDataForm()
 
-        return render(request, 'index.html', {'form': form, 'detection': detection, 'accuracy': accuracy, 'status': status})
+        return render(request, 'index.html', {'form': form, 'detection': detection, 'accuracy': accuracy, 'attack_status': attack_status, 'ml_status': ml_status})
+
+    form = CapturedDataForm()
+    return render(request, 'index.html', {'form': form, 'detection': detection, 'accuracy': accuracy, 'attack_status': attack_status, 'ml_status': ml_status})
