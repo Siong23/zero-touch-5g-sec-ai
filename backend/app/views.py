@@ -3,7 +3,10 @@ import numpy as np
 import logging
 import json
 import os
+import io
+import csv
 
+from django import forms
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.contrib import messages
@@ -23,6 +26,9 @@ detection = None
 accuracy = None
 attack_status = None
 ml_status = None 
+
+class CapturedDataForm(forms.Form):
+    captured_data = forms.FileField(required=True)
 
 def start_ml(request):
 
@@ -64,55 +70,58 @@ def home(request):
     global model, detection, accuracy, attack_status, ml_status
 
     if request.method == 'POST':
-        form = CapturedDataForm(request.POST)
+        form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
-            captured_data = form.cleaned_data['captured_data']
-            logger.debug(f"Captured data: {captured_data}")
+            uploaded_file = request.FILES['captured_data']
+            filename = uploaded_file.name.lower()
+            data = None
 
             try:
                 # Parse the data to handle JSON format
-                if captured_data.strip().startswith('{'):
-                    # Handle JSON object format
-                    data_dict = json.loads(captured_data)
+                if filename.endswith('.json'):
+                    # Handle JSON format
+                    file_content = uploaded_file.read().decode('utf-8')
+                    obj = json.loads(file_content)
 
-                    # Extract values in the correct order
-                    feature_keys = [
-                        "frame.time_relative",   # Timestamp of the captured packet
-                        "ip.len",                # Total length of the IP packet
-                        "tcp.flags.syn",         # TCP synchronize flag status
-                        "tcp.flags.ack",         # TCP acknowledgement flag status
-                        "tcp.flags.push",        # TCP push flag status
-                        "tcp.flags.fin",         # TCP finish flag status
-                        "tcp.flags.reset",       # TCP reset flag status
-                        "ip.proto",              # IP protocol number
-                        "ip.ttl",                # IP time to live; max hops before discard packet
-                        "tcp.window_size_value", # TCP window size; receive buffer space
-                        "tcp.hdr_len",           # TCP header length
-                        "udp.length",            # UDP datagram length
-                        "srcport",               # Source port number
-                        "dstport"                # Destination port number
-                    ]
+                    # Extract values by keys if its dict
+                    if isinstance(obj, dict):
+                        feature_keys = list(obj.keys())
+                        data = [float(obj[k]) for k in feature_keys]
+                    elif isinstance(obj, list):
+                        data = [float(x) for x in obj[:14]]
 
-                    data_list = [data_dict.get(key, 0.0) for key in feature_keys]
-                elif captured_data.strip().startswith('['):
-                    # Handle JSON array format
-                    data_list = json.loads(captured_data)
-                    data_list = data_list[:14]
+                elif filename.endswith('.csv'):
+                    # Handle CSV format
+                    file_content = uploaded_file.read().decode('utf-8')
+                    reader = csv.reader(io.StringIO(file_content))
+                    row = next(reader)
+                    data = [float(x) for x in row[:14]]
+
+                elif filename.endswith('.npy'):
+                    # Handle NPY format
+                    file_buffer = io.BytesIO(uploaded_file.read())
+                    arr = np.load(file_buffer, allow_pickle=True)
+                    arr = arr.flatten()
+                    data = [float(x) for x in arr[:14]]
+
+                elif filename.endswith('.netflow'):
+                    # Handle NetFlow format
+                    file_content = uploaded_file.read().decode('utf-8')
+                    data = [line.split() for line in file_content.splitlines()][0]
+
                 else:
-                    # Handle CSV
-                    data_list = [float(x.strip()) for x in captured_data.split(',')]
-                    data_list = data_list[:14]
+                    detection = "Error: Unsupported file format!"
 
-                logger.debug(f"Processed data list: {data_list}")
-                logger.debug(f"Data list length: {len(data_list)}")
+                logger.debug(f"Processed data list: {data}")
+                logger.debug(f"Data list length: {len(data)}")
 
                 # Ensure exactly 14 features are present
-                if len(data_list) != 14:
+                if len(data) != 14:
                     messages.error(request, "Invalid data format. Please provide exactly 14 features.")
                     return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
 
                 # Reshape the data into 3D array to fit in LSTM input format
-                data_array = np.array(data_list).reshape(1, 1, 14)
+                data_array = np.array(data).reshape(1, 1, 14)
                 logger.debug(f"Data array shape: {data_array.shape}")
 
                 # Make prediction
