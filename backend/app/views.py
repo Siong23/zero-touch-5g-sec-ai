@@ -5,12 +5,14 @@ import json
 import os
 import io
 import csv
+from datetime import datetime, timedelta
 
 from django import forms
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.conf import settings
+from django.core.cache import cache
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -27,6 +29,94 @@ accuracy = None
 attack_status = None
 ml_status = None 
 
+# Analyze attack severity levels using network features and patterns
+class SeverityLevelAnalyzer:
+    def __init__(self):
+        # Set the severity threshold for each attack type
+        self.severity_thresholds = {
+            'HTTPFlood': {
+                'Minor': {'packet_rate': 100, 'payload_size': 1000},
+                'Major': {'packet_rate': 1000, 'payload_size': 10000},
+                'Critical': {'packet_rate': 2000, 'payload_size': 20000}
+            },
+
+            'ICMPFlood': {
+                'Minor': {'packet_rate': 50, 'payload_size': 500},
+                'Major': {'packet_rate': 500, 'payload_size': 2000},
+                'Critical': {'packet_rate': 1000, 'payload_size': 5000}
+            },
+
+            'SYNFlood': {
+                'Minor': {'packet_rate': 100, 'connection_attempts': 50},
+                'Major': {'packet_rate': 600, 'connection_attempts': 300},
+                'Critical': {'packet_rate': 1200, 'connection_attempts': 600}
+            },
+
+            ('SYNScan', 'TCPConnectScan', 'UDPScan'): {
+                'Minor': {'packet_rate': 100, 'connection_attempts': 50},
+                'Major': {'packet_rate': 600, 'connection_attempts': 300},
+                'Critical': {'packet_rate': 1200, 'connection_attempts': 600}
+            },
+
+            'SlowrateDoS': {
+                'Minor': {'frame.time_relative': 300, 'connection_rate': 1},
+                'Major': {'frame.time_relative': 1200, 'connection_rate': 0.2},
+                'Critical': {'frame.time_relative': 1800, 'connection_rate': 0.1}
+            },
+
+            'UDPFlood': {
+                'Minor': {'packet_rate': 200, 'payload_size': 1000},
+                'Major': {'packet_rate': 1000, 'payload_size': 6000},
+                'Critical': {'packet_rate': 2000, 'payload_size': 12000}
+            }
+        }
+    
+    def calculate_traffic_metrics(self, features):
+        traffic_metrics = {}
+
+        # Extract key features
+        frame_time = features.get('frame.time_relative', 0)
+        ip_len = features.get('ip.len', 0)
+        udp_len = features.get('udp.length', 0)
+        tcp_window = features.get('tcp.window_size_value', 0)
+        src_port = features.get('srcport', 0)
+        dst_port = features.get('dstport', 0)
+
+        # Calculate derived metrics
+        traffic_metrics['packet_size'] = max(ip_len, udp_len)
+        traffic_metrics['window_efficiency'] = tcp_window / max(ip_len, 1)
+        traffic_metrics['port_randomness'] = abs(src_port - dst_port) / 65535.0
+
+        # Estimate packet rate
+        traffic_metrics['estimated_packet_rate'] = 1.0 / max(frame_time, 0.001)
+
+        return traffic_metrics  
+    
+    def historical_context(self, src_ip=None, dst_ip=None, window_minutes=5):
+        cache_key = f"traffic_history_{src_ip}_{dst_ip}_{window_minutes}"
+        traffic_history = cache.get(cache_key, [])
+
+        cutoff_time = datetime.now() - timedelta(minutes=window_minutes)
+
+        # Filter out old entries
+        traffic_history = [entry for entry in traffic_history if entry['timestamp'] > cutoff_time]
+
+        return traffic_history
+    
+    def update_traffic_history(self, metrics, src_ip=None, dst_ip=None):
+        cache_key = f"traffic_history_{src_ip}_{dst_ip}_5"
+        traffic_history = cache.get(cache_key, [])
+
+        # Append new entry with timestamp
+        traffic_history.append({
+            'timestamp': datetime.now(),
+            'metrics': metrics
+        })
+
+        # Update the cache
+        cache.set(cache_key, traffic_history, timeout=900)  # Cache for 15 minutes
+
+# Captured Data Form
 class CapturedDataForm(forms.Form):
     captured_data = forms.FileField(required=True)
 
