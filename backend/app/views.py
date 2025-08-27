@@ -116,6 +116,51 @@ class SeverityLevelAnalyzer:
         # Update the cache
         cache.set(cache_key, traffic_history, timeout=900)  # Cache for 15 minutes
 
+    def calculate_anomaly_score(self, current_metrics, historical_metrics):
+        if not historical_metrics:
+            return 0.5 # Average anomaly when no history is available
+        
+        # Calculate anomaly score using statistical deviations
+        packet_rates = [m['packet_rate'] for m in historical_metrics if 'packet_rate' in m]
+        packet_sizes = [m['packet_size'] for m in historical_metrics if 'packet_size' in m]
+
+        if not packet_rates or not packet_sizes:
+            return 0.5
+
+        # Calculate packet_rates and packet_sizes using z-scores
+        avg_rate = np.mean(packet_rates)
+        std_rate = np.std(packet_rates) or 1
+        avg_size = np.mean(packet_sizes)
+        std_size = np.std(packet_sizes) or 1
+
+        rate_zscore = abs((current_metrics.get('estimated_packet_rate', 0) - avg_rate) / std_rate)
+        size_zscore = abs((current_metrics.get('packet_size', 0) - avg_size) / std_size)
+
+        # Combine z-scores into anomaly score
+        anomaly_score = min((rate_zscore + size_zscore) / 10.0, 1.0)
+        return anomaly_score
+    
+    def decide_attack_level(self, attack_type, features, anomaly_score=0.5):
+        if attack_type == "Benign":
+            return "None", 0, {}
+        
+        # Calculate traffic metrics
+        traffic_metrics = self.calculate_traffic_metrics(features)
+
+        # Get the thresholds for specific attack
+        thresholds = self.severity_thresholds.get(attack_type, {})
+
+        if not thresholds:
+            # For unknown attack types, can use generic severity level based on anomaly score
+            if anomaly_score < 0.3:
+                return "Minor", 1, traffic_metrics
+            elif anomaly_score < 0.8:
+                return "Major", 2, traffic_metrics
+            else:
+                return "Critical", 3, traffic_metrics
+            
+        # Calculate severity levle based on different factors
+
 # Captured Data Form
 class CapturedDataForm(forms.Form):
     captured_data = forms.FileField(required=True)
