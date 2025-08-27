@@ -178,27 +178,11 @@
         {% if ml_status == "ML model is available and ready to be used." %}
         <div class="detect">
             <h3>5G Network Data Analysis</h3>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="id_captured_data">Upload captured data (JSON format):</label>
-                    <textarea name="captured_data" rows="10" cols="50" placeholder='Enter data in JSON format, e.g.:
-{
-    "frame.time_relative": , 
-    "ip.len": ,
-    "tcp.flags.syn": ,
-    "tcp.flags.ack": ,
-    "tcp.flags.push": ,
-    "tcp.flags.fin": ,
-    "tcp.flags.reset": ,
-    "ip.proto": ,
-    "ip.ttl": ,
-    "tcp.window_size_value": ,
-    "tcp.hdr_len": ,
-    "udp.length": ,
-    "srcport": ,
-    "dstport": 
-}' required>{{ captured_data }}</textarea>
+                    <label for="id_captured_data">Upload captured data (JSON/CSV/NPY file):</label>
+                    <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow" required>
                 </div>
                 <button class="detect-btn" type="submit">Detect Attack</button>
             </form>
