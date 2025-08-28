@@ -195,6 +195,13 @@
                         {{ detection|default:"No detection performed" }}
                     </span>
                 </p>
+                
+                <p><strong>Severity Level:</strong>
+                    <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
+                        {{ attack_severity|default:"N/A" }}
+                    </span>
+                </p>
+
                 <p><strong>Model Accuracy:</strong> 
                     <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
                         {{ accuracy|default:"N/A" }}
