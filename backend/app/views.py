@@ -6,6 +6,7 @@ import os
 import io
 import csv
 from datetime import datetime, timedelta
+from collections import deque, defaultdict
 
 from django import forms
 from django.shortcuts import render
@@ -25,9 +26,12 @@ logger = logging.getLogger(__name__)
 
 model = None    
 detection = None
+attack_level = None
+attack_severity_num = 0
 accuracy = None
 attack_status = None
-ml_status = None 
+ml_status = None
+analysis_report = {}
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
@@ -79,16 +83,23 @@ class SeverityLevelAnalyzer:
         ip_len = features.get('ip.len', 0)
         udp_len = features.get('udp.length', 0)
         tcp_window = features.get('tcp.window_size_value', 0)
+        tcp_hdr_len = features.get('tcp.hdr_len', 0)
         src_port = features.get('srcport', 0)
         dst_port = features.get('dstport', 0)
 
         # Calculate derived metrics
         traffic_metrics['packet_size'] = max(ip_len, udp_len)
+        traffic_metrics['payload_size'] = ip_len - tcp_hdr_len
         traffic_metrics['window_efficiency'] = tcp_window / max(ip_len, 1)
         traffic_metrics['port_randomness'] = abs(src_port - dst_port) / 65535.0
 
         # Estimate packet rate
         traffic_metrics['estimated_packet_rate'] = 1.0 / max(frame_time, 0.001)
+        traffic_metrics['packet_rate'] = traffic_metrics['estimated_packet_rate']
+
+        traffic_metrics['connection_attempts'] = traffic_metrics['packet_rate'] * 0.1
+        traffic_metrics['connection_rate'] = 1.0 / max(frame_time, 1.0)
+        traffic_metrics['frame_time_relative'] = frame_time
 
         return traffic_metrics  
     
@@ -140,7 +151,7 @@ class SeverityLevelAnalyzer:
         anomaly_score = min((rate_zscore + size_zscore) / 10.0, 1.0)
         return anomaly_score
     
-    def decide_attack_level(self, attack_type, features, anomaly_score=0.5):
+    def decide_attack_level(self, attack_type, features, anomaly_score):
         if attack_type == "Benign":
             return "None", 0, {}
         
@@ -159,7 +170,52 @@ class SeverityLevelAnalyzer:
             else:
                 return "Critical", 3, traffic_metrics
             
-        # Calculate severity levle based on different factors
+        # Calculate severity levels based on different factors
+        severity_level = None
+        severity_score = 1 
+
+        # Check each severity level from highest to lowest
+        for level, level_thresholds in [('Critical', thresholds.get('Critical', {})),
+                                        ('Major', thresholds.get('Major', {})),
+                                        ('Minor', thresholds.get('Minor', {}))]:
+            if not level_thresholds:
+                continue
+
+            # Check if current metrics exceed thresholds for this level
+            exceeds_threshold = True
+
+            for metric_name, threshold_value in level_thresholds.items():
+                current_value = traffic_metrics.get(metric_name, 0)
+
+                if metric_name == 'frame_time_relative':
+                    if current_value < threshold_value:
+                        exceeds_threshold = False
+                        break
+                
+                # Lower rates indicate more severe attacks for connection rate in SlowrateDoS
+                elif metric_name == 'connection_rate' and attack_type == 'SlowrateDoS':
+                    if current_value > threshold_value:
+                        exceeds_threshold = False
+                        break
+                
+                else:
+                    if current_value < threshold_value:
+                        exceeds_threshold = False
+                        break
+            
+            if exceeds_threshold:
+                severity_level = level
+                severity_score = 3 if level == 'Critical' else (2 if level == 'Major' else 1)
+                break
+
+        traffic_metrics['anomaly_score'] = anomaly_score
+        traffic_metrics['severity_level'] = severity_level
+        traffic_metrics['severity_score'] = severity_score
+
+        return severity_level, severity_score, traffic_metrics
+    
+# Initialize the SeverityLevelAnalyzer class
+severity_analyzer = SeverityLevelAnalyzer()
 
 # Captured Data Form
 class CapturedDataForm(forms.Form):
@@ -202,7 +258,7 @@ def stop_ml(request):
 
 def home(request):
 
-    global model, detection, accuracy, attack_status, ml_status
+    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, analysis_report
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
@@ -253,7 +309,7 @@ def home(request):
                 # Ensure exactly 14 features are present
                 if len(data) != 14:
                     messages.error(request, "Invalid data format. Please provide exactly 14 features.")
-                    return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
+                    return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'attack_level': "N/A", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
 
                 # Reshape the data into 3D array to fit in LSTM input format
                 data_array = np.array(data).reshape(1, 1, 14)
@@ -285,22 +341,29 @@ def home(request):
 
                 detection = attack_types.get(predicted_class, "Unknown")
 
+                # Determine attack severity level
+                attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, {f'feature_{i+1}': data[i] for i in range(14)}, anomaly_score=0.5)
+                logger.info(f"Attack detected: {detection}, Severity Level: {attack_level}, Severity Num: {attack_severity_num}")
+
             except json.JSONDecodeError as e:
                 logger.error(f"JSON decode error: {e}")
                 messages.error(request, "Invalid JSON format in input data.")
                 detection = "Error: Invalid JSON format!"
+                attack_level = "N/A"
                 accuracy = "N/A"
 
             except ValueError as e:
                 logger.error(f"Value error: {e}")
                 messages.error(request, "Invalid number format in input data.")
                 detection = "Error: Invalid number format!"
+                attack_level = "N/A"
                 accuracy = "N/A"
 
             except Exception as e:
                 logger.error(f"Prediction error: {e}")
                 messages.error(request, f"Error during prediction: {str(e)}")
                 detection = "Error: Prediction failed!"
+                attack_level = "N/A"
                 accuracy  = "N/A"
 
             pass
@@ -308,7 +371,25 @@ def home(request):
         else:
             form = CapturedDataForm()
 
-        return render(request, 'index.html', {'form': form, 'detection': detection, 'accuracy': accuracy, 'attack_status': attack_status, 'ml_status': ml_status, 'captured_data': request.POST.get('captured_data', '')})
+        return render(request, 'index.html', 
+                      {'form': form, 
+                       'detection': detection, 
+                       'attack_level': attack_level, 
+                       'attack_severity': attack_severity_num, 
+                       'analysis_report': analysis_report,
+                       'accuracy': accuracy, 
+                       'attack_status': attack_status, 
+                       'ml_status': ml_status, 
+                       'captured_data': request.POST.get('captured_data', '')})
 
     form = CapturedDataForm()
-    return render(request, 'index.html', {'form': form, 'detection': detection, 'accuracy': accuracy, 'attack_status': attack_status, 'ml_status': ml_status, 'captured_data': ''})
+    return render(request, 'index.html', 
+                  {'form': form, 
+                   'detection': detection, 
+                   'attack_level': attack_level, 
+                   'attack_severity': attack_severity_num, 
+                   'analysis_report': analysis_report,
+                   'accuracy': accuracy, 
+                   'attack_status': attack_status, 
+                   'ml_status': ml_status, 
+                   'captured_data': ''})
