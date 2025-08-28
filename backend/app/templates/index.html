@@ -182,7 +182,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="id_captured_data">Upload captured data (JSON/CSV/NPY file):</label>
-                    <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow" required>
+                    <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow">
                 </div>
                 <div>
                     <label for="id_captured_text">Text form:</label>
@@ -218,7 +218,7 @@
                 
                 <p><strong>Severity Level:</strong>
                     <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
-                        {{ attack_severity|default:"N/A" }}
+                        {{ attack_level|default:"N/A" }}
                     </span>
                 </p>
 

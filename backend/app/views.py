@@ -20,7 +20,6 @@ from django.urls import reverse
 
 from .forms import CapturedDataForm
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -217,10 +216,6 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
-# Captured Data Form
-class CapturedDataForm(forms.Form):
-    captured_data = forms.FileField(required=True)
-
 def start_ml(request):
 
     global model, detection, accuracy, attack_status, ml_status
@@ -263,14 +258,14 @@ def home(request):
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = request.FILES['captured_data']
-            captured_text = form.cleaned_data.get('captured_text', '')
-            filename = uploaded_file.name.lower()
+            uploaded_file = request.FILES.get('captured_data')
+            captured_text = form.cleaned_data.get('captured_text', '').strip()
             data = None
 
             try:
                 # If file is submitted
                 if uploaded_file:
+                    filename = uploaded_file.name.lower()
                     # Parse the data to handle JSON format
                     if filename.endswith('.json'):
                         # Handle JSON format
@@ -305,16 +300,45 @@ def home(request):
 
                     else:
                         detection = "Error: Unsupported file format!"
+                    
+                    pass
 
                 # If text form is submitted
                 elif captured_text:
-                    if ',' in captured_text:
-                        fields = [x.strip() for x in captured_text.split(',')]
-                    
+                    if captured_text.strip().startswith('{'):
+                        # Handle JSON object format
+                        data_dict = json.loads(captured_text)
+
+                        # Extract values in the correct order
+                        feature_keys = [
+                            "frame.time_relative",
+                            "ip.len",
+                            "tcp.flags.syn",
+                            "tcp.flags.ack",
+                            "tcp.flags.push",
+                            "tcp.flags.fin",
+                            "tcp.flags.reset",
+                            "ip.proto",
+                            "ip.ttl",
+                            "tcp.window_size_value",
+                            "tcp.hdr_len",
+                            "udp.length",
+                            "srcport",
+                            "dstport" 
+                        ]
+
+                        data = [float(data_dict.get(key, 0.0)) for key in feature_keys]
+
+                    elif captured_text.strip().startswith('['):
+                        data = json.loads(captured_text)
+                        data = [float(x) for x in data[:14]]
+
                     else:
-                        fields = captured_text.replace('\t', '').splitlines()
-                    
-                    data = [float(x) for x in fields[:14]]
+                        if ',' in captured_text:
+                            fields = [x.strip() for x in captured_text.split(',')]
+                        else:
+                            fields = captured_text.replace('\t', ' ')
+                        data = [float(x) for x in fields[:14]]
 
                 else:
                     detection = "Error: No data provided!"
