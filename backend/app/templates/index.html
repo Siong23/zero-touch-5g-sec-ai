@@ -184,6 +184,26 @@
                     <label for="id_captured_data">Upload captured data (JSON/CSV/NPY file):</label>
                     <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow" required>
                 </div>
+                <div>
+                    <label for="id_captured_text">Text form:</label>
+                    <textarea name="captured_text" rows="10" cols="50" placeholder='Enter data in JSON format, eg.:
+{
+    "frame.time_relative": ,
+    "ip.len": ,
+    "tcp.flags.syn": ,
+    "tcp.flags.ack": ,
+    "tcp.flags.push": ,
+    "tcp.flags.fin": ,
+    "tcp.flags.reset": ,
+    "ip.proto": ,
+    "ip.ttl": ,
+    "tcp.window_size_value": ,
+    "tcp.hdr_len": ,
+    "udp.length": ,
+    "srcport": ,
+    "dstport": 
+}' required>{{ captured_data }}</textarea>
+                </div>
                 <button class="detect-btn" type="submit">Detect Attack</button>
             </form>
 
