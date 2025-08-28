@@ -216,6 +216,7 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
+# Start the machine learning model when the start button is clicked
 def start_ml(request):
 
     global model, detection, accuracy, attack_status, ml_status
@@ -239,6 +240,7 @@ def start_ml(request):
     
     return HttpResponseRedirect(reverse('home'))
     
+# Stop the machine learning model when the stop button is clicked
 def stop_ml(request):
 
     global model, detection, accuracy, attack_status, ml_status
@@ -311,20 +313,20 @@ def home(request):
 
                         # Extract values in the correct order
                         feature_keys = [
-                            "frame.time_relative",
-                            "ip.len",
-                            "tcp.flags.syn",
-                            "tcp.flags.ack",
-                            "tcp.flags.push",
-                            "tcp.flags.fin",
-                            "tcp.flags.reset",
-                            "ip.proto",
-                            "ip.ttl",
-                            "tcp.window_size_value",
-                            "tcp.hdr_len",
-                            "udp.length",
-                            "srcport",
-                            "dstport" 
+                            "frame.time_relative",      # Timestamp of the captured packet
+                            "ip.len",                   # Total length of the IP packet
+                            "tcp.flags.syn",            # TCP synchronize flag status
+                            "tcp.flags.ack",            # TCP acknowledgement flag status
+                            "tcp.flags.push",           # TCP push flag status
+                            "tcp.flags.fin",            # TCP finish flag status
+                            "tcp.flags.reset",          # TCP reset flag status
+                            "ip.proto",                 # IP protocol number
+                            "ip.ttl",                   # IP time to live; max hops before discard packet
+                            "tcp.window_size_value",    # TCP window size; receive buffer space
+                            "tcp.hdr_len",              # TCP header length
+                            "udp.length",               # UDP datagram length
+                            "srcport",                  # Source port number
+                            "dstport"                   # Destination port number
                         ]
 
                         data = [float(data_dict.get(key, 0.0)) for key in feature_keys]
@@ -358,7 +360,13 @@ def home(request):
                 # Ensure exactly 14 features are present
                 if len(data) != 14:
                     messages.error(request, "Invalid data format. Please provide exactly 14 features.")
-                    return render(request, 'index.html', {'form': form, 'detection': "Error: Invalid data format!", 'attack_level': "N/A", 'accuracy': "N/A", 'attack_status': attack_status, 'ml_status': ml_status})
+                    return render(request, 'index.html', 
+                                  {'form': form, 
+                                   'detection': "Error: Invalid data format!", 
+                                   'attack_level': "N/A", 
+                                   'accuracy': "N/A", 
+                                   'attack_status': attack_status, 
+                                   'ml_status': ml_status})
 
                 # Reshape the data into 3D array to fit in LSTM input format
                 data_array = np.array(data).reshape(1, 1, 14)
