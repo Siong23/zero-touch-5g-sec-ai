@@ -78,19 +78,19 @@ class SeverityLevelAnalyzer:
         traffic_metrics = {}
 
         # Extract key features
-        frame_time = features.get('frame.time_relative', 0)
-        ip_len = features.get('ip.len', 0)
-        udp_len = features.get('udp.length', 0)
-        tcp_window = features.get('tcp.window_size_value', 0)
-        tcp_hdr_len = features.get('tcp.hdr_len', 0)
-        src_port = features.get('srcport', 0)
-        dst_port = features.get('dstport', 0)
+        frame_time = features.get('frame.time_relative', (features.get('feature_1', 0)))
+        ip_len = features.get('ip.len', (features.get('feature_2', 0)))
+        udp_len = features.get('udp.length', (features.get('feature_10', 0)))
+        tcp_window = features.get('tcp.window_size_value', (features.get('feature_11', 0)))
+        tcp_hdr_len = features.get('tcp.hdr_len', (features.get('feature_12', 0)))
+        src_port = features.get('srcport', (features.get('feature_13', 0)))
+        dst_port = features.get('dstport', (features.get('feature_14', 0)))
 
         # Calculate derived metrics
         traffic_metrics['packet_size'] = max(ip_len, udp_len)
-        traffic_metrics['payload_size'] = ip_len - tcp_hdr_len
+        traffic_metrics['payload_size'] = max(ip_len - tcp_hdr_len, 0)
         traffic_metrics['window_efficiency'] = tcp_window / max(ip_len, 1)
-        traffic_metrics['port_randomness'] = abs(src_port - dst_port) / 65535.0
+        traffic_metrics['port_randomness'] = abs(src_port - dst_port) / 65535.0 if src_port!=0 and dst_port!=0 else 0
 
         # Estimate packet rate
         traffic_metrics['estimated_packet_rate'] = 1.0 / max(frame_time, 0.001)
@@ -170,7 +170,7 @@ class SeverityLevelAnalyzer:
                 return "Critical", 3, traffic_metrics
             
         # Calculate severity levels based on different factors
-        severity_level = None
+        severity_level = "Minor"
         severity_score = 1 
 
         # Check each severity level from highest to lowest
@@ -390,9 +390,40 @@ def home(request):
 
                 detection = attack_types.get(predicted_class, "Unknown")
 
+                # Create feature dictionary for severity report
+                feature_dict = {}
+                feature_names = [
+                    "frame.time_relative",
+                    "ip.len",
+                    "tcp.flags.syn",
+                    "tcp.flags.ack",
+                    "tcp.flags.push",
+                    "tcp.flags.fin",
+                    "tcp.flags.reset",
+                    "ip.proto",
+                    "ip.ttl",
+                    "tcp.window_size_value",
+                    "tcp.hdr_len",
+                    "udp.length",
+                    "srcport",
+                    "dstport" 
+                ]
+
+                for i, value in enumerate(data):
+                    if i < len(feature_names):
+                        feature_dict[feature_names[i]] = value
+                    else:
+                        feature_dict[f'feature_{i+1}'] = value
+
                 # Determine attack severity level
-                attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, {f'feature_{i+1}': data[i] for i in range(14)}, anomaly_score=0.5)
+                attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, feature_dict, anomaly_score=0.5)
                 logger.info(f"Attack detected: {detection}, Severity Level: {attack_level}, Severity Num: {attack_severity_num}")
+
+                # Set attack status based on detection results
+                if detection == "Benign":
+                    attack_status = "Safe"
+                else:
+                    attack_status = "Under Attack!"
 
             except json.JSONDecodeError as e:
                 logger.error(f"JSON decode error: {e}")
@@ -429,7 +460,8 @@ def home(request):
                        'accuracy': accuracy, 
                        'attack_status': attack_status, 
                        'ml_status': ml_status, 
-                       'captured_data': request.POST.get('captured_data', '')})
+                       'captured_data': request.POST.get('captured_data', ''),
+                       'captured_text': request.POST.get('captured_text', '')})
 
     form = CapturedDataForm()
     return render(request, 'index.html', 
@@ -441,4 +473,5 @@ def home(request):
                    'accuracy': accuracy, 
                    'attack_status': attack_status, 
                    'ml_status': ml_status, 
-                   'captured_data': ''})
+                   'captured_data': '',
+                   'captured_text': ''})
