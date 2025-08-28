@@ -264,15 +264,18 @@ def home(request):
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES['captured_data']
+            captured_text = form.cleaned_data.get('captured_text', '')
             filename = uploaded_file.name.lower()
             data = None
 
             try:
-                # Parse the data to handle JSON format
-                if filename.endswith('.json'):
-                    # Handle JSON format
-                    file_content = uploaded_file.read().decode('utf-8')
-                    obj = json.loads(file_content)
+                # If file is submitted
+                if uploaded_file:
+                    # Parse the data to handle JSON format
+                    if filename.endswith('.json'):
+                        # Handle JSON format
+                        file_content = uploaded_file.read().decode('utf-8')
+                        obj = json.loads(file_content)
 
                     # Extract values by keys if its dict
                     if isinstance(obj, dict):
@@ -281,27 +284,49 @@ def home(request):
                     elif isinstance(obj, list):
                         data = [float(x) for x in obj[:14]]
 
-                elif filename.endswith('.csv'):
-                    # Handle CSV format
-                    file_content = uploaded_file.read().decode('utf-8')
-                    reader = csv.reader(io.StringIO(file_content))
-                    row = next(reader)
-                    data = [float(x) for x in row[:14]]
+                    elif filename.endswith('.csv'):
+                        # Handle CSV format
+                        file_content = uploaded_file.read().decode('utf-8')
+                        reader = csv.reader(io.StringIO(file_content))
+                        row = next(reader)
+                        data = [float(x) for x in row[:14]]
 
-                elif filename.endswith('.npy'):
-                    # Handle NPY format
-                    file_buffer = io.BytesIO(uploaded_file.read())
-                    arr = np.load(file_buffer, allow_pickle=True)
-                    arr = arr.flatten()
-                    data = [float(x) for x in arr[:14]]
+                    elif filename.endswith('.npy'):
+                        # Handle NPY format
+                        file_buffer = io.BytesIO(uploaded_file.read())
+                        arr = np.load(file_buffer, allow_pickle=True)
+                        arr = arr.flatten()
+                        data = [float(x) for x in arr[:14]]
 
-                elif filename.endswith('.netflow'):
-                    # Handle NetFlow format
-                    file_content = uploaded_file.read().decode('utf-8')
-                    data = [line.split() for line in file_content.splitlines()][0]
+                    elif filename.endswith('.netflow'):
+                        # Handle NetFlow format
+                        file_content = uploaded_file.read().decode('utf-8')
+                        data = [line.split() for line in file_content.splitlines()][0]
+
+                    else:
+                        detection = "Error: Unsupported file format!"
+
+                # If text form is submitted
+                elif captured_text:
+                    if ',' in captured_text:
+                        fields = [x.strip() for x in captured_text.split(',')]
+                    
+                    else:
+                        fields = captured_text.replace('\t', '').splitlines()
+                    
+                    data = [float(x) for x in fields[:14]]
 
                 else:
-                    detection = "Error: Unsupported file format!"
+                    detection = "Error: No data provided!"
+                    attack_level = "N/A"
+                    accuracy = "N/A"
+                    return render(request, 'index.html', 
+                                  {'form': form, 
+                                   'detection': detection, 
+                                   'attack_level': attack_level, 
+                                   'accuracy': accuracy, 
+                                   'attack_status': attack_status, 
+                                   'ml_status': ml_status})
 
                 logger.debug(f"Processed data list: {data}")
                 logger.debug(f"Data list length: {len(data)}")
