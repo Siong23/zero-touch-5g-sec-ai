@@ -216,10 +216,6 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
-# Suggest solutions to handle specific attack types
-
-
-
 # Start the machine learning model when the start button is clicked
 def start_ml(request):
 
