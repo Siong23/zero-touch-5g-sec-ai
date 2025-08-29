@@ -226,7 +226,13 @@
                     <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
                         {{ accuracy|default:"N/A" }}
                     </span>
-                </p> 
+                </p>
+                
+                <p><strong>Mitigation Solutions:</strong>
+                    <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
+                        {{ mitigation|default:"N/A" }}
+                    </span>
+                </p>
             </div>
             {% endif %}
         {% endif %}
