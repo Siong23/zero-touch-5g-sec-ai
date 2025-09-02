@@ -1,4 +1,5 @@
 import joblib
+import timeshap
 import numpy as np
 import logging
 import json
@@ -31,6 +32,7 @@ accuracy = None
 attack_status = None
 ml_status = None
 analysis_report = {}
+mitigation = None
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
@@ -216,6 +218,41 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
+class AIMitigation:
+    def http_flood_mitigation(self, traffic_data):
+        mitigation = "- Implement rate limiting for HTTP requests from the source IP \n - Block the source IP temporarily \n - Use a Web Application Firewall(WAF) to filter malicious HTTP traffic"
+        return mitigation
+
+    def icmp_flood_mitigation(self, traffic_data):
+        mitigation = "Disable the ICMP functionality of the targeted router, computer or other device"
+        return mitigation
+    
+    def syn_flood_mitigation(self, traffic_data):
+        mitigation = "- Increase the backlog queue size\n - Overwrite the oldest half-open TCP connection once the backlog has been filled\n - Deploy SYN cookies\n Use a firewall to drop suspicious SYN packets"
+        return mitigation
+
+    def syn_scan_mitigation(self, traffic_data):
+        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
+        return mitigation
+    
+    def slowrate_dos_mitigation(self, traffic_data):
+        mitigation = "Use reverse proxy-based protection"
+        return mitigation
+    
+    def tcp_connect_scan_mitigation(self, traffic_data):
+        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
+        return mitigation
+    
+    def udp_flood_mitigation(self,traffic_data):
+        mitigation = "- Block the source IP\n Use filtering rules to drop malicious UDP traffic"
+        return mitigation
+
+    def udp_scan_mitigation(self, traffic_data):
+        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
+        return mitigation
+    
+mitigation_analyzer = AIMitigation()
+
 # Start the machine learning model when the start button is clicked
 def start_ml(request):
 
@@ -255,7 +292,7 @@ def stop_ml(request):
 
 def home(request):
 
-    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, analysis_report
+    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, analysis_report, mitigation
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
@@ -427,11 +464,14 @@ def home(request):
                 attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, feature_dict, anomaly_score=0.5)
                 logger.info(f"Attack detected: {detection}, Severity Level: {attack_level}, Severity Num: {attack_severity_num}")
 
-                # Set attack status based on detection results
+                # Set attack status and mitigation based on detection results
                 if detection == "Benign":
                     attack_status = "Safe"
-                else:
+                    mitigation = "No action needed"
+
+                else:  
                     attack_status = "Under Attack!"
+                # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:
                 logger.error(f"JSON decode error: {e}")
@@ -468,6 +508,7 @@ def home(request):
                        'accuracy': accuracy, 
                        'attack_status': attack_status, 
                        'ml_status': ml_status, 
+                       'mitigation': mitigation,
                        'captured_data': request.POST.get('captured_data', ''),
                        'captured_text': request.POST.get('captured_text', '')})
 
@@ -481,5 +522,6 @@ def home(request):
                    'accuracy': accuracy, 
                    'attack_status': attack_status, 
                    'ml_status': ml_status, 
+                   'mitigation': mitigation,
                    'captured_data': '',
                    'captured_text': ''})
