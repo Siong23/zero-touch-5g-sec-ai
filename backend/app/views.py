@@ -1,13 +1,20 @@
 import joblib
 import timeshap
+import socket
+import threading
+import scapy.all as scapy
 import numpy as np
 import logging
 import json
 import os
 import io
 import csv
+
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
+
+from scapy.layers.inet import IP, TCP, UDP, ICMP
+from scapy.layers.l2 import Ether
 
 from django import forms
 from django.shortcuts import render
@@ -33,6 +40,95 @@ attack_status = None
 ml_status = None
 analysis_report = {}
 mitigation = None
+
+# Capture network traffic of 5G Network core with direct network access integration
+class NetworkTrafficCapture:
+    def __init__(self, host, interface="eth0"):
+        self.host = host
+        self.interface = interface
+        self.capture_active = False
+        self.captured_packets = []
+
+    # Start capturing packets from Open5Gs network 
+    def start_capture(self, filter_expr="host {}".format(host)):
+        self.capture_active = True
+
+        def packet_handler(packet):
+            if self.capture_active:
+                features = self.extract_features(packet)
+
+                if features:
+                    self.captured_packets.append(features)
+        
+        # Start capturing packet in separate thread
+        capture_thread = threading.Thread(
+            target=lambda: scapy.sniff(
+                iface=self.interface,
+                filter=filter_expr,
+                prn=packet_handler,
+                stop_filter=lambda x: not self.capture_active
+            )
+        )
+
+        capture_thread.daemon = True
+        capture_thread.start()
+    
+    def extract_features(self, packet):
+        try:
+            features = {}
+
+            features['frame.time_relative'] = float(packet.time)
+            features['ip.len'] = len(packet) if packet.haslayer(IP) else 0
+
+            if packet.haslayer(TCP):
+                tcp_layer = packet[TCP]
+                features['tcp.flags.syn'] = 1 if tcp_layer.flags & 0x02 else 0
+                features['tcp.flags.ack'] = 1 if tcp_layer.flags & 0x10 else 0
+                features['tcp.flags.push'] = 1 if tcp_layer.flags & 0x08 else 0
+                features['tcp.flags.fin'] = 1 if tcp_layer.flags & 0x01 else 0
+                features['tcp.flags.reset'] = 1 if tcp_layer.flags & 0x04 else 0
+                features['tcp.window_size_value'] = tcp_layer.window
+                features['tcp.hdr_len'] = tcp_layer.dataofs * 4
+                features['srcport'] = tcp_layer.sport
+                features['dstport'] = tcp_layer.dport
+            
+            else:
+                features.update({
+                    'tcp.flags.syn': 0,
+                    'tcp.flags.ack': 0,
+                    'tcp.flags.push': 0,
+                    'tcp.flags.fin': 0,
+                    'tcp.flags.reset': 0,
+                    'tcp.window_size_value': 0,
+                    'tcp.hdr_len': 0,
+                    'srcport': 0,
+                    'dstport': 0
+                })
+            
+            if packet.haslayer(IP):
+                ip_layer = packet[IP]
+                features['ip.proto'] = ip_layer.proto
+                features['ip.ttl'] = ip_layer.ttl
+            
+            else:
+                features['ip.proto'] = 0
+                features['ip.ttl'] = 0
+            
+            features['udp.length'] = len(packet[UDP]) if packet.haslayer(UDP) else 0
+
+            if packet.haslayer(UDP) and not packet.haslayer(TCP):
+                udp_layer = packet[UDP]
+                features['srcport'] = udp_layer.sport
+                features['dstport'] = udp_layer.dport
+            
+            return features
+        
+        except Exception as e:
+            logger.error(f"Error extracting features: {e}")
+            return None
+
+# Create API endpoints to receive data from the Open5gs network host
+
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
