@@ -22,7 +22,9 @@ from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.conf import settings
 from django.core.cache import cache
+from django.views.decorators.csrf import csrf_exempt
 
+from django.http import JsonResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -50,7 +52,9 @@ class NetworkTrafficCapture:
         self.captured_packets = []
 
     # Start capturing packets from Open5Gs network 
-    def start_capture(self, filter_expr="host {}".format(host)):
+    def start_capture(self, filter_expr=None):
+        if filter_expr is None:
+            filter_expr = "host {}".format(self.host)
         self.capture_active = True
 
         def packet_handler(packet):
@@ -128,7 +132,32 @@ class NetworkTrafficCapture:
             return None
 
 # Create API endpoints to receive data from the Open5gs network host
+@csrf_exempt
+def receive_network_data(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
 
+            features = data.get('features', [])
+            timestamp = data.get('timestamp')
+            source_ip = data.get('source_ip')
+
+            if len(features) == 14:
+                detection_result = perform_detection(features)
+
+                cache.set(f"detection_{timestamp}", detection_result, timeout=3600)
+
+                return JsonResponse({
+                    'status': 'success',
+                    'detection': detection_result['attack_type'],
+                    'severity': detection_result['severity_level'],
+                })
+        
+        except Exception as e:
+            logger.error(f"API data processing error: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}) 
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
