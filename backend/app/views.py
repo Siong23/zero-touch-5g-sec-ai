@@ -253,6 +253,9 @@ class AIMitigation:
     
 mitigation_analyzer = AIMitigation()
 
+# def start_attack(request)
+# def stop_attack(request)
+
 # Start the machine learning model when the start button is clicked
 def start_ml(request):
 
