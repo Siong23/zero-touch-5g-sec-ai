@@ -149,8 +149,25 @@
         <div class="status-info">
             <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
-        <button class="button">Start</button>
-        <button class="button">Stop</button>
+        
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <button class="button" type="submit">Start</button>
+                     </form>
+                </td>
+
+                <td>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <button class="button" type="submit">Stop</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
     </section>
 
     <section class="ml-inference">
