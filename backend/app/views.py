@@ -28,10 +28,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import path, reverse
 
 from .forms import CapturedDataForm
-from .settings import OPEN5GS_CONFIG
+from detection.settings import OPEN5GS_CONFIG
+
+settings_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py')
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -42,6 +44,7 @@ attack_level = None
 attack_severity_num = 0
 accuracy = None
 connection_status = None
+network_capture = None
 attack_status = None
 ml_status = None
 analysis_report = {}
@@ -51,14 +54,20 @@ mitigation = None
 
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
-    def __init__(self, host, interface="ogstun"):
+    def __init__(self, host, interface="eth0", buffer_size=1000):
         self.host = host
         self.interface = interface
         self.capture_active = False
-        self.captured_packets = []
+        self.captured_packets = deque(maxlen=buffer_size)
+        self.capture_thread = None
 
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.stats = {
+            'total_packets': 0,
+            'tcp_packets': 0,
+            'udp_packets': 0,
+            'icmp_packets': 0,
+            'malformed_packets': 0
+        }
 
     # Start capturing packets from Open5Gs network 
     def start_capture(self, filter_expr=None):
@@ -74,7 +83,7 @@ class NetworkTrafficCapture:
                     self.captured_packets.append(features)
         
         # Start capturing packet in separate thread
-        capture_thread = threading.Thread(
+        self.capture_thread = threading.Thread(
             target=lambda: scapy.sniff(
                 iface=self.interface,
                 filter=filter_expr,
@@ -83,8 +92,27 @@ class NetworkTrafficCapture:
             )
         )
 
-        capture_thread.daemon = True
-        capture_thread.start()
+        self.capture_thread.daemon = True
+        self.capture_thread.start()
+    
+    def capture(self, filter_expr, packet_handler):
+        try:
+            scapy.sniff(
+                iface=self.interface,
+                filter=filter_expr,
+                prn=packet_handler,
+                stop_filter=lambda x: not self.capture_active,
+                timeout=1
+            )
+        except Exception as e:
+            logger.error(f"Capture packet error: {e}")
+            self.capture_active = False
+
+    def stop_capture(self):
+        self.capture_active = False
+        if self.capture_thread and self.capture_thread.is_alive():
+            self.capture_thread.join(timeout=2)
+        logger.info("Packet capture stopped.")
     
     def extract_features(self, packet):
         try:
@@ -139,8 +167,6 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error extracting features: {e}")
             return None
-        
-traffic_capture = NetworkTrafficCapture(OPEN5GS_CONFIG['HOST'])
 
 # Create API endpoints to receive data from the Open5gs network host
 # @csrf_exempt
