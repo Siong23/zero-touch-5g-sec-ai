@@ -483,7 +483,7 @@ def start_attack(request):
         else:
             attack_status = "Failed to inject attack"
         
-        return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('home'))
 
 # Stop the attack simulation when the stop button is clicked
 def stop_attack(request):
@@ -533,7 +533,7 @@ def stop_ml(request):
 
 def home(request):
 
-    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, analysis_report, mitigation
+    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
