@@ -41,6 +41,7 @@ detection = None
 attack_level = None
 attack_severity_num = 0
 accuracy = None
+connection_status = None
 attack_status = None
 ml_status = None
 analysis_report = {}
@@ -50,11 +51,14 @@ mitigation = None
 
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
-    def __init__(self, host, interface="eth0"):
+    def __init__(self, host, interface="ogstun"):
         self.host = host
         self.interface = interface
         self.capture_active = False
         self.captured_packets = []
+
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     # Start capturing packets from Open5Gs network 
     def start_capture(self, filter_expr=None):
@@ -135,10 +139,16 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error extracting features: {e}")
             return None
+        
+traffic_capture = NetworkTrafficCapture(OPEN5GS_CONFIG['HOST'])
 
 # Create API endpoints to receive data from the Open5gs network host
-@csrf_exempt
+# @csrf_exempt
 def receive_network_data(request):
+
+    global connection_status
+    connection_status = "Connected to 5G Network"
+
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -150,7 +160,7 @@ def receive_network_data(request):
             if len(features) == 14:
                 detection_result = perform_detection(features)
 
-                cache.set(f"detection_{timestamp}", detection_result, timeout=3600)
+                cache.set(f"detection_{timestamp}", source_ip, detection_result, timeout=3600)
 
                 return JsonResponse({
                     'status': 'success',
@@ -162,7 +172,7 @@ def receive_network_data(request):
             logger.error(f"API data processing error: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}) 
+    return HttpResponseRedirect(reverse('home'))
 
 def perform_detection(features):
     global model
@@ -533,7 +543,7 @@ def stop_ml(request):
 
 def home(request):
 
-    global model, detection, attack_level, attack_severity_num, accuracy, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation
+    global model, detection, attack_level, attack_severity_num, accuracy, connection_status, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation
 
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
@@ -628,7 +638,8 @@ def home(request):
                                   {'form': form, 
                                    'detection': detection, 
                                    'attack_level': attack_level, 
-                                   'accuracy': accuracy, 
+                                   'accuracy': accuracy,
+                                   'connection_status': connection_status, 
                                    'attack_status': attack_status, 
                                    'ml_status': ml_status,
                                    'attack_type': attack_type
@@ -645,6 +656,7 @@ def home(request):
                                    'detection': "Error: Invalid data format!", 
                                    'attack_level': "N/A", 
                                    'accuracy': "N/A", 
+                                   'connection_status': connection_status,
                                    'attack_status': attack_status, 
                                    'ml_status': ml_status,
                                    'attack_type': attack_type})
@@ -750,6 +762,7 @@ def home(request):
                        'attack_severity': attack_severity_num, 
                        'analysis_report': analysis_report,
                        'accuracy': accuracy, 
+                       'connection_status': connection_status,
                        'attack_status': attack_status, 
                        'ml_status': ml_status,
                        'target_ip': target_ip,
@@ -766,6 +779,7 @@ def home(request):
                    'attack_severity': attack_severity_num, 
                    'analysis_report': analysis_report,
                    'accuracy': accuracy, 
+                   'connection_status': connection_status,
                    'attack_status': attack_status, 
                    'ml_status': ml_status, 
                    'target_ip': target_ip,
