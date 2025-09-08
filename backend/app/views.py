@@ -33,8 +33,6 @@ from django.urls import path, reverse
 from .forms import CapturedDataForm
 from detection.settings import OPEN5GS_CONFIG
 
-settings_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py')
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -71,42 +69,57 @@ class NetworkTrafficCapture:
 
     # Start capturing packets from Open5Gs network 
     def start_capture(self, filter_expr=None):
+        
+        if self.capture_active:
+            logger.warning("Capture is actived")
+            return
+        
         if filter_expr is None:
             filter_expr = "host {}".format(self.host)
+
         self.capture_active = True
 
         def packet_handler(packet):
             if self.capture_active:
-                features = self.extract_features(packet)
+                try:
+                    features = self.extract_features(packet)
 
-                if features:
-                    self.captured_packets.append(features)
+                    if features:
+                        self.captured_packets.append(features)
+                        self.stats['total_packets'] += 1
+
+                        if packet.haslayer(TCP):
+                            self.stats['tcp_packets'] += 1
+                        
+                        elif packet.haslayer(UDP):
+                            self.stats['udp_packets'] += 1
+                        
+                        elif packet.haslayer(ICMP):
+                            self.stats['icmp_packets'] += 1
+                except Exception as e:
+                    logger.error(f"Error processing packet: {e}")
+                    self.stats['malformed_packets'] += 1
         
         # Start capturing packet in separate thread
-        self.capture_thread = threading.Thread(
-            target=lambda: scapy.sniff(
-                iface=self.interface,
-                filter=filter_expr,
-                prn=packet_handler,
-                stop_filter=lambda x: not self.capture_active
-            )
-        )
-
-        self.capture_thread.daemon = True
-        self.capture_thread.start()
-    
-    def capture(self, filter_expr, packet_handler):
         try:
-            scapy.sniff(
-                iface=self.interface,
-                filter=filter_expr,
-                prn=packet_handler,
-                stop_filter=lambda x: not self.capture_active,
-                timeout=1
+
+            self.capture_thread = threading.Thread(
+                target=lambda: scapy.sniff(
+                    iface=self.interface,
+                    filter=filter_expr,
+                    prn=packet_handler,
+                    stop_filter=lambda x: not self.capture_active
+                )
             )
+
+            self.capture_thread.daemon = True
+            self.capture_thread.start()
+            logger.info("Packet capture started successfully")
+            return True
         except Exception as e:
-            logger.error(f"Capture packet error: {e}")
+            logger.error(f"Failed to start packet capture: {e}")
             self.capture_active = False
+            return False
 
     def stop_capture(self):
         self.capture_active = False
@@ -118,7 +131,7 @@ class NetworkTrafficCapture:
         try:
             features = {}
 
-            features['frame.time_relative'] = float(packet.time)
+            features['frame.time_relative'] = float(packet.time) if hasattr(packet, 'time') else 0.0
             features['ip.len'] = len(packet) if packet.haslayer(IP) else 0
 
             if packet.haslayer(TCP):
@@ -129,7 +142,7 @@ class NetworkTrafficCapture:
                 features['tcp.flags.fin'] = 1 if tcp_layer.flags & 0x01 else 0
                 features['tcp.flags.reset'] = 1 if tcp_layer.flags & 0x04 else 0
                 features['tcp.window_size_value'] = tcp_layer.window
-                features['tcp.hdr_len'] = tcp_layer.dataofs * 4
+                features['tcp.hdr_len'] = tcp_layer.dataofs * 4 if tcp_layer.dataofs else 20
                 features['srcport'] = tcp_layer.sport
                 features['dstport'] = tcp_layer.dport
             
@@ -173,17 +186,18 @@ class NetworkTrafficCapture:
 def receive_network_data(request):
 
     global connection_status
-    connection_status = "Connected to 5G Network"
 
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            logger.debug(f"Received network data: {data}")
 
             features = data.get('features', [])
             timestamp = data.get('timestamp')
             source_ip = data.get('source_ip')
 
             if len(features) == 14:
+                connection_status = "Connected to 5G Network"
                 detection_result = perform_detection(features)
 
                 cache.set(f"detection_{timestamp}", source_ip, detection_result, timeout=3600)
@@ -192,13 +206,21 @@ def receive_network_data(request):
                     'status': 'success',
                     'detection': detection_result['attack_type'],
                     'severity': detection_result['severity_level'],
+                    'timestamp': timestamp
+                })
+
+            else:
+                logger.error(f"Invalid feature count: {len(features)}, expected 14.")
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f'Invalid feature count: {len(features)}, expected 14.'
                 })
         
         except Exception as e:
             logger.error(f"API data processing error: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-    return HttpResponseRedirect(reverse('home'))
+    return JsonResponse({'status': 'error', 'message': 'Method not allowed'})
 
 def perform_detection(features):
     global model
@@ -225,22 +247,24 @@ def perform_detection(features):
         
         attack_type = attack_types.get(predicted_class, "Unknown")
 
-        feature_dict = {
-            "frame.time_relative": features[0],
-            "ip.len": features[1],
-            "tcp.flags.syn": features[2],
-            "tcp.flags.ack": features[3],
-            "tcp.flags.push": features[4],
-            "tcp.flags.fin": features[5],
-            "tcp.flags.reset": features[6],
-            "ip.proto": features[7],
-            "ip.ttl": features[8],
-            "tcp.window_size_value": features[9],
-            "tcp.hdr_len": features[10],
-            "udp.length": features[11],
-            "srcport": features[12],
-            "dstport": features[13]
-        }
+        feature_names = [
+            "frame.time_relative",
+            "ip.len",
+            "tcp.flags.syn",
+            "tcp.flags.ack",
+            "tcp.flags.push",
+            "tcp.flags.fin",
+            "tcp.flags.reset",
+            "ip.proto",
+            "ip.ttl",
+            "tcp.window_size_value",
+            "tcp.hdr_len",
+            "udp.length",
+            "srcport",
+            "dstport"
+        ]
+
+        feature_dict = {feature_names[i]: features[i] for i in range(min(len(features, len(feature_names))))}
 
         severity_level, severity_score, traffic_metrics = severity_analyzer.decide_attack_level(attack_type, feature_dict, anomaly_score=0.5)
 
@@ -248,6 +272,7 @@ def perform_detection(features):
             'model': 'Model loaded',
             'attack_type': attack_type,
             'severity_level': severity_level,
+            'severity_score': severity_score
         }
     except Exception as e:
         logger.error(f"Detection error: {e}")
@@ -258,7 +283,7 @@ class AttackSimulator:
     def __init__(self, host, username, password):
         self.host = host
         self.username = username
-        self.password = password
+        self.password = password or "mmuzte123"
 
     # Trigger a DoS attack (SYNFlood) on the specified target IP
     def trigger_dos_attack(self, target_ip, attack_type="SYNFlood"):
@@ -271,7 +296,7 @@ class AttackSimulator:
                 'SYNFlood': f'sudo hping3 -S -p 80 --flood {target_ip}'
             }
 
-            command = attack_command.get(attack_type)
+            command = attack_command.get(attack_type, attack_command['SYNFlood'])
 
             if command:
                 stdin, stdout, stderr = ssh.exec_command(f'timeout 30 {command}')
@@ -512,7 +537,8 @@ def start_attack(request):
         attack_type = request.POST.get('attack_type', 'SYNFlood')
         target_ip = request.POST.get('target_ip', '192.168.0.115')
 
-        simulator = AttackSimulator(OPEN5GS_CONFIG['HOST'], 'username', 'password')
+        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
+        simulator = AttackSimulator(host, 'username', 'password')
         
         if simulator.trigger_dos_attack(target_ip, attack_type):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
