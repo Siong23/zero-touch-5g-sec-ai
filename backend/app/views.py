@@ -9,6 +9,8 @@ import json
 import os
 import io
 import csv
+import subprocess
+import paramiko
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
@@ -29,6 +31,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .forms import CapturedDataForm
+from backend.settings import OPEN5GS_CONFIG
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -158,6 +161,90 @@ def receive_network_data(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}) 
+
+def perform_detection(features):
+    global model
+
+    if model is None:
+        return {'model': 'Model not loaded', 'attack_type': 'N/A', 'severity_level': 'N/A'}
+    
+    try:
+        data_array = np.array(features).reshape(1, 1, 14)
+        prediction = model.predict(data_array)
+        predicted_class = np.argmax(prediction, axis=1)[0]
+
+        attack_types = {
+                    0: "Benign",
+                    1: "HTTPFlood",
+                    2: "ICMPFlood",
+                    3: "SYNFlood",
+                    4: "SYNScan",
+                    5: "SlowrateDoS",
+                    6: "TCPConnectScan",
+                    7: "UDPFlood",
+                    8: "UDPScan"
+            }
+        
+        attack_type = attack_types.get(predicted_class, "Unknown")
+
+        feature_dict = {
+            "frame.time_relative": features[0],
+            "ip.len": features[1],
+            "tcp.flags.syn": features[2],
+            "tcp.flags.ack": features[3],
+            "tcp.flags.push": features[4],
+            "tcp.flags.fin": features[5],
+            "tcp.flags.reset": features[6],
+            "ip.proto": features[7],
+            "ip.ttl": features[8],
+            "tcp.window_size_value": features[9],
+            "tcp.hdr_len": features[10],
+            "udp.length": features[11],
+            "srcport": features[12],
+            "dstport": features[13]
+        }
+
+        severity_level, severity_score, traffic_metrics = severity_analyzer.decide_attack_level(attack_type, feature_dict, anomaly_score=0.5)
+
+        return {
+            'model': 'Model loaded',
+            'attack_type': attack_type,
+            'severity_level': severity_level,
+        }
+    except Exception as e:
+        logger.error(f"Detection error: {e}")
+        return {'model': 'Error', 'attack_type': 'N/A', 'severity_level': 'N/A'}
+
+# Simulate different types of network attacks by injecting attack into the 5G Networ
+class AttackSimulator:
+    def __init__(self, host, username, password):
+        self.host = host
+        self.username = username
+        self.password = password
+
+    # Trigger a DoS attack (SYNFlood) on the specified target IP
+    def trigger_dos_attack(self, target_ip, attack_type="SYNFlood"):
+        try:
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(self.host, username=self.username, password=self.password)
+
+            attack_command = {
+                'SYNFlood': f'sudo hping3 -S -p 80 --flood {target_ip}'
+            }
+
+            command = attack_command.get(attack_type)
+
+            if command:
+                stdin, stdout, stderr = ssh.exec_command(f'timeout 30 {command}')
+                logger.info(f"{attack_type} attack triggered on {target_ip}")
+
+                ssh.close()
+                return True
+        
+        except Exception as e:
+            logger.error(f"Attack simulation error: {e}")
+            return False
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
@@ -343,6 +430,7 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
+# Mitigation strategies based on attack type (suggestion - temporary)
 class AIMitigation:
     def http_flood_mitigation(self, traffic_data):
         mitigation = "- Implement rate limiting for HTTP requests from the source IP \n - Block the source IP temporarily \n - Use a Web Application Firewall(WAF) to filter malicious HTTP traffic"
@@ -378,8 +466,31 @@ class AIMitigation:
     
 mitigation_analyzer = AIMitigation()
 
-# def start_attack(request)
-# def stop_attack(request)
+# Start the attack simulation when the start button is clicked
+def start_attack(request):
+    global attack_status
+
+    if request.method == "POST":
+        attack_type = request.POST.get('attack_type', 'SYNFlood')
+        target_ip = request.POST.get('target_ip', '192.168.0.115')
+
+        simulator = AttackSimulator(OPEN5GS_CONFIG['HOST'], 'username', 'password')
+        
+        if simulator.trigger_dos_attack(target_ip, attack_type):
+            attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+        else:
+            attack_status = "Failed to inject attack"
+        
+        return HttpResponseRedirect(reverse('home'))
+
+# Stop the attack simulation when the stop button is clicked
+def stop_attack(request):
+    global attack_status
+
+    if request.method == "POST":
+        attack_status = "Attack simulation stopped."
+    
+    return HttpResponseRedirect(reverse('home'))
 
 # Start the machine learning model when the start button is clicked
 def start_ml(request):
