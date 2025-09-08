@@ -35,6 +35,11 @@
             margin: 30px 30px;
         }
 
+        .choose-attack {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
         .detect {
             margin-top: 20px;
             line-height: 30px;
@@ -106,7 +111,7 @@
             font-weight: bold;
         }
 
-        .status-info {
+        .info {
             background-color: #f8f9fa;
             padding: 10px;
             border-radius: 5px;
@@ -146,8 +151,21 @@
 
     <section class="attack">
         <h2>Trigger Attack</h2>
-        <div class="status-info">
+        <div class="info">
+            <form method="post" action="{% url 'receive_network_data' %}">
+                <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
+            </form>
             <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
+        </div>
+
+        <div class="choose-attack">
+            <label for="attack_type">Choose preferred attack type:</label>
+            <select name="attack_type">
+                <option value="SYNFlood">SYN Flood</option>
+                <!--<option value="HTTPFlood">HTTP Flood</option>--> 
+                <!--<option value="ICMPFlood">ICMP Flood</option>-->
+                <!--<option value="UDPFlood">UDP Flood</option>--> 
+            </select>
         </div>
         
         <table>
@@ -156,7 +174,7 @@
                     <form method="post" action="{% url 'start_attack' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Start</button>
-                     </form>
+                    </form>
                 </td>
 
                 <td>
@@ -172,7 +190,7 @@
 
     <section class="ml-inference">
         <h2>Machine Learning Inference</h2>
-        <div class="status-info">
+        <div class="info">
             <p><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</p>
         </div>
 
@@ -182,7 +200,7 @@
                     <form method="post" action="{% url 'start_ml' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Start</button>
-                     </form>
+                    </form>
                 </td>
 
                 <td>

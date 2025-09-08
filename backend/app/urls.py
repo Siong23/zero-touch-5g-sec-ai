@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('start_ml/', views.start_ml, name='start_ml'),
     path('stop_ml/', views.stop_ml, name='stop_ml'),
+    path('receive_network_data/', views.receive_network_data, name='receive_network_data'),
     path('start_attack/', views.start_attack, name='start_attack'),
     path('stop_attack/', views.stop_attack, name='stop_attack')
 ]
