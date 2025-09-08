@@ -189,12 +189,16 @@ def receive_network_data(request):
 
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            logger.debug(f"Received network data: {data}")
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('192.168.0.115')
 
-            features = data.get('features', [])
-            timestamp = data.get('timestamp')
-            source_ip = data.get('source_ip')
+            data = json.loads(request.body)
+            logger.debug(f"Received network data: {[data]}")
+
+            features = data.get['features', []]
+            timestamp = data.get['timestamp']
+            source_ip = data.get['source_ip']
 
             if len(features) == 14:
                 connection_status = "Connected to 5G Network"
@@ -218,9 +222,9 @@ def receive_network_data(request):
         
         except Exception as e:
             logger.error(f"API data processing error: {e}")
-            return JsonResponse({'status': 'error', 'message': str(e)})
+            HttpResponseRedirect(reverse('home'))
 
-    return JsonResponse({'status': 'error', 'message': 'Method not allowed'})
+    return HttpResponseRedirect(reverse('home'))
 
 def perform_detection(features):
     global model
