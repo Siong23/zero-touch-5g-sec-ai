@@ -153,14 +153,14 @@
         <table>
             <tr>
                 <td>
-                    <form method="post" action="">
+                    <form method="post" action="{% url 'start_attack' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Start</button>
                      </form>
                 </td>
 
                 <td>
-                    <form method="post" action="">
+                    <form method="post" action="{% url 'stop_attack' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Stop</button>
                     </form>
