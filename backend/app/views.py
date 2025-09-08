@@ -31,7 +31,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .forms import CapturedDataForm
-from backend.settings import OPEN5GS_CONFIG
+from .settings import OPEN5GS_CONFIG
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -44,6 +44,8 @@ accuracy = None
 attack_status = None
 ml_status = None
 analysis_report = {}
+target_ip = None
+attack_type = None
 mitigation = None
 
 # Capture network traffic of 5G Network core with direct network access integration
@@ -468,7 +470,7 @@ mitigation_analyzer = AIMitigation()
 
 # Start the attack simulation when the start button is clicked
 def start_attack(request):
-    global attack_status
+    global target_ip, attack_type, attack_status
 
     if request.method == "POST":
         attack_type = request.POST.get('attack_type', 'SYNFlood')
@@ -495,7 +497,7 @@ def stop_attack(request):
 # Start the machine learning model when the start button is clicked
 def start_ml(request):
 
-    global model, detection, accuracy, attack_status, ml_status
+    global model, detection, accuracy, ml_status
 
     # Adjust the path as needed to load the trained model
     model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
@@ -628,7 +630,9 @@ def home(request):
                                    'attack_level': attack_level, 
                                    'accuracy': accuracy, 
                                    'attack_status': attack_status, 
-                                   'ml_status': ml_status})
+                                   'ml_status': ml_status,
+                                   'attack_type': attack_type
+                                   })
 
                 logger.debug(f"Processed data list: {data}")
                 logger.debug(f"Data list length: {len(data)}")
@@ -642,7 +646,8 @@ def home(request):
                                    'attack_level': "N/A", 
                                    'accuracy': "N/A", 
                                    'attack_status': attack_status, 
-                                   'ml_status': ml_status})
+                                   'ml_status': ml_status,
+                                   'attack_type': attack_type})
 
                 # Reshape the data into 3D array to fit in LSTM input format
                 data_array = np.array(data).reshape(1, 1, 14)
@@ -746,7 +751,9 @@ def home(request):
                        'analysis_report': analysis_report,
                        'accuracy': accuracy, 
                        'attack_status': attack_status, 
-                       'ml_status': ml_status, 
+                       'ml_status': ml_status,
+                       'target_ip': target_ip,
+                       'attack_type': attack_type,
                        'mitigation': mitigation,
                        'captured_data': request.POST.get('captured_data', ''),
                        'captured_text': request.POST.get('captured_text', '')})
@@ -761,6 +768,8 @@ def home(request):
                    'accuracy': accuracy, 
                    'attack_status': attack_status, 
                    'ml_status': ml_status, 
+                   'target_ip': target_ip,
+                   'attack_type': attack_type,
                    'mitigation': mitigation,
                    'captured_data': '',
                    'captured_text': ''})
