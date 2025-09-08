@@ -32,16 +32,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-OPEN5GS_CONFIG = [
-    {
-        'HOST': '192.168.0.115',
-        'AMF_PORT': 7778, #38412
-        'SMF_PORT': 7779,
-        #'UPF_PORT': 7780,
-        'NETWORK_INTERFACE': 'ogstun',
-        'CAPTURE_FILTER': 'host 192.168.0.115'
-    }
-]
+OPEN5GS_CONFIG = {
+    'HOST': '192.168.0.115',
+    'AMF_PORT': 7778, #38412
+    'SMF_PORT': 7779,
+    #'UPF_PORT': 7780,
+    'NETWORK_INTERFACE': 'ogstun',
+    'CAPTURE_FILTER': 'host 192.168.0.115'
+}
+
 
 ROOT_URLCONF = 'detection.urls'
 
@@ -70,3 +69,7 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+
+API_URL = "http://localhost:8000/receive_network_data/"
+
+SERVER_URL = "http://localhost:8000"

@@ -14,3 +14,6 @@ urlpatterns = [
     path('start_capture/', views.NetworkTrafficCapture.start_capture, name='start_capture'),
     path('stop_capture', views.NetworkTrafficCapture.stop_capture, name='stop_capture'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
