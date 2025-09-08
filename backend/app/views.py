@@ -52,7 +52,7 @@ mitigation = None
 
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
-    def __init__(self, host, interface="eth0", buffer_size=1000):
+    def __init__(self, host, interface="ogstun", buffer_size=1000):
         self.host = host
         self.interface = interface
         self.capture_active = False
