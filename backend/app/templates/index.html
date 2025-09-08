@@ -76,7 +76,7 @@
             background-color: #0c3669;
         }
 
-        .detect-btn {
+        .connect-btn, .detect-btn {
             padding: 12px 30px;
             font-size: 18px;
             color: white;
@@ -87,7 +87,7 @@
             cursor: pointer;
         }
 
-        .detect-btn:hover {
+        .connect-btn:hover, .detect-btn:hover {
             background-color: #218838;
         }
 
@@ -152,10 +152,15 @@
     <section class="attack">
         <h2>Trigger Attack</h2>
         <div class="info">
-            <form method="post" action="{% url 'receive_network_data' %}">
-                <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
-            </form>
+            <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
             <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
+        </div>
+
+        <div class="connection">
+            <form method="post" action="{% url 'receive_network_data' %}">
+                {% csrf_token %}
+                <button class="connect-btn" type="submit">Connect to 5G Network</button> 
+            </form>
         </div>
 
         <div class="choose-attack">

@@ -39,7 +39,7 @@ OPEN5GS_CONFIG = [
         'SMF_PORT': 7779,
         #'UPF_PORT': 7780,
         'NETWORK_INTERFACE': 'ogstun',
-        'CAPTURE_FILTER': 'host{} or host{}'.format('AMF_IP', 'SMF_IP')
+        'CAPTURE_FILTER': 'host 192.168.0.115'
     }
 ]
 
