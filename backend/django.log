@@ -119,3 +119,69 @@ Watching for file changes with StatReloader
 API data processing error: Expecting value: line 1 column 1 (char 0)
 "POST /receive_network_data/ HTTP/1.1" 302 0
 "GET / HTTP/1.1" 200 6242
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+API data processing error: Expecting value: line 1 column 1 (char 0)
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+API data processing error: Expecting value: line 1 column 1 (char 0)
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+API data processing error: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+"GET / HTTP/1.1" 200 6242
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+API data processing error: NetworkTrafficCapture.__init__() missing 1 required positional argument: 'host'
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+"GET / HTTP/1.1" 200 6242
+API data processing error: NetworkTrafficCapture.__init__() missing 1 required positional argument: 'host'
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6242
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7475
