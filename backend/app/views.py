@@ -191,53 +191,14 @@ def receive_network_data(request):
     if request.method == 'POST':
         try:
 
-            content_type = request.content_type
+            command = "sudo service open5gs-amfd status"
 
-            if hasattr(request, 'body') and request.body:
-                data = json.loads(request.body)
-                logger.debug(f"Received network data: {data}")
-
-                features = data.get('features', [])
-                timestamp = data.get('timestamp')
-                source_ip = data.get('source_ip')
-
-                if data.get('source_ip'):
-                    connection_status = "Connected to 5G Network"
-                    detection_result = perform_detection(features)
-
-                    cache.set(f"detection_{timestamp}", source_ip, detection_result, timeout=3600)
-
-                    return JsonResponse({
-                        'status': 'success',
-                        'detection': detection_result['attack_type'],
-                        'severity': detection_result['severity_level'],
-                        'timestamp': timestamp
-                    })
-                
-                else:
-                    logger.error(f"Invalid feature count: {len(features)}, expected 14.")
-                    return JsonResponse({
-                        'status': 'error',
-                        'message': f'Invalid feature count: {len(features)}, expected 14.'
-                    })
-                
-            else:
-                connection_status = "Trying to connect to 5G Network..."
-                logger.info("Connection attempt initiated")
-
-                try:
-                    ssh = paramiko.client.SSHClient()
-                    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                    ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=15)
-                    _stdin, _stdout, _stderr = ssh.exec_command("systemctl ssh status")
-                    print(_stdout.read().decode())
-                    connection_status = "Connected to 5G Network"
-                
-                except Exception as ssh_error:
-                    logger.error(f"SSH connection failed: {ssh_error}")
-                    connection_status = "Failed to connect to 5G Network"
-
-                return HttpResponseRedirect(reverse('home'))
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo service open5gs-amfd status")
+            print(_stdout.read().decode())
+            connection_status = "Connected to 5G Network"
 
         except Exception as e:
             logger.error(f"API data processing error: {e}")
