@@ -185,3 +185,11 @@ Watching for file changes with StatReloader
 Model loaded successfully!
 "POST /start_ml/ HTTP/1.1" 302 0
 "GET / HTTP/1.1" 200 7475
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6239
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6249
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader

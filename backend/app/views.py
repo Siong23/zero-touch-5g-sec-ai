@@ -191,13 +191,16 @@ def receive_network_data(request):
     if request.method == 'POST':
         try:
 
-            command = "sudo service open5gs-amfd status"
-
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo service open5gs-amfd status")
-            print(_stdout.read().decode())
+            _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
+            output = _stdout.readlines()
+            
+            for line in output:
+                if "Active" in line:
+                    print("open5gs-amfd-service: ", line)
+
             connection_status = "Connected to 5G Network"
 
         except Exception as e:
