@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,25 +33,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-OPEN5GS_CONFIG = [
-    {
-        'HOST': '192.168.0.115',
-        'AMF_PORT': 38412, #7778
-        'SMF_PORT': 7779,
-        #'UPF_PORT': 7780,
-        'NETWORK_INTERFACE': 'ogstun',
-        'CAPTURE_FILTER': 'host 192.168.0.115',
-        'USERNAME': '',
-        'PASSWORD': "mmuzte123"
-    }
-]
+OPEN5GS_CONFIG = {
+    'HOST': '192.168.0.115',
+    'AMF_PORT': 38412, #7778
+    'SMF_PORT': 7779,
+    #'UPF_PORT': 7780,
+    'NETWORK_INTERFACE': 'ogstun',
+    'CAPTURE_FILTER': 'host 192.168.0.115',
+    'USERNAME': '',
+    'PASSWORD': "mmuzte123"
+}
 
 ROOT_URLCONF = 'detection.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'app' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +62,8 @@ TEMPLATES = [
     },
 ]
 
+WSGI_APPLICATION = 'detection.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -72,7 +73,55 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        }
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'django.log',
+
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'app': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    },
+}
 
 API_URL = "http://localhost:8000/receive_network_data/"
-
 SERVER_URL = "http://localhost:8000"
+
+NETWORK_TIMEOUT = 10
+SSH_TIMEOUT = 10
