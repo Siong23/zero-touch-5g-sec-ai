@@ -190,6 +190,9 @@ def receive_network_data(request):
 
     if request.method == 'POST':
         try:
+
+            content_type = request.content_type
+
             if hasattr(request, 'body') and request.body:
                 data = json.loads(request.body)
                 logger.debug(f"Received network data: {data}")
@@ -198,7 +201,7 @@ def receive_network_data(request):
                 timestamp = data.get('timestamp')
                 source_ip = data.get('source_ip')
 
-                if len(features) == 14:
+                if data.get('source_ip'):
                     connection_status = "Connected to 5G Network"
                     detection_result = perform_detection(features)
 
@@ -223,22 +226,18 @@ def receive_network_data(request):
                 logger.info("Connection attempt initiated")
 
                 try:
-                    ssh = paramiko.SSHClient()
+                    ssh = paramiko.client.SSHClient()
                     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                    ssh.connect('192.168.0.115', timeout=10)
+                    ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=15)
+                    _stdin, _stdout, _stderr = ssh.exec_command("systemctl ssh status")
+                    print(_stdout.read().decode())
                     connection_status = "Connected to 5G Network"
-                    ssh.close()
                 
                 except Exception as ssh_error:
                     logger.error(f"SSH connection failed: {ssh_error}")
                     connection_status = "Failed to connect to 5G Network"
 
                 return HttpResponseRedirect(reverse('home'))
-            
-        except json.JSONDecodeError as e:
-            logger.error(f"JSON decode error: {e}")
-            connection_status = "Failed to connect - Inavlid data format"
-            return HttpResponseRedirect(reverse('home'))
 
         except Exception as e:
             logger.error(f"API data processing error: {e}")
@@ -289,7 +288,7 @@ def perform_detection(features):
             "dstport"
         ]
 
-        feature_dict = {feature_names[i]: features[i] for i in range(min(len(features, len(feature_names))))}
+        feature_dict = {feature_names[i]: features[i] for i in range(min(len(features), len(feature_names)))}
 
         severity_level, severity_score, traffic_metrics = severity_analyzer.decide_attack_level(attack_type, feature_dict, anomaly_score=0.5)
 
@@ -564,8 +563,9 @@ def start_attack(request):
 
         config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
+        username = config.get('USERNAME', 'server2')
         password = config.get('PASSWORD', 'mmuzte123')
-        simulator = AttackSimulator(host, 'username', password)
+        simulator = AttackSimulator(host, username, password)
         
         if simulator.trigger_dos_attack(target_ip, attack_type):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
