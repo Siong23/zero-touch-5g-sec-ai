@@ -483,16 +483,27 @@ severity_analyzer = SeverityLevelAnalyzer()
 
 # Mitigation strategies based on attack type (suggestion - temporary)
 class AIMitigation:
-    def http_flood_mitigation(self, traffic_data):
-        mitigation = "- Implement rate limiting for HTTP requests from the source IP \n - Block the source IP temporarily \n - Use a Web Application Firewall(WAF) to filter malicious HTTP traffic"
+
+    ssh = paramiko.client.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+
+    def http_flood_mitigation(self, ssh):
+        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
+        output = _stdout.readlines()
+        mitigation = "Block IP source temporarily"
         return mitigation
 
-    def icmp_flood_mitigation(self, traffic_data):
-        mitigation = "Disable the ICMP functionality of the targeted router, computer or other device"
+    def icmp_flood_mitigation(self, ssh):
+        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP")
+        output = _stdout.readlines()
+        mitigation = "Block ICMP echo requests"
         return mitigation
     
-    def syn_flood_mitigation(self, traffic_data):
-        mitigation = "- Increase the backlog queue size\n - Overwrite the oldest half-open TCP connection once the backlog has been filled\n - Deploy SYN cookies\n Use a firewall to drop suspicious SYN packets"
+    def syn_flood_mitigation(self, ssh):
+        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP")
+        output = _stdout.readlines()
+        mitigation = "Drop all SYN packets"
         return mitigation
 
     def syn_scan_mitigation(self, traffic_data):
