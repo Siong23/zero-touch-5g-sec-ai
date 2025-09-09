@@ -40,8 +40,8 @@ OPEN5GS_CONFIG = {
     #'UPF_PORT': 7780,
     'NETWORK_INTERFACE': 'ogstun',
     'CAPTURE_FILTER': 'host 192.168.0.115',
-    'USERNAME': '',
-    'PASSWORD': "mmuzte123"
+    'USERNAME': 'server2',
+    'PASSWORD': 'mmuzte123'
 }
 
 ROOT_URLCONF = 'detection.urls'
@@ -62,7 +62,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'detection.wsgi.application'
+#WSGI_APPLICATION = 'detection.wsgi.application'
 
 DATABASES = {
     'default': {
