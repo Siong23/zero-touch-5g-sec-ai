@@ -28,7 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
-from django.urls import path, reverse
+from django.urls import reverse
 
 from .forms import CapturedDataForm
 from detection.settings import OPEN5GS_CONFIG
@@ -116,6 +116,7 @@ class NetworkTrafficCapture:
             self.capture_thread.start()
             logger.info("Packet capture started successfully")
             return True
+        
         except Exception as e:
             logger.error(f"Failed to start packet capture: {e}")
             self.capture_active = False
@@ -182,48 +183,68 @@ class NetworkTrafficCapture:
             return None
 
 # Create API endpoints to receive data from the Open5gs network host
-# @csrf_exempt
+@csrf_exempt
 def receive_network_data(request):
 
     global connection_status
 
     if request.method == 'POST':
         try:
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect('192.168.0.115')
+            if hasattr(request, 'body') and request.body:
+                data = json.loads(request.body)
+                logger.debug(f"Received network data: {data}")
 
-            data = json.loads(request.body)
-            logger.debug(f"Received network data: {[data]}")
+                features = data.get('features', [])
+                timestamp = data.get('timestamp')
+                source_ip = data.get('source_ip')
 
-            features = data.get['features', []]
-            timestamp = data.get['timestamp']
-            source_ip = data.get['source_ip']
+                if len(features) == 14:
+                    connection_status = "Connected to 5G Network"
+                    detection_result = perform_detection(features)
 
-            if len(features) == 14:
-                connection_status = "Connected to 5G Network"
-                detection_result = perform_detection(features)
+                    cache.set(f"detection_{timestamp}", source_ip, detection_result, timeout=3600)
 
-                cache.set(f"detection_{timestamp}", source_ip, detection_result, timeout=3600)
-
-                return JsonResponse({
-                    'status': 'success',
-                    'detection': detection_result['attack_type'],
-                    'severity': detection_result['severity_level'],
-                    'timestamp': timestamp
-                })
-
+                    return JsonResponse({
+                        'status': 'success',
+                        'detection': detection_result['attack_type'],
+                        'severity': detection_result['severity_level'],
+                        'timestamp': timestamp
+                    })
+                
+                else:
+                    logger.error(f"Invalid feature count: {len(features)}, expected 14.")
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': f'Invalid feature count: {len(features)}, expected 14.'
+                    })
+                
             else:
-                logger.error(f"Invalid feature count: {len(features)}, expected 14.")
-                return JsonResponse({
-                    'status': 'error',
-                    'message': f'Invalid feature count: {len(features)}, expected 14.'
-                })
-        
+                connection_status = "Trying to connect to 5G Network..."
+                logger.info("Connection attempt initiated")
+
+                try:
+                    ssh = paramiko.SSHClient()
+                    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                    ssh.connect('192.168.0.115', timeout=10)
+                    connection_status = "Connected to 5G Network"
+                    ssh.close()
+                
+                except Exception as ssh_error:
+                    logger.error(f"SSH connection failed: {ssh_error}")
+                    connection_status = "Failed to connect to 5G Network"
+
+                return HttpResponseRedirect(reverse('home'))
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON decode error: {e}")
+            connection_status = "Failed to connect - Inavlid data format"
+            return HttpResponseRedirect(reverse('home'))
+
         except Exception as e:
             logger.error(f"API data processing error: {e}")
-            HttpResponseRedirect(reverse('home'))
-
+            connection_status = "Connection error"
+            return HttpResponseRedirect(reverse('home'))
+    
     return HttpResponseRedirect(reverse('home'))
 
 def perform_detection(features):
@@ -294,7 +315,7 @@ class AttackSimulator:
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(self.host, username=self.username, password=self.password)
+            ssh.connect(self.host, username=self.username, password=self.password, timeout=10)
 
             attack_command = {
                 'SYNFlood': f'sudo hping3 -S -p 80 --flood {target_ip}'
@@ -541,8 +562,10 @@ def start_attack(request):
         attack_type = request.POST.get('attack_type', 'SYNFlood')
         target_ip = request.POST.get('target_ip', '192.168.0.115')
 
+        config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        simulator = AttackSimulator(host, 'username', 'password')
+        password = config.get('PASSWORD', 'mmuzte123')
+        simulator = AttackSimulator(host, 'username', password)
         
         if simulator.trigger_dos_attack(target_ip, attack_type):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
@@ -589,11 +612,11 @@ def stop_ml(request):
 
     global model, detection, accuracy, attack_status, ml_status
 
-    messages.info(request, "Machine Learning model stopped.")
-
     if request.method == "POST":
         ml_status = "ML model is stopped."
+        model = None
         detection = None
+        messages.info(request, "Machine Learning model stopped.")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -601,7 +624,7 @@ def home(request):
 
     global model, detection, attack_level, attack_severity_num, accuracy, connection_status, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation
 
-    if request.method == 'POST':
+    if request.method == 'POST' and model is not None:
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES.get('captured_data')
@@ -783,6 +806,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
+                    mitigation = mitigation_analyzer.get_mitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:

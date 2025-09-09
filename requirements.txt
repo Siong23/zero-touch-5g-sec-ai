@@ -6,6 +6,8 @@ Markdown
 requests
 pandas
 numpy
+scapy
+paramiko
 matplotlib
 seaborn
 scikit-learn
