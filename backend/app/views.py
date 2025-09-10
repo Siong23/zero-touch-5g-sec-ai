@@ -65,12 +65,18 @@ class NetworkTrafficCapture:
             
             capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
             capture.sniff(timeout=5)
+            capture.load_packets()
             logger.info("Packet capture started.")
+            capture.load_packets()
+
+            print("Packet capture summary:")
+            for packet in capture:
+                print(packet)
 
         else:
-            HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('home'))
 
-        HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('home'))
 
     def stop_capture(request):
         logger.info("Packet capture stopped.")
