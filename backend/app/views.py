@@ -2,6 +2,7 @@ import joblib
 import timeshap
 import socket
 import threading
+import pyshark
 import scapy.all as scapy
 import numpy as np
 import logging
@@ -17,6 +18,7 @@ from collections import deque, defaultdict
 
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import Ether
+from scapy.all import rdpcap
 
 from django import forms
 from django.shortcuts import render
@@ -74,8 +76,8 @@ class NetworkTrafficCapture:
             logger.warning("Capture is actived")
             return
         
-        if filter_expr is None:
-            filter_expr = "host {}".format(self.host)
+        capture = pyshark.LiveCapture()
+        capture.set_debug()
 
         self.capture_active = True
 
@@ -193,6 +195,8 @@ def receive_network_data(request):
 
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+            # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
             ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
@@ -484,50 +488,62 @@ severity_analyzer = SeverityLevelAnalyzer()
 # Mitigation strategies based on attack type (suggestion - temporary)
 class AIMitigation:
 
-    ssh = paramiko.client.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+    if detection!=None:
 
-    def http_flood_mitigation(self, ssh):
-        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
-        output = _stdout.readlines()
-        mitigation = "Block IP source temporarily"
-        return mitigation
+        ssh = paramiko.client.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-    def icmp_flood_mitigation(self, ssh):
-        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP")
-        output = _stdout.readlines()
-        mitigation = "Block ICMP echo requests"
-        return mitigation
-    
-    def syn_flood_mitigation(self, ssh):
-        _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP")
-        output = _stdout.readlines()
-        mitigation = "Drop all SYN packets"
-        return mitigation
+        # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
+        ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
 
-    def syn_scan_mitigation(self, traffic_data):
-        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
-        return mitigation
-    
-    def slowrate_dos_mitigation(self, traffic_data):
-        mitigation = "Use reverse proxy-based protection"
-        return mitigation
-    
-    def tcp_connect_scan_mitigation(self, traffic_data):
-        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
-        return mitigation
-    
-    def udp_flood_mitigation(self,traffic_data):
-        mitigation = "- Block the source IP\n Use filtering rules to drop malicious UDP traffic"
-        return mitigation
+        def http_flood_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
+            output = _stdout.readlines()
+            mitigation = "Block IP source temporarily"
+            return mitigation
 
-    def udp_scan_mitigation(self, traffic_data):
-        mitigation = "Use a firewall to block or filter suspicious IP addresses and traffic patterns"
-        return mitigation
-    
-mitigation_analyzer = AIMitigation()
+        def icmp_flood_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP")
+            output = _stdout.readlines()
+            mitigation = "Block ICMP echo requests"
+            return mitigation
+        
+        def syn_flood_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP")
+            output = _stdout.readlines()
+            mitigation = "Drop all SYN packets"
+            return mitigation
 
+        def syn_scan_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
+            output = _stdout.readlines()
+            mitigation = "Block IP source temporarily"
+            return mitigation
+        
+        def slowrate_dos_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
+            output = _stdout.readlines()
+            mitigation = "Block IP source temporarily"
+            return mitigation
+        
+        def tcp_connect_scan_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
+            output = _stdout.readlines()
+            mitigation = "Block IP addresses temporarily"
+            return mitigation
+        
+        def udp_flood_mitigation(self,ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
+            output = _stdout.readlines()
+            mitigation = "Block the source IP temporarily"
+            return mitigation
+
+        def udp_scan_mitigation(self, ssh):
+            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
+            output = _stdout.readlines()
+            mitigation = "Block IP addresses temporarily"
+            return mitigation
+    
 # Start the attack simulation when the start button is clicked
 def start_attack(request):
     global target_ip, attack_type, attack_status
@@ -629,6 +645,12 @@ def home(request):
                         reader = csv.reader(io.StringIO(file_content))
                         row = next(reader)
                         data = [float(x) for x in row[:14]]
+
+                    elif filename.endswith('.pcap'):
+                        # Handle PCAP format
+                        file_content = uploaded_file.read().decode('utf-8')
+                        reader = rdpcap(uploaded_file)
+                        data = [float(x) for x in obj[:14]]
 
                     elif filename.endswith('.npy'):
                         # Handle NPY format
@@ -781,7 +803,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigation = mitigation_analyzer.get_mitigation(detection, analysis_report)
+                    # mitigation = mitigation_analyzer.get_mitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:
