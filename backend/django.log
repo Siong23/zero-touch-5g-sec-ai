@@ -744,3 +744,70 @@ Packet capture started.
 - Broken pipe from ('127.0.0.1', 57846)
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+Model loaded successfully!
+- Broken pipe from ('127.0.0.1', 64192)
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9178
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 70, in start_capture
+    messages.sucess(request, "Packet capture success.")
+    ^^^^^^^^^^^^^^^
+AttributeError: module 'django.contrib.messages' has no attribute 'sucess'. Did you mean: 'success'?
+"POST /start_capture/ HTTP/1.1" 500 74096
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Packet capture success.
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Packet capture success.
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Packet capture success.
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0

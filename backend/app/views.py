@@ -13,6 +13,7 @@ import io
 import csv
 import subprocess
 import paramiko
+import glob
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
@@ -56,7 +57,7 @@ mitigation = None
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
 
-    # Start capturing packets from Open5Gs network 
+    # Start capturing packets from Open5Gs network (Current - Stop automatically after 5s)
     def start_capture(request):
         
         if request.method == "POST":
@@ -65,13 +66,8 @@ class NetworkTrafficCapture:
             
             capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
             capture.sniff(timeout=5)
-            capture.load_packets()
-            logger.info("Packet capture started.")
-            capture.load_packets()
 
-            print("Packet capture summary:")
-            for packet in capture:
-                print(packet)
+            logger.info("Packet capture success.")
 
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -80,7 +76,49 @@ class NetworkTrafficCapture:
 
     def stop_capture(request):
         logger.info("Packet capture stopped.")
-    
+
+    # Process captured data in packet
+    def processing_file(pcap_file_path):
+        try:
+            packets = rdpcap(pcap_file_path)
+
+            predictions = []
+
+            for packet in packets:
+                capture_instance = NetworkTrafficCapture()
+                features = capture_instance.extract_features(packet)
+
+                if features:
+                    # Convert features dict to ordered list
+                    feature_list = [
+                        features.get('frame.time_relative', 0.0),
+                        features.get('ip.len', 0),
+                        features.get('tcp.flags.syn', 0),
+                        features.get('tcp.flags.ack', 0),
+                        features.get('tcp.flags.push', 0),
+                        features.get('tcp.flags.fin', 0),
+                        features.get('tcp.flags.reset', 0),
+                        features.get('ip.proto', 0),
+                        features.get('ip.ttl', 0),
+                        features.get('tcp.window_size_value', 0),
+                        features.get('tcp.hdr_len', 0),
+                        features.get('udp.length', 0),
+                        features.get('srcport', 0),
+                        features.get('dstport', 0)
+                    ]
+
+                    detection_result = perform_detection(feature_list)
+                    predictions.append({
+                        'features': feature_list,
+                        'prediction': detection_result
+                    })
+
+            return predictions
+        
+        except Exception as e:
+            logger.error(f"Error processing file: {e}")
+            return HttpResponseRedirect(reverse('home'))
+
     def extract_features(self, packet):
         try:
             features = {}
@@ -569,8 +607,16 @@ def home(request):
     if request.method == 'POST' and model is not None:
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = request.FILES.get('captured_data')
-            captured_text = form.cleaned_data.get('captured_text', '').strip()
+            if glob.glob('./test.pcap'):
+                uploaded_file = "./test.pcap"
+                file_content = uploaded_file.read().decode('utf-8')
+                reader = rdpcap(uploaded_file)
+                data = [float(x) for x in obj[:14]]
+
+            else:
+                uploaded_file = request.FILES.get('captured_data')
+                captured_text = form.cleaned_data.get('captured_text', '').strip()
+
             data = None
             accuracy = "90.73%"
 
