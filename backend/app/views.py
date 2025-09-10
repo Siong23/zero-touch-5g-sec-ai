@@ -2,6 +2,7 @@ import joblib
 import timeshap
 import socket
 import threading
+import asyncio
 import pyshark
 import scapy.all as scapy
 import numpy as np
@@ -54,80 +55,24 @@ mitigation = None
 
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
-    def __init__(self, host, interface="ogstun", buffer_size=1000):
-        self.host = host
-        self.interface = interface
-        self.capture_active = False
-        self.captured_packets = deque(maxlen=buffer_size)
-        self.capture_thread = None
-
-        self.stats = {
-            'total_packets': 0,
-            'tcp_packets': 0,
-            'udp_packets': 0,
-            'icmp_packets': 0,
-            'malformed_packets': 0
-        }
 
     # Start capturing packets from Open5Gs network 
-    def start_capture(self, filter_expr=None):
+    def start_capture(request):
         
-        if self.capture_active:
-            logger.warning("Capture is actived")
-            return
-        
-        capture = pyshark.LiveCapture()
-        capture.set_debug()
+        if request.method == "POST":
+            loop = asyncio.ProactorEventLoop()
+            asyncio.set_event_loop(loop)
+            
+            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
+            capture.sniff(timeout=5)
+            logger.info("Packet capture started.")
 
-        self.capture_active = True
+        else:
+            HttpResponseRedirect(reverse('home'))
 
-        def packet_handler(packet):
-            if self.capture_active:
-                try:
-                    features = self.extract_features(packet)
+        HttpResponseRedirect(reverse('home'))
 
-                    if features:
-                        self.captured_packets.append(features)
-                        self.stats['total_packets'] += 1
-
-                        if packet.haslayer(TCP):
-                            self.stats['tcp_packets'] += 1
-                        
-                        elif packet.haslayer(UDP):
-                            self.stats['udp_packets'] += 1
-                        
-                        elif packet.haslayer(ICMP):
-                            self.stats['icmp_packets'] += 1
-                except Exception as e:
-                    logger.error(f"Error processing packet: {e}")
-                    self.stats['malformed_packets'] += 1
-        
-        # Start capturing packet in separate thread
-        try:
-
-            self.capture_thread = threading.Thread(
-                target=lambda: scapy.sniff(
-                    iface=self.interface,
-                    filter=filter_expr,
-                    prn=packet_handler,
-                    stop_filter=lambda x: not self.capture_active
-                )
-            )
-
-            self.capture_thread.daemon = True
-            self.capture_thread.start()
-            logger.info("Packet capture started successfully")
-            return True
-        
-        except Exception as e:
-            logger.error(f"Failed to start packet capture: {e}")
-            self.capture_active = False
-            return False
-
-    def stop_capture(self):
-        self.capture_active = False
-        if self.capture_thread and self.capture_thread.is_alive():
-            self.capture_thread.join(timeout=2)
+    def stop_capture(request):
         logger.info("Packet capture stopped.")
     
     def extract_features(self, packet):
@@ -270,7 +215,7 @@ def perform_detection(features):
         logger.error(f"Detection error: {e}")
         return {'model': 'Error', 'attack_type': 'N/A', 'severity_level': 'N/A'}
 
-# Simulate different types of network attacks by injecting attack into the 5G Networ
+# Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
         self.host = host
@@ -485,10 +430,10 @@ class SeverityLevelAnalyzer:
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
 
-# Mitigation strategies based on attack type (suggestion - temporary)
+# Mitigation strategies based on attack type
 class AIMitigation:
 
-    if detection!=None:
+    if detection!="Benign":
 
         ssh = paramiko.client.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -621,6 +566,7 @@ def home(request):
             uploaded_file = request.FILES.get('captured_data')
             captured_text = form.cleaned_data.get('captured_text', '').strip()
             data = None
+            accuracy = "90.73%"
 
             try:
                 # If file is submitted
@@ -732,6 +678,7 @@ def home(request):
                                    'detection': "Error: Invalid data format!", 
                                    'attack_level': "N/A", 
                                    'accuracy': "N/A", 
+                                   'mitigation': "N/A",
                                    'connection_status': connection_status,
                                    'attack_status': attack_status, 
                                    'ml_status': ml_status,
@@ -803,7 +750,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    # mitigation = mitigation_analyzer.get_mitigation(detection, analysis_report)
+                    mitigation = AIMitigation.get_mitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:

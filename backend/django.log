@@ -239,3 +239,454 @@ Model loaded successfully!
 "GET /favicon.ico HTTP/1.1" 204 0
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6471
+"GET /favicon.ico HTTP/1.1" 204 0
+API data processing error: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+- Broken pipe from ('127.0.0.1', 56547)
+API data processing error: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6474
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6481
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+Model loaded successfully!
+Model loaded successfully!
+- Broken pipe from ('127.0.0.1', 56244)
+- Broken pipe from ('127.0.0.1', 64569)
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7698
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8555
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9169
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6471
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6481
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7698
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9174
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9187
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+API data processing error: Authentication timeout.
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6475
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6475
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6482
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7712
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 75, in start_capture
+    if self.capture_active:
+       ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WSGIRequest' object has no attribute 'capture_active'
+"POST /start_capture/ HTTP/1.1" 500 73731
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 61, in start_capture
+    capture = pyshark.LiveCapture(interface="ogstun")
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\live_capture.py", line 47, in __init__
+    super(LiveCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                                      eventloop=eventloop, custom_parameters=custom_parameters,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      debug=debug)
+                                      ^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-1 (process_request_thread)'.
+"POST /start_capture/ HTTP/1.1" 500 96101
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6482
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7712
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9188
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 61, in start_capture
+    capture = pyshark.LiveCapture(interface="eth0")
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\live_capture.py", line 47, in __init__
+    super(LiveCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                                      eventloop=eventloop, custom_parameters=custom_parameters,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      debug=debug)
+                                      ^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-1 (process_request_thread)'.
+"POST /start_capture/ HTTP/1.1" 500 96091
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 61, in start_capture
+    capture = pyshark.LiveCapture(interface="eth0")
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\live_capture.py", line 47, in __init__
+    super(LiveCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                                      eventloop=eventloop, custom_parameters=custom_parameters,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      debug=debug)
+                                      ^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-1 (process_request_thread)'.
+"POST /start_capture/ HTTP/1.1" 500 96109
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 61, in start_capture
+    capture = pyshark.LiveCapture(interface="eth0")
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\live_capture.py", line 47, in __init__
+    super(LiveCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                                      eventloop=eventloop, custom_parameters=custom_parameters,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      debug=debug)
+                                      ^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-1 (process_request_thread)'.
+"POST /start_capture/ HTTP/1.1" 500 96109
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 61, in start_capture
+    capture = pyshark.LiveCapture(interface="Wi-Fi")
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\live_capture.py", line 47, in __init__
+    super(LiveCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                                      eventloop=eventloop, custom_parameters=custom_parameters,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      debug=debug)
+                                      ^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-3 (process_request_thread)'.
+"POST /start_capture/ HTTP/1.1" 500 96114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6482
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7712
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9188
+"GET /favicon.ico HTTP/1.1" 204 0
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6482
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7712
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9188
+"GET /favicon.ico HTTP/1.1" 204 0
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 67, in start_capture
+    logger.info(capture.summary())
+                ^^^^^^^^^^^^^^^
+AttributeError: 'LiveCapture' object has no attribute 'summary'
+"POST /start_capture/ HTTP/1.1" 500 73998
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 67, in start_capture
+    logger.info(capture.summary())
+                ^^^^^^^^^^^^^^^
+AttributeError: 'LiveCapture' object has no attribute 'summary'
+"POST /start_capture/ HTTP/1.1" 500 74036
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+<LiveCapture (54 packets)>
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Packet capture started.
+Internal Server Error: /start_capture/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_capture didn't return an HttpResponse object. It returned None instead.
+"POST /start_capture/ HTTP/1.1" 500 74524
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
