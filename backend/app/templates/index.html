@@ -180,14 +180,14 @@
         <table>
             <tr>
                 <td>
-                    <form method="post" action="{% url 'start_attack' %}">
+                    <form method="post" action="{% url 'start_capture' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Start</button>
                     </form>
                 </td>
 
                 <td>
-                    <form method="post" action="{% url 'stop_attack' %}">
+                    <form method="post" action="{% url 'stop_capture' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Stop</button>
                     </form>
@@ -227,7 +227,7 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="id_captured_data">Upload captured data (JSON/CSV/NPY file):</label>
+                    <label for="id_captured_data">Upload captured data (JSON/CSV/PCAP/NPY/NetFlow file):</label>
                     <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow">
                 </div>
                 <div>
@@ -248,7 +248,7 @@
     "udp.length": ,
     "srcport": ,
     "dstport": 
-}' required>{{ captured_text }}</textarea>
+}'>{{ captured_text }}</textarea>
                 </div>
                 <button class="detect-btn" type="submit">Detect Attack</button>
             </form>
