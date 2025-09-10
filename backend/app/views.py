@@ -67,7 +67,10 @@ class NetworkTrafficCapture:
             capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
             capture.sniff(timeout=5)
 
-            logger.info("Packet capture success.")
+            if 'capture' in locals() and capture:
+                capture.close()
+
+            print(f"Packet capture success. Live capture saved.")
 
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -607,16 +610,8 @@ def home(request):
     if request.method == 'POST' and model is not None:
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
-            if glob.glob('./test.pcap'):
-                uploaded_file = "./test.pcap"
-                file_content = uploaded_file.read().decode('utf-8')
-                reader = rdpcap(uploaded_file)
-                data = [float(x) for x in obj[:14]]
-
-            else:
-                uploaded_file = request.FILES.get('captured_data')
-                captured_text = form.cleaned_data.get('captured_text', '').strip()
-
+            uploaded_file = request.FILES.get('captured_data')
+            captured_text = form.cleaned_data.get('captured_text', '').strip()
             data = None
             accuracy = "90.73%"
 
@@ -630,12 +625,12 @@ def home(request):
                         file_content = uploaded_file.read().decode('utf-8')
                         obj = json.loads(file_content)
 
-                    # Extract values by keys if its dict
-                    if isinstance(obj, dict):
-                        feature_keys = list(obj.keys())
-                        data = [float(obj[k]) for k in feature_keys]
-                    elif isinstance(obj, list):
-                        data = [float(x) for x in obj[:14]]
+                        # Extract values by keys if its dict
+                        if isinstance(obj, dict):
+                            feature_keys = list(obj.keys())
+                            data = [float(obj[k]) for k in feature_keys]
+                        elif isinstance(obj, list):
+                            data = [float(x) for x in obj[:14]]
 
                     elif filename.endswith('.csv'):
                         # Handle CSV format
@@ -646,9 +641,11 @@ def home(request):
 
                     elif filename.endswith('.pcap'):
                         # Handle PCAP format
-                        file_content = uploaded_file.read().decode('utf-8')
-                        reader = rdpcap(uploaded_file)
-                        data = [float(x) for x in obj[:14]]
+                        file_content = uploaded_file.read()
+                        with open("file.pcap", "wb") as f:
+                            f.write(file_content)
+                        packets = rdpcap("file.pcap")
+                        data = [float(len((x))) for x in packets[:14]]
 
                     elif filename.endswith('.npy'):
                         # Handle NPY format
@@ -661,6 +658,7 @@ def home(request):
                         # Handle NetFlow format
                         file_content = uploaded_file.read().decode('utf-8')
                         data = [line.split() for line in file_content.splitlines()][0]
+                        data = [float(x) for x in row[:14]]
 
                     else:
                         detection = "Error: Unsupported file format!"

@@ -811,3 +811,234 @@ Packet capture success.
 "POST /start_capture/ HTTP/1.1" 302 0
 "GET / HTTP/1.1" 200 7702
 "GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 614, in home
+    uploaded_file = pyshark.FileCapture('test.pcap')
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\file_capture.py", line 38, in __init__
+    super(FileCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+                                      include_raw=include_raw, eventloop=eventloop,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      custom_parameters=custom_parameters, debug=debug)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-3 (process_request_thread)'.
+"POST / HTTP/1.1" 500 97602
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 614, in home
+    uploaded_file = pyshark.FileCapture('test.pcap')
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\file_capture.py", line 38, in __init__
+    super(FileCapture, self).__init__(display_filter=display_filter, only_summaries=only_summaries,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      decryption_key=decryption_key, encryption_type=encryption_type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+                                      include_raw=include_raw, eventloop=eventloop,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                      custom_parameters=custom_parameters, debug=debug)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 88, in __init__
+    self._setup_eventloop()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\pyshark\capture\capture.py", line 170, in _setup_eventloop
+    current_eventloop = asyncio.get_event_loop_policy().get_event_loop()
+  File "C:\Users\nakam\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 716, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+                       % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-3 (process_request_thread)'.
+"POST / HTTP/1.1" 500 97602
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Value error: could not convert string to float: 'Benign\r\n{\r\n    "frame.time_relative": -1.909990713'
+"POST / HTTP/1.1" 200 9197
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9178
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: cannot access local variable 'obj' where it is not associated with a value
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9178
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [66.0, 60.0, 42.0, 55.0, 55.0, 66.0, 66.0, 42.0, 42.0, 42.0, 42.0, 60.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8562
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [66.0, 60.0, 42.0, 55.0, 55.0, 66.0, 66.0, 42.0, 42.0, 42.0, 42.0, 60.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1. 0. 0. 0. 0. 0. 0. 0. 0.]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 8562
+"GET /favicon.ico HTTP/1.1" 204 0
