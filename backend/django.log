@@ -1042,3 +1042,290 @@ Model prediction: [[1. 0. 0. 0. 0. 0. 0. 0. 0.]]
 Attack detected: Benign, Severity Level: None, Severity Num: 0
 "POST / HTTP/1.1" 200 8562
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: None
+Prediction error: object of type 'NoneType' has no len()
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00
+  0.0000000e+00 0.0000000e+00 2.8722496e-38 0.0000000e+00]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+- Broken pipe from ('127.0.0.1', 54999)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00
+  0.0000000e+00 0.0000000e+00 2.8722496e-38 0.0000000e+00]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6783
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6643
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6643
+- Broken pipe from ('127.0.0.1', 53202)
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9178
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.187148031, -0.770073841, -0.210455971, 0.1717114595369835, 2.7480652899506612, -0.119927617, -0.125807304, -1.256617747, -0.559981297, -0.170362847, 1.238213611922419, -0.639727849, 1.1562146768479575, -0.969400906]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Processed data list: [-1.187148031, -0.770073841, -0.210455971, 0.1717114595369835, 2.7480652899506612, -0.119927617, -0.125807304, -1.256617747, -0.559981297, -0.170362847, 1.238213611922419, -0.639727849, 1.1562146768479575, -0.969400906]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[2.1875246e-06 5.6220433e-09 4.8829140e-20 1.8953119e-22 3.8313227e-15
+  9.9999785e-01 3.4697297e-13 5.3150620e-24 2.9356869e-13]]
+Model prediction: [[2.1875246e-06 5.6220433e-09 4.8829140e-20 1.8953119e-22 3.8313227e-15
+  9.9999785e-01 3.4697297e-13 5.3150620e-24 2.9356869e-13]]
+Attack detected: SlowrateDoS, Severity Level: Minor, Severity Num: 1
+Attack detected: SlowrateDoS, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 55645)
+"POST / HTTP/1.1" 200 9218
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 63940)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7126
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494102.050035, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 63687)
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 54085)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 57438)
+- Broken pipe from ('127.0.0.1', 57643)
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 58311)
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 49703)
+- Broken pipe from ('127.0.0.1', 54167)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+- Broken pipe from ('127.0.0.1', 50727)
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 54348)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 60837)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6554
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 62355)
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 64880)
+"GET / HTTP/1.1" 200 8616
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 57394)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 49880)
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
