@@ -486,7 +486,7 @@ class AIMitigation:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+        ssh.connect('192.168.0.115', username='open5gs', password='mmuzte123', timeout=30)
 
         def http_flood_mitigation(self, ssh):
             _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
@@ -546,7 +546,7 @@ def start_attack(request):
 
         config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        username = config.get('USERNAME', 'server2')
+        username = config.get('USERNAME', 'open5gs')
         password = config.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
