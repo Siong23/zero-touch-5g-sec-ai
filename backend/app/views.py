@@ -266,10 +266,12 @@ def perform_detection(features):
 
 # Simulate different types of network attacks by injecting attack into the targeted server - 5g network
 class AttackSimulator:
-    def __init__(self, host):
-        self.host = host or "192.168.0.165"
+    def __init__(self, host, username, password):
+        self.host = host or "192.168.0.115"
+        self.username = username or "server2" 
+        self.password = password or "mmuzte123"
 
-    # Trigger a DoS attack (SYNFlood) on the specified target IP
+    # Trigger a DoS attack on the specified target IP
     def trigger_dos_attack(self, target_ip, attack_type, duration=30, speed=50, port=80):
         try:
             if self.host != "localhost" and self.host != "127.0.0.1":
@@ -296,7 +298,7 @@ class AttackSimulator:
                     f.write(flood_script)
             
             # Execute attack
-            attack_command = self._build_attack_command(target_ip, attack_type, duration, speed, port, remote=True)
+            attack_command = self.build_attack_command(target_ip, attack_type, duration, speed, port, remote=True)
 
             if attack_command:
                 stdin, stdout, stderr = ssh.exec_command(f'cd /tmp && timeout {duration + 5} {attack_command}')
@@ -311,7 +313,7 @@ class AttackSimulator:
     def trigger_local_attack(self, target_ip, attack_type, duration, speed, port):
         try:
             # Build packet based on attack type
-            pkt = self._build_packet(target_ip, attack_type, port)
+            pkt = self.build_packet(target_ip, attack_type, port)
             if not pkt:
                 return False
             
@@ -591,8 +593,6 @@ severity_analyzer = SeverityLevelAnalyzer()
 # Mitigation strategies based on attack type
 class AIMitigation:
 
-    if detection!="Benign":
-
         ssh = paramiko.client.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -652,36 +652,35 @@ def start_attack(request):
     global target_ip, attack_type, attack_status
 
     if request.method == "POST":
-        attack_type = request.POST.get('attack_type', 'SYNFlood')
+        attack_type = request.POST.get('attack_type', attack_type)
         target_ip = request.POST.get('target_ip', '192.168.0.165')
         duration = int(request.POST.get('duration', 30))
         speed = int(request.POST.get('speed', 50))
         port = int(request.POST.get('port', 80))
 
-        config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        username = config.get('USERNAME', 'server2')
-        password = config.get('PASSWORD', 'mmuzte123')
+        username = OPEN5GS_CONFIG.get('USERNAME', 'server2')
+        password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
         if simulator.trigger_dos_attack(target_ip, attack_type, duration, speed, port):
-            attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+            attack_status = f"Attack simulation done. {attack_type} attack injected on {target_ip}"
+
+            loop = asyncio.ProactorEventLoop()
+            asyncio.set_event_loop(loop)
+                
+            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
+            capture.sniff(timeout=5)
+
+            if 'capture' in locals() and capture:
+                capture.close()
+
+                print(f"Packet capture success. Live capture saved.")
+
+            else:
+                return HttpResponseRedirect(reverse('home'))
         else:
             attack_status = "Failed to inject attack"
-        
-        loop = asyncio.ProactorEventLoop()
-        asyncio.set_event_loop(loop)
-            
-        capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
-        capture.sniff(timeout=5)
-
-        if 'capture' in locals() and capture:
-            capture.close()
-
-            print(f"Packet capture success. Live capture saved.")
-
-        else:
-            return HttpResponseRedirect(reverse('home'))
 
         return HttpResponseRedirect(reverse('home'))
         
@@ -968,7 +967,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigation = AIMitigation.get_mitigation(detection, analysis_report)
+                    mitigation = AIMitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:

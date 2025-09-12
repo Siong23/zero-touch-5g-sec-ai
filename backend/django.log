@@ -1645,3 +1645,118 @@ C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, relo
 Watching for file changes with StatReloader
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 661, in start_attack
+    config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
+             ~~~~~~~~~~~~~~^^^
+KeyError: 0
+"POST /start_attack/ HTTP/1.1" 500 73745
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 663, in start_attack
+    config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
+             ~~~~~~~~~~~~~~^^^
+KeyError: 0
+"POST /start_attack/ HTTP/1.1" 500 73745
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8434
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757651155.980712, 1278, 0, 1, 1, 0, 0, 6, 55, 424, 32, 0, 80, 60855]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Prediction error: type object 'AIMitigation' has no attribute 'get_mitigation'
+"POST / HTTP/1.1" 200 9281
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8434
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: 'AttackSimulator' object has no attribute '_build_attack_command'
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: 'AttackSimulator' object has no attribute '_build_attack_command'
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7209
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+None attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7245
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader

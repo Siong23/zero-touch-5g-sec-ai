@@ -40,7 +40,7 @@ OPEN5GS_CONFIG = {
     #'UPF_PORT': 7780,
     'NETWORK_INTERFACE': 'ogstun',
     'CAPTURE_FILTER': 'host 192.168.0.115',
-    'USERNAME': 'open5gs',
+    'USERNAME': 'server2',
     'PASSWORD': 'mmuzte123'
 }
 
