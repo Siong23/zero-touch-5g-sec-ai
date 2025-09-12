@@ -1798,3 +1798,118 @@ C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, relo
 Watching for file changes with StatReloader
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6526
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757657048.699592, 55, 0, 1, 0, 0, 0, 6, 128, 2047, 20, 0, 63783, 443]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Prediction error: AIMitigation() takes no arguments
+"POST / HTTP/1.1" 200 8606
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7749
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757657048.699592, 55, 0, 1, 0, 0, 0, 6, 128, 2047, 20, 0, 63783, 443]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757658088.349593, 71, 0, 0, 0, 0, 0, 17, 55, 0, 0, 37, 443, 60484]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757658845.965778, 73, 0, 0, 0, 0, 0, 17, 106, 0, 0, 39, 443, 62433]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757664290.19379, 54, 0, 1, 0, 0, 0, 6, 119, 1052, 20, 0, 443, 56127]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0

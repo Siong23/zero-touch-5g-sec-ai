@@ -176,7 +176,7 @@
         </div>
 
         <div class="choose-attack">
-            <form method="post" action="{% url 'start_attack' %}"></form>
+            <form method="post" action="{% url 'start_attack' %}">
                 {% csrf_token %}
                 <label for="attack_type">Choose preferred attack type:</label>
                 <select name="attack_type" id="attack_type">
