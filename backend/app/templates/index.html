@@ -156,10 +156,22 @@
         </div>
         
         <div class="connection">
-            <form method="post" action="{% url 'receive_network_data' %}">
-                {% csrf_token %}
-                <button class="connect-btn" type="submit">Connect to 5G Network</button> 
-            </form>
+            <table>
+                <tr>
+                    <td>
+                        <form method="post" action="{% url 'receive_network_data' %}">
+                            {% csrf_token %}
+                            <button class="connect-btn" type="submit">Connect to 5G Network</button> 
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'start_capture' %}">
+                            {% csrf_token %}
+                            <button class="button" type="submit">Capture Network Data</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
         </div>
     </section>
 

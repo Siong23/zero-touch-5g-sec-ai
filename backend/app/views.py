@@ -264,12 +264,10 @@ def perform_detection(features):
         logger.error(f"Detection error: {e}")
         return {'model': 'Error', 'attack_type': 'N/A', 'severity_level': 'N/A'}
 
-# Simulate different types of network attacks by injecting attack into the 5G Network
+# Simulate different types of network attacks by injecting attack into the targeted server - 5g network
 class AttackSimulator:
-    def __init__(self, host, username, password):
-        self.host = host or "192.168.0.115"
-        self.username = username or "open5gs"
-        self.password = password or "mmuzte123"
+    def __init__(self, host):
+        self.host = host or "192.168.0.165"
 
     # Trigger a DoS attack (SYNFlood) on the specified target IP
     def trigger_dos_attack(self, target_ip, attack_type, duration=30, speed=50, port=80):
@@ -599,7 +597,7 @@ class AIMitigation:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        # ssh.connect('192.168.0.115', username='open5gs', password='mmuzte123', timeout=30)
+        ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
 
         def http_flood_mitigation(self, ssh):
             _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
@@ -655,14 +653,14 @@ def start_attack(request):
 
     if request.method == "POST":
         attack_type = request.POST.get('attack_type', 'SYNFlood')
-        target_ip = request.POST.get('target_ip', '192.168.0.115')
+        target_ip = request.POST.get('target_ip', '192.168.0.165')
         duration = int(request.POST.get('duration', 30))
         speed = int(request.POST.get('speed', 50))
         port = int(request.POST.get('port', 80))
 
         config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        username = config.get('USERNAME', 'open5gs')
+        username = config.get('USERNAME', 'server2')
         password = config.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
@@ -670,6 +668,22 @@ def start_attack(request):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
         else:
             attack_status = "Failed to inject attack"
+        
+        loop = asyncio.ProactorEventLoop()
+        asyncio.set_event_loop(loop)
+            
+        capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
+        capture.sniff(timeout=5)
+
+        if 'capture' in locals() and capture:
+            capture.close()
+
+            print(f"Packet capture success. Live capture saved.")
+
+        else:
+            return HttpResponseRedirect(reverse('home'))
+
+        return HttpResponseRedirect(reverse('home'))
         
     return HttpResponseRedirect(reverse('home'))
 

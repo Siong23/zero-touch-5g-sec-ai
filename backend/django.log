@@ -1610,3 +1610,38 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 "GET / HTTP/1.1" 200 6614
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6912
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7251
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7320
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+API data processing error: Authentication failed.
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7197
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7197
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
