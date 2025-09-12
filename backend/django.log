@@ -1760,3 +1760,41 @@ None attack triggered on 192.168.0.165 via SSH
 "GET /favicon.ico HTTP/1.1" 204 0
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7149
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7169
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6899
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6899
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6919
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6936
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6936
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6924
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8154
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6526
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader

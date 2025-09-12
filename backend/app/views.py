@@ -652,7 +652,7 @@ def start_attack(request):
     global target_ip, attack_type, attack_status
 
     if request.method == "POST":
-        attack_type = request.POST.get('attack_type', attack_type)
+        attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
         duration = int(request.POST.get('duration', 30))
         speed = int(request.POST.get('speed', 50))

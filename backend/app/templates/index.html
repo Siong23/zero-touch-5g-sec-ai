@@ -164,12 +164,6 @@
                             <button class="connect-btn" type="submit">Connect to 5G Network</button> 
                         </form>
                     </td>
-                    <td>
-                        <form method="post" action="{% url 'start_capture' %}">
-                            {% csrf_token %}
-                            <button class="button" type="submit">Capture Network Data</button>
-                        </form>
-                    </td>
                 </tr>
             </table>
         </div>
@@ -182,37 +176,29 @@
         </div>
 
         <div class="choose-attack">
-            <label for="attack_type">Choose preferred attack type:</label>
-            <select name="attack_type">
-                <option value="HTTPFlood">HTTP Flood</option>
-                <option value="ICMPFlood">ICMP Flood</option>
-                <option value="SYNFlood">SYN Flood</option>
-                <option value="UDPFlood">UDP Flood</option>
-                <option value="SYNScan">SYN Scan</option>
-                <option value="TCPConnectScan">TCP Connect Scan</option>
-                <option value="UDPScan">UDP Scan</option>
-                <option value="SlowrateDoS">Slowrate DoS</option>
-            </select>
+            <form method="post" action="{% url 'start_attack' %}"></form>
+                {% csrf_token %}
+                <label for="attack_type">Choose preferred attack type:</label>
+                <select name="attack_type" id="attack_type">
+                    <option value="HTTPFlood">HTTP Flood</option>
+                    <option value="ICMPFlood">ICMP Flood</option>
+                    <option value="SYNFlood">SYN Flood</option>
+                    <option value="UDPFlood">UDP Flood</option>
+                    <option value="SYNScan">SYN Scan</option>
+                    <option value="TCPConnectScan">TCP Connect Scan</option>
+                    <option value="UDPScan">UDP Scan</option>
+                    <option value="SlowrateDoS">Slowrate DoS</option>
+                </select>
+
+                <table>
+                    <tr>
+                        <td>
+                            <button class="button" type="submit">Start</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
-        
-        <table>
-            <tr>
-                <td>
-                    <form method="post" action="{% url 'start_attack' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Start</button>
-                    </form>
-                </td>
-
-                <td>
-                    <form method="post" action="{% url 'stop_capture' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Stop</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-
     </section>
 
     <section class="ml-inference">
