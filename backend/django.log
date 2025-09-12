@@ -1497,3 +1497,116 @@ Model loaded successfully!
 "GET / HTTP/1.1" 200 6652
 - Broken pipe from ('127.0.0.1', 55237)
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 889, in home
+    return render(request, 'index.html',
+                  {'form': form,
+    ...<11 lines>...
+                   'captured_data': '',
+                   'captured_text': ''})
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 706, in __init__
+    self.args_check(filter_name, filter_func, args)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 768, in args_check
+    raise TemplateSyntaxError(
+        "%s requires %d arguments, %d provided" % (name, alen - dlen, plen)
+    )
+django.template.exceptions.TemplateSyntaxError: default requires 2 arguments, 1 provided
+"GET / HTTP/1.1" 500 188834
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6505
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6515
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6593
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6629
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0

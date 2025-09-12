@@ -11,9 +11,8 @@ paramiko
 matplotlib
 seaborn
 scikit-learn
-scikeras==0.13.0
 tensorflow==2.16.1
-keras==3.3.3
+scikeras==0.12.0
 flask
 flask-cors
 flask-expects-json

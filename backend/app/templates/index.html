@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        .attack, .ml-inference {
+        .attack, .ml-inference, .network {
             background-color: white;
             padding: 20px 20px 20px 20px;
             box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
@@ -149,18 +149,24 @@
         </div>
     </section>
 
-    <section class="attack">
-        <h2>Trigger Attack</h2>
+    <section class="network">
+        <h2>Open5gs Connection</h2>
         <div class="info">
             <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
-            <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
-
+        
         <div class="connection">
             <form method="post" action="{% url 'receive_network_data' %}">
                 {% csrf_token %}
                 <button class="connect-btn" type="submit">Connect to 5G Network</button> 
             </form>
+        </div>
+    </section>
+
+    <section class="attack">
+        <h2>Trigger Attack</h2>
+        <div class="info">
+            <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
 
         <div class="choose-attack">
@@ -180,7 +186,7 @@
         <table>
             <tr>
                 <td>
-                    <form method="post" action="{% url 'start_capture' %}">
+                    <form method="post" action="{% url 'start_attack' %}">
                         {% csrf_token %}
                         <button class="button" type="submit">Start</button>
                     </form>
