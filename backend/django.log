@@ -1990,3 +1990,5 @@ Not Found: /networking.jpg
 Not Found: /background.jpeg
 "GET /background.jpeg HTTP/1.1" 404 5114
 "GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
