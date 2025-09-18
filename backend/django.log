@@ -1042,3 +1042,1050 @@ Model prediction: [[1. 0. 0. 0. 0. 0. 0. 0. 0.]]
 Attack detected: Benign, Severity Level: None, Severity Num: 0
 "POST / HTTP/1.1" 200 8562
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: None
+Prediction error: object of type 'NoneType' has no len()
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00
+  0.0000000e+00 0.0000000e+00 2.8722496e-38 0.0000000e+00]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+- Broken pipe from ('127.0.0.1', 54999)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[1.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00 0.0000000e+00
+  0.0000000e+00 0.0000000e+00 2.8722496e-38 0.0000000e+00]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6783
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6643
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6643
+- Broken pipe from ('127.0.0.1', 53202)
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7693
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.909990713, -0.720828222, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, -2.182787826, -0.696464265, -0.212153377, -0.765434182, -0.639727849, -0.843824564, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[9.9999559e-01 1.2897113e-12 1.7609337e-09 4.4699887e-16 3.2312923e-06
+  8.8467896e-12 8.0354721e-07 3.2451860e-16 3.6734525e-07]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9178
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.187148031, -0.770073841, -0.210455971, 0.1717114595369835, 2.7480652899506612, -0.119927617, -0.125807304, -1.256617747, -0.559981297, -0.170362847, 1.238213611922419, -0.639727849, 1.1562146768479575, -0.969400906]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Processed data list: [-1.187148031, -0.770073841, -0.210455971, 0.1717114595369835, 2.7480652899506612, -0.119927617, -0.125807304, -1.256617747, -0.559981297, -0.170362847, 1.238213611922419, -0.639727849, 1.1562146768479575, -0.969400906]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[2.1875246e-06 5.6220433e-09 4.8829140e-20 1.8953119e-22 3.8313227e-15
+  9.9999785e-01 3.4697297e-13 5.3150620e-24 2.9356869e-13]]
+Model prediction: [[2.1875246e-06 5.6220433e-09 4.8829140e-20 1.8953119e-22 3.8313227e-15
+  9.9999785e-01 3.4697297e-13 5.3150620e-24 2.9356869e-13]]
+Attack detected: SlowrateDoS, Severity Level: Minor, Severity Num: 1
+Attack detected: SlowrateDoS, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 55645)
+"POST / HTTP/1.1" 200 9218
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 63940)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 8559
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7126
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494102.050035, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 63687)
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 54085)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 57438)
+- Broken pipe from ('127.0.0.1', 57643)
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8558
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 58311)
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 49703)
+- Broken pipe from ('127.0.0.1', 54167)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+- Broken pipe from ('127.0.0.1', 50727)
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 54348)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 60837)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6554
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 62355)
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 64880)
+"GET / HTTP/1.1" 200 8616
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 57394)
+"GET / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 49880)
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 65516)
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 63723)
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 54099)
+- Broken pipe from ('127.0.0.1', 61645)
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 56607)
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+"GET /favicon.ico HTTP/1.1" 204 0
+- Broken pipe from ('127.0.0.1', 60212)
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Error processing data packet: PcapNg: Invalid Block body length (too short)
+- Broken pipe from ('127.0.0.1', 60001)
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 62284)
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 50382)
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+- Broken pipe from ('127.0.0.1', 50095)
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+- Broken pipe from ('127.0.0.1', 60322)
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757563569.548658, 68, 0, 0, 0, 0, 0, 17, 55, 0, 0, 34, 443, 61616]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+- Broken pipe from ('127.0.0.1', 55944)
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757408792.142705, 42, 0, 0, 0, 0, 0, 1, 63, 0, 0, 0, 0, 0]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+Processed data list: [0.196688327, -0.80978805, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, 0.780956425, -0.559981297, -0.212153377, -0.765434182, -0.626168052, 0.516664649, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[5.0485355e-01 2.3085635e-20 2.4012873e-12 1.1660841e-17 6.6287752e-12
+  7.9029465e-12 4.4492776e-13 4.9514642e-01 1.7594556e-11]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9174
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [0.196688327, -0.80978805, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, 0.780956425, -0.559981297, -0.212153377, -0.765434182, -0.626168052, 0.516664649, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[5.0485355e-01 2.3085635e-20 2.4012873e-12 1.1660841e-17 6.6287752e-12
+  7.9029465e-12 4.4492776e-13 4.9514642e-01 1.7594556e-11]]
+Attack detected: Benign, Severity Level: None, Severity Num: 0
+"POST / HTTP/1.1" 200 9174
+"GET /favicon.ico HTTP/1.1" 204 0
+Value error: could not convert string to float: 'SlowrateDoS\r\n{\r\n    "frame.time_relative": -1.187148031'
+"POST / HTTP/1.1" 200 9231
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [-1.187148031, -0.770073841, -0.210455971, 0.1717114595369835, 2.7480652899506612, -0.119927617, -0.125807304, -1.256617747, -0.559981297, -0.170362847, 1.238213611922419, -0.639727849, 1.1562146768479575, -0.969400906]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[2.1875246e-06 5.6220433e-09 4.8829140e-20 1.8953119e-22 3.8313227e-15
+  9.9999785e-01 3.4697297e-13 5.3150620e-24 2.9356869e-13]]
+Attack detected: SlowrateDoS, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 9218
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [0.128030128, -0.80978805, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, 0.780956425, -0.559981297, -0.212153377, -0.765434182, -0.626168052, 0.431748478, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.9817303e-01 5.1367163e-20 5.8214544e-11 4.9716423e-17 1.4526506e-10
+  5.4304887e-11 1.4909888e-12 5.0182700e-01 5.8870919e-10]]
+Attack detected: UDPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 9186
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [0.128030128, -0.80978805, -0.210455971, 0.17171146, -0.363892373, -0.119927617, -0.125807304, 0.780956425, -0.559981297, -0.212153377, -0.765434182, -0.626168052, 0.431748478, -0.972929059]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.9817303e-01 5.1367163e-20 5.8214544e-11 4.9716423e-17 1.4526506e-10
+  5.4304887e-11 1.4909888e-12 5.0182700e-01 5.8870919e-10]]
+Attack detected: UDPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 9186
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6755
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6652
+- Broken pipe from ('127.0.0.1', 55237)
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7702
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757494348.956082, 42, 0, 0, 0, 0, 0, 17, 63, 0, 0, 8, 1748, 80]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8552
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 889, in home
+    return render(request, 'index.html',
+                  {'form': form,
+    ...<11 lines>...
+                   'captured_data': '',
+                   'captured_text': ''})
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 706, in __init__
+    self.args_check(filter_name, filter_func, args)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 768, in args_check
+    raise TemplateSyntaxError(
+        "%s requires %d arguments, %d provided" % (name, alen - dlen, plen)
+    )
+django.template.exceptions.TemplateSyntaxError: default requires 2 arguments, 1 provided
+"GET / HTTP/1.1" 500 188834
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6505
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6516
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6515
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6593
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6629
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6614
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6912
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7251
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7320
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+API data processing error: Authentication failed.
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7197
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7197
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /start_capture/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 661, in start_attack
+    config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
+             ~~~~~~~~~~~~~~^^^
+KeyError: 0
+"POST /start_attack/ HTTP/1.1" 500 73745
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 663, in start_attack
+    config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
+             ~~~~~~~~~~~~~~^^^
+KeyError: 0
+"POST /start_attack/ HTTP/1.1" 500 73745
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8424
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8434
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757651155.980712, 1278, 0, 1, 1, 0, 0, 6, 55, 424, 32, 0, 80, 60855]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Prediction error: type object 'AIMitigation' has no attribute 'get_mitigation'
+"POST / HTTP/1.1" 200 9281
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8434
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: Authentication failed.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: 'AttackSimulator' object has no attribute '_build_attack_command'
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7204
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+Remote attack execution error: 'AttackSimulator' object has no attribute '_build_attack_command'
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7209
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+None attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7245
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7194
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7149
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7169
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6899
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6899
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6919
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 6936
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6936
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6924
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 8154
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6526
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6526
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757657048.699592, 55, 0, 1, 0, 0, 0, 6, 128, 2047, 20, 0, 63783, 443]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Prediction error: AIMitigation() takes no arguments
+"POST / HTTP/1.1" 200 8606
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7749
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757657048.699592, 55, 0, 1, 0, 0, 0, 6, 128, 2047, 20, 0, 63783, 443]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757658088.349593, 71, 0, 0, 0, 0, 0, 17, 55, 0, 0, 37, 443, 60484]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757658845.965778, 73, 0, 0, 0, 0, 0, 17, 106, 0, 0, 39, 443, 62433]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6519
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 6572
+"GET /favicon.ico HTTP/1.1" 204 0
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+ICMPFlood attack triggered on 192.168.0.165 via SSH
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 7802
+"GET /favicon.ico HTTP/1.1" 204 0
+Processed data list: [1757664290.19379, 54, 0, 1, 0, 0, 0, 6, 119, 1052, 20, 0, 443, 56127]
+Data list length: 14
+Data array shape: (1, 1, 14)
+Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+"POST / HTTP/1.1" 200 8599
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8173
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8196
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8203
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8223
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8410
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8203
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8201
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8248
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8830
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8804
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8824
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8826
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8804
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8766
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+"GET / HTTP/1.1" 200 8766
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8746
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8746
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8745
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9259
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9259
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+"GET / HTTP/1.1" 200 8767
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9832
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /backend/app/templates/index.html
+"GET /backend/app/templates/index.html HTTP/1.1" 404 5165
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9810
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9810
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9811
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9820
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9816
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9809
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
