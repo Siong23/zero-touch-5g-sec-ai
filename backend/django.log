@@ -2089,3 +2089,50 @@ Not Found: /images/networking.jpeg
 Not Found: /networking.jpeg
 "GET /networking.jpeg HTTP/1.1" 404 5114
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 9809
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9815
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11169
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11138
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11349
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11348
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11348
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11346
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /backend/app/templates/index.html
+"GET /backend/app/templates/index.html HTTP/1.1" 404 5165
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 11518
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 17665
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 17878
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18000
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18000
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 17878
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 17886
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18511
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18511
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18511
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18511
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18708
+"GET /favicon.ico HTTP/1.1" 204 0
