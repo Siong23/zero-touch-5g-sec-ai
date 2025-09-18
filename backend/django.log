@@ -1982,3 +1982,11 @@ Not Found: /networking.jpg
 "GET /favicon.ico HTTP/1.1" 204 0
 Not Found: /.well-known/appspecific/com.chrome.devtools.json
 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+"GET / HTTP/1.1" 200 8766
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8746
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
