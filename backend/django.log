@@ -2006,3 +2006,86 @@ Not Found: /background.jpeg
 Not Found: /backend/app/templates/networking.jpeg
 "GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
 "GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8744
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9259
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9259
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+"GET / HTTP/1.1" 200 8767
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9832
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /backend/app/templates/index.html
+"GET /backend/app/templates/index.html HTTP/1.1" 404 5165
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9810
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9810
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9811
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9820
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9816
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 9818
+Not Found: /images/networking.jpeg
+"GET /images/networking.jpeg HTTP/1.1" 404 5135
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 9809
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0

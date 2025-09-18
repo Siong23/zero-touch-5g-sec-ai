@@ -23,7 +23,7 @@
 
         .intro {
             position: relative;
-            background-image: url("/backend/app/templates/networking.jpeg");
+            background-image: url("networking.jpeg");
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -208,6 +208,56 @@
         .success {
             color: #24873b;
             font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .intro h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro p {
+                font-size: 1.1rem;
+            }
+        }
+
+                @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
     </style>
 </head>
