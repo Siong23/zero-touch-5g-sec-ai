@@ -4,28 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>5G Network Intrusion Detection</title>
+    <title>AEGIS-5G</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #d4f4f8;
-            padding: 40px;
+            font-family: 'Georgia', serif;
+            background-color: #d4f4f8;
+            line-height: 1.6;
         }
 
         .intro {
             position: relative;
+            background-image: url("/backend/app/templates/networking.jpeg");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
             color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            height: 20vh;
+            padding-top: 60px;
+        }
+
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
         .intro-content {
             position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
-        .attack, .ml-inference {
+        .intro h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out, float 3s ease-in-out infinite;
+        }
+
+        .intro p {
+            font-size: 1.25rem;
+            margin: 0 auto 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            border: 2px solid tranparent;
+            margin: 10px 10px 10px 0;
+            display: inline-block;
+            animation: scaleIn 0.8s ease-out 0.9s both;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .attack, .ml-inference, .network {
             background-color: white;
             padding: 20px 20px 20px 20px;
             box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
@@ -145,56 +215,65 @@
 <body>
     <section class="intro">
         <div class="intro-content">
-            <h1>Welcome to the<br>5G Network Intrusion Detection System!</h1>
+            <h1>Welcome to AEGIS-5G</h1>
+            <p>Your advanced solution for efficient 5G Network Intrusion Detection System!</p>
+        </div>
+
+        <div class="button-group">
+            <a href="/backend/app/templates/index.html#network" class="button">Get Started</a>
+        </div>
+    </section>
+
+    <section class="network">
+        <h2>Open5gs Connection</h2>
+        <div class="info">
+            <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
+        </div>
+        
+        <div class="connection">
+            <table>
+                <tr>
+                    <td>
+                        <form method="post" action="{% url 'receive_network_data' %}">
+                            {% csrf_token %}
+                            <button class="connect-btn" type="submit">Connect to 5G Network</button> 
+                        </form>
+                    </td>
+                </tr>
+            </table>
         </div>
     </section>
 
     <section class="attack">
         <h2>Trigger Attack</h2>
         <div class="info">
-            <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
             <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
         </div>
 
-        <div class="connection">
-            <form method="post" action="{% url 'receive_network_data' %}">
+        <div class="choose-attack">
+            <form method="post" action="{% url 'start_attack' %}">
                 {% csrf_token %}
-                <button class="connect-btn" type="submit">Connect to 5G Network</button> 
+                <label for="attack_type">Choose preferred attack type:</label>
+                <select name="attack_type" id="attack_type">
+                    <option value="HTTPFlood">HTTP Flood</option>
+                    <option value="ICMPFlood">ICMP Flood</option>
+                    <option value="SYNFlood">SYN Flood</option>
+                    <option value="UDPFlood">UDP Flood</option>
+                    <option value="SYNScan">SYN Scan</option>
+                    <option value="TCPConnectScan">TCP Connect Scan</option>
+                    <option value="UDPScan">UDP Scan</option>
+                    <option value="SlowrateDoS">Slowrate DoS</option>
+                </select>
+
+                <table>
+                    <tr>
+                        <td>
+                            <button class="button" type="submit">Start</button>
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
-
-        <div class="choose-attack">
-            <label for="attack_type">Choose preferred attack type:</label>
-            <select name="attack_type">
-                <option value="HTTPFlood">HTTP Flood</option>
-                <option value="ICMPFlood">ICMP Flood</option>
-                <option value="SYNFlood">SYN Flood</option>
-                <option value="UDPFlood">UDP Flood</option>
-                <option value="SYNScan">SYN Scan</option>
-                <option value="TCPConnectScan">TCP Connect Scan</option>
-                <option value="UDPScan">UDP Scan</option>
-                <option value="SlowrateDoS">Slowrate DoS</option>
-            </select>
-        </div>
-        
-        <table>
-            <tr>
-                <td>
-                    <form method="post" action="{% url 'start_capture' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Start</button>
-                    </form>
-                </td>
-
-                <td>
-                    <form method="post" action="{% url 'stop_capture' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Stop</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-
     </section>
 
     <section class="ml-inference">

@@ -1992,3 +1992,17 @@ Not Found: /background.jpeg
 "GET /favicon.ico HTTP/1.1" 204 0
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 6472
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8746
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8745
+Not Found: /background.jpeg
+"GET /background.jpeg HTTP/1.1" 404 5114
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8767
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET /favicon.ico HTTP/1.1" 204 0
