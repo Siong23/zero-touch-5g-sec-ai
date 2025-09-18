@@ -2136,3 +2136,5 @@ Not Found: /backend/app/templates/index.html
 "GET /favicon.ico HTTP/1.1" 204 0
 "GET / HTTP/1.1" 200 18708
 "GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18708
+"GET /favicon.ico HTTP/1.1" 204 0
