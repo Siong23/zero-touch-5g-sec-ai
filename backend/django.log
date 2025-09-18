@@ -1913,3 +1913,72 @@ Model prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.24
 Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
 "POST / HTTP/1.1" 200 8599
 "GET /favicon.ico HTTP/1.1" 204 0
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 8173
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8196
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8203
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8223
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8410
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8203
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8201
+Not Found: /images/networking.jpg
+"GET /images/networking.jpg HTTP/1.1" 404 5132
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8248
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8830
+Not Found: /zero-touch-5g-sec-ai/images/networking.jpg
+"GET /zero-touch-5g-sec-ai/images/networking.jpg HTTP/1.1" 404 5195
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8804
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8824
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8825
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8826
+Not Found: /backend/app/templates/networking.jpg
+"GET /backend/app/templates/networking.jpg HTTP/1.1" 404 5177
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8804
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 8766
+Not Found: /networking.jpg
+"GET /networking.jpg HTTP/1.1" 404 5111
+"GET /favicon.ico HTTP/1.1" 204 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5213
