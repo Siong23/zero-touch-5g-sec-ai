@@ -2155,3 +2155,7 @@ Not Found: /networking.jpeg
 "GET / HTTP/1.1" 200 20736
 Not Found: /backend/app/templates/networking.jpeg
 "GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
+"GET / HTTP/1.1" 200 20620
+"GET / HTTP/1.1" 200 20620
+"GET / HTTP/1.1" 200 20620
+"GET / HTTP/1.1" 200 20622
