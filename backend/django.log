@@ -2149,3 +2149,9 @@ Model loaded successfully!
 "GET / HTTP/1.1" 200 21009
 "GET / HTTP/1.1" 200 21022
 "GET / HTTP/1.1" 200 20620
+"GET / HTTP/1.1" 200 20719
+Not Found: /networking.jpeg
+"GET /networking.jpeg HTTP/1.1" 404 5114
+"GET / HTTP/1.1" 200 20736
+Not Found: /backend/app/templates/networking.jpeg
+"GET /backend/app/templates/networking.jpeg HTTP/1.1" 404 5180
