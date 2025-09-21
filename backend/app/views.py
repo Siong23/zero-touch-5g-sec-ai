@@ -12,15 +12,17 @@ import os
 import io
 import csv
 import subprocess
+import tempfile
 import paramiko
 import glob
+import time
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
 
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import Ether
-from scapy.all import rdpcap
+from scapy.all import *
 
 from django import forms
 from django.shortcuts import render
@@ -265,22 +267,29 @@ def perform_detection(features):
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
-        self.host = host
-        self.username = username
+        self.host = host or "192.168.0.115"
+        self.username = username or "server2" 
         self.password = password or "mmuzte123"
 
     # Trigger a DoS attack (SYNFlood) on the specified target IP
-    def trigger_dos_attack(self, target_ip, attack_type="SYNFlood"):
+    def trigger_dos_attack(self, target_ip, attack_type):
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(self.host, username=self.username, password=self.password, timeout=10)
 
             attack_command = {
-                'SYNFlood': f'sudo hping3 -S -p 80 --flood {target_ip}'
+                'HTTPFlood': f'sudo python3 ./goldeneye.p http://{target_ip}',
+                'ICMPFlood': f'sudo hping3 --flood --rand-source -1 -p 80 {target_ip}',
+                'SYNFlood': f'sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
+                'UDPFlood': f'sudo hping3 --flood --rand-source --udp -p 80 {target_ip}',
+                'SYNScan': f'sudo nmap -sS {target_ip} -p 80 ',
+                'TCPConnectScan': f'sudo nmap -sT {target_ip} -p 80',
+                'UDPScan': f'sudo nmap -sU {target_ip} -p 80',
+                'SlowrateDoS': f'sudo python3 slowloris.py {target_ip}'
             }
 
-            command = attack_command.get(attack_type, attack_command['SYNFlood'])
+            command = attack_command.get(attack_type)
 
             if command:
                 stdin, stdout, stderr = ssh.exec_command(f'timeout 30 {command}')
@@ -486,7 +495,7 @@ class AIMitigation:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+        # ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
 
         def http_flood_mitigation(self, ssh):
             _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
@@ -559,11 +568,44 @@ def start_attack(request):
 
 # Stop the attack simulation when the stop button is clicked
 def stop_attack(request):
-    global attack_status
+    global target_ip, attack_type, attack_status
 
     if request.method == "POST":
-        attack_status = "Attack simulation stopped."
-    
+        attack_type = request.POST.get('attack_type')
+        target_ip = request.POST.get('target_ip', '192.168.0.165')
+        duration = int(request.POST.get('duration', 30))
+        speed = int(request.POST.get('speed', 50))
+        port = int(request.POST.get('port', 80))
+
+        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
+        username = OPEN5GS_CONFIG.get('USERNAME', 'server2')
+        password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
+        simulator = AttackSimulator(host, username, password)
+
+        if simulator.trigger_dos_attack(target_ip, attack_type, duration, speed, port):
+            attack_status = f"Attack simulation done. {attack_type} attack injected on {target_ip}"
+
+            loop = asyncio.ProactorEventLoop()
+            asyncio.set_event_loop(loop)
+                
+            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
+            capture.sniff(timeout=5)
+
+            if 'capture' in locals() and capture:
+                capture.close()
+
+                print(f"Packet capture success. Live capture saved.")
+
+            else:
+                return HttpResponseRedirect(reverse('home'))
+        
+        if simulator.trigger_dos_attack(target_ip, attack_type):
+            attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+        else:
+            attack_status = "Failed to inject attack"
+
+        return HttpResponseRedirect(reverse('home'))    
+ 
     return HttpResponseRedirect(reverse('home'))
 
 # Start the machine learning model when the start button is clicked
@@ -639,12 +681,52 @@ def home(request):
                         row = next(reader)
                         data = [float(x) for x in row[:14]]
 
-                    elif filename.endswith('.pcap'):
+                    elif filename.endswith('.pcap', '.pcapng'):
                         # Handle PCAP format
                         file_content = uploaded_file.read()
-                        with open("file.pcap", "wb") as f:
+                        temp_filename = f"temp_{filename}"
+                        with open(temp_filename, "wb") as f:
                             f.write(file_content)
-                        packets = rdpcap("file.pcap")
+                        
+
+                        try:
+
+                            packets = rdpcap(temp_filename)
+
+                            if len(packets) == 0:
+                                detection = "Error: No packets of data found."
+                                if os.path.exists(temp_filename):
+                                    os.remove(temp_filename)
+                                return render(request, 'index.html', {'form': form, 'detection': detection})
+                            
+                            packet = packets[0]
+                            
+                            capture_instance = NetworkTrafficCapture()
+                            features = capture_instance.extract_features(packet)
+
+                            if features:
+                                data = [
+                                    features.get('frame.time_relative', 0.0),
+                                    features.get('ip.len', 0),
+                                    features.get('tcp.flags.syn', 0),
+                                    features.get('tcp.flags.ack', 0),
+                                    features.get('tcp.flags.push', 0),
+                                    features.get('tcp.flags.fin', 0),
+                                    features.get('tcp.flags.reset', 0),
+                                    features.get('ip.proto', 0),
+                                    features.get('ip.ttl', 0),
+                                    features.get('tcp.window_size_value', 0),
+                                    features.get('tcp.hdr_len', 0),
+                                    features.get('udp.length', 0),
+                                    features.get('srcport', 0),
+                                    features.get('dstport', 0)
+                                ]
+                                
+                        except Exception as e:
+                            logger.warning(f"Error processing data packet: {e}")
+                            detection = f"Error: Processing file failed - {str(e)}"
+                            return render(request, 'index.html', {'form': form, 'detection': detection})
+
                         data = [float(len((x))) for x in packets[:14]]
 
                     elif filename.endswith('.npy'):

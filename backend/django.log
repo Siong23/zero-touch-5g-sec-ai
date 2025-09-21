@@ -2159,3 +2159,14 @@ Not Found: /backend/app/templates/networking.jpeg
 "GET / HTTP/1.1" 200 20620
 "GET / HTTP/1.1" 200 20620
 "GET / HTTP/1.1" 200 20622
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18918
+API data processing error: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 18921
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20625
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
