@@ -1,8 +1,0 @@
-services:
-  zerotouch5gsecai:
-    image: zerotouch5gsecai
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8000:8000

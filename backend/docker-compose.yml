@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount logs, media, and database for persistence
+      - ./logs:/app/logs
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+      # Mount ML model directory
+      - ./app/model:/app/app/model
+    environment:
+      - DJANGO_SETTINGS_MODULE=detection.production_settings
+    restart: unless-stopped
+    
+  # Optional: Add Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    depends_on:
+      - web
+    restart: unless-stopped
