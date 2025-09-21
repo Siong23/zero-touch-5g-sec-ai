@@ -1,31 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AEGIS-5G</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <title>AEGIS-5G - Autonomous Zero-Touch AI-Driven Defense System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
+        :root {
+            --primary-color: #061629;
+            --secondary-color: #007bff;
+            --accent-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
+        
         body {
             margin: 0;
             font-family: 'Georgia', serif;
-            background-color: #d4f4f8;
+            background-color: #f4f4f4;
             line-height: 1.6;
+            color: #333;
         }
-
+        
+        /* Navigation */
+        .topnav {
+            background-color: var(--primary-color);
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
         .intro {
             position: relative;
-            background-image: url("networking.jpeg");
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #061629 0%, #007bff 100%);
             height: 100vh;
             color: white;
             display: flex;
@@ -33,194 +92,335 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 60px;
+            padding-top: 80px;
+            overflow: hidden;
         }
-
+        
         .intro::before {
-            content: "";
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: slide 20s linear infinite;
         }
-
+        
         .intro-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
             padding: 0 20px;
         }
-
+        
         .intro h1 {
-            color: white;
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: fadeInUp 1s ease-out, float 3s ease-in-out infinite;
         }
-
+        
         .intro p {
-            font-size: 1.25rem;
-            margin: 0 auto 30px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
             animation: fadeInUp 1s ease-out 0.3s both;
         }
-
+        
         .button-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
             animation: fadeInUp 1s ease-out 0.6s both;
         }
-
+        
         .button {
-            padding: 12px 30px;
-            font-size: 1.1rem;
+            padding: 15px 35px;
+            font-size: 1.2rem;
             color: white;
-            background-color: #007bff;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 50px;
             transition: all 0.3s;
-            border: 2px solid tranparent;
-            margin: 10px 10px 10px 0;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
             animation: scaleIn 0.8s ease-out 0.9s both;
         }
-
+        
         .button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.6);
         }
-
-        .attack, .ml-inference, .network {
-            background-color: white;
-            padding: 20px 20px 20px 20px;
-            box-shadow: 0 0 10px rgba(214, 211, 211, 0.989);
-            border-radius: 6px;
-            max-width: 90%;
-            height: auto;
-            margin: 30px 30px;
-        }
-
-        .choose-attack {
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        .detect {
-            margin-top: 20px;
-            line-height: 30px;
-        }
-
-        h1 {
-            color: #061629;
+        
+        /* Section Containers */
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            background: white;
             margin-bottom: 20px;
-            font-size: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
-
-        h2 {
-            color: #061629;
-        }
-
-        h3 {
-            color: #061629;
-            margin-top: 30px;
-        }
-
-        button {
-            padding: 12px 30px;
-            font-size: 18px;
-            color: white;
-            background-color: #061629;
-            text-decoration: none;
-            border-radius: 6px;
-            margin: 10px 10px 10px 0;
-            display: inline-block;
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
             text-align: center;
-        }
-
-        button:hover {
-            background-color: #0c3669;
-        }
-
-        .connect-btn, .detect-btn {
-            padding: 12px 30px;
-            font-size: 18px;
-            color: white;
-            background-color: #28a745;
-            border: none;
-            border-radius: 6px;
-            margin-top: 15px;
-            cursor: pointer;
-        }
-
-        .connect-btn:hover, .detect-btn:hover {
-            background-color: #218838;
-        }
-
-        textarea {
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            align-items: center;
+            gap: 15px;
             width: 100%;
-            height: 150px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: monospace;
-            resize: vertical;
         }
-
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            flex: 1;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        /* Status Info Boxes */
+        .info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .info p {
+            margin: 0;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        /* Form Elements */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-
+        
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        select, textarea, input[type="file"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        textarea {
+            height: 200px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+        
+        /* Buttons */
+        button, .connect-btn, .detect-btn {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            margin: 5px 10px 5px 0;
+        }
+        
+        button, .connect-btn {
+            background: var(--secondary-color);
+            color: white;
         }
 
-        .info {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
         }
-
+        
+        .button-container form {
+            margin: 0;
+        }
+        
+        button, .connect-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .detect-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        button:hover, .connect-btn:hover, .detect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .connect-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .detect-btn:hover {
+            background-color: #218838;
+        }
+        
+        /* Results Display */
         .result-box {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent-color);
         }
-
+        
+        .result-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .result-box p {
-            margin: 5px 0;
+            margin: 12px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
+        
+        .result-box p:last-child {
+            border-bottom: none;
+        }
+        
+        .result-box strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
         .error {
-            color: #a82835;
+            color: var(--danger-color);
             font-weight: bold;
         }
-
+        
         .success {
-            color: #24873b;
+            color: var(--accent-color);
             font-weight: bold;
         }
-
+        
+        /* Connection Tables */
+        table {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        table td {
+            padding: 10px 0;
+        }
+        
+        /* File Upload Styling */
+        input[type="file"] {
+            border: 2px dashed #d1ecf1;
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        input[type="file"]:hover {
+            border-color: var(--secondary-color);
+            background: rgba(0, 123, 255, 0.02);
+        }
+        
+        /* Page Sections */
+        .network, .attack, .ml-inference {
+            margin: 20px;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .intro h1 {
-                font-size: 2.5rem;
+            .intro {
+                padding: 100px 15px 50px;
+                height: auto;
+                min-height: 80vh;
             }
-
-            .intro p {
-                font-size: 1.1rem;
+            
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+            
+            .nav-links {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .section-container {
+                margin: 10px;
+                padding: 30px 15px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section-title::after {
+                width: 100%;
+                height: 2px;
+            }
+            
+            button, .connect-btn, .detect-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
             }
         }
-
-                @keyframes fadeInUp {
+        
+        /* Animations */
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -231,23 +431,23 @@
             }
         }
         
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
         @keyframes scaleIn {
             from {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: scale(0.9);
             }
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.3);
             }
         }
         
@@ -259,161 +459,231 @@
                 transform: translateY(-10px);
             }
         }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
     </style>
 </head>
 
 <body>
-    <section class="intro">
+    <!-- Navigation -->
+    <nav class="topnav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                AEGIS-5G
+            </a>
+            
+            <div class="nav-links">
+                <a href="#intro" class="active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#network">
+                    <i class="fas fa-network-wired"></i> Network
+                </a>
+                <a href="#analysis">
+                    <i class="fas fa-chart-line"></i> Analysis
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="intro" id="intro">
         <div class="intro-content">
-            <h1>Welcome to AEGIS-5G</h1>
-            <p>Your advanced solution for efficient 5G Network Intrusion Detection System!</p>
-        </div>
-
-        <div class="button-group">
-            <a href="/backend/app/templates/index.html#network" class="button">Get Started</a>
-        </div>
-    </section>
-
-    <section class="network">
-        <h2>Open5gs Connection</h2>
-        <div class="info">
-            <p><strong>Connection:</strong> {{ connection_status|default:"Not connected" }}</p>
-        </div>
-        
-        <div class="connection">
-            <table>
-                <tr>
-                    <td>
-                        <form method="post" action="{% url 'receive_network_data' %}">
-                            {% csrf_token %}
-                            <button class="connect-btn" type="submit">Connect to 5G Network</button> 
-                        </form>
-                    </td>
-                </tr>
-            </table>
+            <h1>Welcome to AEGIS-5G!</h1>
+            <p>Your advanced solution for efficient autonomous<br>Zero-Touch AI-Driven Defense System for 5G Network.</p>
+            
+            <div class="button-group">
+                <a href="#network" class="button">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
+            </div>
         </div>
     </section>
 
+    <!-- Network Connection Section -->
+    <section class="network" id="network">
+        <div class="section-container">
+            <h2 class="section-title">
+                <i class="fas fa-network-wired"></i>
+                5G Network Connection
+            </h2>
+            
+            <div class="info">
+                <p><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</p>
+            </div>
+            
+            <div class="button-container">
+                <form method="post" action="{% url 'receive_network_data' %}">
+                    {% csrf_token %}
+                    <button class="connect-btn" type="submit">
+                        <i class="fas fa-plug"></i>
+                        Connect to 5G Network
+                    </button> 
+                </form> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Attack Simulation Section -->
     <section class="attack">
-        <h2>Trigger Attack</h2>
-        <div class="info">
-            <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
-        </div>
+        <div class="section-container">
+            <h2 class="section-title">
+                <i class="fas fa-bug"></i>
+                Attack Simulation
+            </h2>
+            
+            <div class="info">
+                <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
+            </div>
 
-        <div class="choose-attack">
             <form method="post" action="{% url 'start_attack' %}">
                 {% csrf_token %}
-                <label for="attack_type">Choose preferred attack type:</label>
-                <select name="attack_type" id="attack_type">
-                    <option value="HTTPFlood">HTTP Flood</option>
-                    <option value="ICMPFlood">ICMP Flood</option>
-                    <option value="SYNFlood">SYN Flood</option>
-                    <option value="UDPFlood">UDP Flood</option>
-                    <option value="SYNScan">SYN Scan</option>
-                    <option value="TCPConnectScan">TCP Connect Scan</option>
-                    <option value="UDPScan">UDP Scan</option>
-                    <option value="SlowrateDoS">Slowrate DoS</option>
-                </select>
+                <div class="form-group">
+                    <label for="attack_type">Choose preferred attack type:</label>
+                    <select name="attack_type" id="attack_type">
+                        <option value="HTTPFlood">HTTP Flood Attack</option>
+                        <option value="ICMPFlood">ICMP Flood Attack</option>
+                        <option value="SYNFlood">SYN Flood Attack</option>
+                        <option value="UDPFlood">UDP Flood Attack</option>
+                        <option value="SYNScan">SYN Port Scan</option>
+                        <option value="TCPConnectScan">TCP Connect Scan</option>
+                        <option value="UDPScan">UDP Port Scan</option>
+                        <option value="SlowrateDoS">Slowrate DoS Attack</option>
+                    </select>
+                </div>
 
-                <table>
-                    <tr>
-                        <td>
-                            <button class="button" type="submit">Start</button>
-                        </td>
-                    </tr>
-                </table>
+                <div class="button-container">
+                    <button type="submit">
+                        <i class="fas fa-play"></i>
+                        Start Attack
+                    </button>
+                </div>
             </form>
         </div>
     </section>
 
-    <section class="ml-inference">
-        <h2>Machine Learning Inference</h2>
-        <div class="info">
-            <p><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</p>
-        </div>
+    <!-- ML Inference Section -->
+    <section class="ml-inference" id="analysis">
+        <div class="section-container">
+            <h2 class="section-title">
+                <i class="fas fa-brain"></i>
+                Machine Learning Inference
+            </h2>
+            
+            <div class="info">
+                <p><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</p>
+            </div>
 
-        <table>
-            <tr>
-                <td>
-                    <form method="post" action="{% url 'start_ml' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Start</button>
-                    </form>
-                </td>
+            <div class="button-container" style="margin: 20px 0;">
+                <form method="post" action="{% url 'start_ml' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">
+                        <i class="fas fa-play"></i>
+                        Start ML System
+                    </button>
+                </form>
 
-                <td>
-                    <form method="post" action="{% url 'stop_ml' %}">
-                        {% csrf_token %}
-                        <button class="button" type="submit">Stop</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+                <form method="post" action="{% url 'stop_ml' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">
+                        <i class="fas fa-stop"></i>
+                        Stop ML System
+                    </button>
+                </form>
+            </div>
 
-        {% if ml_status == "ML model is available and ready to be used." %}
-        <div class="detect">
-            <h3>5G Network Data Analysis</h3>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_captured_data">Upload captured data (JSON/CSV/PCAP/NPY/NetFlow file):</label>
-                    <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow">
-                </div>
-                <div>
-                    <label for="id_captured_text">Text form:</label>
-                    <textarea name="captured_text" rows="10" cols="50" placeholder='Enter data in JSON format, eg.:
-{
-    "frame.time_relative": ,
-    "ip.len": ,
-    "tcp.flags.syn": ,
-    "tcp.flags.ack": ,
-    "tcp.flags.push": ,
-    "tcp.flags.fin": ,
-    "tcp.flags.reset": ,
-    "ip.proto": ,
-    "ip.ttl": ,
-    "tcp.window_size_value": ,
-    "tcp.hdr_len": ,
-    "udp.length": ,
-    "srcport": ,
-    "dstport": 
+            {% if ml_status == "ML model is available and ready to be used." %}
+            <div style="margin-top: 40px;">
+                <h3>
+                    <i class="fas fa-search"></i>
+                    5G Network Data Analysis
+                </h3>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_captured_data">Upload captured data (JSON/CSV/PCAP/NPY/NetFlow file):</label>
+                        <input type="file" name="captured_data" accept=".json, .csv, .npy, .netflow, .pcap">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_captured_text">Or enter data manually (JSON format):</label>
+                        <textarea name="captured_text" placeholder='{
+    "frame.time_relative": 0.123456,
+    "ip.len": 1500,
+    "tcp.flags.syn": 1,
+    "tcp.flags.ack": 0,
+    "tcp.flags.push": 0,
+    "tcp.flags.fin": 0,
+    "tcp.flags.reset": 0,
+    "ip.proto": 6,
+    "ip.ttl": 64,
+    "tcp.window_size_value": 8192,
+    "tcp.hdr_len": 20,
+    "udp.length": 0,
+    "srcport": 12345,
+    "dstport": 80
 }'>{{ captured_text }}</textarea>
+                    </div>
+                    
+                    <div class="button-container">
+                        <button class="detect-btn" type="submit">
+                            <i class="fas fa-microscope"></i>
+                            Detect Attack
+                        </button>
+                    </div>
+                </form>
+
+                {% if detection %}
+                <div class="result-box">
+                    <h3>
+                        <i class="fas fa-clipboard-list"></i>
+                        Detection Results
+                    </h3>
+                    <p>
+                        <strong>Attack Type:</strong>
+                        <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
+                            {{ detection|default:"No detection performed" }}
+                        </span>
+                    </p>
+                    
+                    <p>
+                        <strong>Severity Level:</strong>
+                        <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
+                            {{ attack_level|default:"N/A" }}
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Model Accuracy:</strong>
+                        <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
+                            {{ accuracy|default:"N/A" }}
+                        </span>
+                    </p>
+                    
+                    <p>
+                        <strong>Mitigation Solution:</strong>
+                        <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
+                            {{ mitigation|default:"N/A" }}
+                        </span>
+                    </p>
                 </div>
-                <button class="detect-btn" type="submit">Detect Attack</button>
-            </form>
-
-            {% if detection %}
-            <div class="result-box">
-                <h3>Detection Results</h3>
-                <p><strong>Attack Type:</strong> 
-                    <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
-                        {{ detection|default:"No detection performed" }}
-                    </span>
-                </p>
-                
-                <p><strong>Severity Level:</strong>
-                    <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
-                        {{ attack_level|default:"N/A" }}
-                    </span>
-                </p>
-
-                <p><strong>Model Accuracy:</strong> 
-                    <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
-                        {{ accuracy|default:"N/A" }}
-                    </span>
-                </p>
-                
-                <p><strong>Mitigation Solution:</strong>
-                    <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
-                        {{ mitigation|default:"N/A" }}
-                    </span>
-                </p>
+                {% endif %}
             </div>
             {% endif %}
-        {% endif %}
             
             {% if ml_status == "ML model is stopped." %}
                 <div class="result-box">
+                    <h3><i class="fas fa-exclamation-triangle"></i> System Messages</h3>
                     {% for message in messages %}
                         <p class="error">{{ message }}</p>
                     {% endfor %}
@@ -421,5 +691,22 @@
             {% endif %}
         </div>
     </section>
+
+    <!-- Minimal JavaScript for smooth scrolling only -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
