@@ -2170,3 +2170,4 @@ Model loaded successfully!
 "GET / HTTP/1.1" 200 20625
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.

@@ -62,7 +62,7 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'detection.wsgi.application'
+WSGI_APPLICATION = 'detection.wsgi.application'
 
 DATABASES = {
     'default': {
