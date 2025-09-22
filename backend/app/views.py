@@ -191,7 +191,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
+            ssh.connect('192.168.0.132', username='open5gs', password='mmuzte123', timeout=30)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -267,8 +267,8 @@ def perform_detection(features):
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
-        self.host = host or "192.168.0.115"
-        self.username = username or "server2" 
+        self.host = host or "192.168.0.132"
+        self.username = username or "open5gs"
         self.password = password or "mmuzte123"
 
     # Trigger a DoS attack (SYNFlood) on the specified target IP
@@ -550,12 +550,12 @@ def start_attack(request):
     global target_ip, attack_type, attack_status
 
     if request.method == "POST":
-        attack_type = request.POST.get('attack_type', 'SYNFlood')
-        target_ip = request.POST.get('target_ip', '192.168.0.115')
+        attack_type = request.POST.get('attack_type')
+        target_ip = request.POST.get('target_ip', '192.168.0.165')
 
         config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
-        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        username = config.get('USERNAME', 'server2')
+        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
+        username = config.get('USERNAME', 'open5gs')
         password = config.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
@@ -577,8 +577,8 @@ def stop_attack(request):
         speed = int(request.POST.get('speed', 50))
         port = int(request.POST.get('port', 80))
 
-        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.115')
-        username = OPEN5GS_CONFIG.get('USERNAME', 'server2')
+        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
+        username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
         password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
 
@@ -621,7 +621,7 @@ def start_ml(request):
             model = joblib.load(model_path)
             logger.info("Model loaded successfully!")
             ml_status = "ML model is available and ready to be used."
-            accuracy = "90.73%"
+            accuracy = "91.01%"
             detection = None
 
         else:
@@ -655,7 +655,7 @@ def home(request):
             uploaded_file = request.FILES.get('captured_data')
             captured_text = form.cleaned_data.get('captured_text', '').strip()
             data = None
-            accuracy = "90.73%"
+            accuracy = "91.01%"
 
             try:
                 # If file is submitted

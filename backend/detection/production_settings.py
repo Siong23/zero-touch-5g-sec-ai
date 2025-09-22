@@ -8,7 +8,8 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '192.168.0.115',
+    '192.168.0.132',
+    '0.0.0.0'
     # Add other allowed hosts as needed
 ]
 

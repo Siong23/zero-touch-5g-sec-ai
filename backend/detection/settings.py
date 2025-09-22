@@ -34,13 +34,13 @@ MIDDLEWARE = [
 ]
 
 OPEN5GS_CONFIG = {
-    'HOST': '192.168.0.115',
+    'HOST': '192.168.0.132',
     'AMF_PORT': 38412, #7778
     'SMF_PORT': 7779,
     #'UPF_PORT': 7780,
     'NETWORK_INTERFACE': 'ogstun',
-    'CAPTURE_FILTER': 'host 192.168.0.115',
-    'USERNAME': 'server2',
+    'CAPTURE_FILTER': 'host 192.168.0.132',
+    'USERNAME': 'open5gs',
     'PASSWORD': 'mmuzte123'
 }
 

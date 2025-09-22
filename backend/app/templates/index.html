@@ -518,7 +518,7 @@
             </h2>
             
             <div class="info">
-                <p><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</p>
+                <p><span class="{% if 'Error' in connection_status %}error{% elif 'Success' in connection_status %}success{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p>
             </div>
             
             <div class="button-container">
@@ -542,7 +542,7 @@
             </h2>
             
             <div class="info">
-                <p><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</p>
+                <p><span class="{% if 'Success' in attack_status %}error{% elif 'Error' in attack_status %}success{% endif %}"><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</span></p>
             </div>
 
             <form method="post" action="{% url 'start_attack' %}">
@@ -580,7 +580,7 @@
             </h2>
             
             <div class="info">
-                <p><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</p>
+                <p><span class="{% if 'Error' in ml_status %}error{% elif 'Success' in ml_status %}success{% endif %}"><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</span></p>
             </div>
 
             <div class="button-container" style="margin: 20px 0;">
