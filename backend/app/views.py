@@ -16,6 +16,7 @@ import tempfile
 import paramiko
 import glob
 import time
+import tensorflow as tf
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
@@ -34,7 +35,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import path, reverse
 
 from .forms import CapturedDataForm
 from detection.settings import OPEN5GS_CONFIG
@@ -191,7 +192,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.0.132', username='open5gs', password='mmuzte123', timeout=30)
+            ssh.connect('192.168.0.132', username='open5gs', password='mmuzte123', timeout=10)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -553,14 +554,25 @@ def start_attack(request):
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
 
-        config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
-        username = config.get('USERNAME', 'open5gs')
-        password = config.get('PASSWORD', 'mmuzte123')
+        username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
+        password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
         
         if simulator.trigger_dos_attack(target_ip, attack_type):
             attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+            
+            loop = asyncio.ProactorEventLoop()
+            asyncio.set_event_loop(loop)
+            
+            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
+            capture.sniff(timeout=5)
+
+            if 'capture' in locals() and capture:
+                capture.close()
+
+            print(f"Packet capture success. Live capture saved.")
+            
         else:
             attack_status = "Failed to inject attack"
         
@@ -614,21 +626,47 @@ def start_ml(request):
     global model, detection, accuracy, ml_status
 
     # Adjust the path as needed to load the trained model
-    model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
+    # model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
+    model_path = os.path.join(settings.BASE_DIR, 'app','model', 'vanilla_lstm_model.pkl')
+
+    alternative_path = [os.path.join(os.path.dirname(__file__), 'model', 'vanilla_lstm_model.pkl'),
+                        '/app/app/model/vanilla_lstm_model.pkl',
+                        './app/model/vanilla_lstm_model.pkl',
+    ]
+
+    model_file_found = False
+    actual_model_path = None
 
     if os.path.exists(model_path):
-        if request.method == "POST":
-            model = joblib.load(model_path)
+        model_file_found = True
+        actual_model_path = model_path
+    
+    else:
+        for alt_path in alternative_path:
+            if os.path.exists(alt_path):
+                model_file_found = True
+                actual_model_path = alt_path
+                break
+
+    if model_file_found and request.method == "POST":
+        try:
+            model = joblib.load(actual_model_path)
             logger.info("Model loaded successfully!")
             ml_status = "ML model is available and ready to be used."
             accuracy = "91.01%"
             detection = None
-
-        else:
-            logger.warning("Model file not found.")
-            ml_status = "ML model is not available."
+        
+        except Exception as e:
+            logger.error(f"Error loading model: {e}")
+            ml_status = "Failed to load ML model."
             accuracy = "N/A"
             detection = None
+
+    elif not model_file_found:
+        logger.warning("Model file not found.")
+        ml_status = "ML model file is not found."
+        accuracy = "N/A"
+        detection = None
     
     return HttpResponseRedirect(reverse('home'))
     

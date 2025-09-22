@@ -14,6 +14,8 @@ timeshap
 pyshark
 scikeras==0.13.0
 tensorflow==2.16.1
+protobuf==3.20.3
+setuptools==65.0.0
 keras==3.3.3
 flask
 flask-cors

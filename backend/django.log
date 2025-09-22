@@ -2240,3 +2240,140 @@ django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 583: 'if'. 
 "GET / HTTP/1.1" 200 19008
 "GET / HTTP/1.1" 200 19001
 "GET / HTTP/1.1" 200 18994
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18984
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 18994
+"GET / HTTP/1.1" 200 19001
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19001
+"GET / HTTP/1.1" 200 18999
+"GET / HTTP/1.1" 200 18999
+"GET / HTTP/1.1" 200 19001
+"GET / HTTP/1.1" 200 19001
+"GET / HTTP/1.1" 200 19008
+"GET / HTTP/1.1" 200 19001
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20705
+"GET / HTTP/1.1" 200 20712
+"GET / HTTP/1.1" 200 20712
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20712
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19001
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+API data processing error: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 18994
+"GET / HTTP/1.1" 200 18992
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19001
+"GET / HTTP/1.1" 200 19001
+"GET / HTTP/1.1" 200 19001
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19001
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20700
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20700
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20700
+"GET / HTTP/1.1" 200 20700
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20703
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20712
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18989
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20700
+"GET / HTTP/1.1" 200 20698
+"GET / HTTP/1.1" 200 20700
+"POST /stop_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19263
+"GET / HTTP/1.1" 200 19165
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18994
+"GET / HTTP/1.1" 200 18994
+"GET / HTTP/1.1" 200 18999
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20705
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18999
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20705
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20708
+"GET / HTTP/1.1" 200 20708
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 559, in start_attack
+    config = OPEN5GS_CONFIG[0] if OPEN5GS_CONFIG else {}
+             ~~~~~~~~~~~~~~^^^
+KeyError: 0
+"POST /start_attack/ HTTP/1.1" 500 73889
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
