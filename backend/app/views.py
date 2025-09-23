@@ -1000,6 +1000,49 @@ def get_automation_status(request):
         })
     return JsonResponse({'status':'error', 'message': 'Invalid request method'})
 
+def start_ml(request):
+    global model, detection, accuracy, ml_status
+
+    model_path = os.path.join(settings.BASE_DIR, 'app','model', 'vanilla_lstm_model.pkl')
+
+    alternative_path = [os.path.join(os.path.dirname(__file__), 'model', 'vanilla_lstm_model.pkl'),
+                        '/app/app/model/vanilla_lstm_model.pkl',
+                        './app/model/vanilla_lstm_model.pkl',
+    ]
+
+    model_file_found = False
+    actual_model_path = None
+
+    if os.path.exists(model_path):
+        if request.method == "POST":
+            model = joblib.load(model_path)
+        model_file_found = True
+        actual_model_path = model_path
+
+    else:
+        for alt_path in alternative_path:
+            if os.path.exists(alt_path):
+                model_file_found = True
+                actual_model_path = alt_path
+                break
+
+    if model_file_found and request.method == "POST":
+        try:
+            model = joblib.load(actual_model_path)
+            ml_status = "ML model is available and ready to be used."
+            accuracy = "91.01%"
+            messages.info(request, "Machine Learning model started and ready.")
+        
+        except Exception as e:
+            ml_status = "ML model failed to start."
+            messages.error(request, f"Error starting ML model: {e}")
+
+    elif not model_file_found:
+        ml_status = "ML model file not found."
+        messages.error(request, "ML model file not found.")
+
+    return HttpResponseRedirect(reverse('home'))
+
 # Stop the machine learning model when the stop button is clicked
 def stop_ml(request):
 

@@ -2868,3 +2868,6 @@ Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_se
 Automation process completed.
 Captured data analyzed successfully.
 Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\ICMPFlood.pcap
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
