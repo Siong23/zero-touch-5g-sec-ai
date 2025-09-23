@@ -2840,3 +2840,31 @@ Not Found: /{}
 "POST /%7B%7D HTTP/1.1" 404 4306
 "GET /favicon.ico HTTP/1.1" 204 0
 Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\UDPFlood.pcap
+"GET / HTTP/1.1" 200 21926
+"GET / HTTP/1.1" 200 21926
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 21926
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 21926
+ML model is already loaded.
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': None, 'analysis_report': {'packet_size': 212, 'payload_size': 212, 'window_efficiency': 0.0, 'port_randomness': 0.8339971007858397, 'estimated_packet_rate': 5.686289256366958e-10, 'packet_rate': 5.686289256366958e-10, 'connection_attempts': 5.686289256366958e-11, 'connection_rate': 5.686289256366958e-10, 'frame_time_relative': 1758616128.928539, 'anomaly_score': 0.5, 'severity_level': 'Minor', 'severity_score': 1}, 'expected_attack': 'UDPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\UDPFlood.pcap', 'total_packets': 5, 'timestamp': '2025-09-23T16:29:22.460470'}
+Automation process completed.
+Captured data analyzed successfully.
+Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\UDPFlood.pcap
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 21927
+ML model is already loaded.
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': None, 'analysis_report': {'packet_size': 86, 'payload_size': 86, 'window_efficiency': 0.0, 'port_randomness': 0.0, 'estimated_packet_rate': 5.686288935494931e-10, 'packet_rate': 5.686288935494931e-10, 'connection_attempts': 5.6862889354949306e-11, 'connection_rate': 5.686288935494931e-10, 'frame_time_relative': 1758616228.165621, 'anomaly_score': 0.5, 'severity_level': 'Minor', 'severity_score': 1}, 'expected_attack': 'ICMPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\ICMPFlood.pcap', 'total_packets': 1, 'timestamp': '2025-09-23T16:30:42.020554'}
+Automation process completed.
+Captured data analyzed successfully.
+Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\ICMPFlood.pcap
