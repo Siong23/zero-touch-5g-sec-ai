@@ -2,6 +2,8 @@ import joblib
 import timeshap
 import socket
 import threading
+import queue
+import time
 import asyncio
 import pyshark
 import scapy.all as scapy
@@ -17,6 +19,7 @@ import paramiko
 import glob
 import time
 import tensorflow as tf
+import psutil
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
@@ -43,6 +46,10 @@ from detection.settings import OPEN5GS_CONFIG
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+auto_analysis_results = {}
+automation_queue = queue.Queue()
+automation_thread = None
+automation_active = False
 model = None    
 detection = None
 attack_level = None
@@ -56,71 +63,212 @@ analysis_report = {}
 target_ip = None
 attack_type = None
 mitigation = None
+capture_thread = None
+capture_active = False
+latest_capture_file = None
+
+class AutomationManager:
+    def __init__(self):
+        self.current_task = None
+        self.progress = 0
+        self.status = "Idle"
+        self.results = {}
+
+    def start_automation(self, attack_type, target_ip):
+        self.current_task = {
+            'attack_type': attack_type,
+            'target_ip': target_ip,
+            'start_time': datetime.now(),
+            'steps': [
+                'attack_simulation',
+                'packet_capture',
+                'ml_loading',
+                'data_analysis',
+                'results_generation'
+            ]
+        }
+        self.progress = 0
+        self.status = "Running"
+        return True
+    
+    def get_status(self):
+
+        return {
+            'status': self.status,
+            'progress': self.progress,
+            'current_task': self.current_task,
+            'results': self.results
+        }
+    
+    def complete_step(self, step_name, results=None):
+        if self.current_task and step_name in self.current_task['steps']:
+            step_index = self.current_task['steps'].index(step_name)
+            self.progress = int(((step_index + 1) / len(self.current_task['steps'])) * 100)
+           
+            if results:
+                self.results[step_name] = results
+            
+    def complete_automation(self, final_results):
+        self.status = "Completed"
+        self.progress = 100
+        self.results['final'] = final_results
+
+        logger.info("Automation process completed.")
+
+automation_manager = AutomationManager()
 
 # Capture network traffic of 5G Network core with direct network access integration
 class NetworkTrafficCapture:
 
-    # Start capturing packets from Open5Gs network (Current - Stop automatically after 5s)
-    def start_capture(request):
+    def __init__(self):
+        self.capture_active = False
+        self.packets_captured = []
+        self.capture_interface = self.get_active_interface()
+    
+    def get_active_interface(self):
+        try:
+            interfaces = psutil.net_if_addrs()
+            stats = psutil.net_if_stats()
+
+            for interface_name, interface_addresses in interfaces.items():
+                if interface_name in stats and stats[interface_name].isup:
+                    for address in interface_addresses:
+                        if address.family == socket.AF_INET and not address.address.startswith("127."):
+                            logger.info(f"Network interface used: {interface_name} with IP {address.address}")
+                            return interface_name
+            
+            fallback_interfaces = ["Wi-Fi", "wlan0", "eth0", "Ethernet"]
+            for interface in fallback_interfaces:
+                if interface in interfaces:
+                    logger.info(f"Fallback to interface: {interface}")
+                    return interface
         
-        if request.method == "POST":
+        except Exception as e:
+            logger.error(f"Error getting active network interface: {e}")
+            return "Wi-Fi"  # Default to Wi-Fi if an error occurs
+
+    # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
+    def start_capture_with_auto_analysis(self, duration=30, attack_type=None, target_ip=None):
+
+        global capture_active, capture_thread, latest_capture_file
+
+        if capture_active:
+            logger.warning("Capture already running")
+            return False, None
+        
+        try:
+            timestamp = int(time.time())
+            filename = f"{attack_type}.pcap"
+            filepath = os.path.join(settings.BASE_DIR, 'captures', filename)
+
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+            capture_active = True
+            latest_capture_file = filepath
+            self.capture_file_path = filepath
+
+            capture_thread = threading.Thread(target=self._capture_with_analysis, args=(duration, filepath, attack_type, target_ip))
+            capture_thread.daemon = True
+            capture_thread.start()
+            logger.info(f"Packet capture started on interface {self.capture_interface} for {duration} seconds.")
+            return True, filepath
+
+        except Exception as e:
+            logger.error(f"Error starting packet capture: {e}")
+            capture_active = False
+            return False, None
+
+    def _capture_with_analysis(self, duration, filepath, attack_type, target_ip):
+        # Start packet capture and analysis
+        global capture_active, auto_analysis_results
+
+        try:
             loop = asyncio.ProactorEventLoop()
             asyncio.set_event_loop(loop)
-            
-            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
-            capture.sniff(timeout=5)
+
+            capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
+            capture.sniff(timeout=duration)
 
             if 'capture' in locals() and capture:
                 capture.close()
+                logger.info(f"Packet capture completed. Saved to {filepath}")
 
-            print(f"Packet capture success. Live capture saved.")
-
-        else:
-            return HttpResponseRedirect(reverse('home'))
-
-        return HttpResponseRedirect(reverse('home'))
-
-    def stop_capture(request):
-        logger.info("Packet capture stopped.")
+        except Exception as e:
+            logger.error(f"Error during packet capture: {e}")
+        
+        finally:
+            capture_active = False
 
     # Process captured data in packet
-    def processing_file(pcap_file_path):
-        try:
-            packets = rdpcap(pcap_file_path)
+    def auto_analyze_capture(self,filepath, attack_type, target_ip):
 
-            predictions = []
+        global model
 
-            for packet in packets:
-                capture_instance = NetworkTrafficCapture()
-                features = capture_instance.extract_features(packet)
-
-                if features:
-                    # Convert features dict to ordered list
-                    feature_list = [
-                        features.get('frame.time_relative', 0.0),
-                        features.get('ip.len', 0),
-                        features.get('tcp.flags.syn', 0),
-                        features.get('tcp.flags.ack', 0),
-                        features.get('tcp.flags.push', 0),
-                        features.get('tcp.flags.fin', 0),
-                        features.get('tcp.flags.reset', 0),
-                        features.get('ip.proto', 0),
-                        features.get('ip.ttl', 0),
-                        features.get('tcp.window_size_value', 0),
-                        features.get('tcp.hdr_len', 0),
-                        features.get('udp.length', 0),
-                        features.get('srcport', 0),
-                        features.get('dstport', 0)
-                    ]
-
-                    detection_result = perform_detection(feature_list)
-                    predictions.append({
-                        'features': feature_list,
-                        'prediction': detection_result
-                    })
-
-            return predictions
+        if not model:
+            logger.error("ML model is not loaded.")
+            return None
         
+        if not os.path.exists(filepath):
+            logger.error("Capture file not found.")
+            return None
+
+        try:
+            packets = rdpcap(filepath)
+
+            if len(packets) == 0:
+                logger.warning("Error: No packets of data found.")
+                return None
+            
+            analysis_results = {
+                'filepath': filepath,
+                'attack_type': attack_type,
+                'target_ip': target_ip,
+                'total_packets': len(packets),
+                'detections': [],
+                'summary': [],
+                'timestamp': datetime.now().isoformat()
+            }
+
+            packets_to_analyze = packets[:50]
+            logger.info(f"Analyzing {len(packets_to_analyze)} packets from capture.")
+
+            attack_detections = defaultdict(int)
+            severity_levels = defaultdict(int)
+
+            for i, packet in enumerate(packets_to_analyze):
+                features = self.extract_features(packet)
+
+                if not features:
+                    continue
+
+                # Convert features dict to ordered list
+                feature_list = [
+                    features.get('frame.time_relative', 0.0),
+                    features.get('ip.len', 0),
+                    features.get('tcp.flags.syn', 0),
+                    features.get('tcp.flags.ack', 0),
+                    features.get('tcp.flags.push', 0),
+                    features.get('tcp.flags.fin', 0),
+                    features.get('tcp.flags.reset', 0),
+                    features.get('ip.proto', 0),
+                    features.get('ip.ttl', 0),
+                    features.get('tcp.window_size_value', 0),
+                    features.get('tcp.hdr_len', 0),
+                    features.get('udp.length', 0),
+                    features.get('srcport', 0),
+                    features.get('dstport', 0)
+                ]
+
+                return JsonResponse({
+                    'status': 'success',
+                    'data': {
+                        'features': feature_list,
+                        'file_path': filepath,
+                        'packet_count': len(packets),
+                        'auto_analysis': auto_analysis_results
+                    }
+                })
+
         except Exception as e:
             logger.error(f"Error processing file: {e}")
             return HttpResponseRedirect(reverse('home'))
@@ -277,23 +425,24 @@ class AttackSimulator:
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(self.host, username=self.username, password=self.password, timeout=10)
+            ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'HTTPFlood': f'sudo python3 ./goldeneye.p http://{target_ip}',
-                'ICMPFlood': f'sudo hping3 --flood --rand-source -1 -p 80 {target_ip}',
-                'SYNFlood': f'sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
-                'UDPFlood': f'sudo hping3 --flood --rand-source --udp -p 80 {target_ip}',
-                'SYNScan': f'sudo nmap -sS {target_ip} -p 80 ',
-                'TCPConnectScan': f'sudo nmap -sT {target_ip} -p 80',
-                'UDPScan': f'sudo nmap -sU {target_ip} -p 80',
-                'SlowrateDoS': f'sudo python3 slowloris.py {target_ip}'
+                'HTTPFlood': f'python3 goldeneye.py http://{target_ip}',
+                'ICMPFlood': f'hping3 -1 {target_ip}',
+                'SYNFlood': f'hping3 -S -p 80 --flood --rand-source {target_ip}',
+                'UDPFlood': f'hping3 -1 {target_ip}',
+                'SYNScan': f'nmap -sS {target_ip} -p 1-1000',
+                'TCPConnectScan': f'nmap -sT {target_ip} -p 1-1000',
+                'UDPScan': f'nmap -sU {target_ip} -p 1-1000',
+                'SlowrateDoS': f'python3 slowloris.py {target_ip}'
             }
 
             command = attack_command.get(attack_type)
 
             if command:
-                stdin, stdout, stderr = ssh.exec_command(f'timeout 30 {command}')
+                stdin, stdout, stderr = ssh.exec_command(f'timeout 60 {command}')
+                print(stdout.readlines())
                 logger.info(f"{attack_type} attack triggered on {target_ip}")
 
                 ssh.close()
@@ -486,6 +635,7 @@ class SeverityLevelAnalyzer:
     
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
+network_capture = NetworkTrafficCapture()
 
 # Mitigation strategies based on attack type
 class AIMitigation:
@@ -548,9 +698,12 @@ class AIMitigation:
     
 # Start the attack simulation when the start button is clicked
 def start_attack(request):
-    global target_ip, attack_type, attack_status
+    global target_ip, attack_type, attack_status, network_capture, latest_capture_file
+    global model, ml_status, automation_manager
 
     if request.method == "POST":
+        automation_manager.start_automation(attack_type, target_ip)
+
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
 
@@ -558,118 +711,295 @@ def start_attack(request):
         username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
         password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
+
+        # 1. Start packet capture with auto analysis
+        capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
+
+        if capture_success:
+            logger.info("Packet capture thread started.")
+
+            automation_manager.complete_step('packet_capture', {'file_path': capture_file})
+
+            time.sleep(2)
         
-        if simulator.trigger_dos_attack(target_ip, attack_type):
-            attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+            # 2. Start attack simulation
+            if simulator.trigger_dos_attack(target_ip, attack_type):
+                attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
+                latest_capture_file = capture_file
+                automation_manager.complete_step('attack_simulation', {'status': 'success'})
+                cache.set('latest_capture_info', 
+                    {
+                    'file_path': capture_file,
+                    'attack_type': attack_type,
+                    'target_ip': target_ip,
+                    'timestamp': datetime.now().isoformat(),
+                    'automation_id': id(automation_manager.current_task)
+                }, timeout=3600) # Cache for 1 hour 
+
+                # 3. ML model loading and analysis
+                threading.Thread(
+                    target=schedule_ml_automation,
+                    args=(capture_file, attack_type, target_ip),
+                    daemon=True
+                ).start()
             
-            loop = asyncio.ProactorEventLoop()
-            asyncio.set_event_loop(loop)
-            
-            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
-            capture.sniff(timeout=5)
-
-            if 'capture' in locals() and capture:
-                capture.close()
-
-            print(f"Packet capture success. Live capture saved.")
-            
-        else:
-            attack_status = "Failed to inject attack"
-        
-    return HttpResponseRedirect(reverse('home'))
-
-# Stop the attack simulation when the stop button is clicked
-def stop_attack(request):
-    global target_ip, attack_type, attack_status
-
-    if request.method == "POST":
-        attack_type = request.POST.get('attack_type')
-        target_ip = request.POST.get('target_ip', '192.168.0.165')
-        duration = int(request.POST.get('duration', 30))
-        speed = int(request.POST.get('speed', 50))
-        port = int(request.POST.get('port', 80))
-
-        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
-        username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
-        password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
-        simulator = AttackSimulator(host, username, password)
-
-        if simulator.trigger_dos_attack(target_ip, attack_type, duration, speed, port):
-            attack_status = f"Attack simulation done. {attack_type} attack injected on {target_ip}"
-
-            loop = asyncio.ProactorEventLoop()
-            asyncio.set_event_loop(loop)
-                
-            capture = pyshark.LiveCapture(interface="Wi-Fi", eventloop=loop, output_file='./test.pcap')
-            capture.sniff(timeout=5)
-
-            if 'capture' in locals() and capture:
-                capture.close()
-
-                print(f"Packet capture success. Live capture saved.")
-
             else:
-                return HttpResponseRedirect(reverse('home'))
+                attack_status = "Failed to inject attack"
+                automation_manager.status = "Failed"
+                network_capture.stop_capture()
+                messages.error(request, "Attack simulation failed.")
         
-        if simulator.trigger_dos_attack(target_ip, attack_type):
-            attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
         else:
-            attack_status = "Failed to inject attack"
-
-        return HttpResponseRedirect(reverse('home'))    
- 
+            attack_status = "Failed to start packet capture"
+            automation_manager.status = "Failed"
+            messages.error("Failed to intialize packet capture.")
+        
     return HttpResponseRedirect(reverse('home'))
 
-# Start the machine learning model when the start button is clicked
-def start_ml(request):
+def schedule_ml_automation(capture_file, attack_type, target_ip):
+    global model, ml_status, automation_manager
 
-    global model, detection, accuracy, ml_status
+    try:
+        time.sleep(37) # Wait for capture to complete
 
-    # Adjust the path as needed to load the trained model
-    # model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
-    model_path = os.path.join(settings.BASE_DIR, 'app','model', 'vanilla_lstm_model.pkl')
+        # 4. Auto load ML model
+        if model is None:
+            logger.info("Loading ML model for automation...")
+            model_loaded = auto_load_ml_model()
 
-    alternative_path = [os.path.join(os.path.dirname(__file__), 'model', 'vanilla_lstm_model.pkl'),
-                        '/app/app/model/vanilla_lstm_model.pkl',
-                        './app/model/vanilla_lstm_model.pkl',
-    ]
+            if model_loaded:
+                automation_manager.complete_step('ml_loading', {'status': 'Model loaded'})
+                logger.info("ML model auto-loaded successfully.")
+            
+            else:
+                automation_manager.status = "Failed"
+                logger.error("Failed to auto-load ML model.")
+                return
+        else:
+            automation_manager.complete_step('ml_loading', {'status': 'Model already loaded'})
+            logger.info("ML model is already loaded.")
 
-    model_file_found = False
-    actual_model_path = None
+        time.sleep(3) # Ensure file is ready 
 
-    if os.path.exists(model_path):
-        model_file_found = True
-        actual_model_path = model_path
+        # 5. Automatically analyze the captured data
+        if os.path.exists(capture_file):
+            analysis_results = auto_analyze_captured_data(capture_file, attack_type, target_ip)
+
+            if analysis_results:
+                automation_manager.complete_step('data_analysis', analysis_results)
+                automation_manager.complete_automation(analysis_results)
+                logger.info("Captured data analyzed successfully.")
+
+                cache.set('automation_results', {
+                    'analysis': analysis_results,
+                    'capture_file': capture_file,
+                    'attack_type': attack_type,
+                    'target_ip': target_ip,
+                    'completed_at': datetime.now().isoformat()
+                }, timeout=3600) # Cache for 1 hour
+            
+            else:
+                automation_manager.status = "analysis_failed"
+                logger.error("Failed to analyze captured data.")
+        else:
+            automation_manager.status = "file_not_found"
+            logger.error("Capture file not found for analysis.")
     
-    else:
-        for alt_path in alternative_path:
-            if os.path.exists(alt_path):
-                model_file_found = True
-                actual_model_path = alt_path
-                break
+    except Exception as e:
+        automation_manager.status = "Error"
+        logger.error(f"Automation scheduling error: {e}")
 
-    if model_file_found and request.method == "POST":
-        try:
+def auto_load_ml_model():
+
+    global model, accuracy, ml_status
+
+    try:
+
+        # Adjust the path as needed to load the trained model
+        # model_path = (r'C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\model\vanilla_lstm_model.pkl')
+        model_path = os.path.join(settings.BASE_DIR, 'app','model', 'vanilla_lstm_model.pkl')
+
+        alternative_path = [os.path.join(os.path.dirname(__file__), 'model', 'vanilla_lstm_model.pkl'),
+                            '/app/app/model/vanilla_lstm_model.pkl',
+                            './app/model/vanilla_lstm_model.pkl',
+        ]
+
+        model_file_found = False
+        actual_model_path = None
+
+        if os.path.exists(model_path):
+            model_file_found = True
+            actual_model_path = model_path
+        
+        else:
+            for alt_path in alternative_path:
+                if os.path.exists(alt_path):
+                    model_file_found = True
+                    actual_model_path = alt_path
+                    break
+
+        if model_file_found:
             model = joblib.load(actual_model_path)
             logger.info("Model loaded successfully!")
             ml_status = "ML model is available and ready to be used."
             accuracy = "91.01%"
-            detection = None
+            return True
         
-        except Exception as e:
+        else:
             logger.error(f"Error loading model: {e}")
             ml_status = "Failed to load ML model."
-            accuracy = "N/A"
-            detection = None
+            return False
 
-    elif not model_file_found:
-        logger.warning("Model file not found.")
-        ml_status = "ML model file is not found."
-        accuracy = "N/A"
-        detection = None
+    except Exception as e:
+        logger.error(f"Error loading model: {e}")
+        ml_status = "Failed to load ML model."
+        return False
+
+def auto_analyze_captured_data(capture_file, attack_type, target_ip):
+    global model, detection, attack_level, attack_severity_num, accuracy
+    global analysis_report, mitigation
+
+    if not model:
+        logger.error("ML model is not loaded.")
+        return None
     
-    return HttpResponseRedirect(reverse('home'))
+    try:
+        packets = rdpcap(capture_file)
+
+        if len(packets) == 0:
+            logger.warning("Error: No packets of data found.")
+            return None
+        
+        packet = packets[0]
+        
+        capture_instance = NetworkTrafficCapture()
+        features = capture_instance.extract_features(packet)
+
+        if not features:
+            logger.warning("Error: No features extracted.")
+            return None
+
+        feature_list = [
+            features.get('frame.time_relative', 0.0),
+            features.get('ip.len', 0),
+            features.get('tcp.flags.syn', 0),
+            features.get('tcp.flags.ack', 0),
+            features.get('tcp.flags.push', 0),
+            features.get('tcp.flags.fin', 0),
+            features.get('tcp.flags.reset', 0),
+            features.get('ip.proto', 0),
+            features.get('ip.ttl', 0),
+            features.get('tcp.window_size_value', 0),
+            features.get('tcp.hdr_len', 0),
+            features.get('udp.length', 0),
+            features.get('srcport', 0),
+            features.get('dstport', 0)
+            ]
+
+        # Reshape the data into 3D array to fit in LSTM input format
+        data_array = np.array(feature_list).reshape(1, 1, 14)
+
+        # Make prediction
+        prediction = model.predict(data_array)
+
+        if len(prediction.shape) > 1:
+            predicted_class = np.argmax(prediction, axis=1)
+
+            if isinstance(predicted_class, np.ndarray):
+                predicted_class = int(predicted_class[0])
+        else:
+            predicted_class = int(prediction[0])
+
+        attack_types = {
+            0: "Benign",
+            1: "HTTPFlood",
+            2: "ICMPFlood",
+            3: "SYNFlood",
+            4: "SYNScan",
+            5: "SlowrateDoS",
+            6: "TCPConnectScan",
+            7: "UDPFlood",
+            8: "UDPScan"
+        }
+
+        detection = attack_types.get(predicted_class, "Unknown")
+
+        # Create feature dictionary for severity report
+        feature_names = [
+            "frame.time_relative",
+            "ip.len",
+            "tcp.flags.syn",
+            "tcp.flags.ack",
+            "tcp.flags.push",
+            "tcp.flags.fin",
+            "tcp.flags.reset",
+            "ip.proto",
+            "ip.ttl",
+            "tcp.window_size_value",
+            "tcp.hdr_len",
+            "udp.length",
+            "srcport",
+            "dstport" 
+        ]
+
+        feature_dict = {}
+
+        for i, value in enumerate(feature_list):
+            if i < len(feature_names):
+                feature_dict[feature_names[i]] = value
+            else:
+                feature_dict[f'feature_{i+1}'] = value
+
+        # Determine attack severity level
+        attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, feature_dict, anomaly_score=0.5)
+        logger.info(f"Attack detected: {detection}, Severity Level: {attack_level}, Severity Num: {attack_severity_num}")
+
+        # Set attack status and mitigation based on detection results
+        if detection == "Benign":
+            mitigation = "No action needed"
+
+        #else:  
+            #mitigation = AIMitigation.get_mitigation(detection, analysis_report)
+        
+        accuracy = "91.01%"
+
+        auto_analysis_results = {
+            'detection': detection,
+            'attack_level': attack_level,
+            'attack_severity_num': attack_severity_num,
+            'accuracy': accuracy,
+            'mitigation': mitigation,
+            'analysis_report': analysis_report,
+            'expected_attack': attack_type,
+            'target_ip': target_ip,
+            'capture_file': capture_file,
+            'total_packets': len(packets),
+            'timestamp': datetime.now().isoformat()
+        }
+
+        logger.info(f"Analysis Results: {auto_analysis_results}")
+        return auto_analysis_results
     
+    except Exception as e:
+        logger.error(f"Error analyzing captured data: {e}")
+        return None
+    
+def get_automation_status(request):
+    if request.method == "GET":
+        status = automation_manager.get_status()
+
+        # Check for completed results in cache
+        automation_results = cache.get('automation_results', None)
+
+        if automation_results:
+            status['results'] = automation_results
+
+        return JsonResponse({
+            'status': status,
+            'automation': status
+        })
+    return JsonResponse({'status':'error', 'message': 'Invalid request method'})
+
 # Stop the machine learning model when the stop button is clicked
 def stop_ml(request):
 
@@ -685,7 +1015,21 @@ def stop_ml(request):
 
 def home(request):
 
-    global model, detection, attack_level, attack_severity_num, accuracy, connection_status, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation
+    global model, detection, attack_level, attack_severity_num, accuracy, connection_status, attack_status, ml_status, target_ip, attack_type, analysis_report, mitigation, auto_analysis_results, latest_capture_file, automation_manager
+
+    automation_results = cache.get('automation_results')
+
+    if automation_results and not detection:
+        detection = automation_results['analysis']['detection']
+        attack_level = automation_results['analysis']['attack_level']
+        attack_severity_num = automation_results['analysis']['attack_severity_num']
+        accuracy = automation_results['analysis']['accuracy']
+        mitigation = automation_results['analysis']['mitigation']
+        analysis_report = automation_results['analysis']['analysis_report']
+
+        messages.info(request, "Automation completed. Results are available.")
+
+        cache.delete('automation_results')
 
     if request.method == 'POST' and model is not None:
         form = CapturedDataForm(request.POST, request.FILES)
@@ -963,7 +1307,11 @@ def home(request):
                        'attack_type': attack_type,
                        'mitigation': mitigation,
                        'captured_data': request.POST.get('captured_data', ''),
-                       'captured_text': request.POST.get('captured_text', '')})
+                       'captured_text': request.POST.get('captured_text', ''),
+                       'auto_analysis_results': auto_analysis_results,
+                       'latest_capture_file': latest_capture_file,
+                       'automation_status': automation_manager.get_status()
+                       })
 
     form = CapturedDataForm()
     return render(request, 'index.html', 
@@ -980,4 +1328,8 @@ def home(request):
                    'attack_type': attack_type,
                    'mitigation': mitigation,
                    'captured_data': '',
-                   'captured_text': ''})
+                   'captured_text': '',
+                   'auto_analysis_results': auto_analysis_results,
+                   'latest_capture_file': latest_capture_file,
+                   'automation_status': automation_manager.get_status()
+                   })

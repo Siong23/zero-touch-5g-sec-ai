@@ -10,14 +10,11 @@ def favicon_view(request):
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('start_ml/', views.start_ml, name='start_ml'),
+    #path('start_ml/', views.start_ml, name='start_ml'),
     path('stop_ml/', views.stop_ml, name='stop_ml'),
     path('receive_network_data/', views.receive_network_data, name='receive_network_data'),
+    path('get_automation_status/', views.get_automation_status, name='get_automation_status'),
     path('start_attack/', views.start_attack, name='start_attack'),
-    path('stop_attack/', views.stop_attack, name='stop_attack'),
-    path('start_capture/', views.NetworkTrafficCapture.start_capture, name='start_capture'),
-    path('stop_capture', views.NetworkTrafficCapture.stop_capture, name='stop_capture'),
-
     path('favicon.ico', favicon_view, name='favicon'),
 ]
 

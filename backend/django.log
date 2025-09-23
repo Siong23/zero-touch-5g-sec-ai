@@ -2377,3 +2377,466 @@ ICMPFlood attack triggered on 192.168.0.165
 ICMPFlood attack triggered on 192.168.0.165
 "POST /start_attack/ HTTP/1.1" 302 0
 "GET / HTTP/1.1" 200 20775
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18999
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19002
+"GET / HTTP/1.1" 200 19002
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 18999
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 621, in start_attack
+    if network_capture.start_capture_async(duration=30, output_file=capture_file):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'start_capture_async'
+"POST /start_attack/ HTTP/1.1" 500 75324
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+Capture analysis completed.
+"GET / HTTP/1.1" 200 20775
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Capture analysis completed.
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+SYNFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_SYNFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+Attack simulation error: No existing session
+Packet capture stopped.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20727
+Packet capture completed. Saved to attack_capture_SYNFlood.pcap
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+SYNFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_SYNFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Attack simulation error: Authentication timeout.
+Packet capture stopped.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20727
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+Attack simulation error: No existing session
+Packet capture stopped.
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19009
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+"GET / HTTP/1.1" 200 19009
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19021
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19069
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19069
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20705
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20708
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+API data processing error: timed out
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19002
+"GET / HTTP/1.1" 200 19002
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20717
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19057
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+Capture analysis completed.
+Packet capture started on interface Ethernet 4 for 30 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19056
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Capture analysis completed.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19068
+Model loaded successfully!
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20774
+Capture analysis completed.
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 20775
+Capture analysis completed.
+Packet capture completed. Saved to attack_capture_ICMPFlood.pcap
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18999
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19011
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19068
+Capture analysis completed.
+Packet capture completed. Saved to attack_capture_UDPFlood.pcap
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 1296, in home
+    'analysis_results': analysis_results,
+                        ^^^^^^^^^^^^^^^^
+NameError: name 'analysis_results' is not defined
+"GET / HTTP/1.1" 500 73265
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 1296, in home
+    'analysis_results': analysis_results,
+                        ^^^^^^^^^^^^^^^^
+NameError: name 'analysis_results' is not defined
+"GET / HTTP/1.1" 500 73265
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 1298, in home
+    'latest_capture_file': latest_capture_file,
+                           ^^^^^^^^^^^^^^^^^^^
+NameError: name 'latest_capture_file' is not defined
+"GET / HTTP/1.1" 500 73128
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 1283, in home
+    return render(request, 'index.html',
+                  {'form': form,
+    ...<15 lines>...
+                   'automation_status': automation_manager.get_status()
+                   })
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'start_ml' not found. 'start_ml' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 132885
+"GET /favicon.ico HTTP/1.1" 204 0
+Internal Server Error: /
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 1283, in home
+    return render(request, 'index.html',
+                  {'form': form,
+    ...<15 lines>...
+                   'automation_status': automation_manager.get_status()
+                   })
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'start_ml' not found. 'start_ml' is not a valid view function or pattern name.
+"GET / HTTP/1.1" 500 132885
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 18991
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18991
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19003
+Internal Server Error: /start_attack/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 682, in start_attack
+    capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NetworkTrafficCapture' object has no attribute 'start_capture_with_auto_analysis'
+"POST /start_attack/ HTTP/1.1" 500 75307
+"GET /favicon.ico HTTP/1.1" 204 0
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18991
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19003
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19060
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Error analyzing captured data: type object 'AIMitigation' has no attribute 'get_mitigation'
+Failed to analyze captured data.
+Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\UDPFlood.pcap
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Network interface used: Ethernet 4 with IP 192.168.56.1
+"GET / HTTP/1.1" 200 18991
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19003
+Packet capture started on interface Ethernet 4 for 60 seconds.
+Packet capture thread started.
+UDPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19060
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+Network interface used: Ethernet 4 with IP 192.168.56.1
+Attack detected: HTTPFlood, Severity Level: Minor, Severity Num: 1
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': None, 'analysis_report': {'packet_size': 86, 'payload_size': 86, 'window_efficiency': 0.0, 'port_randomness': 0.0, 'estimated_packet_rate': 5.686293809039556e-10, 'packet_rate': 5.686293809039556e-10, 'connection_attempts': 5.6862938090395565e-11, 'connection_rate': 5.686293809039556e-10, 'frame_time_relative': 1758614720.91064, 'anomaly_score': 0.5, 'severity_level': 'Minor', 'severity_score': 1}, 'expected_attack': 'UDPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\UDPFlood.pcap', 'total_packets': 2, 'timestamp': '2025-09-23T16:05:41.433233'}
+Automation process completed.
+Captured data analyzed successfully.
+Not Found: /{}
+"POST /%7B%7D HTTP/1.1" 404 4306
+"GET /favicon.ico HTTP/1.1" 204 0
+Packet capture completed. Saved to C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\UDPFlood.pcap
