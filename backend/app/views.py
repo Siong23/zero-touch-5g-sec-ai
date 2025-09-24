@@ -848,7 +848,7 @@ class AIMitigation:
         try:
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(self.host, username=self.username, passsword=self.password)
+            ssh.connect(self.host, username=self.username, password=self.password)
 
             mitigation_commands = {
                 'HTTPFlood': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"},
