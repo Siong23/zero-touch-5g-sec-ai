@@ -5953,3 +5953,323 @@ Failed to analyze captured data.
 "GET / HTTP/1.1" 200 67355
 "GET /get_automation_status/ HTTP/1.1" 200 1217
 "GET /get_automation_status/ HTTP/1.1" 200 1217
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 192.168.0.13)
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 192.168.0.13)
+"GET / HTTP/1.1" 200 65609
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 65621
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for HTTPFlood on 192.168.0.165
+Starting attack simulation: HTTPFlood on 192.168.0.165
+Starting packet capture with filter: None
+Packet capture started on interface Wi-Fi for 120 seconds.
+Packet capture thread started.
+Step completed: packet_capture (40%)
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+Target 192.168.0.165 reachability: Yes
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+HTTPFlood attack triggered on 192.168.0.165
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 65679
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+Capture file saved: C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\HTTPFlood.pcap (196260 bytes)
+Total packets captured: 934
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 1201
+"GET /get_automation_status/ HTTP/1.1" 200 1201
+Selected most active interface: Wi-Fi (IP: 192.168.0.13)
+Extracted features: {'frame.time_relative': 1758730108.826933, 'ip.len': 166.0, 'tcp.flags.syn': 0.0, 'tcp.flags.ack': 0.0, 'tcp.flags.push': 0.0, 'tcp.flags.fin': 0.0, 'tcp.flags.reset': 0.0, 'tcp.window_size_value': 0.0, 'tcp.hdr_len': 0.0, 'srcport': 41641.0, 'dstport': 1025.0, 'ip.proto': 17.0, 'ip.ttl': 128.0, 'udp.length': 132.0}
+Extracted features: [1758730108.826933, 166.0, 0.0, 0.0, 0.0, 0.0, 0.0, 17.0, 128.0, 0.0, 0.0, 132.0, 41641.0, 1025.0]
+Processed feature list: [1758730108.826933, 166.0, 0.0, 0.0, 0.0, 0.0, 0.0, 17.0, 128.0, 0.0, 0.0, 132.0, 41641.0, 1025.0]
+Feature list length: 14
+Data array shape: (1, 1, 14), dtype: float32
+Raw prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Prediction shape: (1, 9)
+Prediction type: <class 'numpy.ndarray'>
+Predicted class (int): 1
+"GET /get_automation_status/ HTTP/1.1" 200 1211
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': 'sudo iptables -I INPUT 2 -j prohibited_traffic', 'analysis_report': {}, 'expected_attack': 'HTTPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\HTTPFlood.pcap', 'total_packets': 934, 'match_expected': True, 'confidence': 1.0, 'timestamp': '2025-09-25T00:10:48.467259'}
+Step completed: data_analysis (80%)
+Automation process completed.
+Captured data analyzed successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"POST /start_ml/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 70301
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+"GET /get_automation_status/ HTTP/1.1" 200 3862
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 192.168.0.13)
+"GET / HTTP/1.1" 200 65609
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 65621
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for HTTPFlood on 192.168.0.165
+Starting attack simulation: HTTPFlood on 192.168.0.165
+Starting packet capture with filter: None
+Packet capture started on interface Wi-Fi for 120 seconds.
+Packet capture thread started.
+Step completed: packet_capture (40%)
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+Target 192.168.0.165 reachability: Yes
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+"GET /get_automation_status/ HTTP/1.1" 200 1025
+HTTPFlood attack triggered on 192.168.0.165
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 65679
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+Capture file saved: C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\HTTPFlood.pcap (291296 bytes)
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+Total packets captured: 1186
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+"GET /get_automation_status/ HTTP/1.1" 200 1113
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 1201
+"GET /get_automation_status/ HTTP/1.1" 200 1201
+Selected most active interface: Wi-Fi (IP: 192.168.0.13)
+Extracted features: {'frame.time_relative': 1758730565.008116, 'ip.len': 166.0, 'tcp.flags.syn': 0.0, 'tcp.flags.ack': 0.0, 'tcp.flags.push': 0.0, 'tcp.flags.fin': 0.0, 'tcp.flags.reset': 0.0, 'tcp.window_size_value': 0.0, 'tcp.hdr_len': 0.0, 'srcport': 41641.0, 'dstport': 64282.0, 'ip.proto': 17.0, 'ip.ttl': 128.0, 'udp.length': 132.0}
+Extracted features: [1758730565.008116, 166.0, 0.0, 0.0, 0.0, 0.0, 0.0, 17.0, 128.0, 0.0, 0.0, 132.0, 41641.0, 64282.0]
+Processed feature list: [1758730565.008116, 166.0, 0.0, 0.0, 0.0, 0.0, 0.0, 17.0, 128.0, 0.0, 0.0, 132.0, 41641.0, 64282.0]
+Feature list length: 14
+Data array shape: (1, 1, 14), dtype: float32
+Raw prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Prediction shape: (1, 9)
+Prediction type: <class 'numpy.ndarray'>
+Predicted class (int): 1
+"GET /get_automation_status/ HTTP/1.1" 200 1211
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': 'sudo iptables -I INPUT 2 -j prohibited_traffic', 'analysis_report': {}, 'expected_attack': 'HTTPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\HTTPFlood.pcap', 'total_packets': 1186, 'match_expected': True, 'confidence': 1.0, 'timestamp': '2025-09-25T00:18:25.970441'}
+Step completed: data_analysis (80%)
+Automation process completed.
+Captured data analyzed successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET / HTTP/1.1" 200 70301
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867
+"GET /get_automation_status/ HTTP/1.1" 200 3867

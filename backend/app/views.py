@@ -215,7 +215,7 @@ class NetworkTrafficCapture:
         global capture_active, auto_analysis_results
 
         try:
-            capture_filter = self._get_capture_filter(attack_type, target_ip)
+            capture_filter = None #self._get_capture_filter(attack_type, target_ip)
 
             success = False
             packets_captured = 0
