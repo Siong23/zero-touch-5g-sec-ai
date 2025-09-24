@@ -73,6 +73,7 @@ class AutomationManager:
         self.progress = 0
         self.status = "Idle"
         self.results = {}
+        self.step_results = {}
 
     def start_automation(self, attack_type, target_ip):
         self.current_task = {
@@ -89,6 +90,9 @@ class AutomationManager:
         }
         self.progress = 0
         self.status = "Running"
+        self.results = {}
+        self.step_results = {}
+        logger.info(f"Automation started for {attack_type} on {target_ip}")
         return True
     
     def get_status(self):
@@ -97,7 +101,8 @@ class AutomationManager:
             'status': self.status,
             'progress': self.progress,
             'current_task': self.current_task,
-            'results': self.results
+            'results': self.results,
+            'step_results': self.step_results
         }
     
     def complete_step(self, step_name, results=None):
@@ -106,7 +111,9 @@ class AutomationManager:
             self.progress = int(((step_index + 1) / len(self.current_task['steps'])) * 100)
            
             if results:
-                self.results[step_name] = results
+                self.step_results[step_name] = results
+
+            logger.info(f"Step completed: {step_name} ({self.progress}%)")
             
     def complete_automation(self, final_results):
         self.status = "Completed"
@@ -921,19 +928,30 @@ def get_automation_status(request):
 def start_attack(request):
     global target_ip, attack_type, attack_status, network_capture, latest_capture_file
     global model, ml_status, automation_manager
+    global detection, attack_level, attack_severity_num, analysis_report, mitigation
+
+    detection = None
+    attack_level = None
+    attack_severity_num = 0
+    analysis_report = {}
+    mitigation = None
 
     if request.method == "POST":
-        automation_manager.start_automation(attack_type, target_ip)
+        cache.delete('automation_results')
+        cache.delete('results_ready')
 
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
+
+        automation_manager = AutomationManager()
+        automation_manager.start_automation(attack_type, target_ip)
 
         try:
             socket.inet_aton(target_ip)
         except socket.error:
             attack_status = "Invalid target IP address"
             messages.error(request, "Invalid target IP address.")
-            return HttpResponseRedirect(reverse('home'))
+            return JsonResponse({'status': 'error', 'message': 'Invalid IP address'})
 
         logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
 
@@ -965,7 +983,7 @@ def start_attack(request):
                     'target_ip': target_ip,
                     'timestamp': datetime.now().isoformat(),
                     'automation_id': id(automation_manager.current_task)
-                }, timeout=7200) # Cache for 1 hour 
+                }, timeout=7200) # Cache for 2 hour 
 
                 # 3. ML model loading and analysis
                 threading.Thread(
@@ -977,14 +995,13 @@ def start_attack(request):
             else:
                 attack_status = "Failed to inject attack"
                 automation_manager.status = "Failed"
-                network_capture.stop_capture()
-                messages.error(request, "Attack simulation failed.")
+                logger.error("Attack simulation failed.")
         
         else:
             attack_status = "Failed to start packet capture"
             automation_manager.status = "Failed"
-            messages.error("Failed to intialize packet capture.")
-        
+            logger.error("Failed to initialize packet capture.")
+
     return HttpResponseRedirect(reverse('home'))
 
 def schedule_ml_automation(capture_file, attack_type, target_ip):
@@ -1027,7 +1044,10 @@ def schedule_ml_automation(capture_file, attack_type, target_ip):
                     'attack_type': attack_type,
                     'target_ip': target_ip,
                     'completed_at': datetime.now().isoformat()
-                }, timeout=3600) # Cache for 1 hour
+                }, timeout=7200) # Cache for 2 hours
+
+                # Set a flag that results are ready
+                cache.set('results_ready', True, timeout=7200)
             
             else:
                 automation_manager.status = "analysis_failed"
@@ -1138,6 +1158,7 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
         detection = detection_result['attack_type']
         attack_level = detection_result['severity_level']
         attack_severity_num = detection_result['severity_score']
+        accuracy = "91.01%"
 
         # Set attack status and mitigation based on detection results
         if detection == "Benign":
@@ -1174,19 +1195,43 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
     
 def get_automation_status(request):
     if request.method == "GET":
+        global automation_manager, detection, attack_level, attack_severity_num, accuracy, mitigation, analysis_report
         status = automation_manager.get_status()
 
         # Check for completed results in cache
         automation_results = cache.get('automation_results', None)
 
-        if automation_results:
-            status['results'] = automation_results
-
-        return JsonResponse({
+        current_results = {
+            'detection': detection,
+            'attack_level': attack_level,
+            'attack_severity_num': attack_severity_num,
+            'accuracy': accuracy,
+            'mitigation': mitigation,
+            'analysis_report': analysis_report
+        }
+        
+        response_data = {
             'status': status,
-            'automation': status
-        })
+            'automation': status,
+            'current_results': current_results,
+            'has_new_results': automation_results is not None
+        }
+
+        if automation_results:
+            response_data['automation_results'] = automation_results
+
+        return JsonResponse(response_data)
+    
     return JsonResponse({'status':'error', 'message': 'Invalid request method'})
+
+# New endpoint to clear automation results
+@csrf_exempt
+def clear_automation_results(request):
+    if request.method == 'POST':
+        cache.delete('automation_results')
+        cache.delete('results_ready')
+        return JsonResponse({'status': 'success', 'message': 'Results cleared'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def start_ml(request):
     global model, detection, accuracy, ml_status

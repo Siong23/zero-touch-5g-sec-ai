@@ -14,6 +14,7 @@ urlpatterns = [
     path('stop_ml/', views.stop_ml, name='stop_ml'),
     path('receive_network_data/', views.receive_network_data, name='receive_network_data'),
     path('get_automation_status/', views.get_automation_status, name='get_automation_status'),
+    path('clear_automation_results/', views.clear_automation_results, name='clear_automation_results'),
     path('start_attack/', views.start_attack, name='start_attack'),
     path('favicon.ico', favicon_view, name='favicon'),
 ]

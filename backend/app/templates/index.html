@@ -469,6 +469,13 @@
             }
         }
     </style>
+
+    <script>
+        // Make CSRF token available globally
+        window.django = {
+            csrf_token: '{{ csrf_token }}'
+        };
+    </script>
 </head>
 
 <body>
@@ -1405,6 +1412,433 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        // Auto-update functionality for detection results
+        (function() {
+            'use strict';
+            
+            // Configuration
+            const POLLING_INTERVAL = 2000; // 2 seconds
+            const MAX_RETRIES = 3;
+            
+            // State management
+            let automationPolling = null;
+            let isAutomationRunning = false;
+            let retryCount = 0;
+            let lastAutomationStatus = 'Idle';
+            
+            // DOM elements - adjust selectors based on your actual template
+            const elements = {
+                // Detection result elements
+                detectionResult: document.getElementById('detection-result') || document.querySelector('.detection-result'),
+                attackLevel: document.getElementById('attack-level') || document.querySelector('.attack-level'),
+                severityScore: document.getElementById('severity-score') || document.querySelector('.severity-score'),
+                accuracy: document.getElementById('accuracy') || document.querySelector('.accuracy'),
+                mitigation: document.getElementById('mitigation') || document.querySelector('.mitigation'),
+                
+                // Status elements
+                attackStatus: document.getElementById('attack-status') || document.querySelector('.attack-status'),
+                mlStatus: document.getElementById('ml-status') || document.querySelector('.ml-status'),
+                
+                // Form elements
+                startAttackBtn: document.getElementById('start-attack-btn') || document.querySelector('input[type="submit"][value*="Start"]'),
+                attackForm: document.getElementById('attack-form') || document.querySelector('form'),
+                
+                // Progress elements (create if they don't exist)
+                progressContainer: document.getElementById('automation-progress') || createProgressContainer(),
+                progressBar: null,
+                progressText: null,
+                statusText: null
+            };
+            
+            // Create progress container if it doesn't exist
+            function createProgressContainer() {
+                const container = document.createElement('div');
+                container.id = 'automation-progress';
+                container.className = 'automation-progress';
+                container.innerHTML = `
+                    <div class="progress-header">
+                        <h4>Automation Status: <span id="automation-status">Idle</span></h4>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span id="progress-percentage">0</span>% - 
+                        <span id="current-step">Ready</span>
+                    </div>
+                    <div class="automation-log" id="automation-log"></div>
+                `;
+                
+                // Insert after the form
+                const form = elements.attackForm;
+                if (form && form.parentNode) {
+                    form.parentNode.insertBefore(container, form.nextSibling);
+                } else {
+                    // Insert at the beginning of the body if form not found
+                    document.body.insertBefore(container, document.body.firstChild);
+                }
+                
+                // Update element references
+                elements.progressBar = container.querySelector('#progress-bar');
+                elements.progressText = container.querySelector('#progress-percentage');
+                elements.statusText = container.querySelector('#automation-status');
+                elements.currentStep = container.querySelector('#current-step');
+                elements.automationLog = container.querySelector('#automation-log');
+                
+                return container;
+            }
+            
+            // Add CSS styles for progress container
+            function addProgressStyles() {
+                const style = document.createElement('style');
+                style.textContent = `
+                    .automation-progress {
+                        background: #f8f9fa;
+                        border: 1px solid #dee2e6;
+                        border-radius: 5px;
+                        padding: 15px;
+                        margin: 20px 0;
+                        font-family: Arial, sans-serif;
+                    }
+                    .progress-header h4 {
+                        margin: 0 0 10px 0;
+                        color: #495057;
+                    }
+                    .progress-bar-container {
+                        width: 100%;
+                        height: 20px;
+                        background-color: #e9ecef;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        margin: 10px 0;
+                    }
+                    .progress-bar {
+                        height: 100%;
+                        background-color: #007bff;
+                        transition: width 0.3s ease;
+                        border-radius: 10px;
+                    }
+                    .progress-info {
+                        font-size: 14px;
+                        color: #6c757d;
+                        margin-bottom: 10px;
+                    }
+                    .automation-log {
+                        background: #ffffff;
+                        border: 1px solid #dee2e6;
+                        border-radius: 3px;
+                        padding: 10px;
+                        max-height: 150px;
+                        overflow-y: auto;
+                        font-family: monospace;
+                        font-size: 12px;
+                        line-height: 1.4;
+                    }
+                    .log-entry {
+                        margin-bottom: 5px;
+                    }
+                    .log-timestamp {
+                        color: #6c757d;
+                        font-weight: bold;
+                    }
+                    .detection-updated {
+                        animation: highlightUpdate 2s ease-in-out;
+                    }
+                    @keyframes highlightUpdate {
+                        0% { background-color: #fff3cd; }
+                        100% { background-color: transparent; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Utility functions
+            function addLogEntry(message) {
+                if (!elements.automationLog) return;
+                
+                const timestamp = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${message}`;
+                
+                elements.automationLog.appendChild(entry);
+                elements.automationLog.scrollTop = elements.automationLog.scrollHeight;
+                
+                // Keep only last 20 entries
+                const entries = elements.automationLog.querySelectorAll('.log-entry');
+                if (entries.length > 20) {
+                    entries[0].remove();
+                }
+            }
+            
+            function updateProgress(percentage, status, step) {
+                if (elements.progressBar) {
+                    elements.progressBar.style.width = `${percentage}%`;
+                }
+                if (elements.progressText) {
+                    elements.progressText.textContent = percentage;
+                }
+                if (elements.statusText) {
+                    elements.statusText.textContent = status || 'Unknown';
+                }
+                if (elements.currentStep && step) {
+                    elements.currentStep.textContent = step.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                }
+            }
+            
+            function updateDetectionResults(results) {
+                if (!results) return;
+                
+                let updated = false;
+                
+                // Update detection result
+                if (elements.detectionResult && results.detection) {
+                    elements.detectionResult.textContent = results.detection;
+                    elements.detectionResult.classList.add('detection-updated');
+                    setTimeout(() => elements.detectionResult.classList.remove('detection-updated'), 2000);
+                    updated = true;
+                }
+                
+                // Update attack level
+                if (elements.attackLevel && results.attack_level) {
+                    elements.attackLevel.textContent = results.attack_level;
+                    updated = true;
+                }
+                
+                // Update severity score
+                if (elements.severityScore && results.attack_severity_num !== undefined) {
+                    elements.severityScore.textContent = results.attack_severity_num;
+                    updated = true;
+                }
+                
+                // Update accuracy
+                if (elements.accuracy && results.accuracy) {
+                    elements.accuracy.textContent = results.accuracy;
+                    updated = true;
+                }
+                
+                // Update mitigation
+                if (elements.mitigation && results.mitigation) {
+                    elements.mitigation.textContent = results.mitigation;
+                    updated = true;
+                }
+                
+                if (updated) {
+                    addLogEntry(`Detection results updated: ${results.detection || 'Unknown'} (${results.attack_level || 'N/A'})`);
+                }
+            }
+            
+            function updateSystemStatus(data) {
+                if (data.current_results) {
+                    const current = data.current_results;
+                    
+                    // Update attack status
+                    if (elements.attackStatus) {
+                        const status = current.detection && current.detection !== 'Benign' ? 'Under Attack!' : 'Safe';
+                        elements.attackStatus.textContent = status;
+                    }
+                    
+                    // Update ML status
+                    if (elements.mlStatus && current.accuracy) {
+                        elements.mlStatus.textContent = 'ML model is available and ready to be used.';
+                    }
+                }
+            }
+            
+            // Main polling function
+            function pollAutomationStatus() {
+                fetch('/get_automation_status/', {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    retryCount = 0; // Reset retry count on success
+                    
+                    if (data.status) {
+                        const status = data.status;
+                        const currentStatus = status.status || 'Idle';
+                        
+                        // Update progress and status
+                        updateProgress(
+                            status.progress || 0,
+                            currentStatus,
+                            getCurrentStep(status)
+                        );
+                        
+                        // Log status changes
+                        if (currentStatus !== lastAutomationStatus) {
+                            addLogEntry(`Status changed: ${currentStatus}`);
+                            lastAutomationStatus = currentStatus;
+                        }
+                        
+                        // Check for automation results
+                        if (data.automation_results && data.automation_results.analysis) {
+                            addLogEntry('Automation completed! Displaying results...');
+                            updateDetectionResults(data.automation_results.analysis);
+                            
+                            // Stop polling when completed
+                            if (currentStatus === 'Completed') {
+                                setTimeout(() => stopAutomationPolling(), 3000); // Stop after 3 seconds
+                            }
+                        }
+                        
+                        // Update current results if available
+                        if (data.current_results) {
+                            updateDetectionResults(data.current_results);
+                            updateSystemStatus(data);
+                        }
+                        
+                        // Check if automation should stop
+                        if (['Completed', 'Failed', 'Error'].includes(currentStatus)) {
+                            setTimeout(() => stopAutomationPolling(), 5000);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error polling automation status:', error);
+                    retryCount++;
+                    
+                    if (retryCount >= MAX_RETRIES) {
+                        addLogEntry('Error: Failed to get automation status. Stopping polling.');
+                        stopAutomationPolling();
+                    } else {
+                        addLogEntry(`Error getting status (retry ${retryCount}/${MAX_RETRIES})`);
+                    }
+                });
+            }
+            
+            function getCurrentStep(status) {
+                if (!status.current_task || !status.current_task.steps) return 'Initializing';
+                
+                const progress = status.progress || 0;
+                const steps = status.current_task.steps;
+                const currentStepIndex = Math.floor((progress / 100) * steps.length);
+                
+                return steps[currentStepIndex] || 'Processing';
+            }
+            
+            function startAutomationPolling() {
+                if (automationPolling) return;
+                
+                isAutomationRunning = true;
+                retryCount = 0;
+                lastAutomationStatus = 'Idle';
+                
+                // Update UI
+                if (elements.startAttackBtn) {
+                    elements.startAttackBtn.disabled = true;
+                    elements.startAttackBtn.value = elements.startAttackBtn.value.replace('Start', 'Running...');
+                }
+                
+                addLogEntry('Starting automation monitoring...');
+                
+                // Start polling
+                automationPolling = setInterval(pollAutomationStatus, POLLING_INTERVAL);
+                pollAutomationStatus(); // Initial call
+            }
+            
+            function stopAutomationPolling() {
+                if (automationPolling) {
+                    clearInterval(automationPolling);
+                    automationPolling = null;
+                }
+                
+                isAutomationRunning = false;
+                
+                // Update UI
+                if (elements.startAttackBtn) {
+                    elements.startAttackBtn.disabled = false;
+                    elements.startAttackBtn.value = elements.startAttackBtn.value.replace('Running...', 'Start');
+                }
+                
+                addLogEntry('Automation monitoring stopped.');
+            }
+            
+            // Form submission handler
+            function handleFormSubmission(event) {
+                if (isAutomationRunning) {
+                    event.preventDefault();
+                    alert('Automation is already running. Please wait for it to complete.');
+                    return false;
+                }
+                
+                // For AJAX submission
+                event.preventDefault();
+                
+                const formData = new FormData(elements.attackForm);
+                
+                // Clear previous results
+                addLogEntry('Starting new attack simulation...');
+                
+                // Start polling
+                startAutomationPolling();
+                
+                fetch('/start_attack/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        addLogEntry(data.message || 'Attack simulation started successfully');
+                    } else {
+                        addLogEntry(`Error: ${data.message || 'Failed to start attack simulation'}`);
+                        stopAutomationPolling();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting attack:', error);
+                    addLogEntry('Error: Failed to start attack simulation');
+                    stopAutomationPolling();
+                });
+            }
+            
+            // Initialize
+            function initialize() {
+                addProgressStyles();
+                
+                // Attach form submission handler
+                if (elements.attackForm) {
+                    elements.attackForm.addEventListener('submit', handleFormSubmission);
+                }
+                
+                // Initial status check
+                setTimeout(pollAutomationStatus, 1000);
+                
+                addLogEntry('Auto-update system initialized');
+            }
+            
+            // Cleanup
+            window.addEventListener('beforeunload', function() {
+                stopAutomationPolling();
+            });
+            
+            // Start when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initialize);
+            } else {
+                initialize();
+            }
+            
+        })();
     </script>
 </body>
 </html>
