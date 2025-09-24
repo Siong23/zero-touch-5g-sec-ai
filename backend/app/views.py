@@ -1008,7 +1008,7 @@ def schedule_ml_automation(capture_file, attack_type, target_ip):
     global model, ml_status, automation_manager
 
     try:
-        time.sleep(125) # Wait for capture to complete
+        time.sleep(60) # Wait for capture to complete
 
         # 4. Auto load ML model
         if model is None:
