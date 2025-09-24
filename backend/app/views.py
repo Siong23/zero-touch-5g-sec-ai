@@ -224,10 +224,10 @@ class NetworkTrafficCapture:
                 asyncio.set_event_loop(loop)
 
             if capture_filter:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter, capture_timeout=1)
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter)
 
             else:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, capture_timeout=1)
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
 
             capture.sniff(timeout=duration)
 

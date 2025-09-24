@@ -3342,3 +3342,156 @@ ICMPFlood attack triggered on 192.168.0.165
 "GET /get_automation_status/ HTTP/1.1" 200 862
 "GET /get_automation_status/ HTTP/1.1" 200 862
 "GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+Capture file not found for analysis.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+"GET / HTTP/1.1" 200 49663
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 49675
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+Starting attack simulation: ICMPFlood on 192.168.0.165
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture started on interface Wi-Fi for 120 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture thread started.
+Error during packet capture: LiveCapture.__init__() got an unexpected keyword argument 'capture_timeout'
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+Target 192.168.0.165 reachability: No
+Target 192.168.0.165 is not reachable. Aborting attack.
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 49733
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET / HTTP/1.1" 200 49733
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 946
+"GET /get_automation_status/ HTTP/1.1" 200 946
+Capture file not found for analysis.
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+"GET /get_automation_status/ HTTP/1.1" 200 960
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
