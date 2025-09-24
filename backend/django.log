@@ -3235,3 +3235,13 @@ Captured data analyzed successfully.
 "GET / HTTP/1.1" 200 22314
 Prediction error: slice indices must be integers or None or have an __index__ method
 "POST / HTTP/1.1" 200 22321
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+"GET / HTTP/1.1" 200 19378
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)

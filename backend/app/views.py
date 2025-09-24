@@ -173,7 +173,7 @@ class NetworkTrafficCapture:
             return "Wi-Fi"  # Default to Wi-Fi if an error occurs
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
-    def start_capture_with_auto_analysis(self, duration=30, attack_type=None, target_ip=None):
+    def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
 
         global capture_active, capture_thread, latest_capture_file
 
@@ -307,7 +307,7 @@ class NetworkTrafficCapture:
                 'timestamp': datetime.now().isoformat()
             }
 
-            packets_to_analyze = packets[:50]
+            packets_to_analyze = packets[:200]
             logger.info(f"Analyzing {len(packets_to_analyze)} packets from capture.")
 
             attack_detections = defaultdict(int)
@@ -613,7 +613,7 @@ class AttackSimulator:
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'HTTPFlood': f'timeout 45 python3 goldeneye.py http://{target_ip}',
+                'HTTPFlood': f'timeout 45 python3 goldeneye.py http://{target_ip} -w 10',
                 'ICMPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
                 'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',
@@ -1264,7 +1264,6 @@ def home(request):
                         temp_filename = f"temp_{filename}"
                         with open(temp_filename, "wb") as f:
                             f.write(file_content)
-                        
 
                         try:
 
