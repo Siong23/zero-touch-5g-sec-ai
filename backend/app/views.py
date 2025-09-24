@@ -436,7 +436,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.0.132', username='open5gs', password='mmuzte123', timeout=10)
+            ssh.connect('100.108.112.77', username='open5gs', password='mmuzte123', timeout=10)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -902,6 +902,8 @@ def start_attack(request):
     global model, ml_status, automation_manager
 
     if request.method == "POST":
+        automation_manager.start_automation(attack_type, target_ip)
+
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
 
@@ -914,9 +916,7 @@ def start_attack(request):
 
         logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
 
-        automation_manager.start_automation(attack_type, target_ip)
-
-        host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
+        host = OPEN5GS_CONFIG.get('HOST', '100.108.112.77')
         username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
         password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)

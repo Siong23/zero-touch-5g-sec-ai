@@ -3025,3 +3025,56 @@ Watching for file changes with StatReloader
 Selected most active interface: Wi-Fi (IP: 10.193.99.240)
 "GET / HTTP/1.1" 200 19390
 "GET / HTTP/1.1" 200 19390
+Watching for file changes with StatReloader
+Selected most active interface: vEthernet (WSL (Hyper-V firewall)) (IP: 172.21.240.1)
+"GET / HTTP/1.1" 200 19390
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19402
+Starting attack simulation: ICMPFlood on 192.168.0.165
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture started on interface vEthernet (WSL (Hyper-V firewall)) for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture thread started.
+Target 192.168.0.165 reachability: Yes
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19460
+Capture file saved: C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\ICMPFlood.pcap (468 bytes)
+Total packets captured: 0
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+Error: No packets of data found.
+Failed to analyze captured data.
+"GET / HTTP/1.1" 200 21166
+"GET / HTTP/1.1" 200 21166
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 21166
+Starting attack simulation: ICMPFlood on 192.168.0.165
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture started on interface vEthernet (WSL (Hyper-V firewall)) for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture thread started.
+Target 192.168.0.165 reachability: Yes
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 21166
+Capture file saved: C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\ICMPFlood.pcap (468 bytes)
+Total packets captured: 0
+ML model is already loaded.
+Error: No packets of data found.
+Failed to analyze captured data.
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
