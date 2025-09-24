@@ -1143,8 +1143,9 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
         if detection == "Benign":
             mitigation = "No action needed"
 
-        # else:  
-            #mitigation = AIMitigation.get_mitigation(detection, analysis_report)
+        else:  
+            mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
+            mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.0.165')
         
         accuracy = "91.01%"
 
