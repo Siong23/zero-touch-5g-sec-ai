@@ -124,25 +124,50 @@ class NetworkTrafficCapture:
         self.capture_active = False
         self.packets_captured = []
         self.capture_interface = self.get_active_interface()
+        self.capture_file_path = None
     
     def get_active_interface(self):
         try:
             interfaces = psutil.net_if_addrs()
             stats = psutil.net_if_stats()
 
+            active_interfaces = []
+
             for interface_name, interface_addresses in interfaces.items():
                 if interface_name in stats and stats[interface_name].isup:
                     for address in interface_addresses:
                         if address.family == socket.AF_INET and not address.address.startswith("127."):
-                            logger.info(f"Network interface used: {interface_name} with IP {address.address}")
-                            return interface_name
+                            try:
+                                net_io = psutil.net_io_counters(pernic=True)
+                                if interface_name in net_io:
+                                    io_stats = net_io[interface_name]
+                                    if io_stats.bytes_sent > 0 or io_stats.bytes_recv > 0:
+                                        active_interfaces.append({
+                                            'name': interface_name,
+                                            'ip': address.address,
+                                            'activity': io_stats.bytes_sent + io_stats.bytes_recv
+                                        })
+                            except:
+                                pass
+
+            if active_interfaces:
+                active_interfaces.sort(key=lambda x: x['activity'], reverse=True)
+                best_interface = active_interfaces[0]['name']
+                logger.info(f"Selected most active interface: {best_interface} (IP: {active_interfaces[0]['ip']})")
+                return best_interface
+
             
             fallback_interfaces = ["Wi-Fi", "wlan0", "eth0", "Ethernet"]
             for interface in fallback_interfaces:
                 if interface in interfaces:
                     logger.info(f"Fallback to interface: {interface}")
                     return interface
-        
+                
+            available = list(interfaces.keys())
+            if available:
+                logger.warning(f"Using first available interface: {available[0]}")
+                return available[0]
+
         except Exception as e:
             logger.error(f"Error getting active network interface: {e}")
             return "Wi-Fi"  # Default to Wi-Fi if an error occurs
@@ -183,21 +208,74 @@ class NetworkTrafficCapture:
         global capture_active, auto_analysis_results
 
         try:
-            loop = asyncio.ProactorEventLoop()
-            asyncio.set_event_loop(loop)
+            capture_filter = self._get_capture_filter(attack_type, target_ip)
 
-            capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
+            success = False
+            packets_captured = 0
+
+            logger.info(f"Starting packet capture with filter: {capture_filter}")
+
+            if os.name == 'nt':  # Windows
+                loop = asyncio.ProactorEventLoop()
+                asyncio.set_event_loop(loop)
+
+            else: # Unix/Linux/Mac
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+
+            if capture_filter:
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter)
+
+            else:
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
+
             capture.sniff(timeout=duration)
 
-            if 'capture' in locals() and capture:
+            if hasattr(capture, 'close'):
                 capture.close()
-                logger.info(f"Packet capture completed. Saved to {filepath}")
+            
+            success = True
+
+            if success and os.path.exists(filepath):
+                file_size = os.path.getsize(filepath)
+                logger.info(f"Capture file saved: {filepath} ({file_size} bytes)")
+
+                time.sleep(2) # Ensure file is ready
+
+                try:
+                    test_packets = rdpcap(filepath)
+                    packets_captured = len(test_packets)
+                    logger.info(f"Total packets captured: {packets_captured}")
+                
+                except:
+                    pass
+            
+            else:
+                logger.warning("Capture file not found after capture.")
+                success = False
 
         except Exception as e:
             logger.error(f"Error during packet capture: {e}")
+            success = False
         
         finally:
             capture_active = False
+
+    def _get_capture_filter(self, attack_type, target_ip):
+        filters = {
+            'ICMPFlood': f'icmp and (src host {target_ip} or dst host {target_ip})',
+            'HTTPFlood': f'tcp port 80 and (src host {target_ip} or dst host {target_ip})',
+            'SYNFlood': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
+            'UDPFlood': f'udp and (src host {target_ip} or dst host {target_ip})',
+            'SYNScan': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
+            'TCPConnectScan': f'tcp and (src host {target_ip} or dst host {target_ip})',
+            'UDPScan': f'udp and (src host {target_ip} or dst host {target_ip})',
+            'SlowrateDoS': f'tcp port 80 and (src host {target_ip} or dst host {target_ip})'
+        }
+        
+        filter_str = filters.get(attack_type, f'host {target_ip}')
+        logger.info(f"Generated capture filter for {attack_type}: {filter_str}")
+        return filter_str
 
     # Process captured data in packet
     def auto_analyze_capture(self,filepath, attack_type, target_ip):
@@ -277,54 +355,72 @@ class NetworkTrafficCapture:
         try:
             features = {}
 
-            features['frame.time_relative'] = float(packet.time) if hasattr(packet, 'time') else 0.0
-            features['ip.len'] = len(packet) if packet.haslayer(IP) else 0
+            # Frame time - handle different packet formats
+            if hasattr(packet, 'time'):
+                features['frame.time_relative'] = float(packet.time)
+            elif hasattr(packet, 'timestamp'):
+                features['frame.time_relative'] = float(packet.timestamp)
+            else:
+                features['frame.time_relative'] = 0.0
 
+            # IP length
+            features['ip.len'] = float(len(packet)) if packet.haslayer(IP) else 0.0
+
+            # TCP features
             if packet.haslayer(TCP):
                 tcp_layer = packet[TCP]
-                features['tcp.flags.syn'] = 1 if tcp_layer.flags & 0x02 else 0
-                features['tcp.flags.ack'] = 1 if tcp_layer.flags & 0x10 else 0
-                features['tcp.flags.push'] = 1 if tcp_layer.flags & 0x08 else 0
-                features['tcp.flags.fin'] = 1 if tcp_layer.flags & 0x01 else 0
-                features['tcp.flags.reset'] = 1 if tcp_layer.flags & 0x04 else 0
-                features['tcp.window_size_value'] = tcp_layer.window
-                features['tcp.hdr_len'] = tcp_layer.dataofs * 4 if tcp_layer.dataofs else 20
-                features['srcport'] = tcp_layer.sport
-                features['dstport'] = tcp_layer.dport
-            
+                features['tcp.flags.syn'] = 1.0 if tcp_layer.flags & 0x02 else 0.0
+                features['tcp.flags.ack'] = 1.0 if tcp_layer.flags & 0x10 else 0.0
+                features['tcp.flags.push'] = 1.0 if tcp_layer.flags & 0x08 else 0.0
+                features['tcp.flags.fin'] = 1.0 if tcp_layer.flags & 0x01 else 0.0
+                features['tcp.flags.reset'] = 1.0 if tcp_layer.flags & 0x04 else 0.0
+                features['tcp.window_size_value'] = float(tcp_layer.window) if tcp_layer.window else 0.0
+                features['tcp.hdr_len'] = float(tcp_layer.dataofs * 4) if tcp_layer.dataofs else 20.0
+                features['srcport'] = float(tcp_layer.sport) if tcp_layer.sport else 0.0
+                features['dstport'] = float(tcp_layer.dport) if tcp_layer.dport else 0.0
             else:
+                # Default TCP features
                 features.update({
-                    'tcp.flags.syn': 0,
-                    'tcp.flags.ack': 0,
-                    'tcp.flags.push': 0,
-                    'tcp.flags.fin': 0,
-                    'tcp.flags.reset': 0,
-                    'tcp.window_size_value': 0,
-                    'tcp.hdr_len': 0,
-                    'srcport': 0,
-                    'dstport': 0
+                    'tcp.flags.syn': 0.0, 'tcp.flags.ack': 0.0, 'tcp.flags.push': 0.0,
+                    'tcp.flags.fin': 0.0, 'tcp.flags.reset': 0.0, 'tcp.window_size_value': 0.0,
+                    'tcp.hdr_len': 0.0, 'srcport': 0.0, 'dstport': 0.0
                 })
-            
+
+            # IP features
             if packet.haslayer(IP):
                 ip_layer = packet[IP]
-                features['ip.proto'] = ip_layer.proto
-                features['ip.ttl'] = ip_layer.ttl
-            
+                features['ip.proto'] = float(ip_layer.proto) if ip_layer.proto else 0.0
+                features['ip.ttl'] = float(ip_layer.ttl) if ip_layer.ttl else 0.0
             else:
-                features['ip.proto'] = 0
-                features['ip.ttl'] = 0
-            
-            features['udp.length'] = len(packet[UDP]) if packet.haslayer(UDP) else 0
+                features['ip.proto'] = 0.0
+                features['ip.ttl'] = 0.0
 
-            if packet.haslayer(UDP) and not packet.haslayer(TCP):
+            # UDP features
+            if packet.haslayer(UDP):
                 udp_layer = packet[UDP]
-                features['srcport'] = udp_layer.sport
-                features['dstport'] = udp_layer.dport
-            
+                features['udp.length'] = float(len(udp_layer)) if udp_layer else 0.0
+                # Override ports for UDP packets if TCP ports weren't set
+                if not packet.haslayer(TCP):
+                    features['srcport'] = float(udp_layer.sport) if udp_layer.sport else 0.0
+                    features['dstport'] = float(udp_layer.dport) if udp_layer.dport else 0.0
+            else:
+                features['udp.length'] = 0.0
+
+            # Validate all values are numeric
+            for key, value in features.items():
+                if not isinstance(value, (int, float)):
+                    logger.warning(f"Non-numeric feature {key}: {value} (type: {type(value)})")
+                    features[key] = 0.0
+                elif np.isnan(value) or np.isinf(value):
+                    logger.warning(f"Invalid numeric value for {key}: {value}")
+                    features[key] = 0.0
+
+            logger.debug(f"Extracted features: {features}")
             return features
-        
+
         except Exception as e:
             logger.error(f"Error extracting features: {e}")
+            logger.error(f"Packet info: {packet.summary() if hasattr(packet, 'summary') else 'Unknown packet'}")
             return None
 
 # Create API endpoints to receive data from the Open5gs network host
@@ -364,54 +460,125 @@ def perform_detection(features):
         return {'model': 'Model not loaded', 'attack_type': 'N/A', 'severity_level': 'N/A'}
     
     try:
-        data_array = np.array(features).reshape(1, 1, 14)
-        prediction = model.predict(data_array)
-        predicted_class = np.argmax(prediction, axis=1)[0]
-
-        attack_types = {
-                    0: "Benign",
-                    1: "HTTPFlood",
-                    2: "ICMPFlood",
-                    3: "SYNFlood",
-                    4: "SYNScan",
-                    5: "SlowrateDoS",
-                    6: "TCPConnectScan",
-                    7: "UDPFlood",
-                    8: "UDPScan"
-            }
+        # Ensure features is a list of numbers
+        if not isinstance(features, (list, tuple, np.ndarray)):
+            logger.error(f"Features must be a list/array, got: {type(features)}")
+            return {'model': 'Error', 'attack_type': 'Invalid input type', 'severity_level': 'N/A'}
         
-        attack_type = attack_types.get(predicted_class, "Unknown")
+        # Convert to float list and ensure we have exactly 14 features
+        try:
+            feature_list = []
+            for i, feature in enumerate(features):
+                if i >= 14:  # Only take first 14 features
+                    break
+                # Convert to float, handle None/string values
+                if feature is None:
+                    feature_val = 0.0
+                elif isinstance(feature, str):
+                    try:
+                        feature_val = float(feature)
+                    except ValueError:
+                        feature_val = 0.0
+                else:
+                    feature_val = float(feature)
+                feature_list.append(feature_val)
+            
+            # Pad with zeros if we don't have enough features
+            while len(feature_list) < 14:
+                feature_list.append(0.0)
+            
+            # Take only first 14 features
+            feature_list = feature_list[:14]
+            
+        except Exception as e:
+            logger.error(f"Error converting features to float list: {e}")
+            return {'model': 'Error', 'attack_type': 'Feature conversion failed', 'severity_level': 'N/A'}
+        
+        logger.debug(f"Processed feature list: {feature_list}")
+        logger.debug(f"Feature list length: {len(feature_list)}")
+        
+        # Create numpy array with explicit dtype
+        data_array = np.array(feature_list, dtype=np.float32).reshape(1, 1, 14)
+        logger.debug(f"Data array shape: {data_array.shape}, dtype: {data_array.dtype}")
+        
+        # Make prediction
+        prediction = model.predict(data_array)
+        logger.debug(f"Raw prediction: {prediction}")
+        logger.debug(f"Prediction shape: {prediction.shape}")
+        logger.debug(f"Prediction type: {type(prediction)}")
+        
+        # Handle different prediction output formats
+        if len(prediction.shape) > 1 and prediction.shape[1] > 1:
+            # Multi-class output - get the class with highest probability
+            predicted_class = np.argmax(prediction, axis=1)
+            if isinstance(predicted_class, np.ndarray):
+                predicted_class = int(predicted_class[0])
+            else:
+                predicted_class = int(predicted_class)
+        else:
+            # Single output - convert directly
+            if isinstance(prediction, np.ndarray):
+                if prediction.size == 1:
+                    predicted_class = int(prediction.item())
+                else:
+                    predicted_class = int(prediction[0])
+            else:
+                predicted_class = int(prediction)
+        
+        logger.debug(f"Predicted class (int): {predicted_class}")
 
+        # Attack type mapping
+        attack_types = {
+            0: "Benign",
+            1: "HTTPFlood",
+            2: "ICMPFlood",
+            3: "SYNFlood",
+            4: "SYNScan",
+            5: "SlowrateDoS",
+            6: "TCPConnectScan",
+            7: "UDPFlood",
+            8: "UDPScan"
+        }
+        
+        attack_type = attack_types.get(predicted_class, f"Unknown_{predicted_class}")
+        
+        # Feature names for severity analysis
         feature_names = [
-            "frame.time_relative",
-            "ip.len",
-            "tcp.flags.syn",
-            "tcp.flags.ack",
-            "tcp.flags.push",
-            "tcp.flags.fin",
-            "tcp.flags.reset",
-            "ip.proto",
-            "ip.ttl",
-            "tcp.window_size_value",
-            "tcp.hdr_len",
-            "udp.length",
-            "srcport",
-            "dstport"
+            "frame.time_relative", "ip.len", "tcp.flags.syn", "tcp.flags.ack",
+            "tcp.flags.push", "tcp.flags.fin", "tcp.flags.reset", "ip.proto",
+            "ip.ttl", "tcp.window_size_value", "tcp.hdr_len", "udp.length",
+            "srcport", "dstport"
         ]
 
-        feature_dict = {feature_names[i]: features[i] for i in range(min(len(features), len(feature_names)))}
+        # Create feature dictionary with proper indexing
+        feature_dict = {}
+        for i in range(min(len(feature_list), len(feature_names))):
+            feature_dict[feature_names[i]] = feature_list[i]
+        
+        # Add any remaining features with generic names
+        for i in range(len(feature_names), len(feature_list)):
+            feature_dict[f'feature_{i+1}'] = feature_list[i]
 
-        severity_level, severity_score, traffic_metrics = severity_analyzer.decide_attack_level(attack_type, feature_dict, anomaly_score=0.5)
+        # Get severity analysis
+        severity_level, severity_score, traffic_metrics = severity_analyzer.decide_attack_level(
+            attack_type, feature_dict, anomaly_score=0.5
+        )
 
         return {
             'model': 'Model loaded',
             'attack_type': attack_type,
             'severity_level': severity_level,
-            'severity_score': severity_score
+            'severity_score': severity_score,
+            'confidence': float(np.max(prediction)) if hasattr(prediction, 'max') else 0.0
         }
+        
     except Exception as e:
         logger.error(f"Detection error: {e}")
-        return {'model': 'Error', 'attack_type': 'N/A', 'severity_level': 'N/A'}
+        logger.error(f"Error details: {type(e).__name__}: {str(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        return {'model': 'Error', 'attack_type': f'Prediction failed: {str(e)}', 'severity_level': 'N/A'}
+
 
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
@@ -420,33 +587,66 @@ class AttackSimulator:
         self.username = username or "open5gs"
         self.password = password or "mmuzte123"
 
+    def check_target_connectivity(self, target_ip):
+        try:
+            if os.name == 'nt':  # Windows
+                result = subprocess.run(['ping', '-n', '1', target_ip], capture_output=True, text=True, timeout=5)
+            else:  # Unix/Linux/Mac
+                result = subprocess.run(['ping', '-c', '1', target_ip], capture_output=True, text=True, timeout=5)
+
+            reachable = result.returncode == 0
+            logger.info(f"Target {target_ip} reachability: {'Yes' if reachable else 'No'}")
+            return reachable
+            
+        except Exception as e:
+            logger.warning(f"Connectivity check failed: {e}")
+            return False
+
     # Trigger a DoS attack (SYNFlood) on the specified target IP
     def trigger_dos_attack(self, target_ip, attack_type):
         try:
+            if not self.check_target_connectivity(target_ip):
+                logger.warning(f"Target {target_ip} is not reachable. Aborting attack.")
+
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'HTTPFlood': f'python3 goldeneye.py http://{target_ip}',
-                'ICMPFlood': f'hping3 -1 {target_ip}',
-                'SYNFlood': f'hping3 -S -p 80 --flood --rand-source {target_ip}',
-                'UDPFlood': f'hping3 -1 {target_ip}',
-                'SYNScan': f'nmap -sS {target_ip} -p 1-1000',
-                'TCPConnectScan': f'nmap -sT {target_ip} -p 1-1000',
-                'UDPScan': f'nmap -sU {target_ip} -p 1-1000',
-                'SlowrateDoS': f'python3 slowloris.py {target_ip}'
+                'HTTPFlood': f'timeout 45 python3 goldeneye.py http://{target_ip}',
+                'ICMPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
+                'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
+                'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',
+                'SYNScan': f'timeout 45 sudo nmap -sS {target_ip} -p 1-1000 --max-rate 1000 -T4',
+                'TCPConnectScan': f'timeout 45 sudo nmap -sT {target_ip} -p 1-1000 --max-rate 500 -T4',
+                'UDPScan': f'timeout 45 sudo nmap -sU {target_ip} -p 1-100 --max-rate 300 -T4',
+                'SlowrateDoS': f'timeout 45 python3 slowloris.py {target_ip}'
             }
 
             command = attack_command.get(attack_type)
 
-            if command:
-                stdin, stdout, stderr = ssh.exec_command(f'timeout 60 {command}')
-                print(stdout.readlines())
-                logger.info(f"{attack_type} attack triggered on {target_ip}")
-
+            if not command:
+                logger.error(f"Unknown attack type: {attack_type}")
                 ssh.close()
-                return True
+                return False
+            
+            logger.info(f"Executing attack command: {command}")
+
+            stdin, stdout, stderr = ssh.exec_command(f'nohup {command} > /dev/null 2>&1 &')
+
+            time.sleep(2)
+
+            logger.info(f"{attack_type} attack triggered on {target_ip}")
+            ssh.close()
+            return True
+        
+        except paramiko.AuthenticationException:
+            logger.error("SSH Authentication failed.")
+            return False
+        
+        except paramiko.SSHException as e:
+            logger.error(f"SSH connection error: {e}")
+            return False
         
         except Exception as e:
             logger.error(f"Attack simulation error: {e}")
@@ -702,10 +902,19 @@ def start_attack(request):
     global model, ml_status, automation_manager
 
     if request.method == "POST":
-        automation_manager.start_automation(attack_type, target_ip)
-
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.0.165')
+
+        try:
+            socket.inet_aton(target_ip)
+        except socket.error:
+            attack_status = "Invalid target IP address"
+            messages.error(request, "Invalid target IP address.")
+            return HttpResponseRedirect(reverse('home'))
+
+        logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
+
+        automation_manager.start_automation(attack_type, target_ip)
 
         host = OPEN5GS_CONFIG.get('HOST', '192.168.0.132')
         username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
@@ -720,13 +929,14 @@ def start_attack(request):
 
             automation_manager.complete_step('packet_capture', {'file_path': capture_file})
 
-            time.sleep(2)
+            time.sleep(3)
         
             # 2. Start attack simulation
             if simulator.trigger_dos_attack(target_ip, attack_type):
                 attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
                 latest_capture_file = capture_file
                 automation_manager.complete_step('attack_simulation', {'status': 'success'})
+                
                 cache.set('latest_capture_info', 
                     {
                     'file_path': capture_file,
@@ -760,7 +970,7 @@ def schedule_ml_automation(capture_file, attack_type, target_ip):
     global model, ml_status, automation_manager
 
     try:
-        time.sleep(37) # Wait for capture to complete
+        time.sleep(65) # Wait for capture to complete
 
         # 4. Auto load ML model
         if model is None:
@@ -880,85 +1090,39 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             return None
 
         feature_list = [
-            features.get('frame.time_relative', 0.0),
-            features.get('ip.len', 0),
-            features.get('tcp.flags.syn', 0),
-            features.get('tcp.flags.ack', 0),
-            features.get('tcp.flags.push', 0),
-            features.get('tcp.flags.fin', 0),
-            features.get('tcp.flags.reset', 0),
-            features.get('ip.proto', 0),
-            features.get('ip.ttl', 0),
-            features.get('tcp.window_size_value', 0),
-            features.get('tcp.hdr_len', 0),
-            features.get('udp.length', 0),
-            features.get('srcport', 0),
-            features.get('dstport', 0)
-            ]
-
-        # Reshape the data into 3D array to fit in LSTM input format
-        data_array = np.array(feature_list).reshape(1, 1, 14)
-
-        # Make prediction
-        prediction = model.predict(data_array)
-
-        if len(prediction.shape) > 1:
-            predicted_class = np.argmax(prediction, axis=1)
-
-            if isinstance(predicted_class, np.ndarray):
-                predicted_class = int(predicted_class[0])
-        else:
-            predicted_class = int(prediction[0])
-
-        attack_types = {
-            0: "Benign",
-            1: "HTTPFlood",
-            2: "ICMPFlood",
-            3: "SYNFlood",
-            4: "SYNScan",
-            5: "SlowrateDoS",
-            6: "TCPConnectScan",
-            7: "UDPFlood",
-            8: "UDPScan"
-        }
-
-        detection = attack_types.get(predicted_class, "Unknown")
-
-        # Create feature dictionary for severity report
-        feature_names = [
-            "frame.time_relative",
-            "ip.len",
-            "tcp.flags.syn",
-            "tcp.flags.ack",
-            "tcp.flags.push",
-            "tcp.flags.fin",
-            "tcp.flags.reset",
-            "ip.proto",
-            "ip.ttl",
-            "tcp.window_size_value",
-            "tcp.hdr_len",
-            "udp.length",
-            "srcport",
-            "dstport" 
+            float(features.get('frame.time_relative', 0.0)),
+            float(features.get('ip.len', 0)),
+            float(features.get('tcp.flags.syn', 0)),
+            float(features.get('tcp.flags.ack', 0)),
+            float(features.get('tcp.flags.push', 0)),
+            float(features.get('tcp.flags.fin', 0)),
+            float(features.get('tcp.flags.reset', 0)),
+            float(features.get('ip.proto', 0)),
+            float(features.get('ip.ttl', 0)),
+            float(features.get('tcp.window_size_value', 0)),
+            float(features.get('tcp.hdr_len', 0)),
+            float(features.get('udp.length', 0)),
+            float(features.get('srcport', 0)),
+            float(features.get('dstport', 0))
         ]
+        
+        logger.info(f"Extracted features: {feature_list}")
 
-        feature_dict = {}
+        detection_result = perform_detection(feature_list)
 
-        for i, value in enumerate(feature_list):
-            if i < len(feature_names):
-                feature_dict[feature_names[i]] = value
-            else:
-                feature_dict[f'feature_{i+1}'] = value
-
-        # Determine attack severity level
-        attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, feature_dict, anomaly_score=0.5)
-        logger.info(f"Attack detected: {detection}, Severity Level: {attack_level}, Severity Num: {attack_severity_num}")
+        if detection_result['model'] == 'Error':
+            logger.error(f"Detection failed: {detection_result['attack_type']}")
+            return None
+        
+        detection = detection_result['attack_type']
+        attack_level = detection_result['severity_level']
+        attack_severity_num = detection_result['severity_score']
 
         # Set attack status and mitigation based on detection results
         if detection == "Benign":
             mitigation = "No action needed"
 
-        #else:  
+        # else:  
             #mitigation = AIMitigation.get_mitigation(detection, analysis_report)
         
         accuracy = "91.01%"
@@ -969,11 +1133,13 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             'attack_severity_num': attack_severity_num,
             'accuracy': accuracy,
             'mitigation': mitigation,
-            'analysis_report': analysis_report,
+            'analysis_report': detection_result.get('traffic_metrics', {}),
             'expected_attack': attack_type,
             'target_ip': target_ip,
             'capture_file': capture_file,
             'total_packets': len(packets),
+            'match_expected': detection == attack_type,
+            'confidence': detection_result.get('confidence', 0.0),
             'timestamp': datetime.now().isoformat()
         }
 
