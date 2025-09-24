@@ -568,6 +568,10 @@
                     </button>
                 </div>
             </form>
+            <div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle" style="color: #1976d2; margin-right: 8px;"></i>
+                    <strong>Note:</strong> Attack simulation will run for 60 seconds with automatic packet capture. Please wait for detection.
+            </div>
         </div>
     </section>
 
@@ -583,7 +587,7 @@
                 <p><span class="{% if 'available' in ml_status %}success{% else %}error{% endif %}"><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</span></p>
             </div>
 
-            <div class="button-container" style="margin: 20px 0;">
+            <div class="button-container" action="{%url 'start_ml' %}" style="margin: 20px 0;">
                 <form method="post" action="{}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit">

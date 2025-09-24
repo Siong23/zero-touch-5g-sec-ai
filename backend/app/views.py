@@ -1297,20 +1297,20 @@ def home(request):
 
                             if features:
                                 data = [
-                                    features.get('frame.time_relative', 0.0),
-                                    features.get('ip.len', 0),
-                                    features.get('tcp.flags.syn', 0),
-                                    features.get('tcp.flags.ack', 0),
-                                    features.get('tcp.flags.push', 0),
-                                    features.get('tcp.flags.fin', 0),
-                                    features.get('tcp.flags.reset', 0),
-                                    features.get('ip.proto', 0),
-                                    features.get('ip.ttl', 0),
-                                    features.get('tcp.window_size_value', 0),
-                                    features.get('tcp.hdr_len', 0),
-                                    features.get('udp.length', 0),
-                                    features.get('srcport', 0),
-                                    features.get('dstport', 0)
+                                    float(features.get('frame.time_relative', 0.0)),
+                                    float(features.get('ip.len', 0)),
+                                    float(features.get('tcp.flags.syn', 0)),
+                                    float(features.get('tcp.flags.ack', 0)),
+                                    float(features.get('tcp.flags.push', 0)),
+                                    float(features.get('tcp.flags.fin', 0)),
+                                    float(features.get('tcp.flags.reset', 0)),
+                                    float(features.get('ip.proto', 0)),
+                                    float(features.get('ip.ttl', 0)),
+                                    float(features.get('tcp.window_size_value', 0)),
+                                    float(features.get('tcp.hdr_len', 0)),
+                                    float(features.get('udp.length', 0)),
+                                    float(features.get('srcport', 0)),
+                                    float(features.get('dstport', 0))
                                 ]
                                 
                         except Exception as e:
