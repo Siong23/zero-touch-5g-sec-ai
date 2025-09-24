@@ -180,7 +180,7 @@ class NetworkTrafficCapture:
             return "Wi-Fi"  # Default to Wi-Fi if an error occurs
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
-    def start_capture_with_auto_analysis(self, duration=120, attack_type=None, target_ip=None):
+    def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
 
         global capture_active, capture_thread, latest_capture_file
 
@@ -858,14 +858,14 @@ class AIMitigation:
             ssh.connect(self.host, username=self.username, password=self.password)
 
             mitigation_commands = {
-                'HTTPFlood': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"},
-                'ICMPFlood': {"sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP", "Block ICMP echo requests"},
-                'SYNFlood': {"sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP", "Drop all SYN packets"},
-                'UDPFlood': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block the source IP temporarily"},
-                'SYNScan': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"},
-                'TCPConnectScan': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"}, 
-                'UDPScan': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"},
-                'SlowrateDoS': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily" }
+                'HTTPFlood': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"),
+                'ICMPFlood': ("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP", "Block ICMP echo requests"),
+                'SYNFlood': ("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP", "Drop all SYN packets"),
+                'UDPFlood': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block the source IP temporarily"),
+                'SYNScan': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"),
+                'TCPConnectScan': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"), 
+                'UDPScan': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"),
+                'SlowrateDoS': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily" )
             }
 
             command, mitigation = mitigation_commands.get(attack_type, (None, "No mitigation strategy available"))
@@ -961,7 +961,7 @@ def start_attack(request):
         simulator = AttackSimulator(host, username, password)
 
         # 1. Start packet capture with auto analysis
-        capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=120, attack_type=attack_type, target_ip=target_ip)
+        capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
 
         if capture_success:
             logger.info("Packet capture thread started.")
