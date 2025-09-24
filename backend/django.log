@@ -5658,3 +5658,7 @@ Captured data analyzed successfully.
 "GET /get_automation_status/ HTTP/1.1" 200 1860
 "GET /get_automation_status/ HTTP/1.1" 200 1860
 "GET /get_automation_status/ HTTP/1.1" 200 1860
+"GET /get_automation_status/ HTTP/1.1" 200 1860
+"GET /get_automation_status/ HTTP/1.1" 200 1860
+"GET /get_automation_status/ HTTP/1.1" 200 1860
+"GET /get_automation_status/ HTTP/1.1" 200 1860
