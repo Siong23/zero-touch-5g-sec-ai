@@ -765,12 +765,42 @@
                                         </div>
                                         <span id="progress-text">0%</span>
                                     </div>
-                                    <div class="status-item">
-                                        <strong>Current Task:</strong> <span id="current-task">None</span>
-                                    </div>
-                                </div>
                                 <div id="automation-results" class="automation-results" style="display: none;">
-                                    <!-- Results will be populated here -->
+                                    {% if detection %}
+                                    <div class="result-box">
+                                        <h3>
+                                            <i class="fas fa-clipboard-list"></i>
+                                            Detection Results
+                                        </h3>
+                                        <p>
+                                            <strong>Attack Type:</strong>
+                                            <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
+                                                {{ detection|default:"No detection performed" }}
+                                            </span>
+                                        </p>
+                                        
+                                        <p>
+                                            <strong>Severity Level:</strong>
+                                            <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
+                                                {{ attack_level|default:"N/A" }}
+                                            </span>
+                                        </p>
+
+                                        <p>
+                                            <strong>Model Accuracy:</strong>
+                                            <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
+                                                {{ accuracy|default:"N/A" }}
+                                            </span>
+                                        </p>
+                                        
+                                        <p>
+                                            <strong>Mitigation Solution:</strong>
+                                            <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
+                                                {{ mitigation|default:"N/A" }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         `;
@@ -1073,18 +1103,6 @@
                         const progress = status.progress || 0;
                         progressFill.style.width = `${progress}%`;
                         progressText.textContent = `${progress}%`;
-                    }
-
-                    // Update current task
-                    const currentTask = document.getElementById('current-task');
-                    if (currentTask) {
-                        if (status.current_task) {
-                            const taskType = status.current_task.attack_type || 'Unknown';
-                            const targetIP = status.current_task.target_ip || 'N/A';
-                            currentTask.textContent = `${taskType} on ${targetIP}`;
-                        } else {
-                            currentTask.textContent = 'None';
-                        }
                     }
 
                     // Update icon animation
