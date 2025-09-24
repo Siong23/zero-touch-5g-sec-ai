@@ -3245,3 +3245,100 @@ Selected most active interface: Wi-Fi (IP: 10.193.99.240)
 C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
 Watching for file changes with StatReloader
 Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+"GET / HTTP/1.1" 200 19378
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19390
+Starting attack simulation: ICMPFlood on 192.168.0.165
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture started on interface Wi-Fi for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture thread started.
+Target 192.168.0.165 reachability: No
+Target 192.168.0.165 is not reachable. Aborting attack.
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 19448
+Capture file saved: C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\captures\ICMPFlood.pcap (560 bytes)
+Total packets captured: 1
+Loading ML model for automation...
+Model loaded successfully!
+ML model auto-loaded successfully.
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+Extracted features: {'frame.time_relative': 1758694910.681393, 'ip.len': 74.0, 'tcp.flags.syn': 0.0, 'tcp.flags.ack': 0.0, 'tcp.flags.push': 0.0, 'tcp.flags.fin': 0.0, 'tcp.flags.reset': 0.0, 'tcp.window_size_value': 0.0, 'tcp.hdr_len': 0.0, 'srcport': 0.0, 'dstport': 0.0, 'ip.proto': 1.0, 'ip.ttl': 128.0, 'udp.length': 0.0}
+Extracted features: [1758694910.681393, 74.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 128.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Processed feature list: [1758694910.681393, 74.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 128.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Feature list length: 14
+Data array shape: (1, 1, 14), dtype: float32
+Raw prediction: [[4.4136888e-15 1.0000000e+00 3.8134841e-22 1.6053219e-14 2.2480632e-17
+  3.7043190e-12 8.2304458e-10 6.1843096e-12 1.7443031e-14]]
+Prediction shape: (1, 9)
+Prediction type: <class 'numpy.ndarray'>
+Predicted class (int): 1
+Analysis Results: {'detection': 'HTTPFlood', 'attack_level': 'Minor', 'attack_severity_num': 1, 'accuracy': '91.01%', 'mitigation': None, 'analysis_report': {}, 'expected_attack': 'ICMPFlood', 'target_ip': '192.168.0.165', 'capture_file': 'C:\\Users\\nakam\\Documents\\zero-touch-5g-sec-ai\\backend\\captures\\ICMPFlood.pcap', 'total_packets': 1, 'match_expected': False, 'confidence': 1.0, 'timestamp': '2025-09-24T14:23:06.389145'}
+Automation process completed.
+Captured data analyzed successfully.
+"GET / HTTP/1.1" 200 22314
+"GET / HTTP/1.1" 200 22314
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.99.240)
+"GET / HTTP/1.1" 200 49663
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"POST /receive_network_data/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 49675
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+"GET /get_automation_status/ HTTP/1.1" 200 168
+Starting attack simulation: ICMPFlood on 192.168.0.165
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture started on interface Wi-Fi for 120 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.0.165 or dst host 192.168.0.165)
+Packet capture thread started.
+Error during packet capture: LiveCapture.__init__() got an unexpected keyword argument 'capture_timeout'
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+"GET /get_automation_status/ HTTP/1.1" 200 774
+Target 192.168.0.165 reachability: No
+Target 192.168.0.165 is not reachable. Aborting attack.
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+"GET /get_automation_status/ HTTP/1.1" 200 774
+ICMPFlood attack triggered on 192.168.0.165
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 49733
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862
+"GET /get_automation_status/ HTTP/1.1" 200 862

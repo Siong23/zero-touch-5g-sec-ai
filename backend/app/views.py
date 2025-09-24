@@ -173,7 +173,7 @@ class NetworkTrafficCapture:
             return "Wi-Fi"  # Default to Wi-Fi if an error occurs
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
-    def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
+    def start_capture_with_auto_analysis(self, duration=120, attack_type=None, target_ip=None):
 
         global capture_active, capture_thread, latest_capture_file
 
@@ -224,10 +224,10 @@ class NetworkTrafficCapture:
                 asyncio.set_event_loop(loop)
 
             if capture_filter:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter)
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter, capture_timeout=1)
 
             else:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
+                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, capture_timeout=1)
 
             capture.sniff(timeout=duration)
 
@@ -881,6 +881,41 @@ class AIMitigation:
         except Exception as e:
             logger.error(f"Mitigation error: {e}")
             return f"Mitigation error: {str(e)}"
+        
+def get_automation_status(request):
+    if request.method == "GET":
+        global automation_manager, detection, attack_level, attack_severity_num, accuracy, mitigation, analysis_report
+
+        status = automation_manager.get_status()
+        
+        # Check for completed results in cache
+        automation_results = cache.get('automation_results', None)
+        
+        # Include current detection results
+        current_results = {
+            'detection': detection,
+            'attack_level': attack_level,
+            'attack_severity_num': attack_severity_num,
+            'accuracy': accuracy,
+            'mitigation': mitigation,
+            'analysis_report': analysis_report
+        }
+        
+        response_data = {
+            'status': status,
+            'automation': status,
+            'current_results': current_results,
+            'has_new_results': automation_results is not None
+        }
+        
+        if automation_results:
+            response_data['automation_results'] = automation_results
+            # Clear the cache after sending results
+            cache.delete('automation_results')
+
+        return JsonResponse(response_data)
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 # Start the attack simulation when the start button is clicked
 def start_attack(request):
@@ -908,14 +943,14 @@ def start_attack(request):
         simulator = AttackSimulator(host, username, password)
 
         # 1. Start packet capture with auto analysis
-        capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
+        capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=120, attack_type=attack_type, target_ip=target_ip)
 
         if capture_success:
             logger.info("Packet capture thread started.")
 
             automation_manager.complete_step('packet_capture', {'file_path': capture_file})
 
-            time.sleep(3)
+            time.sleep(5)
         
             # 2. Start attack simulation
             if simulator.trigger_dos_attack(target_ip, attack_type):
@@ -930,7 +965,7 @@ def start_attack(request):
                     'target_ip': target_ip,
                     'timestamp': datetime.now().isoformat(),
                     'automation_id': id(automation_manager.current_task)
-                }, timeout=3600) # Cache for 1 hour 
+                }, timeout=7200) # Cache for 1 hour 
 
                 # 3. ML model loading and analysis
                 threading.Thread(
@@ -956,7 +991,7 @@ def schedule_ml_automation(capture_file, attack_type, target_ip):
     global model, ml_status, automation_manager
 
     try:
-        time.sleep(65) # Wait for capture to complete
+        time.sleep(125) # Wait for capture to complete
 
         # 4. Auto load ML model
         if model is None:
@@ -975,7 +1010,7 @@ def schedule_ml_automation(capture_file, attack_type, target_ip):
             automation_manager.complete_step('ml_loading', {'status': 'Model already loaded'})
             logger.info("ML model is already loaded.")
 
-        time.sleep(3) # Ensure file is ready 
+        time.sleep(5) # Ensure file is ready 
 
         # 5. Automatically analyze the captured data
         if os.path.exists(capture_file):
@@ -1239,40 +1274,41 @@ def home(request):
                 if uploaded_file:
                     filename = uploaded_file.name.lower()
                     # Parse the data to handle JSON format
-                    if filename.endswith('.json'):
+                    if filename.endswith('.csv'):
                         # Handle JSON format
                         file_content = uploaded_file.read().decode('utf-8')
-                        obj = json.loads(file_content)
-
-                        # Extract values by keys if its dict
-                        if isinstance(obj, dict):
-                            feature_keys = list(obj.keys())
-                            data = [float(obj[k]) for k in feature_keys]
-                        elif isinstance(obj, list):
-                            data = [float(x) for x in obj[:14]]
-
-                    elif filename.endswith('.csv'):
-                        # Handle CSV format
-                        file_content = uploaded_file.read().decode('utf-8')
                         reader = csv.reader(io.StringIO(file_content))
-                        row = next(reader)
-                        data = [float(x) for x in row[:14]]
+
+                        first_row = next(reader, None)
+                        if first_row:
+                            try:
+                                data = [float(x) for x in first_row[:14]]
+                            except ValueError:
+                                second_row = next(reader, None)
+
+                                if second_row:
+                                    data = [float(x) for x in second_row[:14]]
+                                
+                                else:
+                                    raise ValueError("No data rows found in CSV")
 
                     elif filename.endswith('.pcap', '.pcapng'):
                         # Handle PCAP format
                         file_content = uploaded_file.read()
                         temp_filename = f"temp_{filename}"
+                        temp_path = os.path.join(settings.BASE_DIR, 'temp', temp_filename)
+
+                        os.makedirs(os.path.dirname(temp_path), exist_ok=True)
+
                         with open(temp_filename, "wb") as f:
                             f.write(file_content)
 
                         try:
 
-                            packets = rdpcap(temp_filename)
+                            packets = rdpcap(temp_path)
 
                             if len(packets) == 0:
                                 detection = "Error: No packets of data found."
-                                if os.path.exists(temp_filename):
-                                    os.remove(temp_filename)
                                 return render(request, 'index.html', {'form': form, 'detection': detection})
                             
                             packet = packets[0]
@@ -1297,24 +1333,14 @@ def home(request):
                                     float(features.get('srcport', 0)),
                                     float(features.get('dstport', 0))
                                 ]
-                                
+
+                            if os.path.exists(temp_path):
+                                os.remove(temp_path)
+           
                         except Exception as e:
                             logger.warning(f"Error processing data packet: {e}")
                             detection = f"Error: Processing file failed - {str(e)}"
                             return render(request, 'index.html', {'form': form, 'detection': detection})
-
-                    elif filename.endswith('.npy'):
-                        # Handle NPY format
-                        file_buffer = io.BytesIO(uploaded_file.read())
-                        arr = np.load(file_buffer, allow_pickle=True)
-                        arr = arr.flatten()
-                        data = [float(x) for x in arr[:14]]
-
-                    elif filename.endswith('.netflow'):
-                        # Handle NetFlow format
-                        file_content = uploaded_file.read().decode('utf-8')
-                        data = [line.split() for line in file_content.splitlines()][0]
-                        data = [float(x) for x in row[:14]]
 
                     else:
                         detection = "Error: Unsupported file format!"
@@ -1323,7 +1349,9 @@ def home(request):
 
                 # If text form is submitted
                 elif captured_text:
-                    if captured_text.strip().startswith('{'):
+                    captured_text = captured_text.strip()
+
+                    if captured_text.startswith('{'):
                         # Handle JSON object format
                         data_dict = json.loads(captured_text)
 
@@ -1457,7 +1485,7 @@ def home(request):
                 else:  
                     attack_status = "Under Attack!"
                     mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
-                    mitigation = AIMitigation.apply_mitigation(detection, target_ip='192.168.0.165')
+                    mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.0.165')
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:
