@@ -587,8 +587,8 @@
                 <p><span class="{% if 'available' in ml_status %}success{% else %}error{% endif %}"><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</span></p>
             </div>
 
-            <div class="button-container" action="{%url 'start_ml' %}" style="margin: 20px 0;">
-                <form method="post" action="{}" style="display: inline;">
+            <div class="button-container" style="margin: 20px 0;">
+                <form method="post" action="{% url 'start_ml' %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit">
                         <i class="fas fa-play"></i>

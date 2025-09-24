@@ -839,63 +839,49 @@ network_capture = NetworkTrafficCapture()
 
 # Mitigation strategies based on attack type
 class AIMitigation:
-
-    if detection!="Benign":
-
-        ssh = paramiko.client.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        # ssh.connect('192.168.0.115', username='server2', password='mmuzte123', timeout=30)
-
-        def http_flood_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
-            output = _stdout.readlines()
-            mitigation = "Block IP source temporarily"
-            return mitigation
-
-        def icmp_flood_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP")
-            output = _stdout.readlines()
-            mitigation = "Block ICMP echo requests"
-            return mitigation
-        
-        def syn_flood_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP")
-            output = _stdout.readlines()
-            mitigation = "Drop all SYN packets"
-            return mitigation
-
-        def syn_scan_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
-            output = _stdout.readlines()
-            mitigation = "Block IP source temporarily"
-            return mitigation
-        
-        def slowrate_dos_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited_traffic")
-            output = _stdout.readlines()
-            mitigation = "Block IP source temporarily"
-            return mitigation
-        
-        def tcp_connect_scan_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
-            output = _stdout.readlines()
-            mitigation = "Block IP addresses temporarily"
-            return mitigation
-        
-        def udp_flood_mitigation(self,ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
-            output = _stdout.readlines()
-            mitigation = "Block the source IP temporarily"
-            return mitigation
-
-        def udp_scan_mitigation(self, ssh):
-            _stdin, _stdout, _stderr = ssh.exec_command("sudo iptables -I INPUT 2 -j prohibited traffic")
-            output = _stdout.readlines()
-            mitigation = "Block IP addresses temporarily"
-            return mitigation
+    def __init__(self, host, username, password):
+        self.host = host
+        self.username = username
+        self.password = password
     
+    def apply_mitigation(self, attack_type, target_ip):
+        try:
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect(self.host, username=self.username, passsword=self.password)
+
+            mitigation_commands = {
+                'HTTPFlood': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"},
+                'ICMPFlood': {"sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP", "Block ICMP echo requests"},
+                'SYNFlood': {"sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP", "Drop all SYN packets"},
+                'UDPFlood': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block the source IP temporarily"},
+                'SYNScan': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"},
+                'TCPConnectScan': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"}, 
+                'UDPScan': {"sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"},
+                'SlowrateDoS': {"sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily" }
+            }
+
+            command, mitigation = mitigation_commands.get(attack_type, (None, "No mitigation strategy available"))
+
+            if command:
+                stdin, stdout, stderr = ssh.exec_command(command)
+                output = stdout.readlines()
+                ssh.close()
+                return mitigation
+            else:
+                ssh.close()
+                return mitigation
+
+        except paramiko.AuthenticationException:
+            logger.error("SSH Authentication failed for mitigation.")
+            return "SSH Authentication failed."
+        except paramiko.SSHException as e:
+            logger.error(f"SSH connection error for mitigation: {e}")
+            return "SSH connection error."
+        except Exception as e:
+            logger.error(f"Mitigation error: {e}")
+            return f"Mitigation error: {str(e)}"
+
 # Start the attack simulation when the start button is clicked
 def start_attack(request):
     global target_ip, attack_type, attack_status, network_capture, latest_capture_file
@@ -1318,8 +1304,6 @@ def home(request):
                             detection = f"Error: Processing file failed - {str(e)}"
                             return render(request, 'index.html', {'form': form, 'detection': detection})
 
-                        data = [float(len((x))) for x in packets[:14]]
-
                     elif filename.endswith('.npy'):
                         # Handle NPY format
                         file_buffer = io.BytesIO(uploaded_file.read())
@@ -1473,7 +1457,8 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigation = AIMitigation.get_mitigation(detection, analysis_report)
+                    mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
+                    mitigation = AIMitigation.apply_mitigation(detection, target_ip='192.168.0.165')
                 # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:
