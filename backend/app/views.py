@@ -264,7 +264,7 @@ class NetworkTrafficCapture:
     def _get_capture_filter(self, attack_type, target_ip):
         filters = {
             'ICMPFlood': f'icmp and (src host {target_ip} or dst host {target_ip})',
-            'HTTPFlood': f'tcp port 80 and (src host {target_ip} or dst host {target_ip})',
+            'HTTPFlood': f'icmp and (src host {target_ip} or dst host {target_ip})',
             'SYNFlood': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
             'UDPFlood': f'udp and (src host {target_ip} or dst host {target_ip})',
             'SYNScan': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
