@@ -521,7 +521,7 @@ def perform_detection(features):
                 if prediction.size == 1:
                     predicted_class = int(prediction.item())
                 else:
-                    predicted_class = int(prediction[0])
+                    predicted_class = int(np.round(prediction.flatten()[0]))
             else:
                 predicted_class = int(prediction)
         
