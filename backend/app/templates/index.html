@@ -4,656 +4,687 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-    <title>AEGIS-5G - Autonomous Zero-Touch AI-Driven Defense System</title>
+    <title>AEGIS-5G - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #061629;
-            --secondary-color: #007bff;
-            --accent-color: #28a745;
-            --danger-color: #dc3545;
-            --light-color: #f8f9fa;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        
+
         body {
-            margin: 0;
-            font-family: 'Georgia', serif;
-            background-color: #f4f4f4;
-            line-height: 1.6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #061629 0%, #007bff 100%);
+            color: white;
         }
-        
-        /* Navigation */
-        .topnav {
-            background-color: var(--primary-color);
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+
+        /* Header */
+        .header {
+            background: #061629;
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        
-        .logo {
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             color: white;
             font-size: 24px;
             font-weight: bold;
             text-decoration: none;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .mode-selector {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 15px 0;
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
+
+        .mode-selector label {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: 500;
         }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 20px;
-            border-radius: 4px;
-            transition: all 0.3s;
+
+        .mode-selector select {
+            padding: 6px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .gpu-checkbox {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
+            color: #6c757d;
         }
-        
-        .nav-links a:hover, .nav-links a.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        /* Hero Section */
-        .intro {
-            position: relative;
-            background: linear-gradient(135deg, #061629 0%, #007bff 100%);
-            height: 100vh;
-            color: white;
+
+        .header-right {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
             align-items: center;
-            text-align: center;
-            padding-top: 80px;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
             overflow: hidden;
         }
-        
-        .intro::before {
+
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            animation: slide 20s linear infinite;
-        }
-        
-        .intro-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-        
-        .intro h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease-out, float 3s ease-in-out infinite;
-        }
-        
-        .intro p {
-            font-size: clamp(1.1rem, 2vw, 1.5rem);
-            margin: 0 auto 40px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-        
-        .button-group {
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-        
-        .button {
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            color: white;
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
-            animation: scaleIn 0.8s ease-out 0.9s both;
-        }
-        
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.6);
-        }
-        
-        /* Section Containers */
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-            background: white;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        }
-        
-        .section-title {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
-        }
-        
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            flex: 1;
-            height: 3px;
-            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-        
-        /* Status Info Boxes */
-        .info {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border-left: 4px solid var(--secondary-color);
-        }
-        
-        .info p {
-            margin: 0;
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-        
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-        
-        select, textarea, input[type="file"] {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border-color 0.3s;
-        }
-        
-        select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-        
-        textarea {
-            height: 200px;
-            font-family: 'Courier New', monospace;
-            resize: vertical;
-        }
-        
-        /* Buttons */
-        button, .connect-btn, .detect-btn {
-            padding: 14px 28px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            margin: 5px 10px 5px 0;
-        }
-        
-        button, .connect-btn {
-            background: var(--secondary-color);
-            color: white;
+            width: 4px;
+            height: 100%;
         }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
+        .stat-card.benign::before { background: #28a745; }
+        .stat-card.suspicious::before { background: #ffc107; }
+        .stat-card.malicious::before { background: #dc3545; }
+
+        .stat-content h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
-        
-        .button-container form {
-            margin: 0;
+
+        .stat-content p {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: 500;
         }
-        
-        button, .connect-btn {
-            background: var(--secondary-color);
-            color: white;
+
+        .stat-icon {
+            font-size: 40px;
+            opacity: 0.2;
         }
-        
-        .detect-btn {
-            background: var(--accent-color);
-            color: white;
+
+        .stat-card.benign .stat-icon { color: #28a745; }
+        .stat-card.suspicious .stat-icon { color: #ffc107; }
+        .stat-card.malicious .stat-icon { color: #dc3545; }
+
+        /* Main Layout */
+        .main-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 30px 30px 30px;
         }
-        
-        button:hover, .connect-btn:hover, .detect-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
-        
-        .connect-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .detect-btn:hover {
-            background-color: #218838;
-        }
-        
-        /* Results Display */
-        .result-box {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid #dee2e6;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 25px;
-            border-left: 5px solid var(--accent-color);
-        }
-        
-        .result-box h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .result-box p {
-            margin: 12px 0;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+        .panel-header {
+            color: #061629;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .result-box p:last-child {
-            border-bottom: none;
+
+        .panel-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .result-box strong {
-            color: var(--primary-color);
+
+        .panel-content {
+            padding: 20px;
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        /* Flow Monitor */
+        .flow-list {
+            max-height: 100%;
+            overflow-y: visible;
+        }
+
+        .flow-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+            font-size: 13px;
+        }
+
+        .flow-item.malicious {
+            background: #fff5f5;
+            border-color: #dc3545;
+        }
+
+        .flow-item.benign {
+            background: #f0fff4;
+            border-color: #28a745;
+        }
+
+        .flow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .flow-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .flow-badge.malicious { background: #dc3545; }
+        .flow-badge.benign { background: #28a745; }
+
+        .flow-time {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .flow-details {
+            font-size: 12px;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .flow-meta {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .confidence {
             font-weight: 600;
         }
-        
-        .error {
-            color: var(--danger-color);
-            font-weight: bold;
-        }
-        
-        .success {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-        
-        /* Connection Tables */
-        table {
-            width: 100%;
-            margin: 20px 0;
-        }
-        
-        table td {
-            padding: 10px 0;
-        }
-        
-        /* File Upload Styling */
-        input[type="file"] {
-            border: 2px dashed #d1ecf1;
+
+        /* Attack Simulation & ML Sections */
+        .section-box {
             background: #f8f9fa;
+            border-radius: 8px;
             padding: 20px;
-            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2c3e50;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .form-group select,
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+
+        .form-group input[type="file"] {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
             cursor: pointer;
         }
-        
-        input[type="file"]:hover {
-            border-color: var(--secondary-color);
+
+        .form-group input[type="file"]:hover {
+            border-color: #007bff;
             background: rgba(0, 123, 255, 0.02);
         }
-        
-        /* Page Sections */
-        .network, .attack, .ml-inference {
-            margin: 20px;
+
+        .info-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #1565c0;
+            margin-top: 15px;
         }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .intro {
-                padding: 100px 15px 50px;
-                height: auto;
-                min-height: 80vh;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                padding: 10px 20px;
-            }
-            
-            .nav-links {
-                margin-top: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-            }
-            
-            .nav-links a {
-                padding: 8px 12px;
-                font-size: 0.9rem;
-            }
-            
-            .section-container {
-                margin: 10px;
-                padding: 30px 15px;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .section-title::after {
-                width: 100%;
-                height: 2px;
-            }
-            
-            button, .connect-btn, .detect-btn {
-                width: 100%;
-                justify-content: center;
-                margin: 5px 0;
-            }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .btn-form {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
-        
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+
+        .btn-submit {
+            background: #28a745;
+            color: white;
         }
-        
-        @keyframes pulse {
-            0%, 100% {
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            }
-            50% {
-                text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.3);
-            }
+
+        .btn-submit:hover {
+            background: #218838;
+            transform: translateY(-2px);
         }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
+
+        .btn-ml-start {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-ml-stop {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-ml-start:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .btn-ml-stop:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        /* Results Display */
+        .result-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #28a745;
+        }
+
+        .result-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .result-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            align-items: start;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 13px;
+        }
+
+        .result-value {
+            font-size: 13px;
+            color: #2c3e50;
+        }
+
+        .result-value.success {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .result-value.error {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        /* Scrollbar Styling */
+        .panel-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .main-container {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @keyframes slide {
-            0% {
-                transform: translateX(-100%);
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
             }
-            100% {
-                transform: translateX(100%);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-left,
+            .header-right {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .main-container {
+                padding: 0 20px 20px 20px;
+            }
+
+            .result-item {
+                grid-template-columns: 1fr;
+                gap: 5px;
             }
         }
     </style>
-
-    <script>
-        // Make CSRF token available globally
-        window.django = {
-            csrf_token: '{{ csrf_token }}'
-        };
-    </script>
 </head>
-
 <body>
-    <!-- Navigation -->
-    <nav class="topnav">
-        <div class="nav-container">
-            <a href="#" class="logo">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">
                 <i class="fas fa-shield-alt"></i>
                 AEGIS-5G
-            </a>
-            
-            <div class="nav-links">
-                <a href="#intro" class="active">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-                <a href="#network">
-                    <i class="fas fa-network-wired"></i> Network
-                </a>
-                <a href="#analysis">
-                    <i class="fas fa-chart-line"></i> Analysis
-                </a>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="intro" id="intro">
-        <div class="intro-content">
-            <h1>Welcome to AEGIS-5G!</h1>
-            <p>Your advanced solution for efficient autonomous<br>Zero-Touch AI-Driven Defense System for 5G Network.</p>
-            
-            <div class="button-group">
-                <a href="#network" class="button">
-                    <i class="fas fa-rocket"></i>
-                    Get Started
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Network Connection Section -->
-    <section class="network" id="network">
-        <div class="section-container">
-            <h2 class="section-title">
-                <i class="fas fa-network-wired"></i>
-                5G Network Connection
-            </h2>
-            
-            <div class="info">
-                <p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p>
-            </div>
-            
-            <div class="button-container">
-                <form method="post" action="{% url 'receive_network_data' %}">
-                    {% csrf_token %}
-                    <button class="connect-btn" type="submit">
-                        <i class="fas fa-plug"></i>
-                        Connect to 5G Network
-                    </button> 
-                </form> 
-            </div>
-        </div>
-    </section>
-
-    <!-- Attack Simulation Section -->
-    <section class="attack">
-        <div class="section-container">
-            <h2 class="section-title">
-                <i class="fas fa-bug"></i>
-                Attack Simulation
-            </h2>
-            
-            <div class="info">
-                <p><span class="{% if 'injected' in attack_status %}success{% else %}error{% endif %}"><strong>Status:</strong> {{ attack_status|default:"Not Available" }}</span></p>
+        <div class="header-right">
+            <div class="mode-selector">
+                <i class="fas fa-cog"></i>
+                <label for="info"><p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p></label>
             </div>
 
-            <form method="post" action="{% url 'start_attack' %}">
+            <form method="post" action="{% url 'receive_network_data' %}">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="attack_type">Choose preferred attack type:</label>
-                    <select name="attack_type" id="attack_type">
-                        <option value="ICMPFlood">ICMP Flood Attack</option>
-                        <option value="HTTPFlood">HTTP Flood Attack</option>
-                        <option value="SYNFlood">SYN Flood Attack</option>
-                        <option value="UDPFlood">UDP Flood Attack</option>
-                        <option value="SYNScan">SYN Port Scan</option>
-                        <option value="TCPConnectScan">TCP Connect Scan</option>
-                        <option value="UDPScan">UDP Port Scan</option>
-                        <option value="SlowrateDoS">Slowrate DoS Attack</option>
-                    </select>
-                </div>
-
-                <div class="button-container">
-                    <button type="submit">
-                        <i class="fas fa-play"></i>
-                        Start Attack
-                    </button>
-                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-play"></i>
+                    Start Detection
+                </button>
             </form>
-            <div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; font-size: 0.9rem;">
-                    <i class="fas fa-info-circle" style="color: #1976d2; margin-right: 8px;"></i>
-                    <strong>Note:</strong> Attack simulation will run for approximately 2 minutes with automatic packet capture. Please wait for detection.
+            <button class="btn btn-danger">
+                <i class="fas fa-stop"></i>
+                Stop Detection
+            </button>
+            <button class="btn btn-secondary">
+                <i class="fas fa-redo"></i>
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-container">
+        <div class="stat-card benign">
+            <div class="stat-content">
+                <h3></h3>
+                <p>Benign Flows</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
             </div>
         </div>
-    </section>
 
-    <!-- ML Inference Section -->
-    <section class="ml-inference" id="analysis">
-        <div class="section-container">
-            <h2 class="section-title">
-                <i class="fas fa-brain"></i>
-                Machine Learning Inference
-            </h2>
-            
-            <div class="info">
-                <p><span class="{% if 'available' in ml_status %}success{% else %}error{% endif %}"><strong>Status:</strong> {{ ml_status|default:"ML model is currently not available." }}</span></p>
+        <div class="stat-card suspicious">
+            <div class="stat-content">
+                <h3></h3>
+                <p>Suspicious Flows</p>
             </div>
+            <div class="stat-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+        </div>
 
-            <div class="button-container" style="margin: 20px 0;">
-                <form method="post" action="{% url 'start_ml' %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">
+        <div class="stat-card malicious">
+            <div class="stat-content">
+                <h3></h3>
+                <p>Malicious Flows</p>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Real-time Flow Monitor -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>
+                    <i class="fas fa-stream"></i>
+                    Real-time Network Monitor
+                </h2>
+            </div>
+            <div class="panel-content">
+                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;"></p>
+
+
+            </div>
+        </div>
+
+        <!-- Attack Simulation Section -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>
+                    <i class="fas fa-bug"></i>
+                    Attack Simulation
+                </h2>
+            </div>
+            <div class="panel-content">
+                <span class="status-badge success">
+                    <i class="fas fa-check-circle"></i> Ready for simulation
+                </span>
+
+                <form method="post" action="/start_attack/">
+                    <div class="form-group">
+                        <label for="attack_type">Choose preferred attack type:</label>
+                        <select name="attack_type" id="attack_type">
+                            <option value="ICMPFlood">ICMP Flood Attack</option>
+                            <option value="HTTPFlood">HTTP Flood Attack</option>
+                            <option value="SYNFlood">SYN Flood Attack</option>
+                            <option value="UDPFlood">UDP Flood Attack</option>
+                            <option value="SYNScan">SYN Port Scan</option>
+                            <option value="TCPConnectScan">TCP Connect Scan</option>
+                            <option value="UDPScan">UDP Port Scan</option>
+                            <option value="SlowrateDoS">Slowrate DoS Attack</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-form btn-submit">
                         <i class="fas fa-play"></i>
+                        Start Attack Simulation
+                    </button>
+                </form>
+
+                <div class="info-note">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Note:</strong> Attack simulation will run for approximately 2 minutes with automatic packet capture. Please wait for detection.
+                </div>
+            </div>
+        </div>
+
+        <!-- Machine Learning Inference Section -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>
+                    <i class="fas fa-brain"></i>
+                    Machine Learning Inference
+                </h2>
+            </div>
+            <div class="panel-content">
+                <span class="status-badge success">
+                    <i class="fas fa-check-circle"></i> ML model is available and ready to be used.
+                </span>
+
+                <div class="button-group">
+                    <button class="btn-form btn-ml-start">
+                        <i class="fas fa-power-off"></i>
                         Start ML System
                     </button>
-                </form>
-
-                <form method="post" action="{% url 'stop_ml' %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">
-                        <i class="fas fa-stop"></i>
+                    <button class="btn-form btn-ml-stop">
+                        <i class="fas fa-stop-circle"></i>
                         Stop ML System
                     </button>
-                </form>
-            </div>
+                </div>
 
-            {% if ml_status == "ML model is available and ready to be used." %}
-            <div style="margin-top: 40px;">
-                <h3>
-                    <i class="fas fa-search"></i>
-                    5G Network Data Analysis
-                </h3>
-                
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="id_captured_data">Upload captured data (JSON/CSV/PCAP/PCAPNG file):</label>
-                        <input type="file" name="captured_data" accept=".json, .pcap, .pcapng">
+                <div class="section-box" style="margin-top: 25px;">
+                    <div class="section-title">
+                        <i class="fas fa-search"></i>
+                        5G Network Data Analysis
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="id_captured_text">Or enter data manually (JSON format):</label>
-                        <textarea name="captured_text" placeholder='{
-    "frame.time_relative": 0.123456,
-    "ip.len": 1500,
-    "tcp.flags.syn": 1,
-    "tcp.flags.ack": 0,
-    "tcp.flags.push": 0,
-    "tcp.flags.fin": 0,
-    "tcp.flags.reset": 0,
-    "ip.proto": 6,
-    "ip.ttl": 64,
-    "tcp.window_size_value": 8192,
-    "tcp.hdr_len": 20,
-    "udp.length": 0,
-    "srcport": 12345,
-    "dstport": 80
-}'>{{ captured_text }}</textarea>
-                    </div>
-                    
-                    <div class="button-container">
-                        <button class="detect-btn" type="submit">
-                            <i class="fas fa-microscope"></i>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="captured_data">Upload captured data (JSON/CSV/PCAP/PCAPNG file):</label>
+                            <input type="file" name="captured_data" id="captured_data" accept=".json,.csv,.pcap,.pcapng">
+                        </div>
+
+                        <button type="submit" class="btn-form btn-submit">
                             Detect Attack
                         </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
 
+                <!-- Detection Results -->
                 {% if detection %}
                 <div class="result-box">
                     <h3>
@@ -690,1155 +721,8 @@
                 </div>
                 {% endif %}
             </div>
-            {% endif %}
-            
-            {% if ml_status == "ML model is stopped." %}
-                <div class="result-box">
-                    <h3><i class="fas fa-exclamation-triangle"></i> System Messages</h3>
-                    {% for message in messages %}
-                        <p class="error">{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
         </div>
-    </section>
+    </div>
 
-    <!-- Minimal JavaScript for smooth scrolling only -->
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
-    <script>
-        // Real-time automation status and results updater
-        class AutomationStatusUpdater {
-            constructor() {
-                this.pollInterval = 3000; // Poll every 3 seconds
-                this.maxRetries = 3;
-                this.currentRetries = 0;
-                this.isPolling = false;
-                this.pollTimer = null;
-                
-                // Initialize when DOM is ready
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => this.init());
-                } else {
-                    this.init();
-                }
-            }
-
-            init() {
-                this.createStatusElements();
-                this.attachEventListeners();
-                this.startPolling();
-            }
-
-            createStatusElements() {
-                // Create automation status container if it doesn't exist
-                if (!document.getElementById('automation-status')) {
-                    const statusContainer = document.createElement('div');
-                    statusContainer.id = 'automation-status';
-                    statusContainer.className = 'automation-status-container';
-                    statusContainer.innerHTML = `
-                        <div class="automation-header">
-                            <h3><i class="fas fa-cog fa-spin" id="automation-icon"></i> Automation Status</h3>
-                            <div class="automation-controls">
-                                <button id="toggle-polling" class="control-btn">
-                                    <i class="fas fa-pause"></i> Pause Updates
-                                </button>
-                            </div>
-                        </div>
-                        <div class="automation-content">
-                            <div class="status-info">
-                                <div class="status-item">
-                                    <strong>Status:</strong> <span id="automation-status-text">Idle</span>
-                                </div>
-                                <div class="status-item">
-                                    <strong>Progress:</strong> 
-                                    <div class="progress-bar">
-                                        <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
-                                    </div>
-                                    <span id="progress-text">0%</span>
-                                </div>
-                            <div id="automation-results" class="automation-results" style="display: none;">
-                                {% if detection %}
-                                <div class="result-box">
-                                    <h3>
-                                        <i class="fas fa-clipboard-list"></i>
-                                        Detection Results
-                                    </h3>
-                                    <p>
-                                        <strong>Attack Type:</strong>
-                                        <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
-                                            {{ detection|default:"No detection performed" }}
-                                        </span>
-                                    </p>
-                                    
-                                    <p>
-                                        <strong>Severity Level:</strong>
-                                        <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
-                                            {{ attack_level|default:"N/A" }}
-                                        </span>
-                                    </p>
-
-                                    <p>
-                                        <strong>Model Accuracy:</strong>
-                                        <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
-                                            {{ accuracy|default:"N/A" }}
-                                        </span>
-                                    </p>
-                                    
-                                    <p>
-                                        <strong>Mitigation Solution:</strong>
-                                        <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
-                                            {{ mitigation|default:"N/A" }}
-                                        </span>
-                                    </p>
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    `;
-
-                    // Insert after the attack simulation section
-                    const attackSection = document.querySelector('.attack .section-container');
-                    if (attackSection) {
-                        attackSection.parentNode.insertBefore(statusContainer, attackSection.nextSibling);
-                    }
-                }
-
-                // Add CSS styles
-                this.addStyles();
-            }
-
-            addStyles() {
-                const style = document.createElement('style');
-                style.textContent = `
-                    .automation-status-container {
-                        background: white;
-                        border-radius: 15px;
-                        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-                        margin: 20px;
-                        padding: 25px;
-                        border-left: 5px solid #007bff;
-                    }
-
-                    .automation-header {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-bottom: 20px;
-                        border-bottom: 1px solid #e9ecef;
-                        padding-bottom: 15px;
-                    }
-
-                    .automation-header h3 {
-                        color: #061629;
-                        margin: 0;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-
-                    .automation-controls {
-                        display: flex;
-                        gap: 10px;
-                    }
-
-                    .control-btn {
-                        padding: 8px 15px;
-                        font-size: 0.9rem;
-                        border: 1px solid #dee2e6;
-                        background: #007bff;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: all 0.3s;
-                        display: flex;
-                        align-items: center;
-                        gap: 5px;
-                    }
-
-                    .control-btn:hover {
-                        background: rgba(0, 123, 255, 0.6);
-                        border-color: #007bff;
-                    }
-
-                    .status-info {
-                        display: grid;
-                        gap: 15px;
-                        margin-bottom: 20px;
-                    }
-
-                    .status-item {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        padding: 10px 0;
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-                    }
-
-                    .status-item:last-child {
-                        border-bottom: none;
-                    }
-
-                    .progress-bar {
-                        flex: 1;
-                        height: 20px;
-                        background: #e9ecef;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        margin: 0 10px;
-                        position: relative;
-                    }
-
-                    .progress-fill {
-                        height: 100%;
-                        background: linear-gradient(45deg, #007bff, #28a745);
-                        transition: width 0.5s ease;
-                        border-radius: 10px;
-                    }
-
-                    .automation-results {
-                        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                        border: 2px solid #dee2e6;
-                        border-radius: 10px;
-                        padding: 20px;
-                        margin-top: 15px;
-                    }
-
-                    .automation-results h4 {
-                        color: #061629;
-                        margin-bottom: 15px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-
-                    .result-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 15px;
-                    }
-
-                    .result-item {
-                        background: white;
-                        padding: 15px;
-                        border-radius: 8px;
-                        border-left: 4px solid #007bff;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .result-item strong {
-                        color: #061629;
-                        display: block;
-                        margin-bottom: 5px;
-                    }
-
-                    .result-value {
-                        font-size: 1.1rem;
-                        font-weight: 500;
-                    }
-
-                    .result-value.success {
-                        color: #28a745;
-                    }
-
-                    .result-value.error {
-                        color: #dc3545;
-                    }
-
-                    .result-value.warning {
-                        color: #ffc107;
-                    }
-
-                    .status-indicator {
-                        display: inline-block;
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 50%;
-                        margin-right: 5px;
-                    }
-
-                    .status-idle { background-color: #6c757d; }
-                    .status-running { background-color: #007bff; animation: pulse 2s infinite; }
-                    .status-completed { background-color: #28a745; }
-                    .status-failed { background-color: #dc3545; }
-
-                    @keyframes pulse {
-                        0%, 100% { opacity: 1; }
-                        50% { opacity: 0.5; }
-                    }
-
-                    .notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: #28a745;
-                        color: white;
-                        padding: 15px 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                        z-index: 10000;
-                        opacity: 0;
-                        transform: translateX(400px);
-                        transition: all 0.3s ease;
-                    }
-
-                    .notification.show {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-
-                    .notification.error {
-                        background: #dc3545;
-                    }
-
-                    .notification.warning {
-                        background: #ffc107;
-                        color: #212529;
-                    }
-
-                    @media (max-width: 768px) {
-                        .automation-header {
-                            flex-direction: column;
-                            gap: 15px;
-                            align-items: flex-start;
-                        }
-
-                        .result-grid {
-                            grid-template-columns: 1fr;
-                        }
-
-                        .notification {
-                            right: 10px;
-                            left: 10px;
-                            transform: translateY(-100px);
-                        }
-
-                        .notification.show {
-                            transform: translateY(0);
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-
-            attachEventListeners() {
-                // Toggle polling button
-                const toggleBtn = document.getElementById('toggle-polling');
-                if (toggleBtn) {
-                    toggleBtn.addEventListener('click', () => this.togglePolling());
-                }
-
-                // Start polling when attack is initiated
-                const startAttackForms = document.querySelectorAll('form[action*="start_attack"]');
-                startAttackForms.forEach(form => {
-                    form.addEventListener('submit', () => {
-                        setTimeout(() => {
-                            this.startIntensivePolling();
-                            this.showNotification('Attack simulation started. Monitoring in real-time...', 'success');
-                        }, 1000);
-                    });
-                });
-            }
-
-            async fetchStatus() {
-                try {
-                    const response = await fetch('/get_automation_status/', {
-                        method: 'GET',
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                        }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-
-                    const data = await response.json();
-                    this.currentRetries = 0;
-                    return data;
-
-                } catch (error) {
-                    console.error('Error fetching automation status:', error);
-                    this.currentRetries++;
-                    
-                    if (this.currentRetries >= this.maxRetries) {
-                        this.showNotification('Connection lost. Retrying...', 'error');
-                        this.currentRetries = 0;
-                    }
-                    
-                    return null;
-                }
-            }
-
-            updateUI(data) {
-                if (!data || !data.status) return;
-
-                const status = data.status;
-                const results = data.current_results;
-                const automationResults = data.automation_results;
-
-                // Update status text and icon
-                const statusText = document.getElementById('automation-status-text');
-                const statusIcon = document.getElementById('automation-icon');
-                
-                if (statusText) {
-                    statusText.innerHTML = `
-                        <span class="status-indicator status-${status.status.toLowerCase()}"></span>
-                        ${status.status}
-                    `;
-                }
-
-                // Update progress bar
-                const progressFill = document.getElementById('progress-fill');
-                const progressText = document.getElementById('progress-text');
-                
-                if (progressFill && progressText) {
-                    const progress = status.progress || 0;
-                    progressFill.style.width = `${progress}%`;
-                    progressText.textContent = `${progress}%`;
-                }
-
-                // Update icon animation
-                if (statusIcon) {
-                    statusIcon.className = status.status === 'Running' ? 
-                        'fas fa-cog fa-spin' : 
-                        status.status === 'Completed' ? 'fas fa-check-circle' :
-                        status.status === 'Failed' ? 'fas fa-exclamation-triangle' :
-                        'fas fa-cog';
-                }
-
-                // Handle results display
-                if (results && (results.detection || automationResults)) {
-                    this.displayResults(results, automationResults);
-                }
-
-                // Show completion notification
-                if (status.status === 'Completed' && data.has_new_results) {
-                    this.showNotification('Analysis completed! Results are ready.', 'success');
-                    this.updateDetectionResults(results, automationResults);
-                }
-            }
-
-            displayResults(currentResults, automationResults) {
-                const resultsContainer = document.getElementById('automation-results');
-                if (!resultsContainer) return;
-
-                const results = automationResults?.analysis || currentResults;
-                if (!results || (!results.detection && !currentResults.detection)) {
-                    resultsContainer.style.display = 'none';
-                    return;
-                }
-
-                resultsContainer.style.display = 'block';
-                resultsContainer.innerHTML = `
-                    <h4><i class="fas fa-chart-line"></i> Real-time Analysis Results</h4>
-                    <div class="result-grid">
-                        <div class="result-item">
-                            <strong>Attack Type:</strong>
-                            <div class="result-value ${this.getResultClass(results.detection || currentResults.detection)}">
-                                ${results.detection || currentResults.detection || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Severity Level:</strong>
-                            <div class="result-value ${this.getSeverityClass(results.attack_level || currentResults.attack_level)}">
-                                ${results.attack_level || currentResults.attack_level || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Model Accuracy:</strong>
-                            <div class="result-value success">
-                                ${results.accuracy || currentResults.accuracy || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Mitigation:</strong>
-                            <div class="result-value">
-                                ${results.mitigation || currentResults.mitigation || 'N/A'}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            updateDetectionResults(currentResults, automationResults) {
-                // Update the main detection results section if it exists
-                const detectionSection = document.querySelector('.result-box');
-                if (!detectionSection) return;
-
-                const results = automationResults?.analysis || currentResults;
-                if (!results) return;
-
-                // Find and update detection results
-                const detectionElements = {
-                    detection: detectionSection.querySelector('p:nth-child(2) span:last-child'),
-                    severity: detectionSection.querySelector('p:nth-child(3) span:last-child'),
-                    accuracy: detectionSection.querySelector('p:nth-child(4) span:last-child'),
-                    mitigation: detectionSection.querySelector('p:nth-child(5) span:last-child')
-                };
-
-                // Update each element with new values
-                if (detectionElements.detection && results.detection) {
-                    detectionElements.detection.textContent = results.detection;
-                    detectionElements.detection.className = this.getResultClass(results.detection);
-                }
-
-                if (detectionElements.severity && results.attack_level) {
-                    detectionElements.severity.textContent = results.attack_level;
-                    detectionElements.severity.className = this.getSeverityClass(results.attack_level);
-                }
-
-                if (detectionElements.accuracy && results.accuracy) {
-                    detectionElements.accuracy.textContent = results.accuracy;
-                    detectionElements.accuracy.className = 'success';
-                }
-
-                if (detectionElements.mitigation && results.mitigation) {
-                    detectionElements.mitigation.textContent = results.mitigation;
-                }
-            }
-
-            getResultClass(detection) {
-                if (!detection) return '';
-                if (detection.includes('Error') || detection === 'Unknown') return 'error';
-                if (detection === 'Benign') return 'success';
-                return 'warning';
-            }
-
-            getSeverityClass(severity) {
-                if (!severity) return '';
-                switch(severity.toLowerCase()) {
-                    case 'none': return 'success';
-                    case 'minor': return 'success';
-                    case 'major': return 'warning';
-                    case 'critical': return 'error';
-                    default: return '';
-                }
-            }
-
-            showNotification(message, type = 'success') {
-                // Remove existing notifications
-                const existing = document.querySelector('.notification');
-                if (existing) {
-                    existing.remove();
-                }
-
-                // Create new notification
-                const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 
-                                        type === 'error' ? 'fa-exclamation-triangle' : 
-                                        'fa-info-circle'}"></i>
-                        <span>${message}</span>
-                        <button onclick="this.parentElement.parentElement.remove()" 
-                                style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-
-                document.body.appendChild(notification);
-
-                // Show notification
-                setTimeout(() => notification.classList.add('show'), 100);
-
-                // Auto-remove after 5 seconds
-                setTimeout(() => {
-                    if (notification.parentElement) {
-                        notification.classList.remove('show');
-                        setTimeout(() => notification.remove(), 300);
-                    }
-                }, 5000);
-            }
-
-            startPolling() {
-                if (this.isPolling) return;
-                
-                this.isPolling = true;
-                this.poll();
-            }
-
-            stopPolling() {
-                this.isPolling = false;
-                if (this.pollTimer) {
-                    clearTimeout(this.pollTimer);
-                    this.pollTimer = null;
-                }
-            }
-
-            startIntensivePolling() {
-                // Reduce poll interval during active operations
-                this.pollInterval = 2000; // Poll every 2 seconds
-                if (!this.isPolling) {
-                    this.startPolling();
-                }
-            }
-
-            resetPollingInterval() {
-                this.pollInterval = 3000; // Back to normal 3 seconds
-            }
-
-            async poll() {
-                if (!this.isPolling) return;
-
-                const data = await this.fetchStatus();
-                if (data) {
-                    this.updateUI(data);
-                    
-                    // Reset to normal polling if automation is completed or idle
-                    if (data.status && (data.status.status === 'Completed' || data.status.status === 'Idle')) {
-                        this.resetPollingInterval();
-                    }
-                }
-
-                // Schedule next poll
-                this.pollTimer = setTimeout(() => this.poll(), this.pollInterval);
-            }
-
-            togglePolling() {
-                const toggleBtn = document.getElementById('toggle-polling');
-                if (!toggleBtn) return;
-
-                if (this.isPolling) {
-                    this.stopPolling();
-                    toggleBtn.innerHTML = '<i class="fas fa-play"></i> Resume Updates';
-                    this.showNotification('Real-time updates paused', 'warning');
-                } else {
-                    this.startPolling();
-                    toggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Updates';
-                    this.showNotification('Real-time updates resumed', 'success');
-                }
-            }
-        }
-
-        // Initialize the automation status updater
-        const automationUpdater = new AutomationStatusUpdater();
-
-        // Enhanced smooth scrolling and navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Form enhancement for better UX
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add loading states to form submissions
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    if (submitBtn && !submitBtn.disabled) {
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-                        submitBtn.disabled = true;
-                        
-                        // Re-enable after 3 seconds as failsafe
-                        setTimeout(() => {
-                            submitBtn.innerHTML = originalText;
-                            submitBtn.disabled = false;
-                        }, 3000);
-                    }
-                });
-            });
-
-            // Enhance file upload with drag and drop
-            const fileInputs = document.querySelectorAll('input[type="file"]');
-            fileInputs.forEach(input => {
-                const wrapper = input.parentElement;
-                
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    wrapper.addEventListener(eventName, preventDefaults, false);
-                });
-
-                function preventDefaults(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-
-                ['dragenter', 'dragover'].forEach(eventName => {
-                    wrapper.addEventListener(eventName, highlight, false);
-                });
-
-                ['dragleave', 'drop'].forEach(eventName => {
-                    wrapper.addEventListener(eventName, unhighlight, false);
-                });
-
-                function highlight(e) {
-                    wrapper.style.borderColor = '#007bff';
-                    wrapper.style.backgroundColor = 'rgba(0, 123, 255, 0.05)';
-                }
-
-                function unhighlight(e) {
-                    wrapper.style.borderColor = '#d1ecf1';
-                    wrapper.style.backgroundColor = '#f8f9fa';
-                }
-
-                wrapper.addEventListener('drop', handleDrop, false);
-
-                function handleDrop(e) {
-                    const dt = e.dataTransfer;
-                    const files = dt.files;
-                    input.files = files;
-                    
-                    if (files.length > 0) {
-                        const fileName = files[0].name;
-                        input.setAttribute('data-filename', fileName);
-                        // You could add visual feedback here showing the file name
-                    }
-                }
-            });
-        });
-    </script>
-
-    <script>
-        // Auto-update functionality for detection results
-        (function() {
-            'use strict';
-            
-            // Configuration
-            const POLLING_INTERVAL = 2000; // 2 seconds
-            const MAX_RETRIES = 3;
-            
-            // State management
-            let automationPolling = null;
-            let isAutomationRunning = false;
-            let retryCount = 0;
-            let lastAutomationStatus = 'Idle';
-            
-            // DOM elements - adjust selectors based on your actual template
-            const elements = {
-                // Detection result elements
-                detectionResult: document.getElementById('detection-result') || document.querySelector('.detection-result'),
-                attackLevel: document.getElementById('attack-level') || document.querySelector('.attack-level'),
-                severityScore: document.getElementById('severity-score') || document.querySelector('.severity-score'),
-                accuracy: document.getElementById('accuracy') || document.querySelector('.accuracy'),
-                mitigation: document.getElementById('mitigation') || document.querySelector('.mitigation'),
-                
-                // Status elements
-                attackStatus: document.getElementById('attack-status') || document.querySelector('.attack-status'),
-                mlStatus: document.getElementById('ml-status') || document.querySelector('.ml-status'),
-                
-                // Form elements
-                startAttackBtn: document.getElementById('start-attack-btn') || document.querySelector('input[type="submit"][value*="Start"]'),
-                attackForm: document.getElementById('attack-form') || document.querySelector('form'),
-                
-                // Progress elements (create if they don't exist)
-                progressContainer: document.getElementById('automation-progress') || createProgressContainer(),
-                progressBar: null,
-                progressText: null,
-                statusText: null
-            };
-            
-            // Create progress container if it doesn't exist
-            function createProgressContainer() {
-                const container = document.createElement('div');
-                container.id = 'automation-progress';
-                container.className = 'automation-progress';
-                container.innerHTML = `
-                    <div class="progress-header">
-                        <h4>Automation Status: <span id="automation-status">Idle</span></h4>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span id="progress-percentage">0</span>% - 
-                        <span id="current-step">Ready</span>
-                    </div>
-                    <div class="automation-log" id="automation-log"></div>
-                `;
-                
-                // Insert after the form
-                const form = elements.attackForm;
-                if (form && form.parentNode) {
-                    form.parentNode.insertBefore(container, form.nextSibling);
-                } else {
-                    // Insert at the beginning of the body if form not found
-                    document.body.insertBefore(container, document.body.firstChild);
-                }
-                
-                // Update element references
-                elements.progressBar = container.querySelector('#progress-bar');
-                elements.progressText = container.querySelector('#progress-percentage');
-                elements.statusText = container.querySelector('#automation-status');
-                elements.currentStep = container.querySelector('#current-step');
-                elements.automationLog = container.querySelector('#automation-log');
-                
-                return container;
-            }
-            
-            // Add CSS styles for progress container
-            function addProgressStyles() {
-                const style = document.createElement('style');
-                style.textContent = `
-                    .automation-progress {
-                        background: #f8f9fa;
-                        border: 1px solid #dee2e6;
-                        border-radius: 5px;
-                        padding: 15px;
-                        margin: 20px 0;
-                        font-family: Arial, sans-serif;
-                    }
-                    .progress-header h4 {
-                        margin: 0 0 10px 0;
-                        color: #495057;
-                    }
-                    .progress-bar-container {
-                        width: 100%;
-                        height: 20px;
-                        background-color: #e9ecef;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        margin: 10px 0;
-                    }
-                    .progress-bar {
-                        height: 100%;
-                        background-color: #007bff;
-                        transition: width 0.3s ease;
-                        border-radius: 10px;
-                    }
-                    .progress-info {
-                        font-size: 14px;
-                        color: #6c757d;
-                        margin-bottom: 10px;
-                    }
-                    .automation-log {
-                        background: #ffffff;
-                        border: 1px solid #dee2e6;
-                        border-radius: 3px;
-                        padding: 10px;
-                        max-height: 150px;
-                        overflow-y: auto;
-                        font-family: monospace;
-                        font-size: 12px;
-                        line-height: 1.4;
-                    }
-                    .log-entry {
-                        margin-bottom: 5px;
-                    }
-                    .log-timestamp {
-                        color: #6c757d;
-                        font-weight: bold;
-                    }
-                    .detection-updated {
-                        animation: highlightUpdate 2s ease-in-out;
-                    }
-                    @keyframes highlightUpdate {
-                        0% { background-color: #fff3cd; }
-                        100% { background-color: transparent; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // Utility functions
-            function addLogEntry(message) {
-                if (!elements.automationLog) return;
-                
-                const timestamp = new Date().toLocaleTimeString();
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${message}`;
-                
-                elements.automationLog.appendChild(entry);
-                elements.automationLog.scrollTop = elements.automationLog.scrollHeight;
-                
-                // Keep only last 20 entries
-                const entries = elements.automationLog.querySelectorAll('.log-entry');
-                if (entries.length > 20) {
-                    entries[0].remove();
-                }
-            }
-            
-            function updateProgress(percentage, status, step) {
-                if (elements.progressBar) {
-                    elements.progressBar.style.width = `${percentage}%`;
-                }
-                if (elements.progressText) {
-                    elements.progressText.textContent = percentage;
-                }
-                if (elements.statusText) {
-                    elements.statusText.textContent = status || 'Unknown';
-                }
-                if (elements.currentStep && step) {
-                    elements.currentStep.textContent = step.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                }
-            }
-            
-            function updateDetectionResults(results) {
-                if (!results) return;
-                
-                let updated = false;
-                
-                // Update detection result
-                if (elements.detectionResult && results.detection) {
-                    elements.detectionResult.textContent = results.detection;
-                    elements.detectionResult.classList.add('detection-updated');
-                    setTimeout(() => elements.detectionResult.classList.remove('detection-updated'), 2000);
-                    updated = true;
-                }
-                
-                // Update attack level
-                if (elements.attackLevel && results.attack_level) {
-                    elements.attackLevel.textContent = results.attack_level;
-                    updated = true;
-                }
-                
-                // Update severity score
-                if (elements.severityScore && results.attack_severity_num !== undefined) {
-                    elements.severityScore.textContent = results.attack_severity_num;
-                    updated = true;
-                }
-                
-                // Update accuracy
-                if (elements.accuracy && results.accuracy) {
-                    elements.accuracy.textContent = results.accuracy;
-                    updated = true;
-                }
-                
-                // Update mitigation
-                if (elements.mitigation && results.mitigation) {
-                    elements.mitigation.textContent = results.mitigation;
-                    updated = true;
-                }
-                
-                if (updated) {
-                    addLogEntry(`Detection results updated: ${results.detection || 'Unknown'} (${results.attack_level || 'N/A'})`);
-                }
-            }
-            
-            function updateSystemStatus(data) {
-                if (data.current_results) {
-                    const current = data.current_results;
-                    
-                    // Update attack status
-                    if (elements.attackStatus) {
-                        const status = current.detection && current.detection !== 'Benign' ? 'Under Attack!' : 'Safe';
-                        elements.attackStatus.textContent = status;
-                    }
-                    
-                    // Update ML status
-                    if (elements.mlStatus && current.accuracy) {
-                        elements.mlStatus.textContent = 'ML model is available and ready to be used.';
-                    }
-                }
-            }
-            
-            // Main polling function
-            function pollAutomationStatus() {
-                fetch('/get_automation_status/', {
-                    method: 'GET',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'same-origin'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    retryCount = 0; // Reset retry count on success
-                    
-                    if (data.status) {
-                        const status = data.status;
-                        const currentStatus = status.status || 'Idle';
-                        
-                        // Update progress and status
-                        updateProgress(
-                            status.progress || 0,
-                            currentStatus,
-                            getCurrentStep(status)
-                        );
-                        
-                        // Log status changes
-                        if (currentStatus !== lastAutomationStatus) {
-                            addLogEntry(`Status changed: ${currentStatus}`);
-                            lastAutomationStatus = currentStatus;
-                        }
-                        
-                        // Check for automation results
-                        if (data.automation_results && data.automation_results.analysis) {
-                            addLogEntry('Automation completed! Displaying results...');
-                            updateDetectionResults(data.automation_results.analysis);
-                            
-                            // Stop polling when completed
-                            if (currentStatus === 'Completed') {
-                                setTimeout(() => stopAutomationPolling(), 3000); // Stop after 3 seconds
-                            }
-                        }
-                        
-                        // Update current results if available
-                        if (data.current_results) {
-                            updateDetectionResults(data.current_results);
-                            updateSystemStatus(data);
-                        }
-                        
-                        // Check if automation should stop
-                        if (['Completed', 'Failed', 'Error'].includes(currentStatus)) {
-                            setTimeout(() => stopAutomationPolling(), 5000);
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error polling automation status:', error);
-                    retryCount++;
-                    
-                    if (retryCount >= MAX_RETRIES) {
-                        addLogEntry('Error: Failed to get automation status. Stopping polling.');
-                        stopAutomationPolling();
-                    } else {
-                        addLogEntry(`Error getting status (retry ${retryCount}/${MAX_RETRIES})`);
-                    }
-                });
-            }
-            
-            function getCurrentStep(status) {
-                if (!status.current_task || !status.current_task.steps) return 'Initializing';
-                
-                const progress = status.progress || 0;
-                const steps = status.current_task.steps;
-                const currentStepIndex = Math.floor((progress / 100) * steps.length);
-                
-                return steps[currentStepIndex] || 'Processing';
-            }
-            
-            function startAutomationPolling() {
-                if (automationPolling) return;
-                
-                isAutomationRunning = true;
-                retryCount = 0;
-                lastAutomationStatus = 'Idle';
-                
-                // Update UI
-                if (elements.startAttackBtn) {
-                    elements.startAttackBtn.disabled = true;
-                    elements.startAttackBtn.value = elements.startAttackBtn.value.replace('Start', 'Running...');
-                }
-                
-                addLogEntry('Starting automation monitoring...');
-                
-                // Start polling
-                automationPolling = setInterval(pollAutomationStatus, POLLING_INTERVAL);
-                pollAutomationStatus(); // Initial call
-            }
-            
-            function stopAutomationPolling() {
-                if (automationPolling) {
-                    clearInterval(automationPolling);
-                    automationPolling = null;
-                }
-                
-                isAutomationRunning = false;
-                
-                // Update UI
-                if (elements.startAttackBtn) {
-                    elements.startAttackBtn.disabled = false;
-                    elements.startAttackBtn.value = elements.startAttackBtn.value.replace('Running...', 'Start');
-                }
-                
-                addLogEntry('Automation monitoring stopped.');
-            }
-            
-            // Form submission handler
-            function handleFormSubmission(event) {
-                if (isAutomationRunning) {
-                    event.preventDefault();
-                    alert('Automation is already running. Please wait for it to complete.');
-                    return false;
-                }
-                
-                // For AJAX submission
-                event.preventDefault();
-                
-                const formData = new FormData(elements.attackForm);
-                
-                // Clear previous results
-                addLogEntry('Starting new attack simulation...');
-                
-                // Start polling
-                startAutomationPolling();
-                
-                fetch('/start_attack/', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
-                    },
-                    credentials: 'same-origin'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        addLogEntry(data.message || 'Attack simulation started successfully');
-                    } else {
-                        addLogEntry(`Error: ${data.message || 'Failed to start attack simulation'}`);
-                        stopAutomationPolling();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error starting attack:', error);
-                    addLogEntry('Error: Failed to start attack simulation');
-                    stopAutomationPolling();
-                });
-            }
-            
-            // Initialize
-            function initialize() {
-                addProgressStyles();
-                
-                // Attach form submission handler
-                if (elements.attackForm) {
-                    elements.attackForm.addEventListener('submit', handleFormSubmission);
-                }
-                
-                // Initial status check
-                setTimeout(pollAutomationStatus, 1000);
-                
-                addLogEntry('Auto-update system initialized');
-            }
-            
-            // Cleanup
-            window.addEventListener('beforeunload', function() {
-                stopAutomationPolling();
-            });
-            
-            // Start when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initialize);
-            } else {
-                initialize();
-            }
-            
-        })();
-    </script>
 </body>
 </html>
