@@ -533,18 +533,16 @@
                 <label for="info"><p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p></label>
             </div>
 
-            <form method="post" action="{% url 'receive_network_data' %}">
-                {% csrf_token %}
-                <button class="btn btn-primary">
-                    <i class="fas fa-play"></i>
-                    Start Detection
-                </button>
-            </form>
-            <button class="btn btn-danger">
+            <button class="btn btn-primary" id="btn-start-detection">
+                <i class="fas fa-play"></i>
+                Start Detection
+            </button>
+
+            <button class="btn btn-danger" id="btn-stop-detection" disabled>
                 <i class="fas fa-stop"></i>
                 Stop Detection
             </button>
-            <button class="btn btn-secondary">
+            <button class="btn btn-secondary" id="btn-reset">
                 <i class="fas fa-redo"></i>
                 Reset
             </button>
@@ -555,7 +553,7 @@
     <div class="stats-container">
         <div class="stat-card benign">
             <div class="stat-content">
-                <h3></h3>
+                <h3 id="stat-benign">{{ flow_stats.benign|default: 0 }}</h3>
                 <p>Benign Flows</p>
             </div>
             <div class="stat-icon">
@@ -565,7 +563,7 @@
 
         <div class="stat-card suspicious">
             <div class="stat-content">
-                <h3></h3>
+                <h3 id="stat-suspicious">{{ flow_stats.suspicious|default: 0 }}</h3>
                 <p>Suspicious Flows</p>
             </div>
             <div class="stat-icon">
@@ -575,7 +573,7 @@
 
         <div class="stat-card malicious">
             <div class="stat-content">
-                <h3></h3>
+            <h3 id="stat-malicious">{{ flow_stats.malicious|default: 0}}</h3>
                 <p>Malicious Flows</p>
             </div>
             <div class="stat-icon">
@@ -597,7 +595,21 @@
             <div class="panel-content">
                 <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;"></p>
 
-
+                <div class="flow-list" id="flow-list">
+                    <div class="flow-item-benign">
+                        <div class="flow-header"></div>
+                            <span class="flow-badge benign"><i class="fas fa-check-circle"></i>Benign</span>
+                            <span class="flow-time">--:--:-- --</span>
+                        </div>
+                        <div class="flow-details">
+                            <strong>Waiting for traffic...</strong>
+                            Start detection to monitor live network flows
+                        </div>
+                        <div class="flow-meta">
+                            0 bytes, 0 packets &nbsp;|&nbsp; <span class="confidence">Confidence: 0%</span> 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

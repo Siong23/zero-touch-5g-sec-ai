@@ -34,6 +34,7 @@ from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.conf import settings
 from django.core.cache import cache
+from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
 from django.http import JsonResponse
@@ -46,6 +47,8 @@ from detection.settings import OPEN5GS_CONFIG
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+live_flows_buffer = deque(maxlen=100)
+flow_stats = {'benign': 0, 'suspicious': 0, 'malicious': 0}
 auto_analysis_results = {}
 automation_queue = queue.Queue()
 automation_thread = None
@@ -132,6 +135,7 @@ class NetworkTrafficCapture:
         self.packets_captured = []
         self.capture_interface = self.get_active_interface()
         self.capture_file_path = None
+        self.live_monitoring = False
     
     def get_active_interface(self):
         try:
@@ -190,12 +194,13 @@ class NetworkTrafficCapture:
         
         try:
             timestamp = int(time.time())
-            filename = f"{attack_type}.pcap"
+            filename = f"{attack_type}_{timestamp}.pcap"
             filepath = os.path.join(settings.BASE_DIR, 'captures', filename)
 
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
             capture_active = True
+            self.live_monitoring = True
             latest_capture_file = filepath
             self.capture_file_path = filepath
 
@@ -208,11 +213,12 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error starting packet capture: {e}")
             capture_active = False
+            self.live_monitoring = False
             return False, None
 
     def _capture_with_analysis(self, duration, filepath, attack_type, target_ip):
         # Start packet capture and analysis
-        global capture_active, auto_analysis_results
+        global capture_active, live_flows_buffer
 
         try:
             capture_filter = None #self._get_capture_filter(attack_type, target_ip)
@@ -236,7 +242,27 @@ class NetworkTrafficCapture:
             else:
                 capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
 
-            capture.sniff(timeout=duration)
+            packet_count = 0
+            start_time = time.time()
+
+            for packet in capture.sniff_continuously:
+                packet_count += 1
+
+                # Process every 3rd packet to avoid overload packets
+                if packet_count % 3 == 0:
+                    try:
+                        self.process_pyshark_packet(packet)
+                    except Exception as e:
+                        logging.debug(f"Error processing packet")
+
+                # Check if duration has expired
+                if time.time() - start_time >= duration:
+                    break
+
+                # Safety limit
+                if packet_count >= 10000:
+                    logging.warning("Reached packet limit, stopping packet capture.")
+                    break
 
             if hasattr(capture, 'close'):
                 capture.close()
@@ -250,9 +276,7 @@ class NetworkTrafficCapture:
                 time.sleep(2) # Ensure file is ready
 
                 try:
-                    test_packets = rdpcap(filepath)
-                    packets_captured = len(test_packets)
-                    logger.info(f"Total packets captured: {packets_captured}")
+                    logger.info(f"Total packets captured: {packet_count}")
                 
                 except:
                     pass
@@ -267,6 +291,7 @@ class NetworkTrafficCapture:
         
         finally:
             capture_active = False
+            self.live_monitoring = False
 
     def _get_capture_filter(self, attack_type, target_ip):
         filters = {
@@ -283,80 +308,181 @@ class NetworkTrafficCapture:
         filter_str = filters.get(attack_type, f'host {target_ip}')
         logger.info(f"Generated capture filter for {attack_type}: {filter_str}")
         return filter_str
-
-    # Process captured data in packet
-    def auto_analyze_capture(self,filepath, attack_type, target_ip):
-
-        global model
-
-        if not model:
-            logger.error("ML model is not loaded.")
-            return None
-        
-        if not os.path.exists(filepath):
-            logger.error("Capture file not found.")
-            return None
+    
+    def process_pyshark_packet(self, pyshark_packet):
+        global live_flows_buffer, flow_stats, model
 
         try:
-            packets = rdpcap(filepath)
+            src_ip = 'N/A'
+            dst_ip = 'N/A'
+            src_port = 0
+            dst_port = 0
+            protocol  = 'Other'
+            packet_size = 0
 
-            if len(packets) == 0:
-                logger.warning("Error: No packets of data found.")
-                return None
-            
-            analysis_results = {
-                'filepath': filepath,
+            # Get IP addresses
+            if hasattr(pyshark_packet, 'ip'):
+                src_ip = getattr(pyshark_packet.ip, 'src', 'N/A')
+                dst_ip = getattr(pyshark_packet.ip, 'dst', 'N/A')
+                packet_size = int(getattr(pyshark_packet, 'length', 0))
+
+            # Get TCP info
+            elif hasattr(pyshark_packet, 'tcp'):
+                protocol = 'TCP'
+                src_port = int(getattr(pyshark_packet.tcp, 'srcport', 0))
+                dst_port = int(getattr(pyshark_packet.tcp, 'dstport', 0))
+
+            # Get UDP info
+            elif hasattr(pyshark_packet, 'udp'):
+                protocol = 'UDP'
+                src_port = int(getattr(pyshark_packet.udp, 'srcport', 0 ))
+                dst_port = int(getattr(pyshark_packet.udp, 'srcport', 0))
+
+            elif hasattr(pyshark_packet, 'icmp'):
+                protocol = 'ICMP'
+                src_port = int(getattr(pyshark_packet.icmp, 'srcport', 0))
+                dst_port = int(getattr(pyshark_packet.icmp, 'dstport', 0))
+
+            classification = 'benign'
+            attack_type = 'Normal Traffic'
+            confidence = 85.0
+
+            if protocol == 'TCP':
+                # Check for SYN Flood patterns
+                if hasattr(pyshark_packet, 'tcp') and hasattr(pyshark_packet.tcp, 'flags'):
+                    flags = getattr(pyshark_packet.tcp, 'flags', '0x0000')
+                    if 'SYN' in str(flags) and 'ACK' not in str(flags):
+                        classification = 'malicious'
+                        attack_type = 'Possible SYN Scan'
+                        confidence = 65.0
+
+            elif protocol == 'ICMP':
+                classification = 'suspicious'
+                attack_type = 'ICMP Traffic'
+                confidence = 50.0
+
+            # Create flow object
+            flow = {
+                'timestamp': datetime.now().isoformat(),
+                'classification': classification,
                 'attack_type': attack_type,
-                'target_ip': target_ip,
-                'total_packets': len(packets),
-                'detections': [],
-                'summary': [],
-                'timestamp': datetime.now().isoformat()
+                'src_ip': src_ip,
+                'src_port': src_port,
+                'dst_ip': dst_ip,
+                'dst_port': dst_port,
+                'protocol': protocol,
+                'bytes': packet_size,
+                'packets': 1,
+                'confidence': round(confidence, 1)
             }
 
-            packets_to_analyze = packets[:200]
-            logger.info(f"Analyzing {len(packets_to_analyze)} packets from capture.")
+            # Add flow object to buffer
+            live_flows_buffer.append(flow)
 
-            attack_detections = defaultdict(int)
-            severity_levels = defaultdict(int)
+            # Update stats
+            if classification == 'benign':
+                flow_stats['benign'] += 1
+            
+            elif classification == 'malicious':
+                flow_stats['malicious'] += 1
 
-            for i, packet in enumerate(packets_to_analyze):
-                features = self.extract_features(packet)
+            else:
+                flow_stats['suspicious'] += 1
 
-                if not features:
-                    continue
+            logging.debug(f"Live flow added: {attack_type} from {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+        
+        except Exception as e:
+            logging.debug(f"Error creating flow from pyshark packet: {e}")
 
-                # Convert features dict to ordered list
-                feature_list = [
-                    features.get('frame.time_relative', 0.0),
-                    features.get('ip.len', 0),
-                    features.get('tcp.flags.syn', 0),
-                    features.get('tcp.flags.ack', 0),
-                    features.get('tcp.flags.push', 0),
-                    features.get('tcp.flags.fin', 0),
-                    features.get('tcp.flags.reset', 0),
-                    features.get('ip.proto', 0),
-                    features.get('ip.ttl', 0),
-                    features.get('tcp.window_size_value', 0),
-                    features.get('tcp.hdr_len', 0),
-                    features.get('udp.length', 0),
-                    features.get('srcport', 0),
-                    features.get('dstport', 0)
-                ]
+    # Process scapy packet and add to live flow
+    def process_packet_realtime(self, packet):
+        global live_flows_buffer, flow_stats, model
 
-                return JsonResponse({
-                    'status': 'success',
-                    'data': {
-                        'features': feature_list,
-                        'file_path': filepath,
-                        'packet_count': len(packets),
-                        'auto_analysis': auto_analysis_results
-                    }
-                })
+        try:
+            features = self.extract_features(packet)
+            if not features:
+                return
+            
+            feature_list = [
+                features.get('frame.time_relative', 0.0),
+                features.get('ip.len', 0),
+                features.get('tcp.flags.syn', 0),
+                features.get('tcp.flags.ack', 0),
+                features.get('tcp.flags.push', 0),
+                features.get('tcp.flags.fin', 0),
+                features.get('tcp.flags.reset', 0),
+                features.get('ip.proto', 0),
+                features.get('ip.ttl', 0),
+                features.get('tcp.window_size_value', 0),
+                features.get('tcp.hdr_len', 0),
+                features.get('udp.length', 0),
+                features.get('srcport', 0),
+                features.get('dstport', 0)
+            ]
+
+            classification = 'benign'
+            attack_type = 'Normal Traffic'
+            confidence = 0.0
+
+            if model:
+                try:
+                    from app.views import perform_detection
+                    detection_result = perform_detection(feature_list)
+                    attack_type = detection_result.get('attack_type', 'Unknown')
+                    classification = 'benign' if attack_type == 'Benign' else 'malicious'
+                    confidence = detection_result.get('confidence', 0.0) * 100
+                
+                except Exception as e:
+                    logging.debug(f"Error in ML classification: {e}")
+
+            # Extract network info
+            src_ip = packet[IP].src if packet.haslayer(IP) else 'N/A'
+            dst_ip = packet[IP].dst if packet.haslayer(IP) else 'N/A'
+            src_port = features.get('srcport', 0)
+            dst_port = features.get('dstport', 0)
+
+            # Determine protocol
+            if packet.haslayer(TCP):
+                protocol = 'TCP'
+            elif packet.haslayer(UDP):
+                protocol = 'UDP'
+            elif packet.haslayer(ICMP):
+                protocol = 'ICMP'
+            else:
+                protocol = 'Other'
+
+            # Create flow object
+            flow = {
+                'timestamp': datetime.now().isoformat(),
+                'classification': classification,
+                'attack_type': attack_type,
+                'src_ip': src_ip,
+                'src_port': src_port,
+                'dst_ip': dst_ip,
+                'dst_port': dst_port,
+                'protocol': protocol,
+                'bytes':int(features.get('ip.len', 0)),
+                'packets': 1,
+                'confidence': round(confidence, 1)
+            }
+
+            # Add flow object to buffer
+            live_flows_buffer.append(flow)
+
+            # Update stats
+            if classification == 'benign':
+                flow_stats['benign'] += 1
+            
+            elif classification == 'malicious':
+                flow_stats['malicious'] += 1
+
+            else:
+                flow_stats['suspicious'] += 1
+
+            logging.debug(f"Live flow added: {attack_type} from {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
 
         except Exception as e:
-            logger.error(f"Error processing file: {e}")
-            return HttpResponseRedirect(reverse('home'))
+            logging.error(f"Error processing packet for live monitoring: {e}")
 
     def extract_features(self, packet):
         try:
@@ -429,6 +555,122 @@ class NetworkTrafficCapture:
             logger.error(f"Error extracting features: {e}")
             logger.error(f"Packet info: {packet.summary() if hasattr(packet, 'summary') else 'Unknown packet'}")
             return None
+        
+    # Process captured data in packet
+    def auto_analyze_capture(self,filepath, attack_type, target_ip):
+
+        global model
+
+        if not model:
+            logger.error("ML model is not loaded.")
+            return None
+        
+        if not os.path.exists(filepath):
+            logger.error("Capture file not found.")
+            return None
+
+        try:
+            packets = rdpcap(filepath)
+
+            if len(packets) == 0:
+                logger.warning("Error: No packets of data found.")
+                return None
+            
+            analysis_results = {
+                'filepath': filepath,
+                'attack_type': attack_type,
+                'target_ip': target_ip,
+                'total_packets': len(packets),
+                'detections': [],
+                'summary': [],
+                'timestamp': datetime.now().isoformat()
+            }
+
+            packets_to_analyze = packets[:200]
+            logger.info(f"Analyzing {len(packets_to_analyze)} packets from capture.")
+
+            for i, packet in enumerate(packets_to_analyze):
+                features = self.extract_features(packet)
+
+                if not features:
+                    continue
+
+                # Convert features dict to ordered list
+                feature_list = [
+                    features.get('frame.time_relative', 0.0),
+                    features.get('ip.len', 0),
+                    features.get('tcp.flags.syn', 0),
+                    features.get('tcp.flags.ack', 0),
+                    features.get('tcp.flags.push', 0),
+                    features.get('tcp.flags.fin', 0),
+                    features.get('tcp.flags.reset', 0),
+                    features.get('ip.proto', 0),
+                    features.get('ip.ttl', 0),
+                    features.get('tcp.window_size_value', 0),
+                    features.get('tcp.hdr_len', 0),
+                    features.get('udp.length', 0),
+                    features.get('srcport', 0),
+                    features.get('dstport', 0)
+                ]
+
+                from app.views import perform_detection
+                detection_result = perform_detection(feature_list)
+                analysis_results['detections'].append(detection_result)
+            
+                return analysis_results
+
+        except Exception as e:
+            logger.error(f"Error analyzing capture file: {e}")
+            return None
+        
+# Create API endpoints to get live traffic network flows
+@require_http_methods(["GET"])
+def get_live_flows(request):
+    global live_flows_buffer, flow_stats
+
+    try:
+        flows_list = list(live_flows_buffer)
+
+        # Display most recent 20 flows
+        recent_flows = flows_list[-20:] if len(flows_list)>20 else flows_list
+
+        # Revrse to show newest flow first
+        recent_flows.reverse()
+
+        return JsonResponse({'status':'success',
+                            'flows': recent_flows,
+                            'stats': flow_stats,
+                            'total_flows': len(flows_list)})
+    
+    except Exception as e:
+        logging.error(f"Error fetching live flows: {e}")
+        return JsonResponse({'status': 'error',
+                             'message': str(e),
+                             'flows': [],
+                             'stats': flow_stats})
+    
+# Check if network monitoring is active or not
+@require_http_methods(["GET"])
+def get_flow_status(request):
+    global capture_active, network_capture
+
+    return JsonResponse({
+        'monitoring_active': capture_active,
+        'interface': network_capture.capture_interface if network_capture else 'N/A',
+        'capture_file': network_capture.capture_file_path if network_capture else None
+    })
+
+# Reset flow statistics
+@csrf_exempt
+@require_http_methods(["POST"])
+def reset_flow_stats(request):
+    global flow_stats, live_flows_buffer
+
+    flow_stats = {'benign': 0, 'suspicious': 0, 'malicious': 0}
+    live_flows_buffer.clean()
+
+    return JsonResponse({'status': 'success',
+                         'message': 'Flow statistics reset'})
 
 # Create API endpoints to receive data from the Open5gs network host
 @csrf_exempt
