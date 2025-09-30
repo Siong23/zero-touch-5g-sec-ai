@@ -11902,3 +11902,729 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'network_capture._capture_wit
 "GET /get_live_flows/ HTTP/1.1" 200 109
 "GET /get_live_flows/ HTTP/1.1" 200 109
 "GET /get_live_flows/ HTTP/1.1" 200 109
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET / HTTP/1.1" 200 36005
+"GET /get_flow_status/ HTTP/1.1" 200 72
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 36005
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET / HTTP/1.1" 200 36005
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+"GET /get_live_flows/ HTTP/1.1" 200 109
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 36001
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 60
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 36001
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 36001
+"GET /get_flow_status/ HTTP/1.1" 200 72

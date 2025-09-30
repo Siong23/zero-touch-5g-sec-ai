@@ -541,13 +541,10 @@
                 <label for="info"><p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p></label>
             </div>
 
-            <form method="post" action="{% url 'get_live_flows' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary" id="btn-start-detection">
-                    <i class="fas fa-play"></i>
-                    Start Detection
-                </button>
-            </form>
+            <button type="submit" class="btn btn-primary" id="btn-start-detection">
+                <i class="fas fa-play"></i>
+                Start Detection
+            </button>
 
             <button class="btn btn-danger" id="btn-stop-detection" disabled>
                 <i class="fas fa-stop"></i>
@@ -881,8 +878,8 @@
                 if (!this.isMonitoring) return;
 
                 try {
-                    const response = await fetch('/get_live_flows/', {
-                        method: 'GET',
+                    const response = await fetch('/start_live_monitoring/', {
+                        method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
                         }

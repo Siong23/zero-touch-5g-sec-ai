@@ -182,6 +182,70 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error getting active network interface: {e}")
             return "Wi-Fi"  # Default to Wi-Fi if an error occurs
+        
+    # Start live monitoring without saving to file
+    def start_live_monitoring_only(self):
+        global capture_active
+
+        if capture_active:
+            logger.warning("Capture already running")
+            return False
+        
+        try:
+            capture_active = True
+            self.live_monitoring = True
+
+            monitor_thread = threading.Thread(target=self.live_monitor_packets, daemon=True)
+            monitor_thread.start()
+
+            logger.info(f"Live monitoring started using interface {self.capture_interface}")
+            return True
+        
+        except Exception as e:
+            logger.error(f"Error starting live monitoring: {e}")
+            capture_active = False
+            self.live_monitoring = False
+            return False
+    
+    # Monitor packets in real time without saving
+    def live_monitor_packets(self):
+        global capture_active
+
+        try:
+            if os.name == 'nt':  # Windows
+                loop = asyncio.ProactorEventLoop()
+                asyncio.set_event_loop(loop)
+
+            else: # Unix/Linux/Mac
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+
+            capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop)
+
+            packet_count = 0
+
+            for packet in capture.sniff_continuously():
+                if not capture_active or not self.live_monitoring:
+                    break
+
+                packet_count += 1
+
+                if packet_count % 3 == 0:
+                    try:
+                        self.process_pyshark_packet(packet)
+                    
+                    except Exception as e:
+                        logging.debug(f"Error processing packet: {e}")
+            
+            if hasattr(capture, 'close'):
+                capture.close()
+
+        except Exception as e:
+            logger.error(f"Error during live monitoring: {e}")
+        
+        finally:
+            capture_active = False
+            self.live_monitoring = False
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
     def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
@@ -623,7 +687,32 @@ class NetworkTrafficCapture:
             return None
 
 def chrome_devtools_json(request):
-    return JsonResponse({}, status=200)    
+    return JsonResponse({}, status=200)   
+
+# Create API endpoint to start live traffic network monitoring
+@csrf_exempt
+@require_http_methods(["POST"])
+def start_live_monitoring(request):
+    global network_capture
+
+    try:
+        success = network_capture.start_live_monitoring_only()
+
+        if success:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Failed to start monitoring'
+            }, status=500)
+        
+    except Exception as e:
+        logger.error(f"Error starting live monitoring: {e}")
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
+    
+    finally:
+        return HttpResponseRedirect(reverse('home'))
 
 # Create API endpoints to get live traffic network flows
 @require_http_methods(["GET"])
