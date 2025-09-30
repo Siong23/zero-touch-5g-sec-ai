@@ -12730,3 +12730,278 @@ Capture already running
 Capture already running
 "POST /start_live_monitoring/ HTTP/1.1" 302 0
 "GET / HTTP/1.1" 200 37606
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 72
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 57
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 105
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Error during live monitoring: TShark (pid 2768) seems to have crashed (retcode: 3221225786).
+Last error line: 1316 packets captured
+Try rerunning in debug mode [ capture_obj.set_debug() ] or try updating tshark.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET / HTTP/1.1" 200 37746
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 105
+"GET / HTTP/1.1" 200 37746
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37746
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 105
+"GET / HTTP/1.1" 200 37758
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37746
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 105
+"GET / HTTP/1.1" 200 37758
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Error during live monitoring: TShark (pid 19584) seems to have crashed (retcode: 3221225786).
+Last error line: Packets captured: 1427
+Try rerunning in debug mode [ capture_obj.set_debug() ] or try updating tshark.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37746
+"GET /get_flow_status/ HTTP/1.1" 200 72
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37738
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET / HTTP/1.1" 200 37738
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 105
+"GET / HTTP/1.1" 200 37750
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"GET / HTTP/1.1" 200 37750
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"GET / HTTP/1.1" 200 37821
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Traceback (most recent call last):
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\nakam\Documents\zero-touch-5g-sec-ai\.venv\Lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The view app.views.start_live_monitoring didn't return an HttpResponse object. It returned None instead.
+"POST /start_live_monitoring/ HTTP/1.1" 500 74199
+Error during live monitoring: TShark (pid 15772) seems to have crashed (retcode: 3221225786).
+Last error line: 4801 packets captured
+Try rerunning in debug mode [ capture_obj.set_debug() ] or try updating tshark.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37738
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Forbidden (CSRF token missing.): /start_attack/
+"POST /start_attack/ HTTP/1.1" 403 2491
+"GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 37880
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Automation started for HTTPFlood on 192.168.0.165
+Starting attack simulation: HTTPFlood on 192.168.0.165
+Starting packet capture with filter: None
+Packet capture started on interface Wi-Fi for 60 seconds.
+Packet capture thread started.
+Step completed: packet_capture (40%)
+Error during packet capture: 'method' object is not iterable
+Target 192.168.0.165 reachability: No
+Target 192.168.0.165 is not reachable. Aborting attack.
+Executing attack command: timeout 45 sudo hping3 -1 --flood --rand-source 192.168.0.165
+HTTPFlood attack triggered on 192.168.0.165
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 37880
+"GET /get_flow_status/ HTTP/1.1" 200 165
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+Capture file not found for analysis.
+"GET / HTTP/1.1" 200 56798
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET / HTTP/1.1" 200 83896
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET / HTTP/1.1" 200 83896
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237
+"GET /get_automation_status/ HTTP/1.1" 200 1237

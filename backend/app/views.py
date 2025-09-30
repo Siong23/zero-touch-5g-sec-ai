@@ -693,15 +693,28 @@ def chrome_devtools_json(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def start_live_monitoring(request):
-    global network_capture
-
+    global network_capture, connection_status
     try:
+        ssh = paramiko.client.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
+        ssh.connect('100.108.112.77', username='open5gs', password='mmuzte123', timeout=10)
+        _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
+        output = _stdout.readlines()
+        
+        for line in output:
+            if "Active" in line:
+                print("open5gs-amfd-service: ", line)
+
+        connection_status = "Connected to 5G Network"
         success = network_capture.start_live_monitoring_only()
 
         if success:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Failed to start monitoring'
+                'message': 'Live monitoring started',
+                'connection_status': connection_status
             }, status=500)
         
     except Exception as e:
@@ -710,36 +723,31 @@ def start_live_monitoring(request):
             'status': 'error',
             'message': str(e)
         }, status=500)
-    
-    finally:
-        return HttpResponseRedirect(reverse('home'))
 
 # Create API endpoint to stop live traffic network monitoring
 @csrf_exempt
 @require_http_methods(["POST"])
 def stop_live_monitoring(request):
-    global network_capture, capture_active
+    global network_capture, capture_active, connection_status
 
     try:
         capture_active = False
         if network_capture:
             network_capture.live_monitoring = False
+            connection_status = "Not connected"
 
         return JsonResponse({
             'status': 'success',
-            'message': 'Live monitoring stopped'
+            'message': 'Live monitoring stopped',
+            'connection_status': connection_status
         })
-        
+         
     except Exception as e:
         logger.error(f"Error starting live monitoring: {e}")
         return JsonResponse({
             'status': 'error',
             'message': str(e)
         }, status=500)
-    
-    finally:
-        return HttpResponseRedirect(reverse('home'))
-
 
 # Create API endpoints to get live traffic network flows
 @require_http_methods(["GET"])
