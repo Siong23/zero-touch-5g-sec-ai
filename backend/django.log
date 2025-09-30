@@ -11560,3 +11560,11 @@ django.template.exceptions.TemplateSyntaxError: default requires 2 arguments, 1 
 "GET / HTTP/1.1" 200 19778
 "GET / HTTP/1.1" 200 20023
 "GET / HTTP/1.1" 200 20023
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 20023
+"GET / HTTP/1.1" 200 20035
+"GET / HTTP/1.1" 200 20023
+"GET / HTTP/1.1" 200 19993
+"GET / HTTP/1.1" 200 19993
+"GET / HTTP/1.1" 200 20014
