@@ -714,6 +714,33 @@ def start_live_monitoring(request):
     finally:
         return HttpResponseRedirect(reverse('home'))
 
+# Create API endpoint to stop live traffic network monitoring
+@csrf_exempt
+@require_http_methods(["POST"])
+def stop_live_monitoring(request):
+    global network_capture, capture_active
+
+    try:
+        capture_active = False
+        if network_capture:
+            network_capture.live_monitoring = False
+
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Live monitoring stopped'
+        })
+        
+    except Exception as e:
+        logger.error(f"Error starting live monitoring: {e}")
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
+    
+    finally:
+        return HttpResponseRedirect(reverse('home'))
+
+
 # Create API endpoints to get live traffic network flows
 @require_http_methods(["GET"])
 def get_live_flows(request):
@@ -758,7 +785,7 @@ def reset_flow_stats(request):
     global flow_stats, live_flows_buffer
 
     flow_stats = {'benign': 0, 'suspicious': 0, 'malicious': 0}
-    live_flows_buffer.clean()
+    live_flows_buffer.clear()
 
     return JsonResponse({'status': 'success',
                          'message': 'Flow statistics reset'})

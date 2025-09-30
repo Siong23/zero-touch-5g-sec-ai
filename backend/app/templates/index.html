@@ -794,28 +794,67 @@
                 }
             }
 
-            startMonitoring() {
+            async startMonitoring() 
+            {
                 if (this.isMonitoring) return;
+
+                try 
+                {
+                    const response = await fetch('/start_live_monitoring/', {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to start monitoring');
+                    }
+
+                    const data = await response.json()
+
+                    if (data.status == 'success') {
+                        this.isMonitoring = true;
+                        
+                        const startBtn = document.getElementById('btn-start-detection');
+                        const stopBtn = document.getElementById('btn-stop-detection');
+                        
+                        if (startBtn) {
+                            startBtn.disabled = true;
+                            startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Monitoring...';
+                        }
+                        if (stopBtn) {
+                            stopBtn.disabled = false;
+                        }
+                        
+                        this.showNotification('Network monitoring started', 'success');
+                        this.poll();
+                    } else 
+                    {
+                        throw new Error(data.message || 'Unknown error');
+                    }
                 
-                this.isMonitoring = true;
-                
-                const startBtn = document.getElementById('btn-start-detection');
-                const stopBtn = document.getElementById('btn-stop-detection');
-                
-                if (startBtn) {
-                    startBtn.disabled = true;
-                    startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Monitoring...';
+                } catch (error) 
+                {
+                    console.error('Error starting monitoring', error);
+                    this.showNotification('Failed to start monitoring: ' + error.message, 'error');
                 }
-                if (stopBtn) {
-                    stopBtn.disabled = false;
-                }
-                
-                this.showNotification('Network monitoring started', 'success');
-                this.poll();
             }
 
-            stopMonitoring() {
+            async stopMonitoring() {
                 if (!this.isMonitoring) return;
+
+                try {
+                    const response = await fetch('/stop_live_monitoring/', {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+
+                if (!response.ok) {
+                    throw new Error('Failed to start monitoring');
+                }
                 
                 this.isMonitoring = false;
                 if (this.pollTimer) {
@@ -835,7 +874,10 @@
                 }
                 
                 this.showNotification('Network monitoring stopped', 'warning');
+            } catch (error) {
+                console.error('Error stopping monitoring: ', error);
             }
+        }
 
             async resetMonitor() {
                 this.stopMonitoring();

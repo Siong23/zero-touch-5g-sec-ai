@@ -18,6 +18,7 @@ urlpatterns = [
     path('start_attack/', views.start_attack, name='start_attack'),
     path('favicon.ico', favicon_view, name='favicon'),
     path('start_live_monitoring/', views.start_live_monitoring, name='start_live_monitoring'),
+    path('stop_live_monitoring/', views.stop_live_monitoring, name='stop_live_monitoring'),
     path('get_live_flows/', views.get_live_flows, name='get_live_flows'),
     path('get_flow_status/', views.get_flow_status, name='get_flow_status'),
     path('reset_flow_stats/', views.reset_flow_stats, name='reset_flow_status'),

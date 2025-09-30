@@ -12628,3 +12628,105 @@ Watching for file changes with StatReloader
 Selected most active interface: Wi-Fi (IP: 10.193.125.200)
 "GET / HTTP/1.1" 200 36001
 "GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+"GET / HTTP/1.1" 200 36001
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 36001
+Error during live monitoring: TShark (pid 26068) seems to have crashed (retcode: 3221225786).
+Last error line: Capturing on 'Standard input'
+Try rerunning in debug mode [ capture_obj.set_debug() ] or try updating tshark.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 36001
+"GET /get_flow_status/ HTTP/1.1" 200 72
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37588
+"GET /get_flow_status/ HTTP/1.1" 200 72
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 37748
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET / HTTP/1.1" 200 37677
+"GET /get_flow_status/ HTTP/1.1" 200 72
+Live monitoring started using interface Wi-Fi
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 37677
+"GET / HTTP/1.1" 200 37677
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 37677
+"GET / HTTP/1.1" 200 37606
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Capture already running
+"POST /start_live_monitoring/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 37606
