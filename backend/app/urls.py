@@ -19,7 +19,8 @@ urlpatterns = [
     path('favicon.ico', favicon_view, name='favicon'),
     path('get_live_flows/', views.get_live_flows, name='get_live_flows'),
     path('get_flow_status/', views.get_flow_status, name='get_flow_status'),
-    path('reset_flow_stats/', views.reset_flow_stats, name='reset_flow_status')
+    path('reset_flow_stats/', views.reset_flow_stats, name='reset_flow_status'),
+    path('.well-known/appspecific/com.chrome.devtools.json', views.chrome_devtools_json, name='chrome_devtools_json')
 ]
 
 if settings.DEBUG:

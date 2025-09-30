@@ -224,7 +224,6 @@ class NetworkTrafficCapture:
             capture_filter = None #self._get_capture_filter(attack_type, target_ip)
 
             success = False
-            packets_captured = 0
 
             logger.info(f"Starting packet capture with filter: {capture_filter}")
 
@@ -622,7 +621,10 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error analyzing capture file: {e}")
             return None
-        
+
+def chrome_devtools_json(request):
+    return JsonResponse({}, status=200)    
+
 # Create API endpoints to get live traffic network flows
 @require_http_methods(["GET"])
 def get_live_flows(request):

@@ -541,10 +541,13 @@
                 <label for="info"><p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p></label>
             </div>
 
-            <button class="btn btn-primary" id="btn-start-detection">
-                <i class="fas fa-play"></i>
-                Start Detection
-            </button>
+            <form method="post" action="{% url 'get_live_flows' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" id="btn-start-detection">
+                    <i class="fas fa-play"></i>
+                    Start Detection
+                </button>
+            </form>
 
             <button class="btn btn-danger" id="btn-stop-detection" disabled>
                 <i class="fas fa-stop"></i>
@@ -590,14 +593,13 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main-container">
         <!-- Real-time Flow Monitor -->
         <div class="panel">
             <div class="panel-header">
                 <h2>
-                    <i class="fas fa-stream"></i>
-                    Real-time Network Monitor
+                <i class="fas fa-stream"></i>
+                Real-time Network Monitor
                 </h2>
             </div>
             <div class="panel-content">
@@ -605,17 +607,17 @@
 
                 <div class="flow-list" id="flow-list">
                     <div class="flow-item-benign">
-                        <div class="flow-header"></div>
+                        <div class="flow-header">
                             <span class="flow-badge benign"><i class="fas fa-check-circle"></i>Benign</span>
                             <span class="flow-time">--:--:-- --</span>
                         </div>
-                        <div class="flow-details">
-                            <strong>Waiting for traffic...</strong>
-                            Start detection to monitor live network flows
-                        </div>
-                        <div class="flow-meta">
-                            0 bytes, 0 packets &nbsp;|&nbsp; <span class="confidence">Confidence: 0%</span> 
-                        </div>
+                    </div>
+                    <div class="flow-details">
+                        <strong>Waiting for traffic...</strong>
+                        Start detection to monitor live network flows
+                    </div>
+                    <div class="flow-meta">
+                        0 bytes, 0 packets &nbsp;|&nbsp; <span class="confidence">Confidence: 0%</span> 
                     </div>
                 </div>
             </div>
@@ -743,6 +745,382 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Live Network Traffic Monitor
+        class NetworkTrafficMonitor {
+            constructor() {
+                this.flowListElement = document.getElementById('flow-list');
+                this.isMonitoring = false;
+                this.pollInterval = 2000;
+                this.maxFlows = 20;
+                this.pollTimer = null;
+                
+                this.init();
+            }
+
+            init() {
+                const startBtn = document.getElementById('btn-start-detection');
+                const stopBtn = document.getElementById('btn-stop-detection');
+                const resetBtn = document.getElementById('btn-reset');
+
+                if (startBtn) {
+                    startBtn.addEventListener('click', () => this.startMonitoring());
+                }
+                if (stopBtn) {
+                    stopBtn.addEventListener('click', () => this.stopMonitoring());
+                }
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => this.resetMonitor());
+                }
+
+                this.checkInitialStatus();
+            }
+
+            async checkInitialStatus() {
+                try {
+                    const response = await fetch('/get_flow_status/', {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.monitoring_active) {
+                            this.startMonitoring();
+                        }
+                    }
+                } catch (error) {
+                    console.log('Monitoring status check:', error.message);
+                }
+            }
+
+            startMonitoring() {
+                if (this.isMonitoring) return;
+                
+                this.isMonitoring = true;
+                
+                const startBtn = document.getElementById('btn-start-detection');
+                const stopBtn = document.getElementById('btn-stop-detection');
+                
+                if (startBtn) {
+                    startBtn.disabled = true;
+                    startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Monitoring...';
+                }
+                if (stopBtn) {
+                    stopBtn.disabled = false;
+                }
+                
+                this.showNotification('Network monitoring started', 'success');
+                this.poll();
+            }
+
+            stopMonitoring() {
+                if (!this.isMonitoring) return;
+                
+                this.isMonitoring = false;
+                if (this.pollTimer) {
+                    clearTimeout(this.pollTimer);
+                    this.pollTimer = null;
+                }
+                
+                const startBtn = document.getElementById('btn-start-detection');
+                const stopBtn = document.getElementById('btn-stop-detection');
+                
+                if (startBtn) {
+                    startBtn.disabled = false;
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> Start Detection';
+                }
+                if (stopBtn) {
+                    stopBtn.disabled = true;
+                }
+                
+                this.showNotification('Network monitoring stopped', 'warning');
+            }
+
+            async resetMonitor() {
+                this.stopMonitoring();
+                
+                try {
+                    const response = await fetch('/reset_flow_stats/', {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': this.getCookie('csrftoken')
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        this.flowListElement.innerHTML = `
+                            <div class="flow-item benign">
+                                <div class="flow-header">
+                                    <span class="flow-badge benign"><i class="fas fa-check-circle"></i> Benign</span>
+                                    <span class="flow-time">--:--:-- --</span>
+                                </div>
+                                <div class="flow-details">
+                                    <strong>Monitor reset</strong><br>
+                                    Start detection to monitor live network flows
+                                </div>
+                                <div class="flow-meta">
+                                    0 bytes, 0 packets &nbsp;|&nbsp; <span class="confidence">Confidence: 0%</span>
+                                </div>
+                            </div>
+                        `;
+                        this.updateStats(0, 0, 0);
+                        this.showNotification('Monitor reset successfully', 'success');
+                    }
+                } catch (error) {
+                    console.error('Error resetting monitor:', error);
+                    this.showNotification('Failed to reset monitor', 'error');
+                }
+            }
+
+            async poll() {
+                if (!this.isMonitoring) return;
+
+                try {
+                    const response = await fetch('/get_live_flows/', {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.flows && data.flows.length > 0) {
+                            this.updateFlows(data.flows);
+                        }
+                        
+                        if (data.stats) {
+                            this.updateStats(
+                                data.stats.benign || 0,
+                                data.stats.suspicious || 0,
+                                data.stats.malicious || 0
+                            );
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error fetching flows:', error);
+                }
+
+                this.pollTimer = setTimeout(() => this.poll(), this.pollInterval);
+            }
+
+            updateFlows(flows) {
+                const placeholder = this.flowListElement.querySelector('.flow-item:first-child');
+                if (placeholder && placeholder.textContent.includes('Waiting for traffic')) {
+                    this.flowListElement.innerHTML = '';
+                }
+
+                const currentFlowCount = this.flowListElement.children.length;
+                const newFlows = flows.slice(0, Math.min(5, flows.length));
+
+                newFlows.forEach(flow => {
+                    const flowElement = this.createFlowElement(flow);
+                    this.flowListElement.insertBefore(flowElement, this.flowListElement.firstChild);
+                });
+
+                while (this.flowListElement.children.length > this.maxFlows) {
+                    this.flowListElement.removeChild(this.flowListElement.lastChild);
+                }
+
+                const panelContent = this.flowListElement.closest('.panel-content');
+                if (panelContent) {
+                    panelContent.scrollTop = 0;
+                }
+            }
+
+            createFlowElement(flow) {
+                const flowDiv = document.createElement('div');
+                const flowType = flow.classification || 'benign';
+                const isMalicious = flowType.toLowerCase() === 'malicious';
+                const isSuspicious = flowType.toLowerCase() === 'suspicious';
+                
+                flowDiv.className = `flow-item ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}`;
+                flowDiv.innerHTML = `
+                    <div class="flow-header">
+                        <span class="flow-badge ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}">
+                            <i class="fas ${isMalicious ? 'fa-exclamation-circle' : isSuspicious ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
+                            ${isMalicious ? 'Malicious' : isSuspicious ? 'Suspicious' : 'Benign'}
+                        </span>
+                        <span class="flow-time">${this.formatTime(flow.timestamp)}</span>
+                    </div>
+                    <div class="flow-details">
+                        <strong>${flow.attack_type || flowType}</strong><br>
+                        ${flow.src_ip}:${flow.src_port} → ${flow.dst_ip}:${flow.dst_port} ${flow.protocol || 'TCP'}
+                    </div>
+                    <div class="flow-meta">
+                        ${flow.bytes || 0} bytes, ${flow.packets || 0} packets &nbsp;|&nbsp; 
+                        <span class="confidence">Confidence: ${flow.confidence || '0.0'}%</span>
+                    </div>
+                `;
+                
+                return flowDiv;
+            }
+
+            updateStats(benign, suspicious, malicious) {
+                this.animateValue(document.getElementById('stat-benign'), benign);
+                this.animateValue(document.getElementById('stat-suspicious'), suspicious);
+                this.animateValue(document.getElementById('stat-malicious'), malicious);
+            }
+
+            animateValue(element, endValue) {
+                if (!element) return;
+                
+                const startValue = parseInt(element.textContent) || 0;
+                if (startValue === endValue) return;
+                
+                const duration = 500;
+                const range = endValue - startValue;
+                const increment = range / (duration / 16);
+                let current = startValue;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if ((increment > 0 && current >= endValue) || (increment < 0 && current <= endValue)) {
+                        element.textContent = endValue;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.round(current);
+                    }
+                }, 16);
+            }
+
+            formatTime(timestamp) {
+                if (!timestamp) {
+                    return new Date().toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        second: '2-digit',
+                        hour12: true 
+                    });
+                }
+                
+                const date = new Date(timestamp);
+                return date.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: true 
+                });
+            }
+
+            showNotification(message, type = 'success') {
+                const existing = document.querySelector('.notification');
+                if (existing) {
+                    existing.remove();
+                }
+
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                                    type === 'error' ? 'fa-exclamation-triangle' : 
+                                    'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.remove()" 
+                            style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto; font-size: 18px;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 5000);
+            }
+
+            getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        }
+
+        // Initialize the monitor when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                window.trafficMonitor = new NetworkTrafficMonitor();
+            });
+        } else {
+            window.trafficMonitor = new NetworkTrafficMonitor();
+        }
+
+        // Form enhancement for attack simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            const attackForm = document.getElementById('attack-form');
+            
+            if (attackForm) {
+                attackForm.addEventListener('submit', function(e) {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn && !submitBtn.disabled) {
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Attack...';
+                        submitBtn.disabled = true;
+                        
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }, 5000);
+                    }
+                });
+            }
+
+            // File upload drag and drop enhancement
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(input => {
+                const wrapper = input.parentElement;
+                
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    wrapper.addEventListener(eventName, preventDefaults, false);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    wrapper.addEventListener(eventName, () => {
+                        input.style.borderColor = '#007bff';
+                        input.style.backgroundColor = 'rgba(0, 123, 255, 0.05)';
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    wrapper.addEventListener(eventName, () => {
+                        input.style.borderColor = '#dee2e6';
+                        input.style.backgroundColor = '#f8f9fa';
+                    }, false);
+                });
+
+                wrapper.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    input.files = files;
+                    
+                    if (files.length > 0) {
+                        console.log('File dropped:', files[0].name);
+                    }
+                }, false);
+            });
+        });
+    </script>
 
 </body>
 </html>
