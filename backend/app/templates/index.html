@@ -659,6 +659,8 @@
                     <i class="fas fa-info-circle"></i>
                     <strong>Note:</strong> Attack simulation will run for approximately 2 minutes with automatic packet capture. Please wait for detection.
                 </div>
+
+                <div id="automation-status"></div>
             </div>
         </div>
 
@@ -1195,7 +1197,6 @@
                 if (!document.getElementById('automation-status')) {
                     const statusContainer = document.createElement('div');
                     statusContainer.id = 'automation-status';
-                    statusContainer.className = 'automation-status-container';
                     statusContainer.innerHTML = `
                         <div class="automation-header">
                             <h3><i class="fas fa-cog fa-spin" id="automation-icon"></i> Automation Status</h3>
@@ -1258,9 +1259,10 @@
                     `;
 
                     // Insert after the attack simulation section
-                    const attackSection = document.querySelector('.attack .section-container');
-                    if (attackSection) {
-                        attackSection.parentNode.insertBefore(statusContainer, attackSection.nextSibling);
+                    const attackPanelContent = document.querySelector('.panel-content');
+                    const infoNote = attackPanelContent.querySelector('.info-note');
+                    if (infoNote) {
+                        infoNote.insertAdjacentElement('afterend', statusContainer);
                     }
                 }
 
