@@ -1194,14 +1194,13 @@
 
             createStatusElements() {
                 // Create automation status container if it doesn't exist
-                if (!document.getElementById('automation-status')) {
-                    const statusContainer = document.createElement('div');
-                    statusContainer.id = 'automation-status';
+                const statusContainer = document.getElementById('automation-status');
+                if (statusContainer) {
                     statusContainer.innerHTML = `
                         <div class="automation-header">
                             <h3><i class="fas fa-cog fa-spin" id="automation-icon"></i> Automation Status</h3>
                             <div class="automation-controls">
-                                <button id="toggle-polling" class="control-btn">
+                                <button id="toggle-polling" class="control-btn" style="color: white;">
                                     <i class="fas fa-pause"></i> Pause Updates
                                 </button>
                             </div>
@@ -1289,6 +1288,7 @@
                         margin-bottom: 20px;
                         border-bottom: 1px solid #e9ecef;
                         padding-bottom: 15px;
+                        padding-top: 30px;
                     }
 
                     .automation-header h3 {
@@ -1305,6 +1305,7 @@
                     }
 
                     .control-btn {
+                        font-weight: bold;
                         padding: 8px 15px;
                         font-size: 0.9rem;
                         border: 1px solid #dee2e6;
@@ -1323,6 +1324,7 @@
                     }
 
                     .status-info {
+                        color: #061629;
                         display: grid;
                         gap: 15px;
                         margin-bottom: 20px;
