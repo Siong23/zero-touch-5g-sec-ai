@@ -11553,3 +11553,10 @@ Traceback (most recent call last):
 django.template.exceptions.TemplateSyntaxError: default requires 2 arguments, 1 provided
 "GET / HTTP/1.1" 500 180213
 "GET /favicon.ico HTTP/1.1" 204 0
+"GET / HTTP/1.1" 200 19778
+"GET / HTTP/1.1" 200 19778
+"GET / HTTP/1.1" 200 19778
+"GET / HTTP/1.1" 200 20023
+"GET / HTTP/1.1" 200 19778
+"GET / HTTP/1.1" 200 20023
+"GET / HTTP/1.1" 200 20023

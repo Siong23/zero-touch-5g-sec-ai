@@ -172,6 +172,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             padding: 0 30px 30px 30px;
+            align-items: stretch;
         }
 
         .panel {
@@ -179,6 +180,13 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
+            min-width: 350px;
+            max-width: 400px;
+            min-height: 650px;
+            max-height: 700px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .panel-header {
@@ -553,7 +561,7 @@
     <div class="stats-container">
         <div class="stat-card benign">
             <div class="stat-content">
-                <h3 id="stat-benign">{{ flow_stats.benign|default: 0 }}</h3>
+                <h3 id="stat-benign">{{ flow_stats.benign|default:0 }}</h3>
                 <p>Benign Flows</p>
             </div>
             <div class="stat-icon">
@@ -563,7 +571,7 @@
 
         <div class="stat-card suspicious">
             <div class="stat-content">
-                <h3 id="stat-suspicious">{{ flow_stats.suspicious|default: 0 }}</h3>
+                <h3 id="stat-suspicious">{{ flow_stats.suspicious|default:0 }}</h3>
                 <p>Suspicious Flows</p>
             </div>
             <div class="stat-icon">
@@ -573,7 +581,7 @@
 
         <div class="stat-card malicious">
             <div class="stat-content">
-            <h3 id="stat-malicious">{{ flow_stats.malicious|default: 0}}</h3>
+            <h3 id="stat-malicious">{{ flow_stats.malicious|default:0}}</h3>
                 <p>Malicious Flows</p>
             </div>
             <div class="stat-icon">
