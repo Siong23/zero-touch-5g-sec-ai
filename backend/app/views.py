@@ -1755,7 +1755,7 @@ def home(request):
                                 else:
                                     raise ValueError("No data rows found in CSV")
 
-                    elif filename.endswith('.pcap', '.pcapng'):
+                    elif filename.endswith(('.pcap', '.pcapng')):
                         # Handle PCAP format
                         file_content = uploaded_file.read()
                         temp_filename = f"temp_{filename}"
