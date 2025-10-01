@@ -528,7 +528,89 @@
             background: #a0aec0;
         }
 
+        #detection-results-container {
+            margin-top: 20px;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #007bff;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .result-box h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+
+        .result-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .result-value {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .result-value.success {
+            color: #28a745;
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+
+        .result-value.error {
+            color: #dc3545;
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+        }
+
+        .result-value.warning {
+            color: #856404;
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+        }
+
         /* Responsive */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes slideInFlow {
             from {
                 opacity: 0;
@@ -742,7 +824,7 @@
             <div class="panel-header">
                 <h2>
                     <i class="fas fa-brain"></i>
-                    Machine Learning Inference
+                    Deep Learning Inference
                 </h2>
             </div>
             <div class="panel-content">
@@ -756,13 +838,13 @@
                         5G Network Data Analysis
                     </div>
 
-                    <form method="post" enctype="multipart/form-data">
+                    <form id="detection-form" method="post" enctype="multipart/form-data" action="{% url 'home' %}">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="captured_data">Upload captured data (JSON/CSV/PCAP/PCAPNG file):</label>
                             <input style="color: #061629;" type="file" name="captured_data" id="captured_data" accept=".json,.csv,.pcap,.pcapng">
                         </div>
 
-                        {% csrf_token %}
                         <button type="submit" class="btn-form btn-submit">
                             Detect Attack
                         </button>
@@ -770,41 +852,52 @@
                 </div>
 
                 <!-- Detection Results -->
-                {% if detection %}
-                <div class="result-box" id="detection">
-                    <h3>
-                        <i class="fas fa-clipboard-list"></i>
-                        Detection Results
-                    </h3>
-                    <p>
-                        <strong>Attack Type:</strong>
-                        <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
-                            {{ detection|default:"No detection performed" }}
-                        </span>
-                    </p>
-                    
-                    <p>
-                        <strong>Severity Level:</strong>
-                        <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
-                            {{ attack_level|default:"N/A" }}
-                        </span>
-                    </p>
+                <div id="detection-results-container">
+                    {% if detection %}
+                    <div class="result-box" id="detection-results">
+                        <h3>
+                            <i class="fas fa-clipboard-list"></i>
+                            Detection Results
+                        </h3>
 
-                    <p>
-                        <strong>Model Accuracy:</strong>
-                        <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
-                            {{ accuracy|default:"N/A" }}
-                        </span>
-                    </p>
-                    
-                    <p>
-                        <strong>Mitigation Solution:</strong>
-                        <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
-                            {{ mitigation|default:"N/A" }}
-                        </span>
-                    </p>
+                        <div class="result-item">
+                            <p>
+                                <span class="result-label"><strong>Attack Type:</strong></span>
+                                <span class="result-value {% if 'Error' in detection %}error{% else %}success{% endif %}">
+                                    {{ detection|default:"No detection performed" }}
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <div class="result-item">
+                            <p>
+                                <span class="result-label"><strong>Severity Level:</strong></span>
+                                <span class="result-value {% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
+                                    {{ attack_level|default:"N/A" }}
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="result-item">
+                            <p>
+                                <span class="result-label"><strong>Model Accuracy:</strong></span>
+                                <span class="result-value {% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
+                                    {{ accuracy|default:"N/A" }}
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <div class="result-item">
+                            <p>
+                                <span class="result-label"><strong>Mitigation Solution:</strong></span>
+                                <span class="result-value {% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
+                                    {{ mitigation|default:"N/A" }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -1327,42 +1420,6 @@
                                     </div>
                                     <span id="progress-text">0%</span>
                                 </div>
-                            <div id="automation-results" class="automation-results" style="display: none;">
-                                {% if detection %}
-                                <div class="result-box">
-                                    <h3>
-                                        <i class="fas fa-clipboard-list"></i>
-                                        Detection Results
-                                    </h3>
-                                    <p>
-                                        <strong>Attack Type:</strong>
-                                        <span class="{% if 'Error' in detection %}error{% else %}success{% endif %}">
-                                            {{ detection|default:"No detection performed" }}
-                                        </span>
-                                    </p>
-                                    
-                                    <p>
-                                        <strong>Severity Level:</strong>
-                                        <span class="{% if 'N/A' in attack_severity %}error{% else %}success{% endif %}">
-                                            {{ attack_level|default:"N/A" }}
-                                        </span>
-                                    </p>
-
-                                    <p>
-                                        <strong>Model Accuracy:</strong>
-                                        <span class="{% if 'N/A' in accuracy %}error{% else %}success{% endif %}">
-                                            {{ accuracy|default:"N/A" }}
-                                        </span>
-                                    </p>
-                                    
-                                    <p>
-                                        <strong>Mitigation Solution:</strong>
-                                        <span class="{% if 'N/A' in mitigation %}error{% else %}success{% endif %}">
-                                            {{ mitigation|default:"N/A" }}
-                                        </span>
-                                    </p>
-                                </div>
-                                {% endif %}
                             </div>
                         </div>
                     `;
@@ -1470,59 +1527,6 @@
                         background: linear-gradient(45deg, #007bff, #28a745);
                         transition: width 0.5s ease;
                         border-radius: 10px;
-                    }
-
-                    .automation-results {
-                        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-                        border: 2px solid #dee2e6;
-                        border-radius: 10px;
-                        padding: 20px;
-                        margin-top: 15px;
-                    }
-
-                    .automation-results h4 {
-                        color: #061629;
-                        margin-bottom: 15px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-
-                    .result-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 15px;
-                    }
-
-                    .result-item {
-                        background: white;
-                        padding: 15px;
-                        border-radius: 8px;
-                        border-left: 4px solid #007bff;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .result-item strong {
-                        color: #061629;
-                        display: block;
-                        margin-bottom: 5px;
-                    }
-
-                    .result-value {
-                        font-size: 1.1rem;
-                        font-weight: 500;
-                    }
-
-                    .result-value.success {
-                        color: #28a745;
-                    }
-
-                    .result-value.error {
-                        color: #dc3545;
-                    }
-
-                    .result-value.warning {
-                        color: #ffc107;
                     }
 
                     .status-indicator {
@@ -1692,103 +1696,6 @@
                 if (status.status === 'Completed' && data.has_new_results) {
                     this.showNotification('Analysis completed! Results are ready.', 'success');
                     this.updateDetectionResults(results, automationResults);
-                }
-            }
-
-            displayResults(currentResults, automationResults) {
-                const resultsContainer = document.getElementById('automation-results');
-                if (!resultsContainer) return;
-
-                const results = automationResults?.analysis || currentResults;
-                if (!results || (!results.detection && !currentResults.detection)) {
-                    resultsContainer.style.display = 'none';
-                    return;
-                }
-
-                resultsContainer.style.display = 'block';
-                resultsContainer.innerHTML = `
-                    <h4><i class="fas fa-chart-line"></i> Real-time Analysis Results</h4>
-                    <div class="result-grid">
-                        <div class="result-item">
-                            <strong>Attack Type:</strong>
-                            <div class="result-value ${this.getResultClass(results.detection || currentResults.detection)}">
-                                ${results.detection || currentResults.detection || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Severity Level:</strong>
-                            <div class="result-value ${this.getSeverityClass(results.attack_level || currentResults.attack_level)}">
-                                ${results.attack_level || currentResults.attack_level || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Model Accuracy:</strong>
-                            <div class="result-value success">
-                                ${results.accuracy || currentResults.accuracy || 'N/A'}
-                            </div>
-                        </div>
-                        <div class="result-item">
-                            <strong>Mitigation:</strong>
-                            <div class="result-value">
-                                ${results.mitigation || currentResults.mitigation || 'N/A'}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            updateDetectionResults(currentResults, automationResults) {
-                // Update the main detection results section if it exists
-                const detectionSection = document.querySelector('.result-box');
-                if (!detectionSection) return;
-
-                const results = automationResults?.analysis || currentResults;
-                if (!results) return;
-
-                // Find and update detection results
-                const detectionElements = {
-                    detection: detectionSection.querySelector('p:nth-child(2) span:last-child'),
-                    severity: detectionSection.querySelector('p:nth-child(3) span:last-child'),
-                    accuracy: detectionSection.querySelector('p:nth-child(4) span:last-child'),
-                    mitigation: detectionSection.querySelector('p:nth-child(5) span:last-child')
-                };
-
-                // Update each element with new values
-                if (detectionElements.detection && results.detection) {
-                    detectionElements.detection.textContent = results.detection;
-                    detectionElements.detection.className = this.getResultClass(results.detection);
-                }
-
-                if (detectionElements.severity && results.attack_level) {
-                    detectionElements.severity.textContent = results.attack_level;
-                    detectionElements.severity.className = this.getSeverityClass(results.attack_level);
-                }
-
-                if (detectionElements.accuracy && results.accuracy) {
-                    detectionElements.accuracy.textContent = results.accuracy;
-                    detectionElements.accuracy.className = 'success';
-                }
-
-                if (detectionElements.mitigation && results.mitigation) {
-                    detectionElements.mitigation.textContent = results.mitigation;
-                }
-            }
-
-            getResultClass(detection) {
-                if (!detection) return '';
-                if (detection.includes('Error') || detection === 'Unknown') return 'error';
-                if (detection === 'Benign') return 'success';
-                return 'warning';
-            }
-
-            getSeverityClass(severity) {
-                if (!severity) return '';
-                switch(severity.toLowerCase()) {
-                    case 'none': return 'success';
-                    case 'minor': return 'success';
-                    case 'major': return 'warning';
-                    case 'critical': return 'error';
-                    default: return '';
                 }
             }
 
@@ -1973,6 +1880,51 @@
                     }
                 }
             });
+        });
+    </script>
+
+    <script>
+        document.getElementById('detection-form').addEventListener('submit', async function(e) 
+        {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            submitBtn.disabled = true;
+        
+            try 
+            {
+                const response = await fetch('{% url "home" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+            
+                if (response.ok) 
+                {
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Extract and update results
+                    const newResults = doc.getElementById('detection-results-container');
+                    if (newResults) {
+                        document.getElementById('detection-results-container').innerHTML = newResults.innerHTML;
+                    }
+                }
+            } catch (error) 
+            {
+                console.error('Error:', error);
+                showFormNotification('Detection failed: ' + error.message, 'error');
+            } finally 
+            {
+                submitBtn.innerHTML = '<i class="fas fa-search"></i> Detect Attack';
+                submitBtn.disabled = false;
+            }
         });
     </script>
 
