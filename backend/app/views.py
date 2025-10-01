@@ -226,6 +226,7 @@ class NetworkTrafficCapture:
 
             for packet in capture.sniff_continuously():
                 if not capture_active or not self.live_monitoring:
+                    logger.info("Stop signal received, breaking capture loop")
                     break
 
                 packet_count += 1
@@ -236,9 +237,19 @@ class NetworkTrafficCapture:
                     
                     except Exception as e:
                         logging.debug(f"Error processing packet: {e}")
+
+                if packet_count % 10 == 0:
+                    if not capture_active or not self.live_monitoring:
+                        logger.info("Stop signal received during processing")
+                        break
             
-            if hasattr(capture, 'close'):
-                capture.close()
+            try:
+                if hasattr(capture, 'close'):
+                    capture.close()
+                if hasattr(capture, 'eventloop'):
+                    capture.eventloop.stop()
+            except Exception as e:
+                logger.warning(f"Error closing capture: {e}")
 
         except Exception as e:
             logger.error(f"Error during live monitoring: {e}")
@@ -246,6 +257,7 @@ class NetworkTrafficCapture:
         finally:
             capture_active = False
             self.live_monitoring = False
+            logger.info("Live monitoring stopped completely")
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
     def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
@@ -452,7 +464,7 @@ class NetworkTrafficCapture:
             else:
                 flow_stats['suspicious'] += 1
 
-            logging.debug(f"Live flow added: {attack_type} from {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            logging.debug(f"Buffer size: {len(live_flows_buffer)}, Live flow added: {attack_type} from {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
         
         except Exception as e:
             logging.debug(f"Error creating flow from pyshark packet: {e}")
@@ -712,10 +724,18 @@ def start_live_monitoring(request):
 
         if success:
             return JsonResponse({
-                'status': 'error',
+                'status': 'success',
                 'message': 'Live monitoring started',
                 'connection_status': connection_status
+            }, status=200)
+        
+        else:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Failed to start monitoring',
+                'connection_status': connection_status
             }, status=500)
+
         
     except Exception as e:
         logger.error(f"Error starting live monitoring: {e}")
@@ -734,7 +754,10 @@ def stop_live_monitoring(request):
         capture_active = False
         if network_capture:
             network_capture.live_monitoring = False
+            network_capture.capture_active = False
             connection_status = "Not connected"
+
+        logger.info("Live monitoring stopped successfully")
 
         return JsonResponse({
             'status': 'success',
@@ -766,14 +789,16 @@ def get_live_flows(request):
         return JsonResponse({'status':'success',
                             'flows': recent_flows,
                             'stats': flow_stats,
-                            'total_flows': len(flows_list)})
+                            'total_flows': len(flows_list),
+                            'connection_status': connection_status})
     
     except Exception as e:
         logging.error(f"Error fetching live flows: {e}")
         return JsonResponse({'status': 'error',
                              'message': str(e),
                              'flows': [],
-                             'stats': flow_stats})
+                             'stats': flow_stats,
+                             'connection_status': connection_status})
     
 # Check if network monitoring is active or not
 @require_http_methods(["GET"])

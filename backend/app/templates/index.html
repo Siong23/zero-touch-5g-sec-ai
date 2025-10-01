@@ -79,6 +79,48 @@
             gap: 15px;
         }
 
+        .connection-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .connection-status-badge.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .connection-status-badge.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .connection-status-badge.connecting {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        #connection-status-icon {
+            font-size: 10px;
+        }
+
+        #connection-status-icon.connected {
+            color: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        #connection-status-icon.disconnected {
+            color: #dc3545;
+        }
+
+        #connection-status-icon.connecting {
+            color: #ffc107;
+            animation: spin 1s linear infinite;
+        }
+
         .btn {
             padding: 10px 20px;
             border: none;
@@ -146,6 +188,7 @@
         .stat-card.malicious::before { background: #dc3545; }
 
         .stat-content h3 {
+            color: #061629;
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 5px;
@@ -224,6 +267,7 @@
             margin-bottom: 10px;
             border-left: 4px solid;
             font-size: 13px;
+            animation: slideInFlow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .flow-item.malicious {
@@ -485,6 +529,27 @@
         }
 
         /* Responsive */
+        @keyframes slideInFlow {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }       
+
         @media (max-width: 1400px) {
             .main-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -538,7 +603,15 @@
         <div class="header-right">
             <div class="mode-selector">
                 <i class="fas fa-cog"></i>
-                <label for="info"><p><span class="{% if 'Connected' in connection_status %}success{% else %}error{% endif %}"><strong>Connection Status:</strong> {{ connection_status|default:"Not connected" }}</span></p></label>
+                <label for="info">
+                    <p>
+                        <span id="connection-status-display" class="connection-status-badge">
+                            <i class="fas fa-circle" id="connection-status-icon"></i>
+                            <strong>Connection Status:</strong>
+                            <span id="connection-status-text">{{ connection_status|default:"Not connected" }}</span>
+                        </span>
+                    </p>
+                </label>
             </div>
 
             <button type="submit" class="btn btn-primary" id="btn-start-detection">
@@ -677,17 +750,6 @@
                     <i class="fas fa-check-circle"></i> ML model is available and ready to be used.
                 </span>
 
-                <div class="button-group">
-                    <button class="btn-form btn-ml-start">
-                        <i class="fas fa-power-off"></i>
-                        Start ML System
-                    </button>
-                    <button class="btn-form btn-ml-stop">
-                        <i class="fas fa-stop-circle"></i>
-                        Stop ML System
-                    </button>
-                </div>
-
                 <div class="section-box" style="margin-top: 25px;">
                     <div class="section-title">
                         <i class="fas fa-search"></i>
@@ -697,9 +759,10 @@
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="captured_data">Upload captured data (JSON/CSV/PCAP/PCAPNG file):</label>
-                            <input type="file" name="captured_data" id="captured_data" accept=".json,.csv,.pcap,.pcapng">
+                            <input style="color: #061629;" type="file" name="captured_data" id="captured_data" accept=".json,.csv,.pcap,.pcapng">
                         </div>
 
+                        {% csrf_token %}
                         <button type="submit" class="btn-form btn-submit">
                             Detect Attack
                         </button>
@@ -708,7 +771,7 @@
 
                 <!-- Detection Results -->
                 {% if detection %}
-                <div class="result-box">
+                <div class="result-box" id="detection">
                     <h3>
                         <i class="fas fa-clipboard-list"></i>
                         Detection Results
@@ -777,6 +840,35 @@
                 this.checkInitialStatus();
             }
 
+            updateConnectionStatus(status, isConnected = false, isConnecting = false) {
+                const statusDisplay = document.getElementById('connection-status-display');
+                const statusText = document.getElementById('connection-status-text');
+                const statusIcon = document.getElementById('connection-status-icon');
+                
+                if (!statusDisplay || !statusText || !statusIcon) {
+                    console.warn('Connection status elements not found');
+                    return;
+                }
+                
+                // Update text
+                statusText.textContent = status;
+                
+                // Update classes and icon
+                statusDisplay.classList.remove('connected', 'disconnected', 'connecting');
+                statusIcon.classList.remove('connected', 'disconnected', 'connecting');
+                
+                if (isConnecting) {
+                    statusDisplay.classList.add('connecting');
+                    statusIcon.classList.add('connecting');
+                } else if (isConnected) {
+                    statusDisplay.classList.add('connected');
+                    statusIcon.classList.add('connected');
+                } else {
+                    statusDisplay.classList.add('disconnected');
+                    statusIcon.classList.add('disconnected');
+                }
+            }           
+
             async checkInitialStatus() {
                 try {
                     const response = await fetch('/get_flow_status/', {
@@ -803,6 +895,8 @@
 
                 try 
                 {
+                    this.updateConnectionStatus('Connecting...', false, true);
+
                     const response = await fetch('/start_live_monitoring/', {
                         method: 'POST',
                         headers: {
@@ -810,11 +904,9 @@
                         }
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to start monitoring');
-                    }
-
+                    console.log('Response status:', response.status);
                     const data = await response.json()
+                    console.log('Response data:', data);
 
                     if (data.status == 'success') {
                         this.isMonitoring = true;
@@ -829,6 +921,9 @@
                         if (stopBtn) {
                             stopBtn.disabled = false;
                         }
+
+                        const connectionStatus = data.connection_status || 'Connected to 5G Network';
+                        this.updateConnectionStatus(connectionStatus, true, false);
                         
                         this.showNotification('Network monitoring started', 'success');
                         this.poll();
@@ -840,6 +935,7 @@
                 } catch (error) 
                 {
                     console.error('Error starting monitoring', error);
+                    this.updateConnectionStatus('Connection failed', false, false);
                     this.showNotification('Failed to start monitoring: ' + error.message, 'error');
                 }
             }
@@ -854,12 +950,15 @@
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': this.getCookie('csrftoken')
                         }
                     });
 
                     if (!response.ok) {
                         throw new Error('Failed to start monitoring');
                     }
+
+                    const data = await response.json();
                 
                     this.isMonitoring = false;
                     if (this.pollTimer) {
@@ -878,7 +977,10 @@
                         stopBtn.disabled = true;
                     }
                 
-                     this.showNotification('Network monitoring stopped', 'warning');
+                    const connectionStatus = data.connection_status || 'Not connected';
+                    this.updateConnectionStatus(connectionStatus, false, false);       
+                    
+                    this.showNotification('Network monitoring stopped', 'warning');
                 } catch (error) 
                 {
                     console.error('Error stopping monitoring: ', error);
@@ -914,6 +1016,7 @@
                             </div>
                         `;
                         this.updateStats(0, 0, 0);
+                        this.updateConnectionStatus('Not connected', false, false);
                         this.showNotification('Monitor reset successfully', 'success');
                     }
                 } catch (error) {
@@ -947,9 +1050,16 @@
                                 data.stats.malicious || 0
                             );
                         }
+
+                        if (data.connection_status) {
+                            this.updateConnectionStatus(data.connection_status, true, false);
+                        }
+                    } else {
+                        this.updateConnectionStatus('Connection lost', false, false);
                     }
                 } catch (error) {
                     console.error('Error fetching flows:', error);
+                    this.updateConnectionStatus('Connection error', false, false);
                 }
 
                 this.pollTimer = setTimeout(() => this.poll(), this.pollInterval);
@@ -985,7 +1095,7 @@
                 const isMalicious = flowType.toLowerCase() === 'malicious';
                 const isSuspicious = flowType.toLowerCase() === 'suspicious';
                 
-                flowDiv.className = `flow-item ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}`;
+                flowDiv.className = `flow-item ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'} slide-in`;
                 flowDiv.innerHTML = `
                     <div class="flow-header">
                         <span class="flow-badge ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}">
@@ -1297,6 +1407,9 @@
                         display: flex;
                         align-items: center;
                         gap: 10px;
+        
+                        font-size: 18px;
+                        font-weight: 600;
                     }
 
                     .automation-controls {
