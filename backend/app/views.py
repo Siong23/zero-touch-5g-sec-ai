@@ -1721,12 +1721,36 @@ def home(request):
                         first_row = next(reader, None)
                         if first_row:
                             try:
-                                data = [float(x) for x in first_row[:14]]
-                            except ValueError:
+                                data = []
+                                for i, x in enumerate(first_row):
+                                    if i >= 14:
+                                        break
+                                    try:
+                                        data.append(float(x))
+                                    except (ValueError, TypeError):
+                                        logger.warning(f"Invalid value at index method")
+                                        data.append(0.0)
+
+                                while len(data) < 14:
+                                    data.append(0.0)
+
+                            except Exception as e:
+                                logger.error(f"Error parsing first row: {e}")
                                 second_row = next(reader, None)
 
                                 if second_row:
-                                    data = [float(x) for x in second_row[:14]]
+                                    data = []
+                                    for i, x in enumerate(second_row):
+                                        if i >= 14:
+                                            break
+                                        try:
+                                            data.append(float(x))
+                                        except (ValueError, TypeError):
+                                            logger.warning(f"Invalid value at index method")
+                                            data.append(0.0)
+
+                                    while len(data) < 14:
+                                        data.append(0.0)
                                 
                                 else:
                                     raise ValueError("No data rows found in CSV")
@@ -1748,7 +1772,10 @@ def home(request):
 
                             if len(packets) == 0:
                                 detection = "Error: No packets of data found."
-                                return render(request, 'index.html', {'form': form, 'detection': detection})
+                                attack_level = "N/A"
+                                accuracy = "N/A"
+                                mitigation = "N/A"
+                                return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
                             
                             packet = packets[0]
                             
@@ -1756,34 +1783,57 @@ def home(request):
                             features = capture_instance.extract_features(packet)
 
                             if features:
-                                data = [
-                                    float(features.get('frame.time_relative', 0.0)),
-                                    float(features.get('ip.len', 0)),
-                                    float(features.get('tcp.flags.syn', 0)),
-                                    float(features.get('tcp.flags.ack', 0)),
-                                    float(features.get('tcp.flags.push', 0)),
-                                    float(features.get('tcp.flags.fin', 0)),
-                                    float(features.get('tcp.flags.reset', 0)),
-                                    float(features.get('ip.proto', 0)),
-                                    float(features.get('ip.ttl', 0)),
-                                    float(features.get('tcp.window_size_value', 0)),
-                                    float(features.get('tcp.hdr_len', 0)),
-                                    float(features.get('udp.length', 0)),
-                                    float(features.get('srcport', 0)),
-                                    float(features.get('dstport', 0))
+                                data = []
+                                feature_keys = [
+                                    'frame.time_relative',
+                                    'ip.len',
+                                    'tcp.flags.syn',
+                                    'tcp.flags.ack',
+                                    'tcp.flags.push',
+                                    'tcp.flags.fin',
+                                    'tcp.flags.reset',
+                                    'ip.proto',
+                                    'ip.ttl',
+                                    'tcp.window_size_value',
+                                    'tcp.hdr_len',
+                                    'udp.length',
+                                    'srcport',
+                                    'dstport'
                                 ]
+
+                                for key in feature_keys:
+                                    value = features.get(key, 0.0)
+                                    try:
+                                        data.append(float(value))
+                                    except (ValueError, TypeError):
+                                        logger.warning(f"Invalid feature {key}")
+                                        data.append(0.0)
+
+                                data = data[:14]
+                                while len(data) < 14:
+                                    data.append(0.0)
+                            else:
+                                raise ValueError("Could not extract feature")
 
                             if os.path.exists(temp_path):
                                 os.remove(temp_path)
            
                         except Exception as e:
-                            logger.warning(f"Error processing data packet: {e}")
+                            logger.error(f"Error processing PCAP file: {e}")
                             detection = f"Error: Processing file failed - {str(e)}"
-                            return render(request, 'index.html', {'form': form, 'detection': detection})
+                            attack_level = "N/A"
+                            accuracy = "N/A"
+                            mitigation = "N/A"
+                            if os.path.exists(temp_path):
+                                os.remove(temp_path)
+                            return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
 
                     else:
                         detection = "Error: Unsupported file format!"
-                    
+                        attack_level = "N/A"
+                        accuracy = "N/A"
+                        mitigation = "N/A"
+                        return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
                     pass
 
                 # If text form is submitted
@@ -1846,6 +1896,7 @@ def home(request):
                 # Ensure exactly 14 features are present
                 if len(data) != 14:
                     messages.error(request, "Invalid data format. Please provide exactly 14 features.")
+                    
                     return render(request, 'index.html', 
                                   {'form': form, 
                                    'detection': "Error: Invalid data format!", 
@@ -1856,10 +1907,20 @@ def home(request):
                                    'attack_status': attack_status, 
                                    'ml_status': ml_status,
                                    'attack_type': attack_type})
+                
+                for i, val in enumerate(data):
+                    if not isinstance(val, (int, float)):
+                        logger.error(f"Non-numeric value at index {i}: {val}")
+                        data[i] = 0.0
+
+                    elif np.isnan(val) or np.isinf(val):
+                        logger.warning(f"Invalid numeric value at index {i}")
+                        data[i] = 0.0
 
                 # Reshape the data into 3D array to fit in LSTM input format
-                data_array = np.array(data).reshape(1, 1, 14)
+                data_array = np.array(data, dtype=np.float32).reshape(1, 1, 14)
                 logger.debug(f"Data array shape: {data_array.shape}")
+                logger.debug(f"Data array dtype: {data_array.dtype}")
 
                 # Make prediction
                 prediction = model.predict(data_array)
@@ -1870,8 +1931,13 @@ def home(request):
 
                     if isinstance(predicted_class, np.ndarray):
                         predicted_class = int(predicted_class[0])
+                    else:
+                        predicted_class = int(predicted_class)
                 else:
-                    predicted_class = int(prediction[0])
+                    if isinstance(prediction, np.ndarray):
+                        predicted_class = int(prediction[0])
+                    else:
+                        predicted_class = int(prediction)
 
                 attack_types = {
                     0: "Benign",
@@ -1908,9 +1974,9 @@ def home(request):
 
                 for i, value in enumerate(data):
                     if i < len(feature_names):
-                        feature_dict[feature_names[i]] = value
+                        feature_dict[feature_names[i]] = float(value)
                     else:
-                        feature_dict[f'feature_{i+1}'] = value
+                        feature_dict[f'feature_{i+1}'] = float(value)
 
                 # Determine attack severity level
                 attack_level, attack_severity_num, analysis_report = severity_analyzer.decide_attack_level(detection, feature_dict, anomaly_score=0.5)
@@ -1925,7 +1991,6 @@ def home(request):
                     attack_status = "Under Attack!"
                     mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
                     mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.0.165')
-                # Will implement mitigation strategies
 
             except json.JSONDecodeError as e:
                 logger.error(f"JSON decode error: {e}")
