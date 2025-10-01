@@ -1722,12 +1722,11 @@ def home(request):
                         if first_row:
                             try:
                                 data = []
-                                for i, x in enumerate(first_row):
-                                    if i >= 14:
-                                        break
+                                for i, x in range(min(len(first_row), 14)):
                                     try:
-                                        data.append(float(x))
-                                    except (ValueError, TypeError):
+                                        value = first_row[i]
+                                        data.append(float(value))
+                                    except (ValueError, TypeError, IndexError):
                                         logger.warning(f"Invalid value at index method")
                                         data.append(0.0)
 
@@ -1740,17 +1739,18 @@ def home(request):
 
                                 if second_row:
                                     data = []
-                                    for i, x in enumerate(second_row):
-                                        if i >= 14:
-                                            break
+                                    for i in range(min(len(second_row), 14)):
                                         try:
-                                            data.append(float(x))
-                                        except (ValueError, TypeError):
-                                            logger.warning(f"Invalid value at index method")
+                                            value = second_row[i]
+                                            data.append(float(value))
+                                        except (ValueError, TypeError, IndexError) as e:
+                                            logger.warning(f"Invalid value at index {i}: {e}")
                                             data.append(0.0)
 
                                     while len(data) < 14:
                                         data.append(0.0)
+
+                                    data = data[:14]
                                 
                                 else:
                                     raise ValueError("No data rows found in CSV")
@@ -1835,45 +1835,6 @@ def home(request):
                         mitigation = "N/A"
                         return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
                     pass
-
-                # If text form is submitted
-                elif captured_text:
-                    captured_text = captured_text.strip()
-
-                    if captured_text.startswith('{'):
-                        # Handle JSON object format
-                        data_dict = json.loads(captured_text)
-
-                        # Extract values in the correct order
-                        feature_keys = [
-                            "frame.time_relative",      # Timestamp of the captured packet
-                            "ip.len",                   # Total length of the IP packet
-                            "tcp.flags.syn",            # TCP synchronize flag status
-                            "tcp.flags.ack",            # TCP acknowledgement flag status
-                            "tcp.flags.push",           # TCP push flag status
-                            "tcp.flags.fin",            # TCP finish flag status
-                            "tcp.flags.reset",          # TCP reset flag status
-                            "ip.proto",                 # IP protocol number
-                            "ip.ttl",                   # IP time to live; max hops before discard packet
-                            "tcp.window_size_value",    # TCP window size; receive buffer space
-                            "tcp.hdr_len",              # TCP header length
-                            "udp.length",               # UDP datagram length
-                            "srcport",                  # Source port number
-                            "dstport"                   # Destination port number
-                        ]
-
-                        data = [float(data_dict.get(key, 0.0)) for key in feature_keys]
-
-                    elif captured_text.strip().startswith('['):
-                        data = json.loads(captured_text)
-                        data = [float(x) for x in data[:14]]
-
-                    else:
-                        if ',' in captured_text:
-                            fields = [x.strip() for x in captured_text.split(',')]
-                        else:
-                            fields = captured_text.replace('\t', ' ')
-                        data = [float(x) for x in fields[:14]]
 
                 else:
                     detection = "Error: No data provided!"

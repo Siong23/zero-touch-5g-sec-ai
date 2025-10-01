@@ -16247,3 +16247,42 @@ Selected most active interface: Wi-Fi (IP: 10.193.125.200)
 Prediction error: slice indices must be integers or None or have an __index__ method
 "POST / HTTP/1.1" 200 87396
 "GET /get_automation_status/ HTTP/1.1" 200 408
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 85465
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 87396
+"GET /get_automation_status/ HTTP/1.1" 200 408
+Live monitoring started using interface Wi-Fi
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_live_flows/ HTTP/1.1" 200 1715
+"GET /get_live_flows/ HTTP/1.1" 200 2495
+"GET /get_live_flows/ HTTP/1.1" 200 3274
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Stop signal received, breaking capture loop
+Live monitoring stopped completely
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 85465
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 87396
+"GET /get_automation_status/ HTTP/1.1" 200 408
