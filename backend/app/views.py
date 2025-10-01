@@ -1700,7 +1700,7 @@ def home(request):
 
         cache.delete('automation_results')
 
-    if request.method == 'POST' and model is not None:
+    if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES.get('captured_data')

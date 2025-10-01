@@ -16179,3 +16179,14 @@ Live monitoring stopped completely
 "GET / HTTP/1.1" 200 87396
 "GET /get_automation_status/ HTTP/1.1" 200 1258
 "GET /get_flow_status/ HTTP/1.1" 200 165
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Selected most active interface: Wi-Fi (IP: 10.193.125.200)
+"GET / HTTP/1.1" 200 85465
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Prediction error: slice indices must be integers or None or have an __index__ method
+"POST / HTTP/1.1" 200 87396
+"GET /get_automation_status/ HTTP/1.1" 200 408
