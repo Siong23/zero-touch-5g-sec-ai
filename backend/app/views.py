@@ -1722,7 +1722,7 @@ def home(request):
                         if first_row:
                             try:
                                 data = []
-                                for i, x in range(min(len(first_row), 14)):
+                                for i in range(min(len(first_row), 14)):
                                     try:
                                         value = first_row[i]
                                         data.append(float(value))
@@ -1769,6 +1769,9 @@ def home(request):
                         try:
 
                             packets = rdpcap(temp_path)
+
+                            if not isinstance(packets, (list, scapy.PacketList)):
+                                raise ValueError("PCAP file did not return a list of packets.")
 
                             if len(packets) == 0:
                                 detection = "Error: No packets of data found."
@@ -1834,7 +1837,6 @@ def home(request):
                         accuracy = "N/A"
                         mitigation = "N/A"
                         return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
-                    pass
 
                 else:
                     detection = "Error: No data provided!"
