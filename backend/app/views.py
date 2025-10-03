@@ -1334,7 +1334,7 @@ def start_attack(request):
         cache.delete('results_ready')
 
         attack_type = request.POST.get('attack_type')
-        target_ip = request.POST.get('target_ip', '192.168.3.120')
+        target_ip = request.POST.get('target_ip', '192.168.1.1')
 
         automation_manager = AutomationManager()
         automation_manager.start_automation(attack_type, target_ip)
@@ -1559,7 +1559,7 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
 
         else:  
             mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
-            mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.3.120')
+            mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
         
         accuracy = "91.01%"
 
@@ -1953,7 +1953,7 @@ def home(request):
                 else:  
                     attack_status = "Under Attack!"
                     mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
-                    mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.3.120')
+                    mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
 
             except json.JSONDecodeError as e:
                 logger.error(f"JSON decode error: {e}")
