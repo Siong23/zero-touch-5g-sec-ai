@@ -33,14 +33,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-OPEN5GS_CONFIG = {
-    'HOST': '100.108.112.77',
-    'AMF_PORT': 38412, #7778
-    'SMF_PORT': 7779,
+RAN5G_CONFIG = {
+    'HOST': '192.168.2.170',
+    'AMF_PORT': 38412,
+    'SMF_PORT': 7777,
     #'UPF_PORT': 7780,
-    'NETWORK_INTERFACE': 'ogstun',
-    'CAPTURE_FILTER': 'host 100.108.112.77',
-    'USERNAME': 'open5gs',
+    'NETWORK_INTERFACE': 'uesimtun0',
+    'CAPTURE_FILTER': 'host 192.168.2.170',
+    'USERNAME': 'ran',
     'PASSWORD': 'mmuzte123'
 }
 

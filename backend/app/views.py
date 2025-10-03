@@ -42,7 +42,7 @@ from django.http import HttpResponseRedirect
 from django.urls import path, reverse
 
 from .forms import CapturedDataForm
-from detection.settings import OPEN5GS_CONFIG
+from detection.settings import RAN5G_CONFIG
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -711,7 +711,7 @@ def start_live_monitoring(request):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('100.108.112.77', username='open5gs', password='mmuzte123', timeout=10)
+        ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=10)
         _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
         output = _stdout.readlines()
         
@@ -836,7 +836,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('100.108.112.77', username='open5gs', password='mmuzte123', timeout=10)
+            ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=10)
             _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -983,8 +983,8 @@ def perform_detection(features):
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
-        self.host = host or "192.168.0.132"
-        self.username = username or "open5gs"
+        self.host = host or "192.168.2.170"
+        self.username = username or "ran"
         self.password = password or "mmuzte123"
 
     def check_target_connectivity(self, target_ip):
@@ -1013,7 +1013,7 @@ class AttackSimulator:
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'ICMPFlood': f'timeout 45 sudo hping3 --flood --rand-source {target_ip}',
+                'ICMPFlood': f'timeout 45 sudo ping -I {target_ip}',
                 'HTTPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
                 'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',
@@ -1348,9 +1348,9 @@ def start_attack(request):
 
         logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
 
-        host = OPEN5GS_CONFIG.get('HOST', '100.108.112.77')
-        username = OPEN5GS_CONFIG.get('USERNAME', 'open5gs')
-        password = OPEN5GS_CONFIG.get('PASSWORD', 'mmuzte123')
+        host = RAN5G_CONFIG.get('HOST', '192.168.2.170')
+        username = RAN5G_CONFIG.get('USERNAME', 'ran')
+        password = RAN5G_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
 
         # 1. Start packet capture with auto analysis
@@ -1558,8 +1558,8 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             mitigation = "No action needed"
 
         else:  
-            mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
-            mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.0.165')
+            mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
+            mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.3.120')
         
         accuracy = "91.01%"
 
@@ -1952,7 +1952,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigator = AIMitigation(host='100.108.112.77', username='open5gs', password='mmuzte123')
+                    mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
                     mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.0.165')
 
             except json.JSONDecodeError as e:
