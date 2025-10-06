@@ -191,7 +191,7 @@ class NetworkTrafficCapture:
             ssh_client.connect('100.65.52.69', username='ran', password='mmuzte123')
 
             # Start tcpdump on remote server - stream output
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -w -"
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -l -n -tttt"
             logger.info(f"Starting remote capture with: {tcpdump_cmd}")
             
             stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd, get_pty=True)
@@ -199,23 +199,31 @@ class NetworkTrafficCapture:
 
             while capture_active and self.live_monitoring:
                 try:
-                    chunk = stdout.read(2048)
-                    if not chunk:
-                        logger.info("No more data from remote capture")
+                    line = stdout.readline()
+                    if not line:
                         break
 
                     packet_count += 1
 
-                    if packet_count % 10 == 0:
-                        try:
-                            self.process_pyshark_packet(packet_count)
-                        
-                        except Exception as e:
-                            logging.debug(f"Error processing packet: {e}")
+                    if packet_count % 5 == 0:
+                        flow = self.parse_tcpdump_line(line, packet_count)
+                        if flow:
+                            live_flows_buffer.append(flow)
 
+                            classification = flow.get('classification', 'benign')
+                            if classification == 'malicious':
+                                flow_stats['malicious'] += 1
+                            elif classification == 'suspicious':
+                                flow_stats['suspicious'] += 1
+                            else:
+                                flow_stats['benign'] += 1
+
+                    if packet_count % 50 == 0:
+                        logging.debug(f"Buffer size: {len(live_flows_buffer)}, Packets processed: {packet_count}")
+                    
                     if packet_count % 100 == 0:
                         if not capture_active or not self.live_monitoring:
-                            logger.info("Stop signal received during processing")
+                            logger.info("Stopped signal received.")
                             break
             
                 except Exception as e:
@@ -238,6 +246,78 @@ class NetworkTrafficCapture:
                     pass
 
             logger.info("Live monitoring stopped completely")
+
+    def parse_tcpdump_line(self, line, packet_count):
+        try:
+            # Example: "12:34:56.789012 IP 192.168.1.1.80 > 192.168.1.2.12345: Flags [S]"
+            parts = line.split()
+            if len(parts)<5:
+                return None
+            
+            protocol = 'Unknown'
+            src_ip = 'Unknown'
+            dst_ip = 'Unknown'
+            src_port = 0
+            dst_port = 0
+            attack_type = "Normal Traffic"
+            classification = 'benign'
+            
+            # Find protocol
+            if 'IP' in parts:
+                protocol = 'IP'
+                ip_idx = parts.index('IP')
+                
+                # Parse source (format: IP.port or just IP)
+                if len(parts) > ip_idx + 1:
+                    src = parts[ip_idx + 1]
+                    if '.' in src:
+                        src_parts = src.rsplit('.', 1)
+                        src_ip = src_parts[0]
+                        if len(src_parts) > 1 and src_parts[1].isdigit():
+                            src_port = int(src_parts[1])
+                
+                # Parse destination (skip '>', format: IP.port:)
+                if len(parts) > ip_idx + 3:
+                    dst = parts[ip_idx + 3].rstrip(':')
+                    if '.' in dst:
+                        dst_parts = dst.rsplit('.', 1)
+                        dst_ip = dst_parts[0]
+                        if len(dst_parts) > 1 and dst_parts[1].isdigit():
+                            dst_port = int(dst_parts[1])
+            
+            elif 'TCP' in line or 'UDP' in line or 'ICMP' in line:
+                if 'TCP' in line:
+                    protocol = 'TCP'
+                elif 'UDP' in line:
+                    protocol = 'UDP'
+                elif 'ICMP' in line:
+                    protocol = 'ICMP'
+            
+            # Simple heuristic detection (you can enhance this)
+            if 'Flags [S]' in line and src_port == 0:
+                attack_type = 'Possible SYN Scan'
+                classification = 'suspicious'
+            elif protocol == 'ICMP' and packet_count > 100:
+                attack_type = 'ICMP Traffic'
+                classification = 'benign'
+            
+            return {
+                'timestamp': datetime.now().isoformat(),
+                'classification': classification,
+                'attack_type': attack_type,
+                'src_ip': src_ip,
+                'src_port': src_port,
+                'dst_ip': dst_ip,
+                'dst_port': dst_port,
+                'protocol': protocol,
+                'bytes': 1500,
+                'packets': 1,
+                'confidence': 0.0
+            }
+        
+        except Exception as e:
+            logger.debug(f"Error parsing tcpdump line: {e}")
+            return None
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
     def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
@@ -312,7 +392,7 @@ class NetworkTrafficCapture:
                     # Process for live view every 50 chunks
                     if packet_count % 50 == 0:
                         try:
-                            self.process_remote_packet_simple(packet_count)
+                            self.process_pyshark_packet(packet_count)
                         except:
                             pass
 
@@ -368,12 +448,12 @@ class NetworkTrafficCapture:
             flow = {
                 'timestamp': datetime.now().isoformat(),
                 'classification': 'benign',
-                'attack_type': 'Monitoring',
-                'src_ip': 'Remote',
+                'attack_type': 'Capturing',
+                'src_ip': 'Network',
                 'src_port': 0,
-                'dst_ip': 'Network',
+                'dst_ip': 'Monitor',
                 'dst_port': 0,
-                'protocol': 'Mixed',
+                'protocol': 'TCP/UDP/ICMP/SYN',
                 'bytes': 1500,
                 'packets': 1,
                 'confidence': 0.0
@@ -383,7 +463,7 @@ class NetworkTrafficCapture:
             live_flows_buffer.append(flow)
             flow_stats['benign'] += 1
 
-            if packet_count % 50 == 0:
+            if packet_count % 100 == 0:
                 logging.debug(f"Buffer size: {len(live_flows_buffer)}, Packets processed: {packet_count}")
         
         except Exception as e:
