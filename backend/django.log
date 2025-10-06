@@ -19261,3 +19261,283 @@ Live monitoring stopped successfully
 "GET /get_automation_status/ HTTP/1.1" 200 383
 "GET /get_automation_status/ HTTP/1.1" 200 383
 "GET /get_automation_status/ HTTP/1.1" 200 383
+Watching for file changes with StatReloader
+Error checking network interface: 'tuple' object has no attribute 'readlines'
+"GET / HTTP/1.1" 200 85465
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring started using interface ens18
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Error during live monitoring: Interface 'ens18' does not exist, unable to initiate capture. Perhaps permissions are missing?
+Possible interfaces: \Device\NPF_{309EDDB1-DC9E-4348-99A2-C81277374B9A}
+Local Area Connection* 10
+\Device\NPF_{D0F5695B-BA93-4464-AB44-BE628D5C425C}
+Local Area Connection* 9
+\Device\NPF_{E5DF8249-DF19-4320-8D30-1BE115A1257E}
+Local Area Connection* 8
+\Device\NPF_{DB389884-4F00-4A64-9DEF-268B693BB9A7}
+Bluetooth Network Connection
+\Device\NPF_{186D27B1-F6D4-4297-B478-FE7B2D1318BE}
+Wi-Fi
+\Device\NPF_{51CCD40A-0C95-4C67-B495-906507B99495}
+VMware Network Adapter VMnet8
+\Device\NPF_{6BB6B2A7-0632-4941-AC08-BE0B44CE1F31}
+VMware Network Adapter VMnet1
+\Device\NPF_{16DC5D42-5F25-482A-A12B-7C9250372304}
+Local Area Connection* 2
+\Device\NPF_{A787E497-0599-4422-8728-E3EE62364FEB}
+Local Area Connection* 1
+\Device\NPF_{0560B761-F7FD-4859-BB81-CBF8EEA5DE37}
+Ethernet 5
+\Device\NPF_{9AA49BA0-819B-423D-B58F-457932EF5297}
+Ethernet 4
+\Device\NPF_{37217669-42DA-4657-A55B-0D995D328250}
+Tailscale
+\Device\NPF_Loopback
+Adapter for loopback traffic capture
+\Device\NPF_{E6317E5D-7628-48B3-884B-D7071F914D40}
+Ethernet
+etwdump
+Event Tracing for Windows (ETW) reader
+Live monitoring stopped completely
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85465
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Error checking network interface: 'tuple' object has no attribute 'readlines'
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85465
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring started using interface ens18
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Error checking network interface: 'tuple' object has no attribute 'readlines'
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85465
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85465
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring started using interface ens18
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Error during live monitoring: Interface 'ens18' does not exist, unable to initiate capture. Perhaps permissions are missing?
+Possible interfaces: \Device\NPF_{309EDDB1-DC9E-4348-99A2-C81277374B9A}
+Local Area Connection* 10
+\Device\NPF_{D0F5695B-BA93-4464-AB44-BE628D5C425C}
+Local Area Connection* 9
+\Device\NPF_{E5DF8249-DF19-4320-8D30-1BE115A1257E}
+Local Area Connection* 8
+\Device\NPF_{DB389884-4F00-4A64-9DEF-268B693BB9A7}
+Bluetooth Network Connection
+\Device\NPF_{186D27B1-F6D4-4297-B478-FE7B2D1318BE}
+Wi-Fi
+\Device\NPF_{51CCD40A-0C95-4C67-B495-906507B99495}
+VMware Network Adapter VMnet8
+\Device\NPF_{6BB6B2A7-0632-4941-AC08-BE0B44CE1F31}
+VMware Network Adapter VMnet1
+\Device\NPF_{16DC5D42-5F25-482A-A12B-7C9250372304}
+Local Area Connection* 2
+\Device\NPF_{A787E497-0599-4422-8728-E3EE62364FEB}
+Local Area Connection* 1
+\Device\NPF_{0560B761-F7FD-4859-BB81-CBF8EEA5DE37}
+Ethernet 5
+\Device\NPF_{9AA49BA0-819B-423D-B58F-457932EF5297}
+Ethernet 4
+\Device\NPF_{37217669-42DA-4657-A55B-0D995D328250}
+Tailscale
+\Device\NPF_Loopback
+Adapter for loopback traffic capture
+\Device\NPF_{E6317E5D-7628-48B3-884B-D7071F914D40}
+Ethernet
+etwdump
+Event Tracing for Windows (ETW) reader
+Live monitoring stopped completely
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383

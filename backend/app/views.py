@@ -179,7 +179,14 @@ class NetworkTrafficCapture:
             capture_active = True
             self.live_monitoring = True
 
-            monitor_thread = threading.Thread(target=self.live_monitor_packets, daemon=True)
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
+
+            command = f"sudo tcpdump -i {self.capture_interface} -U -w - | cat"
+            stdin, stdout, stderr = ssh.exec_command(command)
+
+            monitor_thread = threading.Thread(target=self.live_monitor_packets, args=stdout, daemon=True)
             monitor_thread.start()
 
             logger.info(f"Live monitoring started using interface {self.capture_interface}")
