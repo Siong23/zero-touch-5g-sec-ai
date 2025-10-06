@@ -1119,7 +1119,12 @@
             }
 
             async poll() {
-                if (!this.isMonitoring) return;
+                if (!this.isMonitoring) {
+                    console.log('Not monitoring, skipping poll');
+                    return;
+                }
+
+                console.log('Polling for flows...');
 
                 try {
                     const response = await fetch('/get_live_flows/', {
@@ -1129,8 +1134,12 @@
                         }
                     });
 
+                    console.log('Poll response status:', response.status);
+
                     if (response.ok) {
                         const data = await response.json();
+
+                        console.log('Received flows:', data.flows?.length || 0);
                         
                         if (data.flows && data.flows.length > 0) {
                             this.updateFlows(data.flows);
