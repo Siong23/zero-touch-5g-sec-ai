@@ -196,7 +196,7 @@ class NetworkTrafficCapture:
             
             stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd, get_pty=True)
 
-            while self.live_monitoring:
+            while capture_active and self.live_monitoring:
                 try:
                     line = stdout.readline()
                     if not line:
@@ -1351,6 +1351,8 @@ def start_attack(request):
         username = RAN5G_CONFIG.get('USERNAME', 'ran')
         password = RAN5G_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
+
+        network_capture.start_live_monitoring_only()
 
         # 1. Start packet capture with auto analysis
         capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
