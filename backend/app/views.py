@@ -182,6 +182,8 @@ class NetworkTrafficCapture:
         ssh_client = None
 
         try:
+            packet_count = 0
+
             ssh_client = paramiko.client.SSHClient()
             ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -189,12 +191,11 @@ class NetworkTrafficCapture:
             ssh_client.connect('100.65.52.69', username='ran', password='mmuzte123')
 
             # Start tcpdump on remote server - stream output
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -w - 2>/dev/null"
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -w -"
             logger.info(f"Starting remote capture with: {tcpdump_cmd}")
             
             stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd)
 
-            packet_count = 0
 
             while capture_active and self.live_monitoring:
                 try:
