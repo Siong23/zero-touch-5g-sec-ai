@@ -191,10 +191,10 @@ class NetworkTrafficCapture:
             ssh_client.connect('100.65.52.69', username='ran', password='mmuzte123')
 
             # Start tcpdump on remote server - stream output
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -w -"
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -w -"
             logger.info(f"Starting remote capture with: {tcpdump_cmd}")
             
-            stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd)
+            stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd, get_pty=True)
 
 
             while capture_active and self.live_monitoring:
@@ -291,9 +291,9 @@ class NetworkTrafficCapture:
 
             # Build tcpdump command with filter
             if capture_filter:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - '{capture_filter}' 2>/dev/null"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - '{capture_filter}'"
             else:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - 2>/dev/null"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w -"
             
             logger.info(f"Executing: {tcpdump_cmd}")
 
