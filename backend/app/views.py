@@ -143,9 +143,14 @@ class NetworkTrafficCapture:
             configured_interface = RAN5G_CONFIG.get('NETWORK_INTERFACE', 'ens18')
         
             # Verify the interface exists on the system
-            interfaces = psutil.net_if_addrs()
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
+
+            interfaces = ssh.exec_command("ifconfig")
+            output = interfaces.readlines()
             
-            if configured_interface in interfaces:
+            if configured_interface in output:
                 logger.info(f"Using configured interface: {configured_interface}")
                 return configured_interface
             else:
@@ -191,13 +196,8 @@ class NetworkTrafficCapture:
         global capture_active
 
         try:
-            if os.name == 'nt':  # Windows
-                loop = asyncio.ProactorEventLoop()
-                asyncio.set_event_loop(loop)
-
-            else: # Unix/Linux/Mac
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
 
             capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop)
 
@@ -699,6 +699,11 @@ def start_live_monitoring(request):
                 print("open5gs-amfd-service: ", line)
 
         connection_status = "Connected to 5G Network"
+
+        ssh.close()
+
+        ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
+
         success = network_capture.start_live_monitoring_only()
 
         if success:
