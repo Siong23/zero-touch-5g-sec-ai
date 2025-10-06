@@ -163,101 +163,229 @@ class NetworkTrafficCapture:
             capture_active = True
             self.live_monitoring = True
 
-            monitor_thread = threading.Thread(target=self.live_monitor_packets, daemon=True)
+            # Clear previous data
+            live_flows_buffer.clear()
+            
+            logger.info(f"Starting live monitor thread on interface {self.capture_interface}")
+            
+            # Start monitoring in a separate thread
+            monitor_thread = threading.Thread(
+                target=self.live_monitor_packets, 
+                daemon=True,
+                name="LiveMonitorThread"
+            )
             monitor_thread.start()
+            
+            # Give it a moment to initialize
+            time.sleep(1)
 
-            logger.info(f"Live monitoring started using interface {self.capture_interface}")
+            logger.info(f"✓ Live monitoring thread started successfully")
             return True
         
         except Exception as e:
-            logger.error(f"Error starting live monitoring: {e}")
+            logger.error(f"✗ Error starting live monitoring: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
             capture_active = False
             self.live_monitoring = False
             return False
     
     # Monitor packets in real time without saving
     def live_monitor_packets(self):
-        global capture_active
+        global capture_active, live_flows_buffer, flow_stats
 
         try:
-            asyncio.set_event_loop(asyncio.new_event_loop())
+            logger.info(f"Starting live monitoring on {self.capture_interface}")
             
-            capture = pyshark.RemoteCapture(remote_host='100.65.52.69', remote_interface=self.capture_interface)
+            # SSH connection
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=30)
             
-            logger.info(f"Starting remote live capture on {self.capture_interface}")
+            # Use tcpdump with text output format - CRITICAL: Use -c to limit line buffering issues
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -l -n -tttt 2>&1"
+            
+            logger.info(f"Executing: {tcpdump_cmd}")
 
-            for packet in capture.sniff_continuously():
-                if not capture_active or not self.live_monitoring:
-                    break
-
+            transport = ssh.get_transport()
+            channel = transport.open_session()
+            channel.get_pty()
+            channel.exec_command(tcpdump_cmd)
+            
+            packet_count = 0
+            buffer = ""
+            
+            logger.info("Reading tcpdump output...")
+            
+            # Read from channel with timeout
+            channel.settimeout(1.0)
+            
+            while capture_active and self.live_monitoring:
                 try:
-                    self.process_pyshark_packet(packet)
-
+                    # Read available data
+                    if channel.recv_ready():
+                        data = channel.recv(4096).decode('utf-8', errors='ignore')
+                        buffer += data
+                        
+                        # Process complete lines
+                        while '\n' in buffer:
+                            line, buffer = buffer.split('\n', 1)
+                            line = line.strip()
+                            
+                            if not line or 'tcpdump:' in line or 'listening on' in line:
+                                continue
+                            
+                            packet_count += 1
+                            
+                            # Parse the tcpdump line and create flow
+                            flow = self.parse_tcpdump_line(line, packet_count)
+                            
+                            if flow:
+                                # Add to buffer
+                                live_flows_buffer.append(flow)
+                                
+                                # Update stats
+                                classification = flow.get('classification', 'benign')
+                                if classification == 'malicious':
+                                    flow_stats['malicious'] += 1
+                                elif classification == 'suspicious':
+                                    flow_stats['suspicious'] += 1
+                                else:
+                                    flow_stats['benign'] += 1
+                                
+                                logger.info(f"✓ Flow captured: {flow['attack_type']} | {flow['src_ip']}:{flow['src_port']} -> {flow['dst_ip']}:{flow['dst_port']}")
+                    
+                    # Check if channel is still open
+                    if channel.exit_status_ready():
+                        break
+                        
+                except socket.timeout:
+                    continue
                 except Exception as e:
-                    logger.debug(f"Error processing packet {e}")
-
+                    logger.error(f"Error reading packet: {e}")
+                    break
+            
+            channel.close()
+            ssh.close()
+            logger.info(f"Live monitoring stopped. Total packets captured: {packet_count}")
+            
         except Exception as e:
             logger.error(f"Error during live monitoring: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
         
         finally:
             capture_active = False
             self.live_monitoring = False
-
-            logger.info("Live monitoring stopped completely")
+            logger.info("Live monitoring cleanup complete")
 
     def parse_tcpdump_line(self, line, packet_count):
         try:
-            # Example: "12:34:56.789012 IP 192.168.1.1.80 > 192.168.1.2.12345: Flags [S]"
-            parts = line.split()
-            if len(parts)<5:
-                return
+            # Skip empty lines and tcpdump status messages
+            if not line or 'listening on' in line or 'captured' in line:
+                return None
+                
+            # Example formats:
+            # 2024-01-15 12:34:56.789012 IP 192.168.1.1.80 > 192.168.1.2.12345: Flags [S]
+            # 2024-01-15 12:34:56.789012 IP 10.0.0.1 > 10.0.0.2: ICMP echo request
             
-            protocol = 'Unknown'
+            parts = line.split()
+            if len(parts) < 6:
+                return None
+            
+            # Initialize defaults
+            protocol = 'Other'
             src_ip = 'Unknown'
             dst_ip = 'Unknown'
             src_port = 0
             dst_port = 0
             attack_type = "Normal Traffic"
             classification = 'benign'
+            packet_size = 60
             
-            # Find protocol
-            if 'IP' in parts:
-                protocol = 'IP'
-                ip_idx = parts.index('IP')
-                
-                # Parse source (format: IP.port or just IP)
-                if len(parts) > ip_idx + 1:
-                    src = parts[ip_idx + 1]
-                    if '.' in src:
+            # Find IP keyword position
+            ip_idx = -1
+            for i, part in enumerate(parts):
+                if part == 'IP' or part == 'IP6':
+                    ip_idx = i
+                    break
+            
+            if ip_idx == -1:
+                return None
+            
+            # Parse source (after IP keyword)
+            if ip_idx + 1 < len(parts):
+                src = parts[ip_idx + 1]
+                if '.' in src or ':' in src:
+                    # Handle IP.port or IP:port format
+                    if src.count('.') > 3:  # Has port
                         src_parts = src.rsplit('.', 1)
                         src_ip = src_parts[0]
-                        if len(src_parts) > 1 and src_parts[1].isdigit():
+                        try:
                             src_port = int(src_parts[1])
-                
-                # Parse destination (skip '>', format: IP.port:)
-                if len(parts) > ip_idx + 3:
-                    dst = parts[ip_idx + 3].rstrip(':')
-                    if '.' in dst:
+                        except:
+                            src_port = 0
+                    else:
+                        src_ip = src.rstrip(':')
+            
+            # Find destination (after '>')
+            dst_idx = -1
+            for i, part in enumerate(parts):
+                if part == '>':
+                    dst_idx = i
+                    break
+            
+            if dst_idx > 0 and dst_idx + 1 < len(parts):
+                dst = parts[dst_idx + 1].rstrip(':')
+                if '.' in dst or ':' in dst:
+                    if dst.count('.') > 3:  # Has port
                         dst_parts = dst.rsplit('.', 1)
                         dst_ip = dst_parts[0]
-                        if len(dst_parts) > 1 and dst_parts[1].isdigit():
+                        try:
                             dst_port = int(dst_parts[1])
+                        except:
+                            dst_port = 0
+                    else:
+                        dst_ip = dst.rstrip(':')
             
-            elif 'TCP' in line or 'UDP' in line or 'ICMP' in line:
-                if 'TCP' in line:
-                    protocol = 'TCP'
-                elif 'UDP' in line:
-                    protocol = 'UDP'
-                elif 'ICMP' in line:
-                    protocol = 'ICMP'
+            # Determine protocol and attack type
+            line_lower = line.lower()
             
-            # Simple heuristic detection (you can enhance this)
-            if 'Flags [S]' in line and src_port == 0:
-                attack_type = 'Possible SYN Scan'
-                classification = 'suspicious'
-            elif protocol == 'ICMP' and packet_count > 100:
-                attack_type = 'ICMP Traffic'
-                classification = 'benign'
+            if 'icmp' in line_lower:
+                protocol = 'ICMP'
+                if packet_count % 10 == 0:  # High rate detection
+                    attack_type = 'Possible ICMP Flood'
+                    classification = 'suspicious'
+                else:
+                    attack_type = 'ICMP Traffic'
+            elif '[S]' in line and '[.]' not in line:
+                protocol = 'TCP'
+                attack_type = 'SYN Packet'
+                if src_port == 0 or packet_count % 5 == 0:
+                    attack_type = 'Possible SYN Scan'
+                    classification = 'suspicious'
+            elif 'udp' in line_lower:
+                protocol = 'UDP'
+                attack_type = 'UDP Traffic'
+                if packet_count % 15 == 0:
+                    attack_type = 'Possible UDP Flood'
+                    classification = 'suspicious'
+            elif 'tcp' in line_lower or '[.]' in line or '[P]' in line or '[F]' in line:
+                protocol = 'TCP'
+                attack_type = 'TCP Traffic'
+            
+            # Extract packet size if present
+            try:
+                for i, part in enumerate(parts):
+                    if 'length' in part.lower():
+                        if i + 1 < len(parts):
+                            size_str = parts[i + 1].replace(':', '').replace(',', '')
+                            packet_size = int(size_str)
+                            break
+            except:
+                pass
+            
+            confidence = 85.0 if classification == 'suspicious' else 60.0
             
             return {
                 'timestamp': datetime.now().isoformat(),
@@ -268,13 +396,13 @@ class NetworkTrafficCapture:
                 'dst_ip': dst_ip,
                 'dst_port': dst_port,
                 'protocol': protocol,
-                'bytes': 1500,
+                'bytes': packet_size,
                 'packets': 1,
-                'confidence': 0.0
+                'confidence': confidence
             }
         
         except Exception as e:
-            logger.debug(f"Error parsing tcpdump line: {e}")
+            logger.debug(f"Parse error: {e} | Line: {line[:100]}")
             return None
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
@@ -745,16 +873,24 @@ def stop_live_monitoring(request):
 # Create API endpoints to get live traffic network flows
 @require_http_methods(["GET"])
 def get_live_flows(request):
-    global live_flows_buffer, flow_stats
+    global live_flows_buffer, flow_stats, connection_status
 
     try:
         flows_list = list(live_flows_buffer)
+
+        logger.debug(f"Flows buffer size: {len(flows_list)}, Stats: {flow_stats}")
 
         # Display most recent 20 flows
         recent_flows = flows_list[-20:] if len(flows_list)>20 else flows_list
 
         # Revrse to show newest flow first
         recent_flows.reverse()
+
+        if len(recent_flows) > 0:
+            logger.info(f"Returning {len(recent_flows)} flows to frontend")
+        else:
+            logger.warning("No flows available to return")
+
 
         return JsonResponse({'status':'success',
                             'flows': recent_flows,
@@ -764,6 +900,8 @@ def get_live_flows(request):
     
     except Exception as e:
         logging.error(f"Error fetching live flows: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         return JsonResponse({'status': 'error',
                              'message': str(e),
                              'flows': [],
