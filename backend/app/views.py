@@ -136,30 +136,14 @@ class NetworkTrafficCapture:
         self.capture_interface = self.get_active_interface()
         self.capture_file_path = None
         self.live_monitoring = False
+        self.ssh_client = None
+        self.capture_process = None
     
     def get_active_interface(self):
         try:
             # Get the configured interface from settings
             configured_interface = RAN5G_CONFIG.get('NETWORK_INTERFACE', 'ens18')
-        
-            # Verify the interface exists on the system
-            ssh = paramiko.client.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
-
-            interfaces = ssh.exec_command("ifconfig")
-            output = interfaces.readlines()
-            
-            if configured_interface in output:
-                logger.info(f"Using configured interface: {configured_interface}")
-                return configured_interface
-            else:
-                logger.warning(f"Configured interface '{configured_interface}' not found in system interfaces")
-                logger.info(f"Available interfaces: {list(interfaces.keys())}")
-            
-            # Still return the configured interface name
-            # The system will handle the error if it doesn't exist during capture
-            logger.info(f"Attempting to use '{configured_interface}' anyway")
+            logger.info(f"Using configured interface: {configured_interface}")
             return configured_interface
             
         except Exception as e:
@@ -179,14 +163,7 @@ class NetworkTrafficCapture:
             capture_active = True
             self.live_monitoring = True
 
-            ssh = paramiko.client.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
-
-            command = f"sudo tcpdump -i {self.capture_interface} -U -w - | cat"
-            stdin, stdout, stderr = ssh.exec_command(command)
-
-            monitor_thread = threading.Thread(target=self.live_monitor_packets, args=stdout, daemon=True)
+            monitor_thread = threading.Thread(target=self.live_monitor_packets, daemon=True)
             monitor_thread.start()
 
             logger.info(f"Live monitoring started using interface {self.capture_interface}")
@@ -203,39 +180,47 @@ class NetworkTrafficCapture:
         global capture_active
 
         try:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-            capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop)
+            # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
+            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
+
+            # Start tcpdump on remote server - stream output
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -w - 2>/dev/null"
+            logger.info(f"Starting remote capture with: {tcpdump_cmd}")
+            
+            stdin, stdout, stderr = self.ssh_client.exec_command(tcpdump_cmd)
 
             packet_count = 0
 
-            for packet in capture.sniff_continuously():
-                if not capture_active or not self.live_monitoring:
-                    logger.info("Stop signal received, breaking capture loop")
+
+            while capture_active and self.live_monitoring:
+                try:
+                    chunk = stdout.read(2048)
+                    if not chunk:
+                        logger.info("No more data from remote capture")
+                        break
+
+                    packet_count += 1
+
+                    if packet_count % 10 == 0:
+                        try:
+                            self.process_pyshark_packet(packet_count)
+                        
+                        except Exception as e:
+                            logging.debug(f"Error processing packet: {e}")
+
+                    if packet_count % 100 == 0:
+                        if not capture_active or not self.live_monitoring:
+                            logger.info("Stop signal received during processing")
+                            break
+            
+                except Exception as e:
+                    logger.warning(f"Error reading packet data: {e}")
                     break
 
-                packet_count += 1
-
-                if packet_count % 3 == 0:
-                    try:
-                        self.process_pyshark_packet(packet)
-                    
-                    except Exception as e:
-                        logging.debug(f"Error processing packet: {e}")
-
-                if packet_count % 10 == 0:
-                    if not capture_active or not self.live_monitoring:
-                        logger.info("Stop signal received during processing")
-                        break
-            
-            try:
-                if hasattr(capture, 'close'):
-                    capture.close()
-                if hasattr(capture, 'eventloop'):
-                    capture.eventloop.stop()
-            except Exception as e:
-                logger.warning(f"Error closing capture: {e}")
+            logger.info(f"Remote capture stopped. Total packets: {packet_count}")
 
         except Exception as e:
             logger.error(f"Error during live monitoring: {e}")
@@ -243,6 +228,13 @@ class NetworkTrafficCapture:
         finally:
             capture_active = False
             self.live_monitoring = False
+
+            if self.ssh_client:
+                try:
+                    self.ssh_client.close()
+                except:
+                    pass
+
             logger.info("Live monitoring stopped completely")
 
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
@@ -289,44 +281,40 @@ class NetworkTrafficCapture:
 
             logger.info(f"Starting packet capture with filter: {capture_filter}")
 
-            if os.name == 'nt':  # Windows
-                loop = asyncio.ProactorEventLoop()
-                asyncio.set_event_loop(loop)
+            ssh = paramiko.client.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-            else: # Unix/Linux/Mac
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
+            # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
+            ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
 
+            # Build tcpdump command with filter
             if capture_filter:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath, bpf_filter=capture_filter)
-
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - '{capture_filter}' 2>/dev/null"
             else:
-                capture = pyshark.LiveCapture(interface=self.capture_interface, eventloop=loop, output_file=filepath)
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - 2>/dev/null"
+            
+            logger.info(f"Executing: {tcpdump_cmd}")
+
+            stdin, stdout, stderr = ssh.exec_command(tcpdump_cmd)
 
             packet_count = 0
-            start_time = time.time()
 
-            for packet in capture.sniff_continuously:
-                packet_count += 1
+            with open(filepath, 'wb') as f:
+                while True:
+                    chunk = stdout.read(4096)
+                    if not chunk:
+                        break
+                    f.write(chunk)
+                    packet_count += 1
+                    
+                    # Process for live view every 50 chunks
+                    if packet_count % 50 == 0:
+                        try:
+                            self.process_remote_packet_simple(packet_count)
+                        except:
+                            pass
 
-                # Process every 3rd packet to avoid overload packets
-                if packet_count % 3 == 0:
-                    try:
-                        self.process_pyshark_packet(packet)
-                    except Exception as e:
-                        logging.debug(f"Error processing packet")
-
-                # Check if duration has expired
-                if time.time() - start_time >= duration:
-                    break
-
-                # Safety limit
-                if packet_count >= 10000:
-                    logging.warning("Reached packet limit, stopping packet capture.")
-                    break
-
-            if hasattr(capture, 'close'):
-                capture.close()
+            ssh.close()
             
             success = True
 
@@ -334,13 +322,10 @@ class NetworkTrafficCapture:
                 file_size = os.path.getsize(filepath)
                 logger.info(f"Capture file saved: {filepath} ({file_size} bytes)")
 
-                time.sleep(2) # Ensure file is ready
-
-                try:
-                    logger.info(f"Total packets captured: {packet_count}")
-                
-                except:
-                    pass
+                if file_size == 0:
+                    logger.warning("Capture file is empty!")
+                else:
+                    logger.warning("Capture completed successfully")
             
             else:
                 logger.warning("Capture file not found after capture.")
@@ -348,7 +333,9 @@ class NetworkTrafficCapture:
 
         except Exception as e:
             logger.error(f"Error during packet capture: {e}")
+            import traceback
             success = False
+            logger.error(traceback.format_exc())
         
         finally:
             capture_active = False
@@ -357,7 +344,7 @@ class NetworkTrafficCapture:
     def _get_capture_filter(self, attack_type, target_ip):
         filters = {
             'ICMPFlood': f'icmp and (src host {target_ip} or dst host {target_ip})',
-            'HTTPFlood': f'icmp and (src host {target_ip} or dst host {target_ip})',
+            'HTTPFlood': f'tcp port 80 and (src host {target_ip} or dst host {target_ip})',
             'SYNFlood': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
             'UDPFlood': f'udp and (src host {target_ip} or dst host {target_ip})',
             'SYNScan': f'tcp[tcpflags] & tcp-syn != 0 and (src host {target_ip} or dst host {target_ip})',
@@ -370,90 +357,35 @@ class NetworkTrafficCapture:
         logger.info(f"Generated capture filter for {attack_type}: {filter_str}")
         return filter_str
     
-    def process_pyshark_packet(self, pyshark_packet):
+    def process_pyshark_packet(self, packet_count):
         global live_flows_buffer, flow_stats, model
 
         try:
-            src_ip = 'N/A'
-            dst_ip = 'N/A'
-            src_port = 0
-            dst_port = 0
-            protocol  = 'Other'
-            packet_size = 0
-
-            # Get IP addresses
-            if hasattr(pyshark_packet, 'ip'):
-                src_ip = getattr(pyshark_packet.ip, 'src', 'N/A')
-                dst_ip = getattr(pyshark_packet.ip, 'dst', 'N/A')
-                packet_size = int(getattr(pyshark_packet, 'length', 0))
-
-            # Get TCP info
-            elif hasattr(pyshark_packet, 'tcp'):
-                protocol = 'TCP'
-                src_port = int(getattr(pyshark_packet.tcp, 'srcport', 0))
-                dst_port = int(getattr(pyshark_packet.tcp, 'dstport', 0))
-
-            # Get UDP info
-            elif hasattr(pyshark_packet, 'udp'):
-                protocol = 'UDP'
-                src_port = int(getattr(pyshark_packet.udp, 'srcport', 0 ))
-                dst_port = int(getattr(pyshark_packet.udp, 'srcport', 0))
-
-            elif hasattr(pyshark_packet, 'icmp'):
-                protocol = 'ICMP'
-                src_port = int(getattr(pyshark_packet.icmp, 'srcport', 0))
-                dst_port = int(getattr(pyshark_packet.icmp, 'dstport', 0))
-
-            classification = 'benign'
-            attack_type = 'Normal Traffic'
-            confidence = 85.0
-
-            if protocol == 'TCP':
-                # Check for SYN Flood patterns
-                if hasattr(pyshark_packet, 'tcp') and hasattr(pyshark_packet.tcp, 'flags'):
-                    flags = getattr(pyshark_packet.tcp, 'flags', '0x0000')
-                    if 'SYN' in str(flags) and 'ACK' not in str(flags):
-                        classification = 'malicious'
-                        attack_type = 'Possible SYN Scan'
-                        confidence = 65.0
-
-            elif protocol == 'ICMP':
-                classification = 'suspicious'
-                attack_type = 'ICMP Traffic'
-                confidence = 50.0
 
             # Create flow object
             flow = {
                 'timestamp': datetime.now().isoformat(),
-                'classification': classification,
-                'attack_type': attack_type,
-                'src_ip': src_ip,
-                'src_port': src_port,
-                'dst_ip': dst_ip,
-                'dst_port': dst_port,
-                'protocol': protocol,
-                'bytes': packet_size,
+                'classification': 'benign',
+                'attack_type': 'Monitoring',
+                'src_ip': 'Remote',
+                'src_port': 0,
+                'dst_ip': 'Network',
+                'dst_port': 0,
+                'protocol': 'Mixed',
+                'bytes': 1500,
                 'packets': 1,
-                'confidence': round(confidence, 1)
+                'confidence': 0.0
             }
 
             # Add flow object to buffer
             live_flows_buffer.append(flow)
+            flow_stats['benign'] += 1
 
-            # Update stats
-            if classification == 'benign':
-                flow_stats['benign'] += 1
-            
-            elif classification == 'malicious':
-                flow_stats['malicious'] += 1
-
-            else:
-                flow_stats['suspicious'] += 1
-
-            logging.debug(f"Buffer size: {len(live_flows_buffer)}, Live flow added: {attack_type} from {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            if packet_count % 50 == 0:
+                logging.debug(f"Buffer size: {len(live_flows_buffer)}, Packets processed: {packet_count}")
         
         except Exception as e:
-            logging.debug(f"Error creating flow from pyshark packet: {e}")
+            logging.debug(f"Error creating flow entry: {e}")
 
     # Process scapy packet and add to live flow
     def process_packet_realtime(self, packet):
@@ -697,19 +629,8 @@ def start_live_monitoring(request):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('100.80.157.112', username='core', password='mmuzte123', timeout=30)
-        _stdin, _stdout, _stderr = ssh.exec_command("service open5gs-amfd status")
-        output = _stdout.readlines()
-        
-        for line in output:
-            if "Active" in line:
-                print("open5gs-amfd-service: ", line)
-
-        connection_status = "Connected to 5G Network"
-
-        ssh.close()
-
         ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
+        connection_status = "Connected to 5G Network"
 
         success = network_capture.start_live_monitoring_only()
 
