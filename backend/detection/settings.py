@@ -38,7 +38,7 @@ RAN5G_CONFIG = {
     'AMF_PORT': 38412,
     'SMF_PORT': 7777,
     #'UPF_PORT': 7780,
-    'NETWORK_INTERFACE': 'uesimtun0',
+    'NETWORK_INTERFACE': 'ens18',
     'CAPTURE_FILTER': 'host 192.168.2.170',
     'USERNAME': 'ran',
     'PASSWORD': 'mmuzte123'
@@ -123,5 +123,5 @@ LOGGING = {
 API_URL = "http://localhost:8000/receive_network_data/"
 SERVER_URL = "http://localhost:8000"
 
-NETWORK_TIMEOUT = 10
-SSH_TIMEOUT = 10
+NETWORK_TIMEOUT = 15
+SSH_TIMEOUT = 30

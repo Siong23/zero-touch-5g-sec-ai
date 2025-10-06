@@ -139,50 +139,29 @@ class NetworkTrafficCapture:
     
     def get_active_interface(self):
         try:
-            interfaces = psutil.net_if_addrs()
-            stats = psutil.net_if_stats()
-
-            active_interfaces = []
-
-            for interface_name, interface_addresses in interfaces.items():
-                if interface_name in stats and stats[interface_name].isup:
-                    for address in interface_addresses:
-                        if address.family == socket.AF_INET and not address.address.startswith("127."):
-                            try:
-                                net_io = psutil.net_io_counters(pernic=True)
-                                if interface_name in net_io:
-                                    io_stats = net_io[interface_name]
-                                    if io_stats.bytes_sent > 0 or io_stats.bytes_recv > 0:
-                                        active_interfaces.append({
-                                            'name': interface_name,
-                                            'ip': address.address,
-                                            'activity': io_stats.bytes_sent + io_stats.bytes_recv
-                                        })
-                            except:
-                                pass
-
-            if active_interfaces:
-                active_interfaces.sort(key=lambda x: x['activity'], reverse=True)
-                best_interface = active_interfaces[0]['name']
-                logger.info(f"Selected most active interface: {best_interface} (IP: {active_interfaces[0]['ip']})")
-                return best_interface
-
-            
-            fallback_interfaces = ["Wi-Fi", "wlan0", "eth0", "Ethernet"]
-            for interface in fallback_interfaces:
-                if interface in interfaces:
-                    logger.info(f"Fallback to interface: {interface}")
-                    return interface
-                
-            available = list(interfaces.keys())
-            if available:
-                logger.warning(f"Using first available interface: {available[0]}")
-                return available[0]
-
-        except Exception as e:
-            logger.error(f"Error getting active network interface: {e}")
-            return "Wi-Fi"  # Default to Wi-Fi if an error occurs
+            # Get the configured interface from settings
+            configured_interface = RAN5G_CONFIG.get('NETWORK_INTERFACE', 'ens18')
         
+            # Verify the interface exists on the system
+            interfaces = psutil.net_if_addrs()
+            
+            if configured_interface in interfaces:
+                logger.info(f"Using configured interface: {configured_interface}")
+                return configured_interface
+            else:
+                logger.warning(f"Configured interface '{configured_interface}' not found in system interfaces")
+                logger.info(f"Available interfaces: {list(interfaces.keys())}")
+            
+            # Still return the configured interface name
+            # The system will handle the error if it doesn't exist during capture
+            logger.info(f"Attempting to use '{configured_interface}' anyway")
+            return configured_interface
+            
+        except Exception as e:
+            logger.error(f"Error checking network interface: {e}")
+            # Return the default configured interface even on error
+            return RAN5G_CONFIG.get('NETWORK_INTERFACE', 'ens18')
+
     # Start live monitoring without saving to file
     def start_live_monitoring_only(self):
         global capture_active
@@ -297,7 +276,7 @@ class NetworkTrafficCapture:
         global capture_active, live_flows_buffer
 
         try:
-            capture_filter = None #self._get_capture_filter(attack_type, target_ip)
+            capture_filter = self._get_capture_filter(attack_type, target_ip)
 
             success = False
 
@@ -711,8 +690,8 @@ def start_live_monitoring(request):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=10)
-        _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
+        ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=30)
+        _stdin, _stdout, _stderr = ssh.exec_command("service open5gs-amfd status")
         output = _stdout.readlines()
         
         for line in output:
@@ -836,8 +815,8 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=10)
-            _stdin, _stdout, _stderr = ssh.exec_command(" service open5gs-amfd status")
+            ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=30)
+            _stdin, _stdout, _stderr = ssh.exec_command("service open5gs-amfd status")
             output = _stdout.readlines()
             
             for line in output:
@@ -990,9 +969,9 @@ class AttackSimulator:
     def check_target_connectivity(self, target_ip):
         try:
             if os.name == 'nt':  # Windows
-                result = subprocess.run(['ping', '-n', '1', target_ip], capture_output=True, text=True, timeout=5)
+                result = subprocess.run(['ping', '-n', '1', target_ip], capture_output=True, text=True, timeout=15)
             else:  # Unix/Linux/Mac
-                result = subprocess.run(['ping', '-c', '1', target_ip], capture_output=True, text=True, timeout=5)
+                result = subprocess.run(['ping', '-c', '1', target_ip], capture_output=True, text=True, timeout=15)
 
             reachable = result.returncode == 0
             logger.info(f"Target {target_ip} reachability: {'Yes' if reachable else 'No'}")
