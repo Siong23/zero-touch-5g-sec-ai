@@ -196,8 +196,7 @@ class NetworkTrafficCapture:
             
             stdin, stdout, stderr = ssh_client.exec_command(tcpdump_cmd, get_pty=True)
 
-
-            while capture_active and self.live_monitoring:
+            while self.live_monitoring:
                 try:
                     line = stdout.readline()
                     if not line:
@@ -205,18 +204,20 @@ class NetworkTrafficCapture:
 
                     packet_count += 1
 
-                    if packet_count % 5 == 0:
+                    if packet_count % 10 == 0:
                         flow = self.parse_tcpdump_line(line, packet_count)
-                        if flow:
-                            live_flows_buffer.append(flow)
+                        if not flow:
+                            continue
+                        
+                        live_flows_buffer.append(flow)
 
-                            classification = flow.get('classification', 'benign')
-                            if classification == 'malicious':
-                                flow_stats['malicious'] += 1
-                            elif classification == 'suspicious':
-                                flow_stats['suspicious'] += 1
-                            else:
-                                flow_stats['benign'] += 1
+                        classification = flow.get('classification', 'benign')
+                        if classification == 'malicious':
+                            flow_stats['malicious'] += 1
+                        elif classification == 'suspicious':
+                            flow_stats['suspicious'] += 1
+                        else:
+                            flow_stats['benign'] += 1
 
                     if packet_count % 50 == 0:
                         logging.debug(f"Buffer size: {len(live_flows_buffer)}, Packets processed: {packet_count}")
@@ -225,6 +226,8 @@ class NetworkTrafficCapture:
                         if not capture_active or not self.live_monitoring:
                             logger.info("Stopped signal received.")
                             break
+
+                    logger.info(f"Captured flow: {flow}")
             
                 except Exception as e:
                     logger.warning(f"Error reading packet data: {e}")
@@ -252,7 +255,7 @@ class NetworkTrafficCapture:
             # Example: "12:34:56.789012 IP 192.168.1.1.80 > 192.168.1.2.12345: Flags [S]"
             parts = line.split()
             if len(parts)<5:
-                return None
+                return
             
             protocol = 'Unknown'
             src_ip = 'Unknown'
@@ -371,13 +374,14 @@ class NetworkTrafficCapture:
 
             # Build tcpdump command with filter
             if capture_filter:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w - '{capture_filter}'"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -l -n -tttt '{capture_filter}'"
+
             else:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -w -"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -l -n -tttt"
             
             logger.info(f"Executing: {tcpdump_cmd}")
 
-            stdin, stdout, stderr = ssh.exec_command(tcpdump_cmd)
+            stdin, stdout, stderr = ssh.exec_command(tcpdump_cmd, get_pty=True)
 
             packet_count = 0
 
@@ -700,6 +704,8 @@ class NetworkTrafficCapture:
 
 def chrome_devtools_json(request):
     return JsonResponse({}, status=200)   
+
+network_capture = NetworkTrafficCapture()
 
 # Create API endpoint to start live traffic network monitoring
 @csrf_exempt
@@ -1229,7 +1235,6 @@ class SeverityLevelAnalyzer:
     
 # Initialize the SeverityLevelAnalyzer class
 severity_analyzer = SeverityLevelAnalyzer()
-network_capture = NetworkTrafficCapture()
 
 # Mitigation strategies based on attack type
 class AIMitigation:
