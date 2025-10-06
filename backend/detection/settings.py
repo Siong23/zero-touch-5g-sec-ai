@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-7__d(a*74qx!mu@1n7*af0#*n-)cp6_v1=*r9h@==)rsx01-5b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.132', '0.0.0.0', '100.108.112.77']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.132', '0.0.0.0', '100.108.112.77, 192.168.2.170, 100.65.52.69']
 
 # Application definition
 INSTALLED_APPS = [
@@ -34,12 +34,12 @@ MIDDLEWARE = [
 ]
 
 RAN5G_CONFIG = {
-    'HOST': '192.168.2.170',
+    'HOST': '100.65.52.69',
     'AMF_PORT': 38412,
     'SMF_PORT': 7777,
     #'UPF_PORT': 7780,
     'NETWORK_INTERFACE': 'ens18',
-    'CAPTURE_FILTER': 'host 192.168.2.170',
+    'CAPTURE_FILTER': 'host 100.65.52.69',
     'USERNAME': 'ran',
     'PASSWORD': 'mmuzte123'
 }

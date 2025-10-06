@@ -690,7 +690,7 @@ def start_live_monitoring(request):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=30)
+        ssh.connect('100.80.157.112', username='core', password='mmuzte123', timeout=30)
         _stdin, _stdout, _stderr = ssh.exec_command("service open5gs-amfd status")
         output = _stdout.readlines()
         
@@ -815,7 +815,7 @@ def receive_network_data(request):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
             # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-            ssh.connect('192.168.1.125', username='core', password='mmuzte123', timeout=30)
+            ssh.connect('100.80.157.112', username='core', password='mmuzte123', timeout=30)
             _stdin, _stdout, _stderr = ssh.exec_command("service open5gs-amfd status")
             output = _stdout.readlines()
             
@@ -962,7 +962,7 @@ def perform_detection(features):
 # Simulate different types of network attacks by injecting attack into the 5G Network
 class AttackSimulator:
     def __init__(self, host, username, password):
-        self.host = host or "192.168.2.170"
+        self.host = host or "100.65.52.69"
         self.username = username or "ran"
         self.password = password or "mmuzte123"
 
@@ -1327,7 +1327,7 @@ def start_attack(request):
 
         logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
 
-        host = RAN5G_CONFIG.get('HOST', '192.168.2.170')
+        host = RAN5G_CONFIG.get('HOST', '100.65.52.69')
         username = RAN5G_CONFIG.get('USERNAME', 'ran')
         password = RAN5G_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
@@ -1537,7 +1537,7 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             mitigation = "No action needed"
 
         else:  
-            mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
+            mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
             mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
         
         accuracy = "91.01%"
@@ -1931,7 +1931,7 @@ def home(request):
 
                 else:  
                     attack_status = "Under Attack!"
-                    mitigator = AIMitigation(host='192.168.2.170', username='ran', password='mmuzte123')
+                    mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
                     mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
 
             except json.JSONDecodeError as e:

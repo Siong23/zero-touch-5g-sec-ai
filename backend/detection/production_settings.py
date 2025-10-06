@@ -10,6 +10,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.0.132',
     '0.0.0.0',
+    '192.168.2.170',
+    '100.65.52.69'
     # Add other allowed hosts as needed
 ]
 
