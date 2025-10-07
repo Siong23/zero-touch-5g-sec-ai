@@ -22,6 +22,7 @@ urlpatterns = [
     path('get_live_flows/', views.get_live_flows, name='get_live_flows'),
     path('get_flow_status/', views.get_flow_status, name='get_flow_status'),
     path('reset_flow_stats/', views.reset_flow_stats, name='reset_flow_status'),
+    path('acknowledge_results/', views.acknowledge_results, name='acknowledge_results'),
     path('.well-known/appspecific/com.chrome.devtools.json', views.chrome_devtools_json, name='chrome_devtools_json')
 ]
 

@@ -47,7 +47,7 @@ from detection.settings import RAN5G_CONFIG
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-live_flows_buffer = deque(maxlen=100)
+live_flows_buffer = deque()
 flow_stats = {'benign': 0, 'suspicious': 0, 'malicious': 0}
 auto_analysis_results = {}
 automation_queue = queue.Queue()
@@ -416,10 +416,6 @@ class NetworkTrafficCapture:
             # Skip empty lines and tcpdump status messages
             if not line or 'listening on' in line or 'captured' in line:
                 return None
-                
-            # Example formats:
-            # 2024-01-15 12:34:56.789012 IP 192.168.1.1.80 > 192.168.1.2.12345: Flags [S]
-            # 2024-01-15 12:34:56.789012 IP 10.0.0.1 > 10.0.0.2: ICMP echo request
             
             parts = line.split()
             if len(parts) < 6:
@@ -482,26 +478,48 @@ class NetworkTrafficCapture:
             
             # Determine protocol and attack type
             line_lower = line.lower()
+
+            cache_key = f"packet_rate_{src_ip}_{dst_ip}"
+            packet_history = cache.get(cache_key, [])
+            packet_history.append(time.time())
+
+            cutoff = time.time() - 10
+            packet_history = [t for t in packet_history if t > cutoff]
+            cache.set(cache_key, packet_history, timeout=60)
+
+            packet_rate = len(packet_history) / 10.0
             
             if 'icmp' in line_lower:
                 protocol = 'ICMP'
-                if packet_count % 10 == 0:  # High rate detection
-                    attack_type = 'Possible ICMP Flood'
+                if packet_count > 10:  # High rate detection
+                    attack_type = 'ICMP Flood Attack'
+                    classification = 'malicious'
+                elif packet_count > 5:
+                    attack_type = "Possible ICMP Flood"
                     classification = 'suspicious'
                 else:
                     attack_type = 'ICMP Traffic'
+
             elif '[S]' in line and '[.]' not in line:
                 protocol = 'TCP'
-                attack_type = 'SYN Packet'
-                if src_port == 0 or packet_count % 5 == 0:
-                    attack_type = 'Possible SYN Scan'
+                if packet_count > 20:  # High rate detection
+                    attack_type = 'SYN Flood Attack'
+                    classification = 'malicious'
+                elif packet_count > 10:
+                    attack_type = "Possible SYN Scan"
                     classification = 'suspicious'
+                else:
+                    attack_type = 'SYN Packet'
             elif 'udp' in line_lower:
                 protocol = 'UDP'
-                attack_type = 'UDP Traffic'
-                if packet_count % 15 == 0:
-                    attack_type = 'Possible UDP Flood'
+                if packet_count > 50:  # High rate detection
+                    attack_type = 'UDP Flood Attack'
+                    classification = 'malicious'
+                elif packet_count > 25:
+                    attack_type = "Possible UDP Flood"
                     classification = 'suspicious'
+                else:
+                    attack_type = 'UDPTraffic'
             elif 'tcp' in line_lower or '[.]' in line or '[P]' in line or '[F]' in line:
                 protocol = 'TCP'
                 attack_type = 'TCP Traffic'
@@ -517,7 +535,7 @@ class NetworkTrafficCapture:
             except:
                 pass
             
-            confidence = 85.0 if classification == 'suspicious' else 60.0
+            confidence = 90.0 if classification == 'malicious' else (75.0 if classification == 'suspicious' else 60.0)
             
             return {
                 'timestamp': datetime.now().isoformat(),
@@ -530,7 +548,8 @@ class NetworkTrafficCapture:
                 'protocol': protocol,
                 'bytes': packet_size,
                 'packets': 1,
-                'confidence': confidence
+                'confidence': confidence,
+                'packet_rate': round(packet_rate, 2)
             }
         
         except Exception as e:
@@ -1876,8 +1895,6 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
         else:  
             mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
             mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
-        
-        accuracy = "91.01%"
 
         auto_analysis_results = {
             'detection': detection,
@@ -1895,11 +1912,25 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             'timestamp': datetime.now().isoformat()
         }
 
+        cache.set('automation_results', {
+            'analysis': auto_analysis_results,
+            'capture_file': capture_file,
+            'attack_type': attack_type,
+            'target_ip': target_ip,
+            'completed_at': datetime.now().isoformat()
+        }, timeout=14400)  # 4 hours
+
+        cache.set('results_ready', True, timeout=14400)
+
+        analysis_report = detection_result.get('traffic_metrics', {})
+
         logger.info(f"Analysis Results: {auto_analysis_results}")
         return auto_analysis_results
     
     except Exception as e:
         logger.error(f"Error analyzing captured data: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         return None
     
 def get_automation_status(request):
@@ -1909,6 +1940,7 @@ def get_automation_status(request):
 
         # Check for completed results in cache
         automation_results = cache.get('automation_results', None)
+        results_ready = cache.get('results_ready', False)
 
         current_results = {
             'detection': detection,
@@ -1923,7 +1955,8 @@ def get_automation_status(request):
             'status': status,
             'automation': status,
             'current_results': current_results,
-            'has_new_results': automation_results is not None
+            'has_new_results': automation_results is not None and results_ready,
+            'results_ready': results_ready
         }
 
         if automation_results:
@@ -1932,6 +1965,17 @@ def get_automation_status(request):
         return JsonResponse(response_data)
     
     return JsonResponse({'status':'error', 'message': 'Invalid request method'})
+
+# New endpoint to acknowledge results received
+@csrf_exempt
+@require_http_methods(["POST"])
+def acknowledge_results(request):
+    try:
+        cache.delete('automation_results')
+        cache.delete('results_ready')
+        return JsonResponse({'status': 'success', 'message': 'Results acknowledged'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
 # New endpoint to clear automation results
 @csrf_exempt

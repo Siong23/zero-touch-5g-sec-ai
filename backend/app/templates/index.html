@@ -202,7 +202,6 @@
 
         .stat-icon {
             font-size: 40px;
-            opacity: 0.2;
         }
 
         .stat-card.benign .stat-icon { color: #28a745; }
@@ -1384,11 +1383,13 @@
         // Real-time automation status and results updater
         class AutomationStatusUpdater {
             constructor() {
-                this.pollInterval = 3000; // Poll every 3 seconds
+                this.pollInterval = 2000; // Poll every 2 seconds
                 this.maxRetries = 3;
                 this.currentRetries = 0;
                 this.isPolling = false;
                 this.pollTimer = null;
+                this.lastResultsTimestamp = null;
+                this.resultsDisplayed = false;
                 
                 // Initialize when DOM is ready
                 if (document.readyState === 'loading') {
@@ -1429,6 +1430,9 @@
                                     </div>
                                     <span id="progress-text">0%</span>
                                 </div>
+                                <div class="status-item">
+                                    <strong>Current Step:</strong> <span id="current-step-text">Ready</span>
+                                </div
                             </div>
                         </div>
                     `;
@@ -1622,6 +1626,8 @@
                 startAttackForms.forEach(form => {
                     form.addEventListener('submit', () => {
                         setTimeout(() => {
+                            this.resultsDisplayed = false;
+                            this.lastResultsTimestamp = null;
                             this.startIntensivePolling();
                             this.showNotification('Attack simulation started. Monitoring in real-time...', 'success');
                         }, 1000);
@@ -1635,7 +1641,8 @@
                         method: 'GET',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
-                        }
+                        },
+                        credentials: 'same-origin'
                     });
 
                     if (!response.ok) {
@@ -1663,18 +1670,28 @@
                 if (!data || !data.status) return;
 
                 const status = data.status;
+                const currentStatus = status.status || 'Idle';
                 const results = data.current_results;
                 const automationResults = data.automation_results;
 
                 // Update status text and icon
                 const statusText = document.getElementById('automation-status-text');
-                const statusIcon = document.getElementById('automation-icon');
-                
                 if (statusText) {
-                    statusText.innerHTML = `
-                        <span class="status-indicator status-${status.status.toLowerCase()}"></span>
-                        ${status.status}
-                    `;
+                    statusText.textContent = currentStatus;
+                }
+
+                const statusIcon = document.getElementById('automation-icon');
+                if (statusIcon) {
+                    statusIcon.className = 'fas fa-cog';
+                    if (currentStatus === 'Running') {
+                        statusIcon.classList.add('running');
+                    } else if (currentStatus === 'Completed') {
+                        statusIcon.classList.add('completed');
+                        statusIcon.className = 'fas fa-check-circle completed';
+                    } else if (currentStatus === 'Failed') {
+                        statusIcon.classList.add('failed');
+                        statusIcon.className = 'fas fa-exclamation-triangle failed';
+                    }
                 }
 
                 // Update progress bar
@@ -1685,15 +1702,6 @@
                     const progress = status.progress || 0;
                     progressFill.style.width = `${progress}%`;
                     progressText.textContent = `${progress}%`;
-                }
-
-                // Update icon animation
-                if (statusIcon) {
-                    statusIcon.className = status.status === 'Running' ? 
-                        'fas fa-cog fa-spin' : 
-                        status.status === 'Completed' ? 'fas fa-check-circle' :
-                        status.status === 'Failed' ? 'fas fa-exclamation-triangle' :
-                        'fas fa-cog';
                 }
 
                 // Handle results display
