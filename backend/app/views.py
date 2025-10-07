@@ -265,7 +265,7 @@ class NetworkTrafficCapture:
             
             # Use unbuffered tcpdump with explicit packet count for testing
             # Remove -l (line buffering) and add -U (unbuffered), add packet limit for testing
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt -c 1000 2>&1"
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
             
             logger.info(f"Executing: {tcpdump_cmd}")
 
@@ -576,71 +576,141 @@ class NetworkTrafficCapture:
 
         try:
             capture_filter = self._get_capture_filter(attack_type, target_ip)
-
             success = False
 
             logger.info(f"Starting packet capture with filter: {capture_filter}")
 
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-            # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
             ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
 
-            # Build tcpdump command with filter
+            # Build tcpdump command with filter - use text output for parsing
             if capture_filter:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -l -n -tttt '{capture_filter}'"
-
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -U -n -tttt '{capture_filter}' 2>&1"
             else:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -l -n -tttt"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
             
             logger.info(f"Executing: {tcpdump_cmd}")
 
-            stdin, stdout, stderr = ssh.exec_command(tcpdump_cmd, get_pty=True)
+            # Open SSH channel for streaming output
+            transport = ssh.get_transport()
+            channel = transport.open_session()
+            channel.get_pty(term='vt100', width=200, height=24)
+            channel.exec_command(tcpdump_cmd)
+            
+            # Handle sudo password if needed
+            time.sleep(0.5)
+            if channel.recv_ready():
+                prompt = channel.recv(1024).decode('utf-8', errors='ignore')
+                if '[sudo]' in prompt or 'password' in prompt.lower():
+                    channel.send('mmuzte123\n')
+                    time.sleep(1)
 
             packet_count = 0
-
-            with open(filepath, 'wb') as f:
-                while True:
-                    chunk = stdout.read(4096)
-                    if not chunk:
-                        break
-                    f.write(chunk)
-                    packet_count += 1
+            buffer = ""
+            last_data_time = time.time()
+            
+            # Also save raw output to file for later analysis
+            with open(filepath, 'w') as pcap_file:
+                channel.settimeout(0.5)
+                
+                while capture_active and self.live_monitoring:
+                    try:
+                        current_time = time.time()
+                        
+                        # Timeout check
+                        if current_time - last_data_time > 30:
+                            logger.warning("No data received for 30 seconds")
+                            break
+                        
+                        # Read data
+                        data_received = False
+                        
+                        if channel.recv_ready():
+                            data = channel.recv(4096).decode('utf-8', errors='ignore')
+                            if data:
+                                buffer += data
+                                pcap_file.write(data)  # Save to file
+                                pcap_file.flush()
+                                data_received = True
+                                last_data_time = current_time
+                        
+                        if channel.recv_stderr_ready():
+                            stderr_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                            if stderr_data:
+                                buffer += stderr_data
+                                data_received = True
+                                last_data_time = current_time
+                        
+                        if not data_received:
+                            if channel.exit_status_ready():
+                                break
+                            continue
+                        
+                        # Process complete lines for live monitoring
+                        while '\n' in buffer:
+                            line, buffer = buffer.split('\n', 1)
+                            line = line.strip()
+                            
+                            if not line:
+                                continue
+                            
+                            # Skip tcpdump meta-output
+                            if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
+                                continue
+                            
+                            # Parse packet line and create flow
+                            packet_count += 1
+                            flow = self.parse_tcpdump_line(line, packet_count)
+                            
+                            if flow:
+                                # Add to live buffer for real-time display
+                                live_flows_buffer.append(flow)
+                                
+                                # Update stats
+                                classification = flow.get('classification', 'benign')
+                                if classification == 'malicious':
+                                    flow_stats['malicious'] += 1
+                                elif classification == 'suspicious':
+                                    flow_stats['suspicious'] += 1
+                                else:
+                                    flow_stats['benign'] += 1
+                                
+                                # Log progress
+                                if packet_count % 50 == 0:
+                                    logger.info(f"Captured {packet_count} packets, live buffer: {len(live_flows_buffer)}")
                     
-                    # Process for live view every 50 chunks
-                    if packet_count % 50 == 0:
-                        try:
-                            self.process_pyshark_packet(packet_count)
-                        except:
-                            pass
-
+                    except socket.timeout:
+                        continue
+                    except Exception as e:
+                        logger.error(f"Error reading packet: {e}")
+                        break
+            
+            # Cleanup
+            try:
+                channel.close()
+            except:
+                pass
+            
             ssh.close()
             
-            success = True
-
-            if success and os.path.exists(filepath):
-                file_size = os.path.getsize(filepath)
-                logger.info(f"Capture file saved: {filepath} ({file_size} bytes)")
-
-                if file_size == 0:
-                    logger.warning("Capture file is empty!")
-                else:
-                    logger.warning("Capture completed successfully")
+            success = os.path.exists(filepath) and os.path.getsize(filepath) > 0
             
+            if success:
+                logger.info(f"Capture completed: {packet_count} packets, file: {filepath}")
             else:
-                logger.warning("Capture file not found after capture.")
-                success = False
-
+                logger.warning("Capture file is empty or not created")
+                
         except Exception as e:
             logger.error(f"Error during packet capture: {e}")
             import traceback
-            success = False
             logger.error(traceback.format_exc())
+            success = False
         
         finally:
             capture_active = False
             self.live_monitoring = False
+            logger.info(f"Capture cleanup complete. Total flows in buffer: {len(live_flows_buffer)}")
 
     def _get_capture_filter(self, attack_type, target_ip):
         filters = {
@@ -1253,7 +1323,7 @@ class AttackSimulator:
             ssh.connect(self.host, username=self.username, password=self.password, timeout=30)
 
             attack_command = {
-                'ICMPFlood': f'timeout 45 sudo ping -I {target_ip}',
+                'ICMPFlood': f'timeout 45 sudo hping3 -I --flood --rand-source {target_ip}',
                 'HTTPFlood': f'timeout 45 sudo hping3 -1 --flood --rand-source {target_ip}',
                 'SYNFlood': f'timeout 45 sudo hping3 -S -p 80 --flood --rand-source {target_ip}',
                 'UDPFlood': f'timeout 45 sudo hping3 -2 --flood --rand-source -p 80 {target_ip}',
@@ -1591,8 +1661,6 @@ def start_attack(request):
         username = RAN5G_CONFIG.get('USERNAME', 'ran')
         password = RAN5G_CONFIG.get('PASSWORD', 'mmuzte123')
         simulator = AttackSimulator(host, username, password)
-
-        network_capture.start_live_monitoring_only()
 
         # 1. Start packet capture with auto analysis
         capture_success, capture_file = network_capture.start_capture_with_auto_analysis(duration=60, attack_type=attack_type, target_ip=target_ip)
