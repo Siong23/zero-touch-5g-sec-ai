@@ -153,18 +153,58 @@ class NetworkTrafficCapture:
 
     # Start live monitoring without saving to file
     def start_live_monitoring_only(self):
-        global capture_active
+        global capture_active, live_flows_buffer, flow_stats
 
         if capture_active:
             logger.warning("Capture already running")
             return False
         
         try:
+            # Pre-flight checks
+            logger.info("Starting live monitoring pre-flight checks...")
+            
+            # Test SSH connection first
+            try:
+                test_ssh = paramiko.client.SSHClient()
+                test_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                test_ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=10)
+                
+                # Test if tcpdump is available
+                stdin, stdout, stderr = test_ssh.exec_command("which tcpdump")
+                tcpdump_path = stdout.read().decode('utf-8').strip()
+                
+                if not tcpdump_path:
+                    logger.error("tcpdump not found on remote system")
+                    test_ssh.close()
+                    return False
+                
+                logger.info(f"tcpdump found at: {tcpdump_path}")
+                
+                # Test interface
+                stdin, stdout, stderr = test_ssh.exec_command(f"sudo ip link show {self.capture_interface}")
+                output = stdout.read().decode('utf-8')
+                error = stderr.read().decode('utf-8')
+                
+                if error or 'does not exist' in output.lower():
+                    logger.error(f"Interface {self.capture_interface} not found: {error}")
+                    test_ssh.close()
+                    return False
+                
+                logger.info(f"Interface {self.capture_interface} is available")
+                test_ssh.close()
+                
+            except Exception as e:
+                logger.error(f"Pre-flight check failed: {e}")
+                return False
+            
             capture_active = True
             self.live_monitoring = True
 
             # Clear previous data
             live_flows_buffer.clear()
+            flow_stats['benign'] = 0
+            flow_stats['suspicious'] = 0
+            flow_stats['malicious'] = 0
             
             logger.info(f"Starting live monitor thread on interface {self.capture_interface}")
             
@@ -177,13 +217,20 @@ class NetworkTrafficCapture:
             monitor_thread.start()
             
             # Give it a moment to initialize
-            time.sleep(1)
-
-            logger.info(f"✓ Live monitoring thread started successfully")
-            return True
-        
+            time.sleep(2)
+            
+            # Verify thread is actually running
+            if monitor_thread.is_alive():
+                logger.info("[OK] Live monitoring thread started successfully")
+                return True
+            else:
+                logger.error("[FAILED] Monitor thread died immediately")
+                capture_active = False
+                self.live_monitoring = False
+                return False
+            
         except Exception as e:
-            logger.error(f"✗ Error starting live monitoring: {e}")
+            logger.error(f"[ERROR] Error starting live monitoring: {e}")
             import traceback
             logger.error(traceback.format_exc())
             capture_active = False
@@ -202,72 +249,157 @@ class NetworkTrafficCapture:
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=30)
             
-            # Use tcpdump with text output format - CRITICAL: Use -c to limit line buffering issues
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -l -n -tttt 2>&1"
+            # Test if interface exists and has traffic
+            test_cmd = f"sudo ip link show {self.capture_interface}"
+            stdin, stdout, stderr = ssh.exec_command(test_cmd)
+            test_output = stdout.read().decode('utf-8')
+            test_error = stderr.read().decode('utf-8')
+            
+            if test_error or 'does not exist' in test_output.lower():
+                logger.error(f"Interface {self.capture_interface} not found or not accessible")
+                logger.error(f"Error: {test_error}")
+                ssh.close()
+                return
+            
+            logger.info(f"Interface check passed: {test_output[:100]}")
+            
+            # Use unbuffered tcpdump with explicit packet count for testing
+            # Remove -l (line buffering) and add -U (unbuffered), add packet limit for testing
+            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt -c 1000 2>&1"
             
             logger.info(f"Executing: {tcpdump_cmd}")
 
             transport = ssh.get_transport()
             channel = transport.open_session()
-            channel.get_pty()
+            
+            # Set proper terminal settings
+            channel.get_pty(term='vt100', width=200, height=24)
             channel.exec_command(tcpdump_cmd)
+            
+            # ISend sudo password if needed (adjust if passwordless sudo is configured)
+            time.sleep(0.5)
+            if channel.recv_ready():
+                prompt = channel.recv(1024).decode('utf-8', errors='ignore')
+                logger.debug(f"Initial output: {prompt[:200]}")
+                if '[sudo]' in prompt or 'password' in prompt.lower():
+                    channel.send('mmuzte123\n')
+                    time.sleep(1)
             
             packet_count = 0
             buffer = ""
+            line_count = 0
+            last_data_time = time.time()
+            no_data_timeout = 30  # seconds
             
             logger.info("Reading tcpdump output...")
             
-            # Read from channel with timeout
-            channel.settimeout(1.0)
+            # More aggressive reading with better timeout handling
+            channel.settimeout(0.5)  # Shorter timeout for more responsive checking
             
             while capture_active and self.live_monitoring:
                 try:
-                    # Read available data
+                    current_time = time.time()
+                    
+                    # Check if have gone too long without data
+                    if current_time - last_data_time > no_data_timeout:
+                        logger.warning(f"No data received for {no_data_timeout} seconds")
+                        if packet_count == 0:
+                            logger.error("No packets captured at all - possible issues:")
+                            logger.error("1. No traffic on interface")
+                            logger.error("2. Permission issues with tcpdump")
+                            logger.error("3. Interface not in promiscuous mode")
+                        break
+                    
+                    # Try multiple ways to read data
+                    data_received = False
+                    
                     if channel.recv_ready():
                         data = channel.recv(4096).decode('utf-8', errors='ignore')
-                        buffer += data
-                        
-                        # Process complete lines
-                        while '\n' in buffer:
-                            line, buffer = buffer.split('\n', 1)
-                            line = line.strip()
-                            
-                            if not line or 'tcpdump:' in line or 'listening on' in line:
-                                continue
-                            
-                            packet_count += 1
-                            
-                            # Parse the tcpdump line and create flow
-                            flow = self.parse_tcpdump_line(line, packet_count)
-                            
-                            if flow:
-                                # Add to buffer
-                                live_flows_buffer.append(flow)
-                                
-                                # Update stats
-                                classification = flow.get('classification', 'benign')
-                                if classification == 'malicious':
-                                    flow_stats['malicious'] += 1
-                                elif classification == 'suspicious':
-                                    flow_stats['suspicious'] += 1
-                                else:
-                                    flow_stats['benign'] += 1
-                                
-                                logger.info(f"✓ Flow captured: {flow['attack_type']} | {flow['src_ip']}:{flow['src_port']} -> {flow['dst_ip']}:{flow['dst_port']}")
+                        if data:
+                            buffer += data
+                            data_received = True
+                            last_data_time = current_time
                     
-                    # Check if channel is still open
-                    if channel.exit_status_ready():
-                        break
+                    # Check stderr
+                    if channel.recv_stderr_ready():
+                        stderr_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                        if stderr_data:
+                            logger.debug(f"STDERR: {stderr_data[:200]}")
+                            # Some tcpdump versions output to stderr
+                            buffer += stderr_data
+                            data_received = True
+                            last_data_time = current_time
+                    
+                    if not data_received:
+                        # No data available, check if process exited
+                        if channel.exit_status_ready():
+                            exit_status = channel.recv_exit_status()
+                            logger.info(f"tcpdump process exited with status: {exit_status}")
+                            break
+                        continue
+                    
+                    # Process complete lines
+                    while '\n' in buffer:
+                        line, buffer = buffer.split('\n', 1)
+                        line = line.strip()
+                        line_count += 1
                         
+                        # Better filtering and logging
+                        if not line:
+                            continue
+                        
+                        # Log first few lines for debugging
+                        if line_count <= 5:
+                            logger.info(f"Line {line_count}: {line[:150]}")
+                        
+                        # Skip tcpdump meta-output
+                        if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
+                            logger.debug(f"Meta line: {line[:100]}")
+                            continue
+                        
+                        # This should be an actual packet line
+                        packet_count += 1
+                        
+                        # Parse the tcpdump line and create flow
+                        flow = self.parse_tcpdump_line(line, packet_count)
+                        
+                        if flow:
+                            # Add to buffer
+                            live_flows_buffer.append(flow)
+                            
+                            # Update stats
+                            classification = flow.get('classification', 'benign')
+                            if classification == 'malicious':
+                                flow_stats['malicious'] += 1
+                            elif classification == 'suspicious':
+                                flow_stats['suspicious'] += 1
+                            else:
+                                flow_stats['benign'] += 1
+                            
+                            # Log every 10th packet to avoid spam
+                            if packet_count % 10 == 0:
+                                logger.info(f"Captured {packet_count} packets, buffer size: {len(live_flows_buffer)}")
+                        else:
+                            # Log parsing failures for first few packets
+                            if packet_count <= 10:
+                                logger.warning(f"Failed to parse line {packet_count}: {line[:100]}")
+                
                 except socket.timeout:
                     continue
                 except Exception as e:
                     logger.error(f"Error reading packet: {e}")
+                    import traceback
+                    logger.error(traceback.format_exc())
                     break
             
-            channel.close()
+            # Cleanup
+            try:
+                channel.close()
+            except:
+                pass
+            
             ssh.close()
-            logger.info(f"Live monitoring stopped. Total packets captured: {packet_count}")
+            logger.info(f"Live monitoring stopped. Total packets captured: {packet_count}, Flows created: {len(live_flows_buffer)}")
             
         except Exception as e:
             logger.error(f"Error during live monitoring: {e}")
@@ -440,7 +572,7 @@ class NetworkTrafficCapture:
 
     def _capture_with_analysis(self, duration, filepath, attack_type, target_ip):
         # Start packet capture and analysis
-        global capture_active, live_flows_buffer
+        global capture_active, live_flows_buffer, flow_stats
 
         try:
             capture_filter = self._get_capture_filter(attack_type, target_ip)
@@ -527,7 +659,7 @@ class NetworkTrafficCapture:
         return filter_str
     
     def process_pyshark_packet(self, packet):
-        global live_flows_buffer, flow_stats, model
+        global capture_active, live_flows_buffer, flow_stats
 
         try:
             # Extract basic info from PyShark packet
@@ -573,7 +705,7 @@ class NetworkTrafficCapture:
 
     # Process scapy packet and add to live flow
     def process_packet_realtime(self, packet):
-        global live_flows_buffer, flow_stats, model
+        global capture_active, live_flows_buffer, flow_stats
 
         try:
             features = self.extract_features(packet)

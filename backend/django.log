@@ -23678,3 +23678,810 @@ Live monitoring cleanup complete
 "GET /get_automation_status/ HTTP/1.1" 200 383
 "GET /get_automation_status/ HTTP/1.1" 200 383
 "GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85783
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Executing: sudo tcpdump -i ens18 -l -n -tttt 2>&1
+Reading tcpdump output...
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 0
+Live monitoring cleanup complete
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\detection\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85783
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Executing: sudo tcpdump -i ens18 -l -n -tttt 2>&1
+Reading tcpdump output...
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+Live monitoring stopped successfully
+"GET /get_live_flows/ HTTP/1.1" 200 147
+Live monitoring stopped. Total packets captured: 0
+Live monitoring cleanup complete
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85783
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Executing: sudo tcpdump -i ens18 -l -n -tttt 2>&1
+Reading tcpdump output...
+Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring stopped. Total packets captured: 0
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85783
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 not found: sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85783
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+"GET /get_automation_status/ HTTP/1.1" 200 383
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt -c 1000 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Error during live monitoring: cannot access local variable 'capture_active' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py", line 297, in live_monitor_packets
+    while capture_active and self.live_monitoring:
+          ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'capture_active' where it is not associated with a value
+
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Live monitoring stopped successfully
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85783
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+"GET /get_automation_status/ HTTP/1.1" 200 383
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt -c 1000 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 09:12:30.395366 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3710776033:3710776380, ack 3284601977, win 2119, options [nop,n
+Line 5: 2025-10-07 09:12:30.463891 IP 172.237.72.43.443 > 192.168.2.170.39654: Flags [.], ack 347, win 1281, options [nop,nop,TS val 946100072 ecr 3343659143]
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Flows buffer size: 90, Stats: {'benign': 89, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5412
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 160, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5410
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 225, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 230 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 313, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 320 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5410
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 356, Flows created: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
