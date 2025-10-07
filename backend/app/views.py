@@ -574,9 +574,17 @@ class NetworkTrafficCapture:
         # Start packet capture and analysis
         global capture_active, live_flows_buffer, flow_stats
 
+        ssh = None
+        channel = None
+        success = False
+
         try:
+            live_flows_buffer.clear()
+            flow_stats['benign'] = 0
+            flow_stats['malicious'] = 0
+            flow_stats['suspicious'] = 0
+
             capture_filter = self._get_capture_filter(attack_type, target_ip)
-            success = False
 
             logger.info(f"Starting packet capture with filter: {capture_filter}")
 
@@ -586,7 +594,7 @@ class NetworkTrafficCapture:
 
             # Build tcpdump command with filter - use text output for parsing
             if capture_filter:
-                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -U -n -tttt '{capture_filter}' 2>&1"
+                tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -U -n -tttt host {target_ip} 2>&1"
             else:
                 tcpdump_cmd = f"timeout {duration} sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
             
@@ -609,6 +617,8 @@ class NetworkTrafficCapture:
             packet_count = 0
             buffer = ""
             last_data_time = time.time()
+
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
             
             # Also save raw output to file for later analysis
             with open(filepath, 'w') as pcap_file:
@@ -1299,10 +1309,7 @@ class AttackSimulator:
 
     def check_target_connectivity(self, target_ip):
         try:
-            if os.name == 'nt':  # Windows
-                result = subprocess.run(['ping', '-n', '1', target_ip], capture_output=True, text=True, timeout=15)
-            else:  # Unix/Linux/Mac
-                result = subprocess.run(['ping', '-c', '1', target_ip], capture_output=True, text=True, timeout=15)
+            result = subprocess.run(['ping', '-c', '1', target_ip], capture_output=True, text=True, timeout=15)
 
             reachable = result.returncode == 0
             logger.info(f"Target {target_ip} reachability: {'Yes' if reachable else 'No'}")
@@ -1670,7 +1677,7 @@ def start_attack(request):
 
             automation_manager.complete_step('packet_capture', {'file_path': capture_file})
 
-            time.sleep(5)
+            time.sleep(10)
         
             # 2. Start attack simulation
             if simulator.trigger_dos_attack(target_ip, attack_type):

@@ -28860,3 +28860,4389 @@ Captured 8800 packets, buffer size: 100
 Captured 8810 packets, buffer size: 100
 Captured 8820 packets, buffer size: 100
 Captured 8830 packets, buffer size: 100
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85807
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Error starting live monitoring: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 233
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+"GET /get_automation_status/ HTTP/1.1" 200 383
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 11:40:52.303519 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3742692618:3742692965, ack 3296186074, win 2119, options [nop,n
+Line 5: 2025-10-07 11:40:52.306624 IP 172.237.72.43.443 > 192.168.2.170.39654: Flags [P.], seq 1:140, ack 4294966954, win 771, options [nop,nop,TS val 9550024
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 346, 'suspicious': 0, 'malicious': 0}
+Captured 350 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 360 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5419
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 736, 'suspicious': 1, 'malicious': 0}
+Captured 740 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 750 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5403
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Captured 1070 packets, buffer size: 100
+Captured 1080 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1081, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1090 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+Captured 1260 packets, buffer size: 100
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Captured 1320 packets, buffer size: 100
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Captured 1410 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1413, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5427
+Captured 1420 packets, buffer size: 100
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Captured 1650 packets, buffer size: 100
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1700 packets, buffer size: 100
+Captured 1710 packets, buffer size: 100
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Captured 1740 packets, buffer size: 100
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1806, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1810 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Captured 1960 packets, buffer size: 100
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Captured 2040 packets, buffer size: 100
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+Captured 2110 packets, buffer size: 100
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2128, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2140 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 2150 packets, buffer size: 100
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Captured 2260 packets, buffer size: 100
+Captured 2270 packets, buffer size: 100
+Captured 2280 packets, buffer size: 100
+Captured 2290 packets, buffer size: 100
+Captured 2300 packets, buffer size: 100
+Captured 2310 packets, buffer size: 100
+Captured 2320 packets, buffer size: 100
+Captured 2330 packets, buffer size: 100
+Captured 2340 packets, buffer size: 100
+Captured 2350 packets, buffer size: 100
+Captured 2360 packets, buffer size: 100
+Captured 2370 packets, buffer size: 100
+Captured 2380 packets, buffer size: 100
+Captured 2390 packets, buffer size: 100
+Captured 2400 packets, buffer size: 100
+Captured 2410 packets, buffer size: 100
+Captured 2420 packets, buffer size: 100
+Captured 2430 packets, buffer size: 100
+Captured 2440 packets, buffer size: 100
+Captured 2450 packets, buffer size: 100
+Captured 2460 packets, buffer size: 100
+Captured 2470 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2473, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2480 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 2490 packets, buffer size: 100
+Captured 2500 packets, buffer size: 100
+Captured 2510 packets, buffer size: 100
+Captured 2520 packets, buffer size: 100
+Captured 2530 packets, buffer size: 100
+Captured 2540 packets, buffer size: 100
+Captured 2550 packets, buffer size: 100
+Captured 2560 packets, buffer size: 100
+Captured 2570 packets, buffer size: 100
+Captured 2580 packets, buffer size: 100
+Captured 2590 packets, buffer size: 100
+Captured 2600 packets, buffer size: 100
+Captured 2610 packets, buffer size: 100
+Captured 2620 packets, buffer size: 100
+Captured 2630 packets, buffer size: 100
+Captured 2640 packets, buffer size: 100
+Captured 2650 packets, buffer size: 100
+Captured 2660 packets, buffer size: 100
+Captured 2670 packets, buffer size: 100
+Captured 2680 packets, buffer size: 100
+Captured 2690 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2700 packets, buffer size: 100
+Captured 2710 packets, buffer size: 100
+Captured 2720 packets, buffer size: 100
+Captured 2730 packets, buffer size: 100
+Captured 2740 packets, buffer size: 100
+Captured 2750 packets, buffer size: 100
+Captured 2760 packets, buffer size: 100
+Captured 2770 packets, buffer size: 100
+Captured 2780 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2778, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2790 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 2800 packets, buffer size: 100
+Captured 2810 packets, buffer size: 100
+Captured 2820 packets, buffer size: 100
+Captured 2830 packets, buffer size: 100
+Captured 2840 packets, buffer size: 100
+Captured 2850 packets, buffer size: 100
+Captured 2860 packets, buffer size: 100
+Captured 2870 packets, buffer size: 100
+Captured 2880 packets, buffer size: 100
+Captured 2890 packets, buffer size: 100
+Captured 2900 packets, buffer size: 100
+Captured 2910 packets, buffer size: 100
+Captured 2920 packets, buffer size: 100
+Captured 2930 packets, buffer size: 100
+Captured 2940 packets, buffer size: 100
+Captured 2950 packets, buffer size: 100
+Captured 2960 packets, buffer size: 100
+Captured 2970 packets, buffer size: 100
+Captured 2980 packets, buffer size: 100
+Captured 2990 packets, buffer size: 100
+Captured 3000 packets, buffer size: 100
+Captured 3010 packets, buffer size: 100
+Captured 3020 packets, buffer size: 100
+Captured 3030 packets, buffer size: 100
+Captured 3040 packets, buffer size: 100
+Captured 3050 packets, buffer size: 100
+Captured 3060 packets, buffer size: 100
+Captured 3070 packets, buffer size: 100
+Captured 3080 packets, buffer size: 100
+Captured 3090 packets, buffer size: 100
+Captured 3100 packets, buffer size: 100
+Captured 3110 packets, buffer size: 100
+Captured 3120 packets, buffer size: 100
+Captured 3130 packets, buffer size: 100
+Captured 3140 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3144, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 3150 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 3160 packets, buffer size: 100
+Captured 3170 packets, buffer size: 100
+Captured 3180 packets, buffer size: 100
+Captured 3190 packets, buffer size: 100
+Captured 3200 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 3210 packets, buffer size: 100
+Captured 3220 packets, buffer size: 100
+Captured 3230 packets, buffer size: 100
+Captured 3240 packets, buffer size: 100
+Captured 3250 packets, buffer size: 100
+Captured 3260 packets, buffer size: 100
+Captured 3270 packets, buffer size: 100
+Captured 3280 packets, buffer size: 100
+Captured 3290 packets, buffer size: 100
+Captured 3300 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 3308, Flows created: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 11:41:18.461969 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3743682374:3743682545, ack 3296354949, win 2119, options [nop,n
+Line 5: 2025-10-07 11:41:18.462418 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 171:518, ack 1, win 2119, options [nop,nop,TS val 3352587210 ec
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 332, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 340 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5426
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 636, 'suspicious': 0, 'malicious': 0}
+Captured 640 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5433
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 987, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 990 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5435
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Captured 1070 packets, buffer size: 100
+Captured 1080 packets, buffer size: 100
+Captured 1090 packets, buffer size: 100
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1260 packets, buffer size: 100
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1316, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1320 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5435
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Captured 1410 packets, buffer size: 100
+Captured 1420 packets, buffer size: 100
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1647, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1650 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5441
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1710 packets, buffer size: 100
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Captured 1740 packets, buffer size: 100
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Captured 1810 packets, buffer size: 100
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1951, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1960 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Captured 2040 packets, buffer size: 100
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+Captured 2110 packets, buffer size: 100
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+Captured 2140 packets, buffer size: 100
+Captured 2150 packets, buffer size: 100
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Captured 2260 packets, buffer size: 100
+Captured 2270 packets, buffer size: 100
+Captured 2280 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2278, 'suspicious': 2, 'malicious': 0}
+Captured 2290 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 2300 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5436
+Captured 2310 packets, buffer size: 100
+Captured 2320 packets, buffer size: 100
+Captured 2330 packets, buffer size: 100
+Captured 2340 packets, buffer size: 100
+Captured 2350 packets, buffer size: 100
+Captured 2360 packets, buffer size: 100
+Captured 2370 packets, buffer size: 100
+Captured 2380 packets, buffer size: 100
+Captured 2390 packets, buffer size: 100
+Captured 2400 packets, buffer size: 100
+Captured 2410 packets, buffer size: 100
+Captured 2420 packets, buffer size: 100
+Captured 2430 packets, buffer size: 100
+Captured 2440 packets, buffer size: 100
+Captured 2450 packets, buffer size: 100
+Captured 2460 packets, buffer size: 100
+Captured 2470 packets, buffer size: 100
+Captured 2480 packets, buffer size: 100
+Captured 2490 packets, buffer size: 100
+Captured 2500 packets, buffer size: 100
+Captured 2510 packets, buffer size: 100
+Captured 2520 packets, buffer size: 100
+Captured 2530 packets, buffer size: 100
+Captured 2540 packets, buffer size: 100
+Captured 2550 packets, buffer size: 100
+Captured 2560 packets, buffer size: 100
+Captured 2570 packets, buffer size: 100
+Captured 2580 packets, buffer size: 100
+Captured 2590 packets, buffer size: 100
+Captured 2600 packets, buffer size: 100
+Captured 2610 packets, buffer size: 100
+Captured 2620 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2620, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2630 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 2640 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2650 packets, buffer size: 100
+Captured 2660 packets, buffer size: 100
+Captured 2670 packets, buffer size: 100
+Captured 2680 packets, buffer size: 100
+Captured 2690 packets, buffer size: 100
+Captured 2700 packets, buffer size: 100
+Captured 2710 packets, buffer size: 100
+Captured 2720 packets, buffer size: 100
+Captured 2730 packets, buffer size: 100
+Captured 2740 packets, buffer size: 100
+Captured 2750 packets, buffer size: 100
+Captured 2760 packets, buffer size: 100
+Captured 2770 packets, buffer size: 100
+Captured 2780 packets, buffer size: 100
+Captured 2790 packets, buffer size: 100
+Captured 2800 packets, buffer size: 100
+Captured 2810 packets, buffer size: 100
+Captured 2820 packets, buffer size: 100
+Captured 2830 packets, buffer size: 100
+Captured 2840 packets, buffer size: 100
+Captured 2850 packets, buffer size: 100
+Captured 2860 packets, buffer size: 100
+Captured 2870 packets, buffer size: 100
+Captured 2880 packets, buffer size: 100
+Captured 2890 packets, buffer size: 100
+Captured 2900 packets, buffer size: 100
+Captured 2910 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2911, 'suspicious': 3, 'malicious': 0}
+Captured 2920 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 2930 packets, buffer size: 100
+Captured 2940 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5440
+Captured 2950 packets, buffer size: 100
+Captured 2960 packets, buffer size: 100
+Captured 2970 packets, buffer size: 100
+Captured 2980 packets, buffer size: 100
+Captured 2990 packets, buffer size: 100
+Captured 3000 packets, buffer size: 100
+Captured 3010 packets, buffer size: 100
+Captured 3020 packets, buffer size: 100
+Captured 3030 packets, buffer size: 100
+Captured 3040 packets, buffer size: 100
+Captured 3050 packets, buffer size: 100
+Captured 3060 packets, buffer size: 100
+Captured 3070 packets, buffer size: 100
+Captured 3080 packets, buffer size: 100
+Live monitoring stopped successfully
+Captured 3090 packets, buffer size: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Captured 3100 packets, buffer size: 100
+Live monitoring stopped. Total packets captured: 3102, Flows created: 100
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture started on interface ens18 for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture thread started.
+Step completed: packet_capture (40%)
+Executing: timeout 60 sudo tcpdump -i ens18 -U -n -tttt 'icmp and (src host 192.168.1.1 or dst host 192.168.1.1)' 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 reachability: No
+Target 192.168.1.1 is not reachable. Aborting attack.
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing attack command: timeout 45 sudo hping3 -I --flood --rand-source 192.168.1.1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+ICMPFlood attack triggered on 192.168.1.1
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 85807
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_flow_status/ HTTP/1.1" 200 164
+Capture already running
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+No data received for 30 seconds
+Capture file is empty or not created
+Capture cleanup complete. Total flows in buffer: 0
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"GET / HTTP/1.1" 200 85817
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 11:44:34.064341 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3746089761:3746090108, ack 3297120598, win 2119, options [nop,n
+Line 5: 2025-10-07 11:44:34.066233 IP 172.237.72.43.443 > 192.168.2.170.39654: Flags [.], ack 4294967125, win 771, options [nop,nop,TS val 955224183 ecr 33527
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 343, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 350 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5440
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 702, 'suspicious': 1, 'malicious': 0}
+Captured 710 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5426
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1030, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1040 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Captured 1070 packets, buffer size: 100
+Captured 1080 packets, buffer size: 100
+Captured 1090 packets, buffer size: 100
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+Captured 1260 packets, buffer size: 100
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Captured 1320 packets, buffer size: 100
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1376, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1380 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5441
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Captured 1410 packets, buffer size: 100
+Captured 1420 packets, buffer size: 100
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Captured 1650 packets, buffer size: 100
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+Captured 1710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1715, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Captured 1740 packets, buffer size: 100
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Loading ML model for automation...
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Captured 1810 packets, buffer size: 100
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Captured 1960 packets, buffer size: 100
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2028, 'suspicious': 2, 'malicious': 0}
+Captured 2040 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5409
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+Captured 2110 packets, buffer size: 100
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+Model loaded successfully!
+Captured 2140 packets, buffer size: 100
+Step completed: ml_loading (60%)
+Captured 2150 packets, buffer size: 100
+ML model auto-loaded successfully.
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Captured 2260 packets, buffer size: 100
+Captured 2270 packets, buffer size: 100
+Captured 2280 packets, buffer size: 100
+Captured 2290 packets, buffer size: 100
+Captured 2300 packets, buffer size: 100
+Captured 2310 packets, buffer size: 100
+Captured 2320 packets, buffer size: 100
+Captured 2330 packets, buffer size: 100
+Captured 2340 packets, buffer size: 100
+Captured 2350 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Captured 2360 packets, buffer size: 100
+Captured 2370 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2375, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2380 packets, buffer size: 100
+Captured 2390 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5394
+Captured 2400 packets, buffer size: 100
+Captured 2410 packets, buffer size: 100
+Captured 2420 packets, buffer size: 100
+Captured 2430 packets, buffer size: 100
+Captured 2440 packets, buffer size: 100
+Captured 2450 packets, buffer size: 100
+Captured 2460 packets, buffer size: 100
+Captured 2470 packets, buffer size: 100
+Captured 2480 packets, buffer size: 100
+Captured 2490 packets, buffer size: 100
+Captured 2500 packets, buffer size: 100
+Captured 2510 packets, buffer size: 100
+Captured 2520 packets, buffer size: 100
+Captured 2530 packets, buffer size: 100
+Captured 2540 packets, buffer size: 100
+Captured 2550 packets, buffer size: 100
+Captured 2560 packets, buffer size: 100
+Captured 2570 packets, buffer size: 100
+Captured 2580 packets, buffer size: 100
+Captured 2590 packets, buffer size: 100
+Captured 2600 packets, buffer size: 100
+Captured 2610 packets, buffer size: 100
+Captured 2620 packets, buffer size: 100
+Captured 2630 packets, buffer size: 100
+Captured 2640 packets, buffer size: 100
+Captured 2650 packets, buffer size: 100
+Captured 2660 packets, buffer size: 100
+Captured 2670 packets, buffer size: 100
+Captured 2680 packets, buffer size: 100
+Captured 2690 packets, buffer size: 100
+Captured 2700 packets, buffer size: 100
+Captured 2710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2708, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2720 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5428
+Captured 2730 packets, buffer size: 100
+Captured 2740 packets, buffer size: 100
+Captured 2750 packets, buffer size: 100
+Captured 2760 packets, buffer size: 100
+Captured 2770 packets, buffer size: 100
+Captured 2780 packets, buffer size: 100
+Captured 2790 packets, buffer size: 100
+Captured 2800 packets, buffer size: 100
+Captured 2810 packets, buffer size: 100
+Captured 2820 packets, buffer size: 100
+Captured 2830 packets, buffer size: 100
+Captured 2840 packets, buffer size: 100
+Captured 2850 packets, buffer size: 100
+Captured 2860 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Captured 2870 packets, buffer size: 100
+Captured 2880 packets, buffer size: 100
+Captured 2890 packets, buffer size: 100
+Captured 2900 packets, buffer size: 100
+Captured 2910 packets, buffer size: 100
+Captured 2920 packets, buffer size: 100
+Captured 2930 packets, buffer size: 100
+Captured 2940 packets, buffer size: 100
+Captured 2950 packets, buffer size: 100
+Captured 2960 packets, buffer size: 100
+Captured 2970 packets, buffer size: 100
+Error analyzing captured data: No data could be read!
+Failed to analyze captured data.
+Captured 2980 packets, buffer size: 100
+Captured 2990 packets, buffer size: 100
+Captured 3000 packets, buffer size: 100
+Captured 3010 packets, buffer size: 100
+Captured 3020 packets, buffer size: 100
+Captured 3030 packets, buffer size: 100
+Captured 3040 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3038, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 3050 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5426
+Captured 3060 packets, buffer size: 100
+Captured 3070 packets, buffer size: 100
+Captured 3080 packets, buffer size: 100
+Captured 3090 packets, buffer size: 100
+Captured 3100 packets, buffer size: 100
+Captured 3110 packets, buffer size: 100
+Captured 3120 packets, buffer size: 100
+Captured 3130 packets, buffer size: 100
+Captured 3140 packets, buffer size: 100
+Captured 3150 packets, buffer size: 100
+Captured 3160 packets, buffer size: 100
+Captured 3170 packets, buffer size: 100
+Captured 3180 packets, buffer size: 100
+Captured 3190 packets, buffer size: 100
+Captured 3200 packets, buffer size: 100
+Captured 3210 packets, buffer size: 100
+Captured 3220 packets, buffer size: 100
+Captured 3230 packets, buffer size: 100
+Captured 3240 packets, buffer size: 100
+Captured 3250 packets, buffer size: 100
+Captured 3260 packets, buffer size: 100
+Captured 3270 packets, buffer size: 100
+Captured 3280 packets, buffer size: 100
+Captured 3290 packets, buffer size: 100
+Captured 3300 packets, buffer size: 100
+Captured 3310 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 3320 packets, buffer size: 100
+Captured 3330 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3328, 'suspicious': 3, 'malicious': 0}
+Captured 3340 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 3350 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5413
+Captured 3360 packets, buffer size: 100
+Captured 3370 packets, buffer size: 100
+Captured 3380 packets, buffer size: 100
+Captured 3390 packets, buffer size: 100
+Captured 3400 packets, buffer size: 100
+Captured 3410 packets, buffer size: 100
+Captured 3420 packets, buffer size: 100
+Captured 3430 packets, buffer size: 100
+Captured 3440 packets, buffer size: 100
+Captured 3450 packets, buffer size: 100
+Captured 3460 packets, buffer size: 100
+Captured 3470 packets, buffer size: 100
+Captured 3480 packets, buffer size: 100
+Captured 3490 packets, buffer size: 100
+Captured 3500 packets, buffer size: 100
+Captured 3510 packets, buffer size: 100
+Captured 3520 packets, buffer size: 100
+Captured 3530 packets, buffer size: 100
+Captured 3540 packets, buffer size: 100
+Captured 3550 packets, buffer size: 100
+Captured 3560 packets, buffer size: 100
+Captured 3570 packets, buffer size: 100
+Captured 3580 packets, buffer size: 100
+Captured 3590 packets, buffer size: 100
+Captured 3600 packets, buffer size: 100
+Captured 3610 packets, buffer size: 100
+Captured 3620 packets, buffer size: 100
+Captured 3630 packets, buffer size: 100
+Captured 3640 packets, buffer size: 100
+Captured 3650 packets, buffer size: 100
+Captured 3660 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3657, 'suspicious': 3, 'malicious': 0}
+Captured 3670 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5436
+Captured 3680 packets, buffer size: 100
+Captured 3690 packets, buffer size: 100
+Captured 3700 packets, buffer size: 100
+Captured 3710 packets, buffer size: 100
+Captured 3720 packets, buffer size: 100
+Captured 3730 packets, buffer size: 100
+Captured 3740 packets, buffer size: 100
+Captured 3750 packets, buffer size: 100
+Captured 3760 packets, buffer size: 100
+Captured 3770 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 3780 packets, buffer size: 100
+Captured 3790 packets, buffer size: 100
+Captured 3800 packets, buffer size: 100
+Captured 3810 packets, buffer size: 100
+Captured 3820 packets, buffer size: 100
+Captured 3830 packets, buffer size: 100
+Captured 3840 packets, buffer size: 100
+Captured 3850 packets, buffer size: 100
+Captured 3860 packets, buffer size: 100
+Captured 3870 packets, buffer size: 100
+Captured 3880 packets, buffer size: 100
+Captured 3890 packets, buffer size: 100
+Captured 3900 packets, buffer size: 100
+Captured 3910 packets, buffer size: 100
+Captured 3920 packets, buffer size: 100
+Captured 3930 packets, buffer size: 100
+Captured 3940 packets, buffer size: 100
+Captured 3950 packets, buffer size: 100
+Captured 3960 packets, buffer size: 100
+Captured 3970 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3973, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 3980 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 3990 packets, buffer size: 100
+Captured 4000 packets, buffer size: 100
+Captured 4010 packets, buffer size: 100
+Captured 4020 packets, buffer size: 100
+Captured 4030 packets, buffer size: 100
+Captured 4040 packets, buffer size: 100
+Captured 4050 packets, buffer size: 100
+Captured 4060 packets, buffer size: 100
+Captured 4070 packets, buffer size: 100
+Captured 4080 packets, buffer size: 100
+Captured 4090 packets, buffer size: 100
+Captured 4100 packets, buffer size: 100
+Captured 4110 packets, buffer size: 100
+Captured 4120 packets, buffer size: 100
+Captured 4130 packets, buffer size: 100
+Captured 4140 packets, buffer size: 100
+Captured 4150 packets, buffer size: 100
+Captured 4160 packets, buffer size: 100
+Captured 4170 packets, buffer size: 100
+Captured 4180 packets, buffer size: 100
+Captured 4190 packets, buffer size: 100
+Captured 4200 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 4210 packets, buffer size: 100
+Captured 4220 packets, buffer size: 100
+Captured 4230 packets, buffer size: 100
+Captured 4240 packets, buffer size: 100
+Captured 4250 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 4255, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 4260 packets, buffer size: 100
+Captured 4270 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 4280 packets, buffer size: 100
+Captured 4290 packets, buffer size: 100
+Captured 4300 packets, buffer size: 100
+Captured 4310 packets, buffer size: 100
+Captured 4320 packets, buffer size: 100
+Captured 4330 packets, buffer size: 100
+Captured 4340 packets, buffer size: 100
+Captured 4350 packets, buffer size: 100
+Captured 4360 packets, buffer size: 100
+Captured 4370 packets, buffer size: 100
+Captured 4380 packets, buffer size: 100
+Captured 4390 packets, buffer size: 100
+Captured 4400 packets, buffer size: 100
+Captured 4410 packets, buffer size: 100
+Captured 4420 packets, buffer size: 100
+Captured 4430 packets, buffer size: 100
+Captured 4440 packets, buffer size: 100
+Captured 4450 packets, buffer size: 100
+Captured 4460 packets, buffer size: 100
+Captured 4470 packets, buffer size: 100
+Captured 4480 packets, buffer size: 100
+Captured 4490 packets, buffer size: 100
+Captured 4500 packets, buffer size: 100
+Captured 4510 packets, buffer size: 100
+Captured 4520 packets, buffer size: 100
+Captured 4530 packets, buffer size: 100
+Captured 4540 packets, buffer size: 100
+Captured 4550 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 4553, 'suspicious': 3, 'malicious': 0}
+Captured 4560 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 4570 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5436
+Captured 4580 packets, buffer size: 100
+Captured 4590 packets, buffer size: 100
+Captured 4600 packets, buffer size: 100
+Captured 4610 packets, buffer size: 100
+Captured 4620 packets, buffer size: 100
+Captured 4630 packets, buffer size: 100
+Captured 4640 packets, buffer size: 100
+Captured 4650 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 4660 packets, buffer size: 100
+Captured 4670 packets, buffer size: 100
+Captured 4680 packets, buffer size: 100
+Captured 4690 packets, buffer size: 100
+Captured 4700 packets, buffer size: 100
+Captured 4710 packets, buffer size: 100
+Captured 4720 packets, buffer size: 100
+Captured 4730 packets, buffer size: 100
+Captured 4740 packets, buffer size: 100
+Captured 4750 packets, buffer size: 100
+Captured 4760 packets, buffer size: 100
+Captured 4770 packets, buffer size: 100
+Captured 4780 packets, buffer size: 100
+Captured 4790 packets, buffer size: 100
+Captured 4800 packets, buffer size: 100
+Captured 4810 packets, buffer size: 100
+Captured 4820 packets, buffer size: 100
+Captured 4830 packets, buffer size: 100
+Captured 4840 packets, buffer size: 100
+Captured 4850 packets, buffer size: 100
+Captured 4860 packets, buffer size: 100
+Captured 4870 packets, buffer size: 100
+Captured 4880 packets, buffer size: 100
+Captured 4890 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 4890, 'suspicious': 3, 'malicious': 0}
+Captured 4900 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5427
+Captured 4910 packets, buffer size: 100
+Captured 4920 packets, buffer size: 100
+Captured 4930 packets, buffer size: 100
+Captured 4940 packets, buffer size: 100
+Captured 4950 packets, buffer size: 100
+Captured 4960 packets, buffer size: 100
+Captured 4970 packets, buffer size: 100
+Captured 4980 packets, buffer size: 100
+Captured 4990 packets, buffer size: 100
+Captured 5000 packets, buffer size: 100
+Captured 5010 packets, buffer size: 100
+Captured 5020 packets, buffer size: 100
+Captured 5030 packets, buffer size: 100
+Captured 5040 packets, buffer size: 100
+Captured 5050 packets, buffer size: 100
+Captured 5060 packets, buffer size: 100
+Captured 5070 packets, buffer size: 100
+Captured 5080 packets, buffer size: 100
+Captured 5090 packets, buffer size: 100
+Captured 5100 packets, buffer size: 100
+Captured 5110 packets, buffer size: 100
+Captured 5120 packets, buffer size: 100
+Captured 5130 packets, buffer size: 100
+Captured 5140 packets, buffer size: 100
+Captured 5150 packets, buffer size: 100
+Captured 5160 packets, buffer size: 100
+Captured 5170 packets, buffer size: 100
+Captured 5180 packets, buffer size: 100
+Captured 5190 packets, buffer size: 100
+Captured 5200 packets, buffer size: 100
+Captured 5210 packets, buffer size: 100
+Captured 5220 packets, buffer size: 100
+Captured 5230 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 5232, 'suspicious': 5, 'malicious': 0}
+Captured 5240 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 5250 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 5260 packets, buffer size: 100
+Captured 5270 packets, buffer size: 100
+Captured 5280 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 5283, Flows created: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring cleanup complete
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture started on interface ens18 for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture thread started.
+Step completed: packet_capture (40%)
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing: timeout 60 sudo tcpdump -i ens18 -U -n -tttt 'icmp and (src host 192.168.1.1 or dst host 192.168.1.1)' 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 reachability: No
+Target 192.168.1.1 is not reachable. Aborting attack.
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing attack command: timeout 45 sudo hping3 -I --flood --rand-source 192.168.1.1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+ICMPFlood attack triggered on 192.168.1.1
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 164
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Capture already running
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+No data received for 30 seconds
+Capture file is empty or not created
+Capture cleanup complete. Total flows in buffer: 0
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 11:58:16.718490 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3754354372:3754354719, ack 3300118036, win 2119, options [nop,n
+Line 5: 2025-10-07 11:58:16.721896 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 347:518, ack 1, win 2119, options [nop,nop,TS val 3353605469 ec
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 318, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 613, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 620 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5447
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 927, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5440
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 1000, Flows created: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Error analyzing captured data: No data could be read!
+Failed to analyze captured data.
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture started on interface ens18 for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture thread started.
+Step completed: packet_capture (40%)
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing: timeout 60 sudo tcpdump -i ens18 -U -n -tttt host 192.168.1.1 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 reachability: No
+Target 192.168.1.1 is not reachable. Aborting attack.
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing attack command: timeout 45 sudo hping3 -I --flood --rand-source 192.168.1.1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+ICMPFlood attack triggered on 192.168.1.1
+Step completed: attack_simulation (20%)
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 164
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Capture already running
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+No data received for 30 seconds
+Capture file is empty or not created
+Capture cleanup complete. Total flows in buffer: 0
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 13:29:37.659453 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3755469994:3755470341, ack 3300516324, win 2119, options [nop,n
+Line 5: 2025-10-07 13:29:37.754787 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 347:742, ack 1, win 2119, options [nop,nop,TS val 3359086502 ec
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Flows buffer size: 73, Stats: {'benign': 73, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5397
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 145, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 150 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5405
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 218, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5383
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 291, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 300 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5410
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 390 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 393, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5405
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 463, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Loading ML model for automation...
+Flows buffer size: 100, Stats: {'benign': 538, 'suspicious': 1, 'malicious': 0}
+Captured 540 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5410
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Captured 630 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 637, 'suspicious': 2, 'malicious': 0}
+Captured 640 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Model loaded successfully!
+Captured 690 packets, buffer size: 100
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 710, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 720 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5397
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 809, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5397
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 930, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Error analyzing captured data: No data could be read!
+"GET /get_live_flows/ HTTP/1.1" 200 5390
+Failed to analyze captured data.
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1004, 'suspicious': 4, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1010 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5414
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Captured 1070 packets, buffer size: 100
+Captured 1080 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1077, 'suspicious': 4, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5411
+Captured 1090 packets, buffer size: 100
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1144, 'suspicious': 4, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1150 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5405
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Flows buffer size: 100, Stats: {'benign': 1228, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5401
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+Captured 1260 packets, buffer size: 100
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1311, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1320 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5398
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1397, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1410 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5405
+Captured 1420 packets, buffer size: 100
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1475, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5398
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1562, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5408
+Captured 1570 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1640, 'suspicious': 5, 'malicious': 0}
+Captured 1650 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5392
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 1710 packets, buffer size: 100
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1730, 'suspicious': 6, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5399
+Captured 1740 packets, buffer size: 100
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 1803, Flows created: 100
+Live monitoring cleanup complete
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture started on interface ens18 for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture thread started.
+Step completed: packet_capture (40%)
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing: timeout 60 sudo tcpdump -i ens18 -U -n -tttt host 192.168.1.1 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 reachability: No
+Target 192.168.1.1 is not reachable. Aborting attack.
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing attack command: timeout 45 sudo hping3 -I --flood --rand-source 192.168.1.1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+ICMPFlood attack triggered on 192.168.1.1
+Step completed: attack_simulation (20%)
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 85807
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_flow_status/ HTTP/1.1" 200 164
+Capture already running
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+No data received for 30 seconds
+Capture file is empty or not created
+Capture cleanup complete. Total flows in buffer: 0
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+Error analyzing captured data: No data could be read!
+Failed to analyze captured data.
+"GET / HTTP/1.1" 200 85817
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 13:52:50.521368 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3755978188:3755978535, ack 3300685536, win 2119, options [nop,n
+Line 5: 2025-10-07 13:52:50.591563 IP 172.237.72.43.443 > 192.168.2.170.39654: Flags [.], ack 347, win 1362, options [nop,nop,TS val 962921142 ecr 3360479269]
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Flows buffer size: 73, Stats: {'benign': 73, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 80 packets, buffer size: 80
+"GET /get_live_flows/ HTTP/1.1" 200 5395
+Captured 90 packets, buffer size: 90
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 147, 'suspicious': 0, 'malicious': 0}
+Captured 150 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5419
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 224, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5410
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 299, 'suspicious': 1, 'malicious': 0}
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Returning 20 flows to frontend
+Captured 310 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 383, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 390 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 468, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5404
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 540 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 541, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5401
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 615, 'suspicious': 3, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 620 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5419
+Captured 630 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 711, 'suspicious': 4, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5406
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 733, Flows created: 100
+Live monitoring cleanup complete
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+C:\Users\nakam\Documents\zero-touch-5g-sec-ai\backend\app\views.py changed, reloading.
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85807
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 14:09:03.612960 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3761893913:3761894084, ack 3303058103, win 2119, options [nop,n
+Line 5: 2025-10-07 14:09:03.613372 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 171:518, ack 1, win 2119, options [nop,nop,TS val 3361452361 ec
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 380, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 390 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5431
+Captured 400 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Captured 720 packets, buffer size: 100
+Captured 730 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 731, 'suspicious': 2, 'malicious': 0}
+Captured 740 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5433
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1040, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5427
+Captured 1070 packets, buffer size: 100
+Captured 1080 packets, buffer size: 100
+Captured 1090 packets, buffer size: 100
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Captured 1180 packets, buffer size: 100
+Capture already running
+Failed to initialize packet capture.
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+"POST /start_attack/ HTTP/1.1" 302 0
+Captured 1210 packets, buffer size: 100
+"GET / HTTP/1.1" 200 85817
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+"GET /get_flow_status/ HTTP/1.1" 200 71
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 1260 packets, buffer size: 100
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Captured 1320 packets, buffer size: 100
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Captured 1410 packets, buffer size: 100
+Captured 1420 packets, buffer size: 100
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Captured 1650 packets, buffer size: 100
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+Captured 1710 packets, buffer size: 100
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Captured 1740 packets, buffer size: 100
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Captured 1810 packets, buffer size: 100
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Captured 1960 packets, buffer size: 100
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Captured 2040 packets, buffer size: 100
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+Captured 2110 packets, buffer size: 100
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+Captured 2140 packets, buffer size: 100
+Captured 2150 packets, buffer size: 100
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Captured 2260 packets, buffer size: 100
+Captured 2270 packets, buffer size: 100
+Captured 2280 packets, buffer size: 100
+Captured 2290 packets, buffer size: 100
+Captured 2300 packets, buffer size: 100
+Captured 2310 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 2320 packets, buffer size: 100
+Captured 2330 packets, buffer size: 100
+Captured 2340 packets, buffer size: 100
+Captured 2350 packets, buffer size: 100
+Captured 2360 packets, buffer size: 100
+Captured 2370 packets, buffer size: 100
+Captured 2380 packets, buffer size: 100
+Captured 2390 packets, buffer size: 100
+Captured 2400 packets, buffer size: 100
+Captured 2410 packets, buffer size: 100
+Captured 2420 packets, buffer size: 100
+Captured 2430 packets, buffer size: 100
+Captured 2440 packets, buffer size: 100
+Captured 2450 packets, buffer size: 100
+Captured 2460 packets, buffer size: 100
+Captured 2470 packets, buffer size: 100
+Captured 2480 packets, buffer size: 100
+Captured 2490 packets, buffer size: 100
+Captured 2500 packets, buffer size: 100
+Captured 2510 packets, buffer size: 100
+Captured 2520 packets, buffer size: 100
+Captured 2530 packets, buffer size: 100
+Captured 2540 packets, buffer size: 100
+Captured 2550 packets, buffer size: 100
+Captured 2560 packets, buffer size: 100
+Captured 2570 packets, buffer size: 100
+Captured 2580 packets, buffer size: 100
+Captured 2590 packets, buffer size: 100
+Captured 2600 packets, buffer size: 100
+Captured 2610 packets, buffer size: 100
+Captured 2620 packets, buffer size: 100
+Captured 2630 packets, buffer size: 100
+Captured 2640 packets, buffer size: 100
+Captured 2650 packets, buffer size: 100
+Captured 2660 packets, buffer size: 100
+Captured 2670 packets, buffer size: 100
+Captured 2680 packets, buffer size: 100
+Captured 2690 packets, buffer size: 100
+Captured 2700 packets, buffer size: 100
+Captured 2710 packets, buffer size: 100
+Captured 2720 packets, buffer size: 100
+Captured 2730 packets, buffer size: 100
+Captured 2740 packets, buffer size: 100
+Captured 2750 packets, buffer size: 100
+Captured 2760 packets, buffer size: 100
+Captured 2770 packets, buffer size: 100
+Captured 2780 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 2790 packets, buffer size: 100
+Captured 2800 packets, buffer size: 100
+Captured 2810 packets, buffer size: 100
+Captured 2820 packets, buffer size: 100
+Captured 2830 packets, buffer size: 100
+Captured 2840 packets, buffer size: 100
+Captured 2850 packets, buffer size: 100
+Captured 2860 packets, buffer size: 100
+Captured 2870 packets, buffer size: 100
+Captured 2880 packets, buffer size: 100
+Captured 2890 packets, buffer size: 100
+Captured 2900 packets, buffer size: 100
+Captured 2910 packets, buffer size: 100
+Captured 2920 packets, buffer size: 100
+Captured 2930 packets, buffer size: 100
+Captured 2940 packets, buffer size: 100
+Captured 2950 packets, buffer size: 100
+Captured 2960 packets, buffer size: 100
+Captured 2970 packets, buffer size: 100
+Captured 2980 packets, buffer size: 100
+Captured 2990 packets, buffer size: 100
+Captured 3000 packets, buffer size: 100
+Captured 3010 packets, buffer size: 100
+Captured 3020 packets, buffer size: 100
+Captured 3030 packets, buffer size: 100
+Captured 3040 packets, buffer size: 100
+Captured 3050 packets, buffer size: 100
+Captured 3060 packets, buffer size: 100
+Captured 3070 packets, buffer size: 100
+Captured 3080 packets, buffer size: 100
+Captured 3090 packets, buffer size: 100
+Captured 3100 packets, buffer size: 100
+Captured 3110 packets, buffer size: 100
+Captured 3120 packets, buffer size: 100
+Captured 3130 packets, buffer size: 100
+Captured 3140 packets, buffer size: 100
+Captured 3150 packets, buffer size: 100
+Captured 3160 packets, buffer size: 100
+Captured 3170 packets, buffer size: 100
+Captured 3180 packets, buffer size: 100
+Captured 3190 packets, buffer size: 100
+Captured 3200 packets, buffer size: 4
+Captured 3210 packets, buffer size: 14
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Captured 3220 packets, buffer size: 24
+Captured 3230 packets, buffer size: 34
+Captured 3240 packets, buffer size: 2
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Captured 3250 packets, buffer size: 12
+Captured 3260 packets, buffer size: 22
+Captured 3270 packets, buffer size: 32
+Captured 3280 packets, buffer size: 42
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 3290 packets, buffer size: 52
+Captured 3300 packets, buffer size: 62
+Captured 3310 packets, buffer size: 72
+Captured 3320 packets, buffer size: 82
+Captured 3330 packets, buffer size: 92
+Captured 3340 packets, buffer size: 100
+Captured 3350 packets, buffer size: 100
+Captured 3360 packets, buffer size: 100
+Captured 3370 packets, buffer size: 100
+Captured 3380 packets, buffer size: 100
+Captured 3390 packets, buffer size: 100
+Captured 3400 packets, buffer size: 100
+Captured 3410 packets, buffer size: 100
+Captured 3420 packets, buffer size: 100
+Captured 3430 packets, buffer size: 100
+Captured 3440 packets, buffer size: 100
+Captured 3450 packets, buffer size: 100
+Captured 3460 packets, buffer size: 100
+Captured 3470 packets, buffer size: 100
+Captured 3480 packets, buffer size: 100
+Captured 3490 packets, buffer size: 100
+Captured 3500 packets, buffer size: 100
+Captured 3510 packets, buffer size: 100
+Captured 3520 packets, buffer size: 100
+Captured 3530 packets, buffer size: 100
+Captured 3540 packets, buffer size: 100
+Captured 3550 packets, buffer size: 100
+Captured 3560 packets, buffer size: 100
+Captured 3570 packets, buffer size: 100
+Captured 3580 packets, buffer size: 100
+"GET / HTTP/1.1" 200 85817
+Captured 3590 packets, buffer size: 100
+Captured 3600 packets, buffer size: 100
+Captured 3610 packets, buffer size: 100
+Captured 3620 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+"GET /get_flow_status/ HTTP/1.1" 200 71
+Captured 3630 packets, buffer size: 100
+Captured 3640 packets, buffer size: 100
+Captured 3650 packets, buffer size: 100
+Captured 3660 packets, buffer size: 100
+Captured 3670 packets, buffer size: 100
+Captured 3680 packets, buffer size: 100
+Captured 3690 packets, buffer size: 100
+Captured 3700 packets, buffer size: 100
+Captured 3710 packets, buffer size: 100
+Captured 3720 packets, buffer size: 100
+Captured 3730 packets, buffer size: 100
+Captured 3740 packets, buffer size: 100
+Captured 3750 packets, buffer size: 100
+Captured 3760 packets, buffer size: 100
+Captured 3770 packets, buffer size: 100
+Captured 3780 packets, buffer size: 100
+Captured 3790 packets, buffer size: 100
+Captured 3800 packets, buffer size: 100
+Captured 3810 packets, buffer size: 100
+Captured 3820 packets, buffer size: 100
+Captured 3830 packets, buffer size: 100
+Captured 3840 packets, buffer size: 100
+Captured 3850 packets, buffer size: 100
+Captured 3860 packets, buffer size: 100
+Captured 3870 packets, buffer size: 100
+Captured 3880 packets, buffer size: 100
+Captured 3890 packets, buffer size: 100
+Captured 3900 packets, buffer size: 100
+Captured 3910 packets, buffer size: 100
+Captured 3920 packets, buffer size: 100
+Captured 3930 packets, buffer size: 100
+Captured 3940 packets, buffer size: 100
+Captured 3950 packets, buffer size: 100
+Captured 3960 packets, buffer size: 100
+Captured 3970 packets, buffer size: 100
+Captured 3980 packets, buffer size: 100
+Captured 3990 packets, buffer size: 100
+Captured 4000 packets, buffer size: 100
+Captured 4010 packets, buffer size: 100
+Captured 4020 packets, buffer size: 100
+Capture already running
+Internal Server Error: /start_live_monitoring/
+Captured 4030 packets, buffer size: 100
+Captured 4040 packets, buffer size: 100
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+Captured 4050 packets, buffer size: 100
+Captured 4060 packets, buffer size: 100
+Captured 4070 packets, buffer size: 100
+Captured 4080 packets, buffer size: 100
+Captured 4090 packets, buffer size: 100
+Captured 4100 packets, buffer size: 100
+Captured 4110 packets, buffer size: 100
+Captured 4120 packets, buffer size: 100
+Captured 4130 packets, buffer size: 100
+Captured 4140 packets, buffer size: 100
+Captured 4150 packets, buffer size: 100
+Captured 4160 packets, buffer size: 100
+Captured 4170 packets, buffer size: 100
+Captured 4180 packets, buffer size: 100
+Captured 4190 packets, buffer size: 100
+Captured 4200 packets, buffer size: 100
+Captured 4210 packets, buffer size: 100
+Captured 4220 packets, buffer size: 100
+Captured 4230 packets, buffer size: 100
+Captured 4240 packets, buffer size: 100
+Captured 4250 packets, buffer size: 100
+Captured 4260 packets, buffer size: 100
+Captured 4270 packets, buffer size: 100
+Captured 4280 packets, buffer size: 100
+Captured 4290 packets, buffer size: 100
+Captured 4300 packets, buffer size: 100
+Captured 4310 packets, buffer size: 100
+Captured 4320 packets, buffer size: 100
+Captured 4330 packets, buffer size: 100
+Captured 4340 packets, buffer size: 100
+Captured 4350 packets, buffer size: 100
+Captured 4360 packets, buffer size: 100
+Captured 4370 packets, buffer size: 100
+Captured 4380 packets, buffer size: 100
+Captured 4390 packets, buffer size: 100
+Captured 4400 packets, buffer size: 100
+Captured 4410 packets, buffer size: 100
+Captured 4420 packets, buffer size: 100
+Captured 4430 packets, buffer size: 100
+Captured 4440 packets, buffer size: 100
+Captured 4450 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 4460 packets, buffer size: 100
+Captured 4470 packets, buffer size: 100
+Captured 4480 packets, buffer size: 100
+Captured 4490 packets, buffer size: 100
+Captured 4500 packets, buffer size: 100
+Captured 4510 packets, buffer size: 100
+Captured 4520 packets, buffer size: 100
+Captured 4530 packets, buffer size: 100
+Captured 4540 packets, buffer size: 100
+Captured 4550 packets, buffer size: 100
+Captured 4560 packets, buffer size: 100
+Captured 4570 packets, buffer size: 100
+Captured 4580 packets, buffer size: 100
+Captured 4590 packets, buffer size: 100
+Captured 4600 packets, buffer size: 100
+Captured 4610 packets, buffer size: 100
+Captured 4620 packets, buffer size: 100
+Captured 4630 packets, buffer size: 100
+Captured 4640 packets, buffer size: 100
+Captured 4650 packets, buffer size: 100
+Captured 4660 packets, buffer size: 100
+Captured 4670 packets, buffer size: 100
+Captured 4680 packets, buffer size: 100
+Captured 4690 packets, buffer size: 100
+Captured 4700 packets, buffer size: 100
+Captured 4710 packets, buffer size: 100
+Captured 4720 packets, buffer size: 100
+Captured 4730 packets, buffer size: 100
+Captured 4740 packets, buffer size: 100
+Captured 4750 packets, buffer size: 100
+Captured 4760 packets, buffer size: 100
+Captured 4770 packets, buffer size: 100
+Captured 4780 packets, buffer size: 100
+Captured 4790 packets, buffer size: 100
+Captured 4800 packets, buffer size: 100
+Captured 4810 packets, buffer size: 100
+Captured 4820 packets, buffer size: 100
+Captured 4830 packets, buffer size: 100
+Captured 4840 packets, buffer size: 100
+Captured 4850 packets, buffer size: 100
+Captured 4860 packets, buffer size: 100
+Captured 4870 packets, buffer size: 100
+Captured 4880 packets, buffer size: 100
+Captured 4890 packets, buffer size: 100
+Captured 4900 packets, buffer size: 100
+Captured 4910 packets, buffer size: 100
+Captured 4920 packets, buffer size: 100
+Captured 4930 packets, buffer size: 100
+Captured 4940 packets, buffer size: 100
+Captured 4950 packets, buffer size: 100
+Captured 4960 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 4970 packets, buffer size: 100
+Captured 4980 packets, buffer size: 100
+Captured 4990 packets, buffer size: 100
+Captured 5000 packets, buffer size: 100
+Captured 5010 packets, buffer size: 100
+Captured 5020 packets, buffer size: 100
+Captured 5030 packets, buffer size: 100
+Captured 5040 packets, buffer size: 100
+Captured 5050 packets, buffer size: 100
+Captured 5060 packets, buffer size: 100
+Captured 5070 packets, buffer size: 100
+Captured 5080 packets, buffer size: 100
+Captured 5090 packets, buffer size: 100
+Captured 5100 packets, buffer size: 100
+Captured 5110 packets, buffer size: 100
+Captured 5120 packets, buffer size: 100
+Captured 5130 packets, buffer size: 100
+Captured 5140 packets, buffer size: 100
+Captured 5150 packets, buffer size: 100
+Captured 5160 packets, buffer size: 100
+Captured 5170 packets, buffer size: 100
+Captured 5180 packets, buffer size: 100
+Captured 5190 packets, buffer size: 100
+Captured 5200 packets, buffer size: 100
+Captured 5210 packets, buffer size: 100
+Captured 5220 packets, buffer size: 100
+Captured 5230 packets, buffer size: 100
+Captured 5240 packets, buffer size: 100
+Captured 5250 packets, buffer size: 100
+Captured 5260 packets, buffer size: 100
+Captured 5270 packets, buffer size: 100
+Captured 5280 packets, buffer size: 100
+Captured 5290 packets, buffer size: 100
+Captured 5300 packets, buffer size: 100
+Captured 5310 packets, buffer size: 100
+Captured 5320 packets, buffer size: 100
+Captured 5330 packets, buffer size: 100
+Captured 5340 packets, buffer size: 100
+Captured 5350 packets, buffer size: 100
+Captured 5360 packets, buffer size: 100
+Captured 5370 packets, buffer size: 100
+Captured 5380 packets, buffer size: 100
+Captured 5390 packets, buffer size: 100
+Captured 5400 packets, buffer size: 100
+Captured 5410 packets, buffer size: 100
+Captured 5420 packets, buffer size: 100
+Captured 5430 packets, buffer size: 100
+Captured 5440 packets, buffer size: 100
+Captured 5450 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 5460 packets, buffer size: 100
+Captured 5470 packets, buffer size: 100
+Captured 5480 packets, buffer size: 100
+Captured 5490 packets, buffer size: 100
+Captured 5500 packets, buffer size: 100
+Captured 5510 packets, buffer size: 100
+Captured 5520 packets, buffer size: 100
+Captured 5530 packets, buffer size: 100
+Captured 5540 packets, buffer size: 100
+Captured 5550 packets, buffer size: 100
+Captured 5560 packets, buffer size: 100
+Captured 5570 packets, buffer size: 100
+Captured 5580 packets, buffer size: 100
+Captured 5590 packets, buffer size: 100
+Captured 5600 packets, buffer size: 100
+Captured 5610 packets, buffer size: 100
+Captured 5620 packets, buffer size: 100
+Captured 5630 packets, buffer size: 100
+Captured 5640 packets, buffer size: 100
+Captured 5650 packets, buffer size: 100
+Captured 5660 packets, buffer size: 100
+Captured 5670 packets, buffer size: 100
+Captured 5680 packets, buffer size: 100
+Captured 5690 packets, buffer size: 100
+Captured 5700 packets, buffer size: 100
+Captured 5710 packets, buffer size: 100
+Captured 5720 packets, buffer size: 100
+Captured 5730 packets, buffer size: 100
+Captured 5740 packets, buffer size: 100
+Captured 5750 packets, buffer size: 100
+Captured 5760 packets, buffer size: 100
+Captured 5770 packets, buffer size: 100
+Captured 5780 packets, buffer size: 100
+Captured 5790 packets, buffer size: 100
+Captured 5800 packets, buffer size: 100
+Captured 5810 packets, buffer size: 100
+Captured 5820 packets, buffer size: 100
+Captured 5830 packets, buffer size: 100
+Captured 5840 packets, buffer size: 100
+Captured 5850 packets, buffer size: 100
+Captured 5860 packets, buffer size: 100
+Captured 5870 packets, buffer size: 100
+Captured 5880 packets, buffer size: 100
+Captured 5890 packets, buffer size: 100
+Captured 5900 packets, buffer size: 100
+Captured 5910 packets, buffer size: 100
+Captured 5920 packets, buffer size: 100
+Captured 5930 packets, buffer size: 100
+Captured 5940 packets, buffer size: 100
+Captured 5950 packets, buffer size: 100
+Captured 5960 packets, buffer size: 100
+Captured 5970 packets, buffer size: 100
+Captured 5980 packets, buffer size: 100
+Captured 5990 packets, buffer size: 100
+Captured 6000 packets, buffer size: 100
+Captured 6010 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 6020 packets, buffer size: 100
+Captured 6030 packets, buffer size: 100
+Captured 6040 packets, buffer size: 100
+Captured 6050 packets, buffer size: 100
+Captured 6060 packets, buffer size: 100
+Captured 6070 packets, buffer size: 100
+Captured 6080 packets, buffer size: 100
+Captured 6090 packets, buffer size: 100
+Captured 6100 packets, buffer size: 100
+Captured 6110 packets, buffer size: 100
+Captured 6120 packets, buffer size: 100
+Captured 6130 packets, buffer size: 100
+Captured 6140 packets, buffer size: 100
+Captured 6150 packets, buffer size: 100
+Captured 6160 packets, buffer size: 100
+Captured 6170 packets, buffer size: 100
+Captured 6180 packets, buffer size: 100
+Captured 6190 packets, buffer size: 100
+Captured 6200 packets, buffer size: 100
+Captured 6210 packets, buffer size: 100
+Captured 6220 packets, buffer size: 100
+Captured 6230 packets, buffer size: 100
+Captured 6240 packets, buffer size: 100
+Captured 6250 packets, buffer size: 100
+Captured 6260 packets, buffer size: 100
+Captured 6270 packets, buffer size: 100
+Captured 6280 packets, buffer size: 100
+Captured 6290 packets, buffer size: 100
+Captured 6300 packets, buffer size: 100
+Captured 6310 packets, buffer size: 100
+Captured 6320 packets, buffer size: 100
+Captured 6330 packets, buffer size: 100
+Captured 6340 packets, buffer size: 100
+Captured 6350 packets, buffer size: 100
+Captured 6360 packets, buffer size: 100
+Captured 6370 packets, buffer size: 100
+Captured 6380 packets, buffer size: 100
+Captured 6390 packets, buffer size: 100
+Captured 6400 packets, buffer size: 100
+Captured 6410 packets, buffer size: 100
+Captured 6420 packets, buffer size: 100
+Captured 6430 packets, buffer size: 100
+Captured 6440 packets, buffer size: 100
+Captured 6450 packets, buffer size: 100
+Captured 6460 packets, buffer size: 100
+Captured 6470 packets, buffer size: 100
+Captured 6480 packets, buffer size: 100
+Captured 6490 packets, buffer size: 100
+Captured 6500 packets, buffer size: 100
+Captured 6510 packets, buffer size: 100
+Captured 6520 packets, buffer size: 100
+Captured 6530 packets, buffer size: 100
+Captured 6540 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 779
+Captured 6550 packets, buffer size: 100
+Captured 6560 packets, buffer size: 100
+Captured 6570 packets, buffer size: 100
+Captured 6580 packets, buffer size: 100
+Captured 6590 packets, buffer size: 100
+Captured 6600 packets, buffer size: 100
+Captured 6610 packets, buffer size: 100
+Captured 6620 packets, buffer size: 100
+Captured 6630 packets, buffer size: 100
+Captured 6640 packets, buffer size: 100
+Captured 6650 packets, buffer size: 100
+Captured 6660 packets, buffer size: 100
+Captured 6670 packets, buffer size: 100
+Captured 6680 packets, buffer size: 100
+Captured 6690 packets, buffer size: 100
+Captured 6700 packets, buffer size: 100
+Watching for file changes with StatReloader
+Using configured interface: ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 72
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 14:11:15.612948 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3764630858:3764631029, ack 3303683379, win 2119, options [nop,n
+Line 5: 2025-10-07 14:11:15.613884 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 171:518, ack 1, win 2119, options [nop,nop,TS val 3361584361 ec
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 348, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5433
+Captured 370 packets, buffer size: 100
+Captured 380 packets, buffer size: 100
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 709, 'suspicious': 1, 'malicious': 0}
+Captured 720 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5419
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1068, 'suspicious': 1, 'malicious': 0}
+Captured 1070 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 1080 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5428
+Captured 1090 packets, buffer size: 100
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+Captured 1260 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Captured 1320 packets, buffer size: 100
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1404, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 1410 packets, buffer size: 100
+Captured 1420 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5420
+Captured 1430 packets, buffer size: 100
+Captured 1440 packets, buffer size: 100
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Captured 1650 packets, buffer size: 100
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+Captured 1710 packets, buffer size: 100
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Captured 1740 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1739, 'suspicious': 1, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1750 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5441
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Captured 1810 packets, buffer size: 100
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Captured 1960 packets, buffer size: 100
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Captured 2040 packets, buffer size: 100
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+Captured 2110 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2114, 'suspicious': 2, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5441
+Captured 2140 packets, buffer size: 100
+Captured 2150 packets, buffer size: 100
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Captured 2260 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2270 packets, buffer size: 100
+Captured 2280 packets, buffer size: 100
+Captured 2290 packets, buffer size: 100
+Captured 2300 packets, buffer size: 100
+Captured 2310 packets, buffer size: 100
+Captured 2320 packets, buffer size: 100
+Captured 2330 packets, buffer size: 100
+Captured 2340 packets, buffer size: 100
+Captured 2350 packets, buffer size: 100
+Captured 2360 packets, buffer size: 100
+Captured 2370 packets, buffer size: 100
+Captured 2380 packets, buffer size: 100
+Captured 2390 packets, buffer size: 100
+Captured 2400 packets, buffer size: 100
+Captured 2410 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2414, 'suspicious': 2, 'malicious': 0}
+Captured 2420 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 2430 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5441
+Captured 2440 packets, buffer size: 100
+Captured 2450 packets, buffer size: 100
+Captured 2460 packets, buffer size: 100
+Captured 2470 packets, buffer size: 100
+Captured 2480 packets, buffer size: 100
+Captured 2490 packets, buffer size: 100
+Captured 2500 packets, buffer size: 100
+Captured 2510 packets, buffer size: 100
+Captured 2520 packets, buffer size: 100
+Captured 2530 packets, buffer size: 100
+Captured 2540 packets, buffer size: 100
+Captured 2550 packets, buffer size: 100
+Captured 2560 packets, buffer size: 100
+Captured 2570 packets, buffer size: 100
+Captured 2580 packets, buffer size: 100
+Captured 2590 packets, buffer size: 100
+Captured 2600 packets, buffer size: 100
+Captured 2610 packets, buffer size: 100
+Captured 2620 packets, buffer size: 100
+Captured 2630 packets, buffer size: 100
+Captured 2640 packets, buffer size: 100
+Captured 2650 packets, buffer size: 100
+Captured 2660 packets, buffer size: 100
+Captured 2670 packets, buffer size: 100
+Captured 2680 packets, buffer size: 100
+Captured 2690 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2700 packets, buffer size: 100
+Captured 2710 packets, buffer size: 100
+Captured 2720 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2718, 'suspicious': 2, 'malicious': 0}
+Captured 2730 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 2740 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 2750 packets, buffer size: 100
+Captured 2760 packets, buffer size: 100
+Captured 2770 packets, buffer size: 100
+Captured 2780 packets, buffer size: 100
+Captured 2790 packets, buffer size: 100
+Captured 2800 packets, buffer size: 100
+Captured 2810 packets, buffer size: 100
+Captured 2820 packets, buffer size: 100
+Captured 2830 packets, buffer size: 100
+Captured 2840 packets, buffer size: 100
+Captured 2850 packets, buffer size: 100
+Captured 2860 packets, buffer size: 100
+Captured 2870 packets, buffer size: 100
+Captured 2880 packets, buffer size: 100
+Captured 2890 packets, buffer size: 100
+Captured 2900 packets, buffer size: 100
+Captured 2910 packets, buffer size: 100
+Captured 2920 packets, buffer size: 100
+Captured 2930 packets, buffer size: 100
+Captured 2940 packets, buffer size: 100
+Captured 2950 packets, buffer size: 100
+Captured 2960 packets, buffer size: 100
+Captured 2970 packets, buffer size: 100
+Captured 2980 packets, buffer size: 100
+Captured 2990 packets, buffer size: 100
+Captured 3000 packets, buffer size: 100
+Captured 3010 packets, buffer size: 100
+Captured 3020 packets, buffer size: 100
+Captured 3030 packets, buffer size: 100
+Captured 3040 packets, buffer size: 100
+Captured 3050 packets, buffer size: 100
+Captured 3060 packets, buffer size: 100
+Captured 3070 packets, buffer size: 100
+Captured 3080 packets, buffer size: 100
+Captured 3090 packets, buffer size: 100
+Captured 3100 packets, buffer size: 100
+Captured 3110 packets, buffer size: 100
+Captured 3120 packets, buffer size: 100
+Captured 3130 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3125, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 3140 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5439
+Captured 3150 packets, buffer size: 100
+Captured 3160 packets, buffer size: 100
+Captured 3170 packets, buffer size: 100
+Captured 3180 packets, buffer size: 100
+Captured 3190 packets, buffer size: 100
+Captured 3200 packets, buffer size: 100
+Captured 3210 packets, buffer size: 100
+Captured 3220 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 3230 packets, buffer size: 100
+Captured 3240 packets, buffer size: 100
+Captured 3250 packets, buffer size: 100
+Captured 3260 packets, buffer size: 100
+Captured 3270 packets, buffer size: 100
+Captured 3280 packets, buffer size: 100
+Captured 3290 packets, buffer size: 100
+Captured 3300 packets, buffer size: 100
+Captured 3310 packets, buffer size: 100
+Captured 3320 packets, buffer size: 100
+Captured 3330 packets, buffer size: 100
+Captured 3340 packets, buffer size: 100
+Captured 3350 packets, buffer size: 100
+Captured 3360 packets, buffer size: 100
+Captured 3370 packets, buffer size: 100
+Captured 3380 packets, buffer size: 100
+Captured 3390 packets, buffer size: 100
+Captured 3400 packets, buffer size: 100
+Captured 3410 packets, buffer size: 100
+Captured 3420 packets, buffer size: 100
+Captured 3430 packets, buffer size: 100
+Captured 3440 packets, buffer size: 100
+Captured 3450 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 3449, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 3460 packets, buffer size: 100
+Captured 3470 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5425
+Captured 3480 packets, buffer size: 100
+Captured 3490 packets, buffer size: 100
+Captured 3500 packets, buffer size: 100
+Captured 3510 packets, buffer size: 100
+Captured 3520 packets, buffer size: 100
+Captured 3530 packets, buffer size: 100
+Captured 3540 packets, buffer size: 100
+Captured 3550 packets, buffer size: 100
+Captured 3560 packets, buffer size: 100
+Captured 3570 packets, buffer size: 100
+Captured 3580 packets, buffer size: 100
+Live monitoring stopped successfully
+Captured 3590 packets, buffer size: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring stopped. Total packets captured: 3591, Flows created: 100
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+Starting live monitoring pre-flight checks...
+tcpdump found at: /usr/bin/tcpdump
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Interface ens18 is available
+Starting live monitor thread on interface ens18
+Starting live monitoring on ens18
+Interface check passed: 2: ens18: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group defa
+Executing: sudo tcpdump -i ens18 -U -n -tttt 2>&1
+Initial output: [sudo] password for ran: 
+[OK] Live monitoring thread started successfully
+"POST /start_live_monitoring/ HTTP/1.1" 200 107
+Flows buffer size: 0, Stats: {'benign': 0, 'suspicious': 0, 'malicious': 0}
+No flows available to return
+"GET /get_live_flows/ HTTP/1.1" 200 157
+Reading tcpdump output...
+Line 2: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Meta line: tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+Line 3: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Meta line: listening on ens18, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+Line 4: 2025-10-07 14:15:57.334340 IP 192.168.2.170.39654 > 172.237.72.43.443: Flags [P.], seq 3767701945:3767702292, ack 3304659516, win 2119, options [nop,n
+Line 5: 2025-10-07 14:15:57.343499 IP 172.237.72.43.443 > 192.168.2.170.39654: Flags [P.], seq 1:140, ack 4294966954, win 771, options [nop,nop,TS val 9643079
+Captured 10 packets, buffer size: 10
+Captured 20 packets, buffer size: 20
+Captured 30 packets, buffer size: 30
+Captured 40 packets, buffer size: 40
+Captured 50 packets, buffer size: 50
+Captured 60 packets, buffer size: 60
+Captured 70 packets, buffer size: 70
+Captured 80 packets, buffer size: 80
+Captured 90 packets, buffer size: 90
+Captured 100 packets, buffer size: 100
+Captured 110 packets, buffer size: 100
+Captured 120 packets, buffer size: 100
+Captured 130 packets, buffer size: 100
+Captured 140 packets, buffer size: 100
+Captured 150 packets, buffer size: 100
+Captured 160 packets, buffer size: 100
+Captured 170 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 180 packets, buffer size: 100
+Captured 190 packets, buffer size: 100
+Captured 200 packets, buffer size: 100
+Captured 210 packets, buffer size: 100
+Captured 220 packets, buffer size: 100
+Captured 230 packets, buffer size: 100
+Captured 240 packets, buffer size: 100
+Captured 250 packets, buffer size: 100
+Captured 260 packets, buffer size: 100
+Captured 270 packets, buffer size: 100
+Captured 280 packets, buffer size: 100
+Captured 290 packets, buffer size: 100
+Captured 300 packets, buffer size: 100
+Captured 310 packets, buffer size: 100
+Captured 320 packets, buffer size: 100
+Captured 330 packets, buffer size: 100
+Captured 340 packets, buffer size: 100
+Captured 350 packets, buffer size: 100
+Captured 360 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 367, 'suspicious': 0, 'malicious': 0}
+Captured 370 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 380 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5414
+Captured 390 packets, buffer size: 100
+Captured 400 packets, buffer size: 100
+Captured 410 packets, buffer size: 100
+Captured 420 packets, buffer size: 100
+Captured 430 packets, buffer size: 100
+Captured 440 packets, buffer size: 100
+Captured 450 packets, buffer size: 100
+Captured 460 packets, buffer size: 100
+Captured 470 packets, buffer size: 100
+Captured 480 packets, buffer size: 100
+Captured 490 packets, buffer size: 100
+Captured 500 packets, buffer size: 100
+Captured 510 packets, buffer size: 100
+Captured 520 packets, buffer size: 100
+Captured 530 packets, buffer size: 100
+Captured 540 packets, buffer size: 100
+Captured 550 packets, buffer size: 100
+Captured 560 packets, buffer size: 100
+Captured 570 packets, buffer size: 100
+Captured 580 packets, buffer size: 100
+Captured 590 packets, buffer size: 100
+Captured 600 packets, buffer size: 100
+Captured 610 packets, buffer size: 100
+Captured 620 packets, buffer size: 100
+Captured 630 packets, buffer size: 100
+Captured 640 packets, buffer size: 100
+Captured 650 packets, buffer size: 100
+Captured 660 packets, buffer size: 100
+Captured 670 packets, buffer size: 100
+Captured 680 packets, buffer size: 100
+Captured 690 packets, buffer size: 100
+Captured 700 packets, buffer size: 100
+Captured 710 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 710, 'suspicious': 0, 'malicious': 0}
+Returning 20 flows to frontend
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 720 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5433
+Captured 730 packets, buffer size: 100
+Captured 740 packets, buffer size: 100
+Captured 750 packets, buffer size: 100
+Captured 760 packets, buffer size: 100
+Captured 770 packets, buffer size: 100
+Captured 780 packets, buffer size: 100
+Captured 790 packets, buffer size: 100
+Captured 800 packets, buffer size: 100
+Captured 810 packets, buffer size: 100
+Captured 820 packets, buffer size: 100
+Captured 830 packets, buffer size: 100
+Captured 840 packets, buffer size: 100
+Captured 850 packets, buffer size: 100
+Captured 860 packets, buffer size: 100
+Captured 870 packets, buffer size: 100
+Captured 880 packets, buffer size: 100
+Captured 890 packets, buffer size: 100
+Captured 900 packets, buffer size: 100
+Captured 910 packets, buffer size: 100
+Captured 920 packets, buffer size: 100
+Captured 930 packets, buffer size: 100
+Captured 940 packets, buffer size: 100
+Captured 950 packets, buffer size: 100
+Captured 960 packets, buffer size: 100
+Captured 970 packets, buffer size: 100
+Captured 980 packets, buffer size: 100
+Captured 990 packets, buffer size: 100
+Captured 1000 packets, buffer size: 100
+Captured 1010 packets, buffer size: 100
+Captured 1020 packets, buffer size: 100
+Captured 1030 packets, buffer size: 100
+Captured 1040 packets, buffer size: 100
+Captured 1050 packets, buffer size: 100
+Captured 1060 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1063, 'suspicious': 1, 'malicious': 0}
+Captured 1070 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 1080 packets, buffer size: 100
+Captured 1090 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5427
+Captured 1100 packets, buffer size: 100
+Captured 1110 packets, buffer size: 100
+Captured 1120 packets, buffer size: 100
+Captured 1130 packets, buffer size: 100
+Captured 1140 packets, buffer size: 100
+Captured 1150 packets, buffer size: 100
+Captured 1160 packets, buffer size: 100
+Captured 1170 packets, buffer size: 100
+Captured 1180 packets, buffer size: 100
+Captured 1190 packets, buffer size: 100
+Captured 1200 packets, buffer size: 100
+Captured 1210 packets, buffer size: 100
+Captured 1220 packets, buffer size: 100
+Captured 1230 packets, buffer size: 100
+Captured 1240 packets, buffer size: 100
+Captured 1250 packets, buffer size: 100
+Captured 1260 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1270 packets, buffer size: 100
+Captured 1280 packets, buffer size: 100
+Captured 1290 packets, buffer size: 100
+Captured 1300 packets, buffer size: 100
+Captured 1310 packets, buffer size: 100
+Captured 1320 packets, buffer size: 100
+Captured 1330 packets, buffer size: 100
+Captured 1340 packets, buffer size: 100
+Captured 1350 packets, buffer size: 100
+Captured 1360 packets, buffer size: 100
+Captured 1370 packets, buffer size: 100
+Captured 1380 packets, buffer size: 100
+Captured 1390 packets, buffer size: 100
+Captured 1400 packets, buffer size: 100
+Captured 1410 packets, buffer size: 100
+Captured 1420 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1421, 'suspicious': 3, 'malicious': 0}
+Captured 1430 packets, buffer size: 100
+Returning 20 flows to frontend
+Captured 1440 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5427
+Captured 1450 packets, buffer size: 100
+Captured 1460 packets, buffer size: 100
+Captured 1470 packets, buffer size: 100
+Captured 1480 packets, buffer size: 100
+Captured 1490 packets, buffer size: 100
+Captured 1500 packets, buffer size: 100
+Captured 1510 packets, buffer size: 100
+Captured 1520 packets, buffer size: 100
+Captured 1530 packets, buffer size: 100
+Captured 1540 packets, buffer size: 100
+Captured 1550 packets, buffer size: 100
+Captured 1560 packets, buffer size: 100
+Captured 1570 packets, buffer size: 100
+Captured 1580 packets, buffer size: 100
+Captured 1590 packets, buffer size: 100
+Captured 1600 packets, buffer size: 100
+Captured 1610 packets, buffer size: 100
+Captured 1620 packets, buffer size: 100
+Captured 1630 packets, buffer size: 100
+Captured 1640 packets, buffer size: 100
+Captured 1650 packets, buffer size: 100
+Captured 1660 packets, buffer size: 100
+Captured 1670 packets, buffer size: 100
+Captured 1680 packets, buffer size: 100
+Captured 1690 packets, buffer size: 100
+Captured 1700 packets, buffer size: 100
+Captured 1710 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 1720 packets, buffer size: 100
+Captured 1730 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 1728, 'suspicious': 3, 'malicious': 0}
+Captured 1740 packets, buffer size: 100
+Returning 20 flows to frontend
+"GET /get_live_flows/ HTTP/1.1" 200 5448
+Captured 1750 packets, buffer size: 100
+Captured 1760 packets, buffer size: 100
+Captured 1770 packets, buffer size: 100
+Captured 1780 packets, buffer size: 100
+Captured 1790 packets, buffer size: 100
+Captured 1800 packets, buffer size: 100
+Captured 1810 packets, buffer size: 100
+Captured 1820 packets, buffer size: 100
+Captured 1830 packets, buffer size: 100
+Captured 1840 packets, buffer size: 100
+Captured 1850 packets, buffer size: 100
+Captured 1860 packets, buffer size: 100
+Captured 1870 packets, buffer size: 100
+Captured 1880 packets, buffer size: 100
+Captured 1890 packets, buffer size: 100
+Captured 1900 packets, buffer size: 100
+Captured 1910 packets, buffer size: 100
+Captured 1920 packets, buffer size: 100
+Captured 1930 packets, buffer size: 100
+Captured 1940 packets, buffer size: 100
+Captured 1950 packets, buffer size: 100
+Captured 1960 packets, buffer size: 100
+Captured 1970 packets, buffer size: 100
+Captured 1980 packets, buffer size: 100
+Captured 1990 packets, buffer size: 100
+Captured 2000 packets, buffer size: 100
+Captured 2010 packets, buffer size: 100
+Captured 2020 packets, buffer size: 100
+Captured 2030 packets, buffer size: 100
+Captured 2040 packets, buffer size: 100
+Captured 2050 packets, buffer size: 100
+Captured 2060 packets, buffer size: 100
+Captured 2070 packets, buffer size: 100
+Captured 2080 packets, buffer size: 100
+Flows buffer size: 100, Stats: {'benign': 2081, 'suspicious': 5, 'malicious': 0}
+Returning 20 flows to frontend
+Captured 2090 packets, buffer size: 100
+Captured 2100 packets, buffer size: 100
+"GET /get_live_flows/ HTTP/1.1" 200 5434
+Captured 2110 packets, buffer size: 100
+Captured 2120 packets, buffer size: 100
+Captured 2130 packets, buffer size: 100
+Captured 2140 packets, buffer size: 100
+Captured 2150 packets, buffer size: 100
+Captured 2160 packets, buffer size: 100
+Captured 2170 packets, buffer size: 100
+Captured 2180 packets, buffer size: 100
+Captured 2190 packets, buffer size: 100
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Captured 2200 packets, buffer size: 100
+Captured 2210 packets, buffer size: 100
+Captured 2220 packets, buffer size: 100
+Captured 2230 packets, buffer size: 100
+Captured 2240 packets, buffer size: 100
+Captured 2250 packets, buffer size: 100
+Live monitoring stopped successfully
+Live monitoring stopped. Total packets captured: 2253, Flows created: 100
+"POST /stop_live_monitoring/ HTTP/1.1" 200 97
+Live monitoring cleanup complete
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"POST /reset_flow_stats/ HTTP/1.1" 200 57
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+"GET /get_automation_status/ HTTP/1.1" 200 383
+Automation started for ICMPFlood on 192.168.1.1
+Starting attack simulation: ICMPFlood on 192.168.1.1
+Generated capture filter for ICMPFlood: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture started on interface ens18 for 60 seconds.
+Starting packet capture with filter: icmp and (src host 192.168.1.1 or dst host 192.168.1.1)
+Packet capture thread started.
+Step completed: packet_capture (40%)
+Executing: timeout 60 sudo tcpdump -i ens18 -U -n -tttt host 192.168.1.1 2>&1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 reachability: No
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Target 192.168.1.1 is not reachable. Aborting attack.
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+Executing attack command: timeout 45 sudo hping3 -I --flood --rand-source 192.168.1.1
+"GET /get_automation_status/ HTTP/1.1" 200 1043
+ICMPFlood attack triggered on 192.168.1.1
+Step completed: attack_simulation (20%)
+"POST /start_attack/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 85807
+"GET /get_flow_status/ HTTP/1.1" 200 164
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Capture already running
+Internal Server Error: /start_live_monitoring/
+"POST /start_live_monitoring/ HTTP/1.1" 500 108
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+No data received for 30 seconds
+Capture file is empty or not created
+Capture cleanup complete. Total flows in buffer: 0
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+"GET /get_automation_status/ HTTP/1.1" 200 1131
+Loading ML model for automation...
+Model loaded successfully!
+Step completed: ml_loading (60%)
+ML model auto-loaded successfully.
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+"GET /get_automation_status/ HTTP/1.1" 200 1219
+Error analyzing captured data: No data could be read!
+Failed to analyze captured data.
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET / HTTP/1.1" 200 85817
+"GET /get_flow_status/ HTTP/1.1" 200 165
+"GET /get_automation_status/ HTTP/1.1" 200 1235
+"GET /get_automation_status/ HTTP/1.1" 200 1235
