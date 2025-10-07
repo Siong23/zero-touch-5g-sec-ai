@@ -1391,7 +1391,6 @@
                 this.lastResultsTimestamp = null;
                 this.resultsDisplayed = false;
                 
-                // Initialize when DOM is ready
                 if (document.readyState === 'loading') {
                     document.addEventListener('DOMContentLoaded', () => this.init());
                 } else {
@@ -1406,12 +1405,11 @@
             }
 
             createStatusElements() {
-                // Create automation status container if it doesn't exist
                 const statusContainer = document.getElementById('automation-status');
                 if (statusContainer) {
                     statusContainer.innerHTML = `
                         <div class="automation-header">
-                            <h3><i class="fas fa-cog fa-spin" id="automation-icon"></i> Automation Status</h3>
+                            <h3><i class="fas fa-cog" id="automation-icon"></i> Automation Status</h3>
                             <div class="automation-controls">
                                 <button id="toggle-polling" class="control-btn" style="color: white;">
                                     <i class="fas fa-pause"></i> Pause Updates
@@ -1432,35 +1430,20 @@
                                 </div>
                                 <div class="status-item">
                                     <strong>Current Step:</strong> <span id="current-step-text">Ready</span>
-                                </div
+                                </div>
                             </div>
                         </div>
                     `;
-
-                    // Insert after the attack simulation section
-                    const attackPanelContent = document.querySelector('.panel-content');
-                    const infoNote = attackPanelContent.querySelector('.info-note');
-                    if (infoNote) {
-                        infoNote.insertAdjacentElement('afterend', statusContainer);
-                    }
                 }
-
-                // Add CSS styles
                 this.addStyles();
             }
 
             addStyles() {
+                if (document.getElementById('automation-styles')) return;
+                
                 const style = document.createElement('style');
+                style.id = 'automation-styles';
                 style.textContent = `
-                    .automation-status-container {
-                        background: white;
-                        border-radius: 15px;
-                        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-                        margin: 20px;
-                        padding: 25px;
-                        border-left: 5px solid #007bff;
-                    }
-
                     .automation-header {
                         display: flex;
                         justify-content: space-between;
@@ -1477,14 +1460,70 @@
                         display: flex;
                         align-items: center;
                         gap: 10px;
-        
                         font-size: 18px;
                         font-weight: 600;
                     }
 
-                    .automation-controls {
+                    #automation-icon {
+                        transition: all 0.3s;
+                    }
+
+                    #automation-icon.running {
+                        animation: spin 2s linear infinite;
+                        color: #007bff;
+                    }
+
+                    #automation-icon.completed {
+                        color: #28a745;
+                    }
+
+                    #automation-icon.failed {
+                        color: #dc3545;
+                    }
+
+                    .automation-content {
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        padding: 15px;
+                    }
+
+                    .status-info {
+                        display: grid;
+                        gap: 12px;
+                    }
+
+                    .status-item {
                         display: flex;
+                        align-items: center;
                         gap: 10px;
+                        font-size: 14px;
+                        color: #495057;
+                    }
+
+                    .status-item strong {
+                        min-width: 100px;
+                    }
+
+                    .progress-bar {
+                        flex: 1;
+                        height: 20px;
+                        background: #e9ecef;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        position: relative;
+                    }
+
+                    .progress-fill {
+                        height: 100%;
+                        background: linear-gradient(45deg, #007bff, #28a745);
+                        transition: width 0.5s ease;
+                        border-radius: 10px;
+                    }
+
+                    #progress-text {
+                        min-width: 40px;
+                        text-align: right;
+                        font-weight: 600;
                     }
 
                     .control-btn {
@@ -1502,134 +1541,40 @@
                     }
 
                     .control-btn:hover {
-                        background: rgba(0, 123, 255, 0.6);
-                        border-color: #007bff;
+                        background: rgba(0, 123, 255, 0.8);
                     }
 
-                    .status-info {
-                        color: #061629;
-                        display: grid;
-                        gap: 15px;
-                        margin-bottom: 20px;
+                    @keyframes spin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
                     }
 
-                    .status-item {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        padding: 10px 0;
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                    .result-highlight {
+                        animation: highlightResult 2s ease-in-out;
                     }
 
-                    .status-item:last-child {
-                        border-bottom: none;
-                    }
-
-                    .progress-bar {
-                        flex: 1;
-                        height: 20px;
-                        background: #e9ecef;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        margin: 0 10px;
-                        position: relative;
-                    }
-
-                    .progress-fill {
-                        height: 100%;
-                        background: linear-gradient(45deg, #007bff, #28a745);
-                        transition: width 0.5s ease;
-                        border-radius: 10px;
-                    }
-
-                    .status-indicator {
-                        display: inline-block;
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 50%;
-                        margin-right: 5px;
-                    }
-
-                    .status-idle { background-color: #6c757d; }
-                    .status-running { background-color: #007bff; animation: pulse 2s infinite; }
-                    .status-completed { background-color: #28a745; }
-                    .status-failed { background-color: #dc3545; }
-
-                    @keyframes pulse {
-                        0%, 100% { opacity: 1; }
-                        50% { opacity: 0.5; }
-                    }
-
-                    .notification {
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: #28a745;
-                        color: white;
-                        padding: 15px 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                        z-index: 10000;
-                        opacity: 0;
-                        transform: translateX(400px);
-                        transition: all 0.3s ease;
-                    }
-
-                    .notification.show {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-
-                    .notification.error {
-                        background: #dc3545;
-                    }
-
-                    .notification.warning {
-                        background: #ffc107;
-                        color: #212529;
-                    }
-
-                    @media (max-width: 768px) {
-                        .automation-header {
-                            flex-direction: column;
-                            gap: 15px;
-                            align-items: flex-start;
-                        }
-
-                        .result-grid {
-                            grid-template-columns: 1fr;
-                        }
-
-                        .notification {
-                            right: 10px;
-                            left: 10px;
-                            transform: translateY(-100px);
-                        }
-
-                        .notification.show {
-                            transform: translateY(0);
-                        }
+                    @keyframes highlightResult {
+                        0% { background-color: #fff3cd; }
+                        100% { background-color: transparent; }
                     }
                 `;
                 document.head.appendChild(style);
             }
 
             attachEventListeners() {
-                // Toggle polling button
                 const toggleBtn = document.getElementById('toggle-polling');
                 if (toggleBtn) {
                     toggleBtn.addEventListener('click', () => this.togglePolling());
                 }
 
-                // Start polling when attack is initiated
-                const startAttackForms = document.querySelectorAll('form[action*="start_attack"]');
-                startAttackForms.forEach(form => {
+                // Listen for attack simulation form submissions
+                const attackForms = document.querySelectorAll('form[action*="start_attack"]');
+                attackForms.forEach(form => {
                     form.addEventListener('submit', () => {
                         setTimeout(() => {
                             this.resultsDisplayed = false;
                             this.lastResultsTimestamp = null;
                             this.startIntensivePolling();
-                            this.showNotification('Attack simulation started. Monitoring in real-time...', 'success');
                         }, 1000);
                     });
                 });
@@ -1671,15 +1616,14 @@
 
                 const status = data.status;
                 const currentStatus = status.status || 'Idle';
-                const results = data.current_results;
-                const automationResults = data.automation_results;
-
-                // Update status text and icon
+                
+                // Update status text
                 const statusText = document.getElementById('automation-status-text');
                 if (statusText) {
                     statusText.textContent = currentStatus;
                 }
 
+                // Update icon
                 const statusIcon = document.getElementById('automation-icon');
                 if (statusIcon) {
                     statusIcon.className = 'fas fa-cog';
@@ -1694,63 +1638,135 @@
                     }
                 }
 
-                // Update progress bar
+                // Update progress
                 const progressFill = document.getElementById('progress-fill');
                 const progressText = document.getElementById('progress-text');
-                
                 if (progressFill && progressText) {
                     const progress = status.progress || 0;
                     progressFill.style.width = `${progress}%`;
                     progressText.textContent = `${progress}%`;
                 }
 
-                // Handle results display
-                if (results && (results.detection || automationResults)) {
-                    this.displayResults(results, automationResults);
+                // Update current step
+                const currentStepText = document.getElementById('current-step-text');
+                if (currentStepText && status.current_task) {
+                    const steps = status.current_task.steps || [];
+                    const progress = status.progress || 0;
+                    const currentStepIndex = Math.floor((progress / 100) * steps.length);
+                    const currentStep = steps[currentStepIndex] || 'Processing';
+                    currentStepText.textContent = currentStep.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 }
 
-                // Show completion notification
-                if (status.status === 'Completed' && data.has_new_results) {
-                    this.showNotification('Analysis completed! Results are ready.', 'success');
-                    this.updateDetectionResults(results, automationResults);
+                // CRITICAL: Handle results display
+                const hasResults = data.automation_results || (data.current_results && data.current_results.detection);
+                const resultsReady = data.results_ready || data.has_new_results;
+                
+                if (hasResults && resultsReady && !this.resultsDisplayed) {
+                    const results = data.automation_results ? data.automation_results.analysis : data.current_results;
+                    
+                    if (results && results.detection) {
+                        const resultsTimestamp = data.automation_results ? data.automation_results.completed_at : new Date().toISOString();
+                        
+                        // Only display if this is a new set of results
+                        if (resultsTimestamp !== this.lastResultsTimestamp) {
+                            this.displayResults(results);
+                            this.lastResultsTimestamp = resultsTimestamp;
+                            this.resultsDisplayed = true;
+                            
+                            // Acknowledge results received
+                            this.acknowledgeResults();
+                            
+                            this.showNotification('Detection completed! Results displayed.', 'success');
+                        }
+                    }
+                }
+
+                // Stop intensive polling when completed
+                if (currentStatus === 'Completed' || currentStatus === 'Failed') {
+                    setTimeout(() => this.resetPollingInterval(), 3000);
                 }
             }
 
-            showNotification(message, type = 'success') {
-                // Remove existing notifications
-                const existing = document.querySelector('.notification');
-                if (existing) {
-                    existing.remove();
+            displayResults(results) {
+                console.log('Displaying results:', results);
+                
+                // Update result box or create if doesn't exist
+                let resultBox = document.getElementById('detection-results');
+                let resultContainer = document.getElementById('detection-results-container');
+                
+                if (!resultContainer) {
+                    resultContainer = document.createElement('div');
+                    resultContainer.id = 'detection-results-container';
+                    
+                    // Insert after the ML section
+                    const mlSection = document.querySelector('.section-box');
+                    if (mlSection) {
+                        mlSection.parentNode.insertBefore(resultContainer, mlSection.nextSibling);
+                    }
                 }
+                
+                resultContainer.innerHTML = `
+                    <div class="result-box result-highlight" id="detection-results">
+                        <h3>
+                            <i class="fas fa-clipboard-list"></i>
+                            Detection Results
+                        </h3>
 
-                // Create new notification
-                const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
-                notification.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 
-                                        type === 'error' ? 'fa-exclamation-triangle' : 
-                                        'fa-info-circle'}"></i>
-                        <span>${message}</span>
-                        <button onclick="this.parentElement.parentElement.remove()" 
-                                style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto;">
-                            <i class="fas fa-times"></i>
-                        </button>
+                        <div class="result-item">
+                            <span class="result-label"><strong>Attack Type:</strong></span>
+                            <span class="result-value ${results.detection && !results.detection.includes('Error') ? 'success' : 'error'}">
+                                ${results.detection || 'No detection performed'}
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label"><strong>Severity Level:</strong></span>
+                            <span class="result-value ${results.attack_level && results.attack_level !== 'N/A' ? 'success' : 'error'}">
+                                ${results.attack_level || 'N/A'}
+                            </span>
+                        </div>
+
+                        <div class="result-item">
+                            <span class="result-label"><strong>Model Accuracy:</strong></span>
+                            <span class="result-value ${results.accuracy && results.accuracy !== 'N/A' ? 'success' : 'error'}">
+                                ${results.accuracy || 'N/A'}
+                            </span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label"><strong>Mitigation Solution:</strong></span>
+                            <span class="result-value ${results.mitigation && results.mitigation !== 'N/A' ? 'success' : 'error'}">
+                                ${results.mitigation || 'N/A'}
+                            </span>
+                        </div>
+
+                        ${results.confidence ? `
+                        <div class="result-item">
+                            <span class="result-label"><strong>Confidence:</strong></span>
+                            <span class="result-value success">
+                                ${(results.confidence * 100).toFixed(1)}%
+                            </span>
+                        </div>
+                        ` : ''}
                     </div>
                 `;
+                
+                // Scroll to results
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
 
-                document.body.appendChild(notification);
-
-                // Show notification
-                setTimeout(() => notification.classList.add('show'), 100);
-
-                // Auto-remove after 5 seconds
-                setTimeout(() => {
-                    if (notification.parentElement) {
-                        notification.classList.remove('show');
-                        setTimeout(() => notification.remove(), 300);
-                    }
-                }, 5000);
+            async acknowledgeResults() {
+                try {
+                    await fetch('/acknowledge_results/', {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': this.getCookie('csrftoken')
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error acknowledging results:', error);
+                }
             }
 
             startPolling() {
@@ -1769,15 +1785,14 @@
             }
 
             startIntensivePolling() {
-                // Reduce poll interval during active operations
-                this.pollInterval = 2000; // Poll every 2 seconds
+                this.pollInterval = 1500; // Poll every 1.5 seconds during active operations
                 if (!this.isPolling) {
                     this.startPolling();
                 }
             }
 
             resetPollingInterval() {
-                this.pollInterval = 3000; // Back to normal 3 seconds
+                this.pollInterval = 2000; // Back to normal
             }
 
             async poll() {
@@ -1786,14 +1801,8 @@
                 const data = await this.fetchStatus();
                 if (data) {
                     this.updateUI(data);
-                    
-                    // Reset to normal polling if automation is completed or idle
-                    if (data.status && (data.status.status === 'Completed' || data.status.status === 'Idle')) {
-                        this.resetPollingInterval();
-                    }
                 }
 
-                // Schedule next poll
                 this.pollTimer = setTimeout(() => this.poll(), this.pollInterval);
             }
 
@@ -1811,10 +1820,311 @@
                     this.showNotification('Real-time updates resumed', 'success');
                 }
             }
+
+            showNotification(message, type = 'success') {
+                const existing = document.querySelector('.notification');
+                if (existing) {
+                    existing.remove();
+                }
+
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                                    type === 'error' ? 'fa-exclamation-triangle' : 
+                                    'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.remove()" 
+                            style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto; font-size: 18px;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 5000);
+            }
+
+            getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
         }
 
         // Initialize the automation status updater
         const automationUpdater = new AutomationStatusUpdater();
+
+        // Enhanced AutomationStatusUpdater to handle live monitoring mode
+        class EnhancedAutomationStatusUpdater extends AutomationStatusUpdater {
+            updateUI(data) {
+                // Call parent updateUI
+                super.updateUI(data);
+                
+                // Check if we're in live monitoring mode
+                if (data.status && data.status.current_task) {
+                    const task = data.status.current_task;
+                    const steps = data.status.step_results || {};
+                    
+                    // Check if packet capture is using live monitoring
+                    if (steps.packet_capture && steps.packet_capture.file_path === 'live_monitoring') {
+                        this.showLiveMonitoringIndicator();
+                    }
+                }
+                
+                // Enhanced result display for live monitoring
+                if (data.automation_results && data.automation_results.analysis) {
+                    const analysis = data.automation_results.analysis;
+                    
+                    if (analysis.source === 'live_monitoring') {
+                        this.displayLiveMonitoringResults(analysis);
+                    }
+                }
+            }
+            
+            showLiveMonitoringIndicator() {
+                const currentStepText = document.getElementById('current-step-text');
+                if (currentStepText && !currentStepText.classList.contains('live-mode')) {
+                    currentStepText.classList.add('live-mode');
+                    currentStepText.innerHTML = `
+                        <i class="fas fa-broadcast-tower" style="color: #007bff;"></i>
+                        Using Live Monitoring
+                    `;
+                    
+                    // Add special styling
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .live-mode {
+                            background: linear-gradient(45deg, #e3f2fd, #bbdefb);
+                            padding: 5px 10px;
+                            border-radius: 4px;
+                            border-left: 3px solid #007bff;
+                            animation: pulse 2s infinite;
+                        }
+                        
+                        @keyframes pulse {
+                            0%, 100% { opacity: 1; }
+                            50% { opacity: 0.8; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            displayLiveMonitoringResults(analysis) {
+                // Call parent display method
+                this.displayResults(analysis);
+                
+                // Add special badge
+                const resultBox = document.getElementById('detection-results');
+                if (resultBox) {
+                    const badge = document.createElement('div');
+                    badge.style.cssText = `
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 5px;
+                        background: #e3f2fd;
+                        color: #1565c0;
+                        padding: 4px 10px;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        margin-bottom: 10px;
+                        border: 1px solid #90caf9;
+                    `;
+                    badge.innerHTML = `
+                        <i class="fas fa-broadcast-tower"></i>
+                        Analyzed from Live Monitoring
+                    `;
+                    
+                    const resultBoxHeader = resultBox.querySelector('h3');
+                    if (resultBoxHeader) {
+                        resultBoxHeader.insertAdjacentElement('afterend', badge);
+                    }
+                }
+            }
+        }
+
+        // Replace the existing automationUpdater with enhanced version
+        if (typeof automationUpdater !== 'undefined') {
+            automationUpdater = new EnhancedAutomationStatusUpdater();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const attackForm = document.querySelector('form[action*="start_attack"]');
+            
+            if (attackForm) {
+                attackForm.addEventListener('submit', function(e) {
+                    // Check if live monitoring is active
+                    const monitoringActive = window.trafficMonitor && window.trafficMonitor.isMonitoring;
+                    
+                    if (monitoringActive) {
+                        // Show special notification for live monitoring mode
+                        const notification = document.createElement('div');
+                        notification.className = 'notification warning';
+                        notification.style.cssText = `
+                            position: fixed;
+                            top: 80px;
+                            right: 20px;
+                            background: #fff3cd;
+                            color: #856404;
+                            padding: 20px;
+                            border-radius: 8px;
+                            border-left: 4px solid #ffc107;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                            z-index: 10000;
+                            max-width: 400px;
+                            animation: slideInRight 0.3s ease-out;
+                        `;
+                        notification.innerHTML = `
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="fas fa-info-circle" style="font-size: 24px; color: #ffc107;"></i>
+                                <div>
+                                    <strong style="display: block; margin-bottom: 5px;">Live Monitoring Mode Active</strong>
+                                    <p style="margin: 0; font-size: 13px; line-height: 1.5;">
+                                        Attack will be simulated while using existing network monitoring. 
+                                        Results will be captured from live flows.
+                                    </p>
+                                </div>
+                                <button onclick="this.parentElement.parentElement.remove()" 
+                                        style="background: none; border: none; color: inherit; cursor: pointer; font-size: 18px; margin-left: auto;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(notification);
+                        
+                        setTimeout(() => {
+                            notification.style.animation = 'slideOutRight 0.3s ease-out';
+                            setTimeout(() => notification.remove(), 300);
+                        }, 8000);
+                    }
+                });
+            }
+        });
+
+        // Add visual indicator in the stats cards when in attack simulation mode
+        function updateStatsForAttackMode(isAttackActive) {
+            const statsContainer = document.querySelector('.stats-container');
+            if (!statsContainer) return;
+            
+            if (isAttackActive) {
+                statsContainer.style.border = '2px solid #ffc107';
+                statsContainer.style.boxShadow = '0 0 20px rgba(255, 193, 7, 0.3)';
+                
+                // Add attack indicator
+                let attackBanner = document.getElementById('attack-mode-banner');
+                if (!attackBanner) {
+                    attackBanner = document.createElement('div');
+                    attackBanner.id = 'attack-mode-banner';
+                    attackBanner.style.cssText = `
+                        background: linear-gradient(45deg, #ff9800, #f44336);
+                        color: white;
+                        padding: 10px 20px;
+                        text-align: center;
+                        font-weight: bold;
+                        border-radius: 8px;
+                        margin: 20px 30px;
+                        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+                        animation: attackPulse 2s infinite;
+                    `;
+                    attackBanner.innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i>
+                        ATTACK SIMULATION IN PROGRESS
+                        <i class="fas fa-exclamation-triangle"></i>
+                    `;
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes attackPulse {
+                            0%, 100% { 
+                                transform: scale(1);
+                                box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+                            }
+                            50% { 
+                                transform: scale(1.02);
+                                box-shadow: 0 6px 20px rgba(244, 67, 54, 0.5);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    statsContainer.parentElement.insertBefore(attackBanner, statsContainer);
+                }
+            } else {
+                statsContainer.style.border = '';
+                statsContainer.style.boxShadow = '';
+                
+                const attackBanner = document.getElementById('attack-mode-banner');
+                if (attackBanner) {
+                    attackBanner.remove();
+                }
+            }
+        }
+
+        // Monitor for attack simulation status
+        setInterval(() => {
+            fetch('/get_automation_status/')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.status && data.status.status === 'Running') {
+                        updateStatsForAttackMode(true);
+                    } else {
+                        updateStatsForAttackMode(false);
+                    }
+                })
+                .catch(err => console.debug('Status check:', err));
+        }, 3000);
+
+
+        // Add CSS animations
+        const additionalStyles = document.createElement('style');
+        additionalStyles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+            
+            .flow-item.attack-detected {
+                border-left: 4px solid #ff9800 !important;
+                animation: highlightAttack 1s ease-in-out;
+            }
+            
+            @keyframes highlightAttack {
+                0%, 100% { background-color: inherit; }
+                50% { background-color: rgba(255, 152, 0, 0.1); }
+            }
+        `;
+        document.head.appendChild(additionalStyles);
 
         // Enhanced smooth scrolling and navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
