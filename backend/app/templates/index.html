@@ -183,6 +183,36 @@
             height: 100%;
         }
 
+        .stat-card.applied::before { 
+            background: #28a745;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .stat-card.pending::before { 
+            background: #ffc107;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .stat-card.failed::before { 
+            background: #6c757d;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
         .stat-card.benign::before { background: #28a745; }
         .stat-card.suspicious::before { background: #ffc107; }
         .stat-card.malicious::before { background: #dc3545; }
@@ -315,6 +345,94 @@
 
         .confidence {
             font-weight: 600;
+        }
+
+        /* Mitigation Flow Items */
+        .mitigation-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+            font-size: 13px;
+            animation: slideInMitigation 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mitigation-item.applied {
+            background: #f0fff4;
+            border-color: #28a745;
+        }
+
+        .mitigation-item.pending {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .mitigation-item.failed {
+            background: #f8f9fa;
+            border-color: #6c757d;
+        }
+
+        .mitigation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .mitigation-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .mitigation-badge.applied { background: #28a745; }
+        .mitigation-badge.pending { background: #ffc107; color: #000; }
+        .mitigation-badge.failed { background: #6c757d; }
+
+        .mitigation-time {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .mitigation-details {
+            font-size: 12px;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .mitigation-action {
+            font-size: 12px;
+            color: #28a745;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .mitigation-item.failed .mitigation-action {
+            color: #6c757d;
+        }
+
+        .mitigation-rule {
+            font-size: 11px;
+            color: #6c757d;
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow-x: auto;
+        }
+
+        @keyframes slideInMitigation {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* Attack Simulation & ML Sections */
@@ -742,6 +860,36 @@
                 <i class="fas fa-shield-alt"></i>
             </div>
         </div>
+
+        <div class="stat-card applied">
+            <div class="stat-content">
+                <h3 id="stat-mitigation-applied">0</h3>
+                <p>Mitigations Applied</p>
+            </div>
+            <div class="stat-icon" style="color: #28a745;">
+                <i class="fas fa-shield-check"></i>
+            </div>
+        </div>
+
+        <div class="stat-card pending">
+            <div class="stat-content">
+                <h3 id="stat-mitigation-pending">0</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-icon" style="color: #ffc107;">
+                <i class="fas fa-clock"></i>
+            </div>
+        </div>
+
+        <div class="stat-card failed">
+            <div class="stat-content">
+                <h3 id="stat-mitigation-failed">0</h3>
+                <p>Failed</p>
+            </div>
+            <div class="stat-icon" style="color: #6c757d;">
+                <i class="fas fa-times-circle"></i>
+            </div>
+        </div>
     </div>
 
     <div class="main-container">
@@ -769,6 +917,37 @@
                     </div>
                     <div class="flow-meta">
                         0 bytes, 0 packets &nbsp;|&nbsp; <span class="confidence">Confidence: 0%</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Mitigation Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>
+                    <i class="fas fa-robot"></i>
+                    AI Mitigation Monitor
+                </h2>
+            </div>
+            <div class="panel-content">
+                <p style="font-size: 13px; color: #6c757d; margin-bottom: 15px;">
+                    Automated mitigation actions triggered by threat detection
+                </p>
+
+                <div class="flow-list" id="mitigation-list">
+                    <div class="mitigation-item applied">
+                        <div class="mitigation-header">
+                            <span class="mitigation-badge applied">
+                                <i class="fas fa-shield-check"></i> Ready
+                            </span>
+                            <span class="mitigation-time">--:--:-- --</span>
+                        </div>
+                        <div class="mitigation-details">
+                            <strong>Waiting for threats...</strong><br>
+                            AI mitigation will activate automatically when malicious flows are detected
+                        </div>
+                        <div class="mitigation-action">System ready for automated response</div>
                     </div>
                 </div>
             </div>
@@ -906,6 +1085,7 @@
         class NetworkTrafficMonitor {
             constructor() {
                 this.flowListElement = document.getElementById('flow-list');
+                this.mitigationListElement = document.getElementById('mitigation-list');
                 this.isMonitoring = false;
                 this.pollInterval = 2000;
                 this.maxFlows = 20;
@@ -1236,10 +1416,19 @@
                 this.stopMonitoring();
                 
                 try {
+                    // Reset network flows
                     const response = await fetch('/reset_flow_stats/', {
                         method: 'POST',
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': this.getCookie('csrftoken')
+                        }
+                    });
+
+                    // Reset mitigation flows
+                    await fetch('/reset_mitigation_stats/', {
+                        method: 'POST',
+                        headers: {
                             'X-CSRFToken': this.getCookie('csrftoken')
                         }
                     });
@@ -1262,7 +1451,25 @@
                                 </div>
                             </div>
                         `;
+
+                        this.mitigationListElement.innerHTML = `
+                            <div class="mitigation-item applied">
+                                <div class="mitigation-header">
+                                    <span class="mitigation-badge applied">
+                                        <i class="fas fa-shield-check"></i> Ready
+                                    </span>
+                                    <span class="mitigation-time">--:--:-- --</span>
+                                </div>
+                                <div class="mitigation-details">
+                                    <strong>Waiting for threats...</strong><br>
+                                    AI mitigation will activate automatically when malicious flows are detected
+                                </div>
+                                <div class="mitigation-action">System ready for automated response</div>
+                            </div>
+                        `;
+
                         this.updateStats(0, 0, 0);
+                        this.updateMitigationStats(0, 0, 0);
                         this.updateConnectionStatus('Not connected', false, false);
                         this.showNotification('Monitor reset successfully', 'success');
                     }
@@ -1305,6 +1512,24 @@
                     } else {
                         this.updateConnectionStatus('Connection lost', false, false);
                     }
+
+                    // Fetch mitigation flows
+                    const mitigationResponse = await fetch('/get_mitigation_flows/');
+                    if (mitigationResponse.ok) {
+                        const mitigationData = await mitigationResponse.json();
+                        
+                        if (mitigationData.flows && mitigationData.flows.length > 0) {
+                            this.updateMitigationFlows(mitigationData.flows);
+                        }
+                        
+                        if (mitigationData.stats) {
+                            this.updateMitigationStats(
+                                mitigationData.stats.applied || 0,
+                                mitigationData.stats.pending || 0,
+                                mitigationData.stats.failed || 0
+                            );
+                        }
+                    }
                 } catch (error) {
                     console.error('Error fetching flows:', error);
                     this.updateConnectionStatus('Connection error', false, false);
@@ -1335,6 +1560,69 @@
                 if (panelContent) {
                     panelContent.scrollTop = 0;
                 }
+            }
+
+            updateMitigationFlows(flows) {
+                // Remove placeholder
+                const placeholder = this.mitigationListElement.querySelector('.mitigation-item:first-child');
+                if (placeholder && placeholder.textContent.includes('Waiting for threats')) {
+                    this.mitigationListElement.innerHTML = '';
+                }
+
+                const newFlows = flows.slice(0, Math.min(5, flows.length));
+
+                newFlows.forEach(flow => {
+                    const mitigationElement = this.createMitigationElement(flow);
+                    this.mitigationListElement.insertBefore(mitigationElement, this.mitigationListElement.firstChild);
+                });
+
+                while (this.mitigationListElement.children.length > this.maxFlows) {
+                    this.mitigationListElement.removeChild(this.mitigationListElement.lastChild);
+                }
+            }
+
+            createMitigationElement(mitigation) {
+                const mitigationDiv = document.createElement('div');
+                const status = mitigation.status || 'pending';
+                
+                mitigationDiv.className = `mitigation-item ${status}`;
+                mitigationDiv.style.animation = 'slideInMitigation 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                
+                const statusIcon = status === 'applied' ? 'fa-shield-check' : 
+                                  status === 'pending' ? 'fa-clock' : 'fa-times-circle';
+                const statusText = status.charAt(0).toUpperCase() + status.slice(1);
+                
+                mitigationDiv.innerHTML = `
+                    <div class="mitigation-header">
+                        <span class="mitigation-badge ${status}">
+                            <i class="fas ${statusIcon}"></i>
+                            ${statusText}
+                        </span>
+                        <span class="mitigation-time">${this.formatTime(mitigation.timestamp)}</span>
+                    </div>
+                    <div class="mitigation-details">
+                        <strong>${mitigation.attack_type || 'Unknown Attack'}</strong><br>
+                        Target: ${mitigation.target_ip || 'N/A'}
+                    </div>
+                    <div class="mitigation-action">
+                        ${mitigation.action || 'Processing...'}
+                    </div>
+                    ${mitigation.rule ? `<div class="mitigation-rule">${mitigation.rule}</div>` : ''}
+                `;
+                
+                return mitigationDiv;
+            }
+
+            updateStats(benign, suspicious, malicious) {
+                this.animateValue(document.getElementById('stat-benign'), benign);
+                this.animateValue(document.getElementById('stat-suspicious'), suspicious);
+                this.animateValue(document.getElementById('stat-malicious'), malicious);
+            }
+
+            updateMitigationStats(applied, pending, failed) {
+                this.animateValue(document.getElementById('stat-mitigation-applied'), applied);
+                this.animateValue(document.getElementById('stat-mitigation-pending'), pending);
+                this.animateValue(document.getElementById('stat-mitigation-failed'), failed);
             }
 
             createFlowElement(flow) {
@@ -1422,6 +1710,22 @@
 
                 const notification = document.createElement('div');
                 notification.className = `notification ${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#fff3cd'};
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#856404'};
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    border-left: 4px solid ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#ffc107'};
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    animation: slideInRight 0.3s ease-out;
+                `;
                 notification.innerHTML = `
                     <i class="fas ${type === 'success' ? 'fa-check-circle' : 
                                     type === 'error' ? 'fa-exclamation-triangle' : 
@@ -1465,6 +1769,267 @@
         } else {
             window.trafficMonitor = new NetworkTrafficMonitor();
         }
+
+                const additionalStyles = document.createElement('style');
+        additionalStyles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes slideInFlow {
+                from {
+                    opacity: 0;
+                    transform: translateX(-40px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .notification {
+                animation: slideInRight 0.3s ease-out;
+            }
+
+            /* Additional flow and mitigation styles */
+            .flow-item.benign {
+                background: #f0fff4;
+                border-color: #28a745;
+            }
+
+            .flow-item.suspicious {
+                background: #fff3cd;
+                border-color: #ffc107;
+            }
+
+            .flow-item.malicious {
+                background: #fff5f5;
+                border-color: #dc3545;
+            }
+
+            .flow-badge {
+                padding: 4px 10px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 600;
+                color: white;
+            }
+
+            .flow-badge.malicious { background: #dc3545; }
+            .flow-badge.suspicious { background: #ffc107; color: #000; }
+            .flow-badge.benign { background: #28a745; }
+
+            .flow-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+
+            .flow-time {
+                font-size: 11px;
+                color: #6c757d;
+            }
+
+            .flow-details {
+                font-size: 12px;
+                color: #495057;
+                margin-bottom: 5px;
+            }
+
+            .flow-meta {
+                font-size: 11px;
+                color: #6c757d;
+            }
+
+            .confidence {
+                font-weight: 600;
+            }
+
+            /* Panel styles */
+            .panel {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                overflow: hidden;
+                min-width: 0;
+                width: 100%;
+                min-height: 650px;
+                max-height: 700px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .panel-header {
+                color: #061629;
+                padding: 20px;
+                border-bottom: 1px solid #e9ecef;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .panel-header h2 {
+                font-size: 18px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .panel-content {
+                padding: 20px;
+                max-height: 650px;
+                overflow-y: auto;
+            }
+
+            .flow-list {
+                max-height: 100%;
+                overflow-y: visible;
+            }
+
+            /* Main Layout */
+            .main-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 0 30px 30px 30px;
+                align-items: stretch;
+            }
+
+            /* Button styles */
+            .btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s;
+            }
+
+            .btn-primary {
+                background: #007bff;
+                color: white;
+            }
+
+            .btn-danger {
+                background: #dc3545;
+                color: white;
+            }
+
+            .btn-secondary {
+                background: #6c757d;
+                color: white;
+            }
+
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+
+            .btn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            /* Header styles */
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                color: white;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .header-right {
+                display: flex;
+                gap: 15px;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            /* Stat card styles */
+            .stat-content h3 {
+                color: #061629;
+                font-size: 32px;
+                font-weight: 700;
+                margin-bottom: 5px;
+            }
+
+            .stat-content p {
+                font-size: 14px;
+                color: #6c757d;
+                font-weight: 500;
+            }
+
+            .stat-icon {
+                font-size: 40px;
+            }
+
+            .stat-card.benign .stat-icon { color: #28a745; }
+            .stat-card.suspicious .stat-icon { color: #ffc107; }
+            .stat-card.malicious .stat-icon { color: #dc3545; }
+
+            /* Scrollbar styling */
+            .panel-content::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .panel-content::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            .panel-content::-webkit-scrollbar-thumb {
+                background: #cbd5e0;
+                border-radius: 3px;
+            }
+
+            .panel-content::-webkit-scrollbar-thumb:hover {
+                background: #a0aec0;
+            }
+
+            /* Responsive */
+            @media (max-width: 1400px) {
+                .main-container {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 900px) {
+                .main-container {
+                    grid-template-columns: 1fr;
+                }
+            }
+        `;
+        document.head.appendChild(additionalStyles);
 
         // Form enhancement for attack simulation
         document.addEventListener('DOMContentLoaded', function() {

@@ -66,6 +66,8 @@ analysis_report = {}
 target_ip = None
 attack_type = None
 mitigation = None
+mitigation_flows_buffer = deque() # Store last 50 mitigation actions
+mitigation_stats = {'applied': 0, 'pending': 0, 'failed': 0}
 capture_thread = None
 capture_active = False
 capture_mode = None
@@ -236,7 +238,7 @@ class NetworkTrafficCapture:
     
     # Monitor packets in real time without saving
     def live_monitor_packets(self):
-        global capture_active, live_flows_buffer, flow_stats
+        global capture_active, live_flows_buffer, flow_stats, mitigation_flows_buffer
 
         try:
             logger.info(f"Starting live monitoring on {self.capture_interface}")
@@ -370,6 +372,20 @@ class NetworkTrafficCapture:
                             classification = flow.get('classification', 'benign')
                             if classification == 'malicious':
                                 flow_stats['malicious'] += 1
+
+                                attack_type = flow.get('attack_type', 'Unknown')
+                                target_ip = flow.get('src_ip', 'Unknown')
+
+                                logger.info(f"Malicious flow detected: {attack_type} from {target_ip}")
+                    
+                                # Apply mitigation in background thread
+                                mitigation_thread = threading.Thread(
+                                    target=self._apply_mitigation_async,
+                                    args=(attack_type, target_ip, flow),
+                                    daemon=True
+                                )
+                                mitigation_thread.start()
+
                             elif classification == 'suspicious':
                                 flow_stats['suspicious'] += 1
                             else:
@@ -1598,10 +1614,27 @@ class AIMitigation:
         self.username = username
         self.password = password
     
-    def apply_mitigation(self, attack_type, target_ip):
+    def apply_mitigation(self, attack_type, target_ip, flow_data=None):
+        global mitigation_flows_buffer, mitigation_stats
+        
         try:
-            # Normalize attack type (remove spaces and make consistent)
+            # Normalize attack type
             attack_type_normalized = attack_type.replace(' ', '').replace('Attack', '')
+
+            # Create mitigation flow entry (optimistic)
+            mitigation_flow = {
+                'timestamp': datetime.now().isoformat(),
+                'attack_type': attack_type,
+                'target_ip': target_ip,
+                'status': 'pending',
+                'action': 'Applying mitigation...',
+                'rule': None,
+                'success': False
+            }
+            
+            # Add to buffer immediately
+            mitigation_flows_buffer.append(mitigation_flow)
+            mitigation_stats['pending'] += 1
 
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -1615,10 +1648,9 @@ class AIMitigation:
                 'SYNScan': ("sudo iptables -I INPUT -s 192.168.1.1 -j DROP", "Block scanning source temporarily"),
                 'TCPConnectScan': ("sudo iptables -I INPUT -s 192.168.1.1 -j DROP", "Block TCP scanning source temporarily"), 
                 'UDPScan': ("sudo iptables -I INPUT -p udp -s 192.168.1.1 -j DROP", "Block UDP scanning source temporarily"),
-                'SlowrateDoS': ("sudo iptables -I INPUT -s 192.168.1.1 -m connlimit --connlimit-aboce 10 -j DROP", "Rate-limited connections from" )
+                'SlowrateDoS': ("sudo iptables -I INPUT -s 192.168.1.1 -m connlimit --connlimit-above 10 -j DROP", "Rate-limited connections")
             }
 
-            # Try to find matching command with normalized attack type
             command = None
             mitigation = None
             
@@ -1626,7 +1658,7 @@ class AIMitigation:
             if attack_type_normalized in mitigation_commands:
                 command, mitigation = mitigation_commands[attack_type_normalized]
             else:
-                # Fuzzy match - check if any key is contained in attack_type
+                # Fuzzy match
                 for key in mitigation_commands.keys():
                     if key.lower() in attack_type.lower().replace(' ', ''):
                         command, mitigation = mitigation_commands[key]
@@ -1635,6 +1667,10 @@ class AIMitigation:
 
             if not command:
                 logger.warning(f"No mitigation strategy found for attack type: {attack_type}")
+                mitigation_flow['status'] = 'failed'
+                mitigation_flow['action'] = f"No mitigation available for {attack_type}"
+                mitigation_stats['pending'] -= 1
+                mitigation_stats['failed'] += 1
                 ssh.close()
                 return f"No mitigation strategy available for {attack_type}"
             
@@ -1642,21 +1678,17 @@ class AIMitigation:
 
             transport = ssh.get_transport()
             channel = transport.open_session()
-            channel.get_pty()  # Request a pseudo-terminal
+            channel.get_pty()
             channel.exec_command(command)
             
-            # Wait a moment for sudo prompt
             time.sleep(0.5)
             
-            # Check if password prompt appears
             if channel.recv_ready():
                 output = channel.recv(1024).decode('utf-8', errors='ignore')
                 if '[sudo]' in output or 'password' in output.lower():
-                    # Send the sudo password
                     channel.send(self.password + '\n')
                     time.sleep(1)
             
-            # Read the output
             output = ""
             error = ""
             
@@ -1673,26 +1705,100 @@ class AIMitigation:
             channel.close()
             ssh.close()
             
+            # Update mitigation flow
             if exit_status == 0:
                 logger.info(f"Mitigation applied successfully: {mitigation}")
+                mitigation_flow['status'] = 'applied'
+                mitigation_flow['action'] = mitigation
+                mitigation_flow['rule'] = command
+                mitigation_flow['success'] = True
+                mitigation_stats['pending'] -= 1
+                mitigation_stats['applied'] += 1
                 return mitigation
             else:
                 logger.error(f"Mitigation command failed: {error}")
+                mitigation_flow['status'] = 'failed'
+                mitigation_flow['action'] = f"Failed: {error[:50]}"
+                mitigation_flow['rule'] = command
+                mitigation_stats['pending'] -= 1
+                mitigation_stats['failed'] += 1
                 return f"Mitigation attempted but failed: {error[:100]}"
 
-        except paramiko.AuthenticationException:
-            logger.error("SSH Authentication failed for mitigation.")
-            return "Mitigation failed: SSH Authentication error"
-        
-        except paramiko.SSHException as e:
-            logger.error(f"SSH connection error for mitigation: {e}")
-            return f"Mitigation failed: SSH connection error - {str(e)}"
-        
         except Exception as e:
             logger.error(f"Mitigation error: {e}")
             import traceback
             logger.error(traceback.format_exc())
+            
+            # Update flow on exception
+            if 'mitigation_flow' in locals():
+                mitigation_flow['status'] = 'failed'
+                mitigation_flow['action'] = f"Error: {str(e)[:50]}"
+                mitigation_stats['pending'] -= 1
+                mitigation_stats['failed'] += 1
+            
             return f"Mitigation failed: {str(e)}"
+
+# Add API endpoint to get mitigation flows
+@require_http_methods(["GET"])
+def get_mitigation_flows(request):
+    global mitigation_flows_buffer, mitigation_stats
+
+    try:
+        flows_list = list(mitigation_flows_buffer)
+        
+        # Most recent 20 flows
+        recent_flows = flows_list[-20:] if len(flows_list) > 20 else flows_list
+        
+        # Reverse to show newest first
+        recent_flows.reverse()
+
+        response_data = {
+            'status': 'success',
+            'flows': recent_flows,
+            'stats': mitigation_stats,
+            'total_flows': len(flows_list),
+            'timestamp': datetime.now().isoformat()
+        }
+
+        return JsonResponse(response_data)
+
+    except Exception as e:
+        logging.error(f"Error fetching mitigation flows: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e),
+            'flows': [],
+            'stats': mitigation_stats
+        })
+
+# Reset mitigation statistics
+@csrf_exempt
+@require_http_methods(["POST"])
+def reset_mitigation_stats(request):
+    global mitigation_stats, mitigation_flows_buffer
+
+    mitigation_stats = {'applied': 0, 'pending': 0, 'failed': 0}
+    mitigation_flows_buffer.clear()
+
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Mitigation statistics reset'
+    })
+
+# Apply mitigation asynchronously to avoid blocking packet capture
+def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
+    try:
+        mitigator = AIMitigation(
+            host='100.65.52.69',
+            username='ran',
+            password='mmuzte123'
+        )
+        mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
+        logger.info(f"Mitigation result: {mitigation_result}")
+    except Exception as e:
+        logger.error(f"Error applying mitigation: {e}")
         
 def get_automation_status(request):
     if request.method == "GET":
