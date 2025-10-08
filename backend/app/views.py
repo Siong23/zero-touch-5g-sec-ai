@@ -1608,17 +1608,17 @@ class AIMitigation:
             ssh.connect(self.host, username=self.username, password=self.password)
 
             mitigation_commands = {
-                'HTTPFlood': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"),
-                'ICMPFlood': ("sudo iptables -A INPUT -p icmp --icmp-type echo-request -j DROP", "Block ICMP echo requests"),
-                'SYNFlood': ("sudo iptables -A BLOCK -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -j DROP", "Drop all SYN packets"),
-                'UDPFlood': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block the source IP temporarily"),
-                'SYNScan': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily"),
-                'TCPConnectScan': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"), 
-                'UDPScan': ("sudo iptables -I INPUT 2 -j prohibited traffic", "Block IP addresses temporarily"),
-                'SlowrateDoS': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily" )
+                'HTTPFlood': ("sudo iptables -I INPUT -s 192.168.1.1 -j DROP", "Block IP source temporarily"),
+                'ICMPFlood': ("sudo iptables -A INPUT -p icmp --icmp-type echo-request -s 192.168.1.1 -j DROP", "Block ICMP echo requests"),
+                'SYNFlood': ("sudo iptables -A INPUT -p tcp --tcp-flags SYN,ACK,FIN,RST SYN -s 192.168.1.1 -j DROP", "Drop all SYN packets"),
+                'UDPFlood': ("sudo iptables -I INPUT -p udp -s 192.168.1.1 -j DROP", "Block UDP traffic temporarily"),
+                'SYNScan': ("sudo iptables -I INPUT -s 192.168.1.1 -j DROP", "Block scanning source temporarily"),
+                'TCPConnectScan': ("sudo iptables -I INPUT -s 192.168.1.1 -j DROP", "Block TCP scanning source temporarily"), 
+                'UDPScan': ("sudo iptables -I INPUT -p udp -s 192.168.1.1 -j DROP", "Block UDP scanning source temporarily"),
+                'SlowrateDoS': ("sudo iptables -I INPUT -s 192.168.1.1 -m connlimit --connlimit-aboce 10 -j DROP", "Rate-limited connections from" )
             }
 
-                        # Try to find matching command with normalized attack type
+            # Try to find matching command with normalized attack type
             command = None
             mitigation = None
             
@@ -1640,14 +1640,37 @@ class AIMitigation:
             
             logger.info(f"Executing mitigation command: {command}")
 
-            # Execute the command
-            stdin, stdout, stderr = ssh.exec_command(command)
+            transport = ssh.get_transport()
+            channel = transport.open_session()
+            channel.get_pty()  # Request a pseudo-terminal
+            channel.exec_command(command)
             
-            # Wait for command to complete
-            exit_status = stdout.channel.recv_exit_status()
-            output = stdout.read().decode('utf-8')
-            error = stderr.read().decode('utf-8')
+            # Wait a moment for sudo prompt
+            time.sleep(0.5)
             
+            # Check if password prompt appears
+            if channel.recv_ready():
+                output = channel.recv(1024).decode('utf-8', errors='ignore')
+                if '[sudo]' in output or 'password' in output.lower():
+                    # Send the sudo password
+                    channel.send(self.password + '\n')
+                    time.sleep(1)
+            
+            # Read the output
+            output = ""
+            error = ""
+            
+            while True:
+                if channel.recv_ready():
+                    output += channel.recv(4096).decode('utf-8', errors='ignore')
+                if channel.recv_stderr_ready():
+                    error += channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                if channel.exit_status_ready():
+                    break
+                time.sleep(0.1)
+            
+            exit_status = channel.recv_exit_status()
+            channel.close()
             ssh.close()
             
             if exit_status == 0:
