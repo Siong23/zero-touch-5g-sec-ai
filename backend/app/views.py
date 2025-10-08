@@ -241,190 +241,158 @@ class NetworkTrafficCapture:
         global capture_active, live_flows_buffer, flow_stats, mitigation_flows_buffer
 
         try:
-            logger.info(f"Starting live monitoring on {self.capture_interface}")
-            
-            # SSH connection
+            import asyncio
+            # Ensure async features can work in this thread
+            try:
+                asyncio.set_event_loop(asyncio.new_event_loop())
+            except Exception:
+                pass
+
+            logger.info(f"[MONITOR] Starting live monitoring on {self.capture_interface}")
+
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=30)
-            
-            # Test if interface exists and has traffic
+
+            # Verify interface availability
             test_cmd = f"sudo ip link show {self.capture_interface}"
             stdin, stdout, stderr = ssh.exec_command(test_cmd)
             test_output = stdout.read().decode('utf-8')
             test_error = stderr.read().decode('utf-8')
-            
             if test_error or 'does not exist' in test_output.lower():
                 logger.error(f"Interface {self.capture_interface} not found or not accessible")
-                logger.error(f"Error: {test_error}")
                 ssh.close()
                 return
-            
-            logger.info(f"Interface check passed: {test_output[:100]}")
-            
-            # Use unbuffered tcpdump with explicit packet count for testing
+
+            # Start tcpdump (unbuffered, continuous output)
             tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
-            
-            logger.info(f"Executing: {tcpdump_cmd}")
+            logger.info(f"[MONITOR] Executing: {tcpdump_cmd}")
 
             transport = ssh.get_transport()
             channel = transport.open_session()
-            
-            # Set proper terminal settings
             channel.get_pty(term='vt100', width=200, height=24)
             channel.exec_command(tcpdump_cmd)
-            
-            # ISend sudo password if needed (adjust if passwordless sudo is configured)
+
+            # Send sudo password if prompted
             time.sleep(0.5)
             if channel.recv_ready():
                 prompt = channel.recv(1024).decode('utf-8', errors='ignore')
-                logger.debug(f"Initial output: {prompt[:200]}")
                 if '[sudo]' in prompt or 'password' in prompt.lower():
                     channel.send('mmuzte123\n')
                     time.sleep(1)
-            
+
             packet_count = 0
             buffer = ""
             line_count = 0
             last_data_time = time.time()
-            no_data_timeout = 30  # seconds
-            
-            logger.info("Reading tcpdump output...")
-            
-            # More aggressive reading with better timeout handling
-            channel.settimeout(0.5)  # Shorter timeout for more responsive checking
-            
+            idle_timeout = 60  # seconds before considering it idle
+            reconnect_delay = 5
+
+            channel.settimeout(2.0)  # longer read timeout
+
+            logger.info("[MONITOR] Reading tcpdump output...")
+
             while capture_active and self.live_monitoring:
                 try:
                     current_time = time.time()
 
-                    # Log status every 10 seconds
-                    if packet_count > 0 and packet_count % 100 == 0:
-                        logger.info(f"[MONITOR] Status check - Active: {capture_active}, Live: {self.live_monitoring}")
-                        logger.info(f"[MONITOR] Packets: {packet_count}, Buffer size: {len(live_flows_buffer)}")
-                        logger.info(f"[MONITOR] Stats: {flow_stats}")
-                    
-                    # Check if have gone too long without data
-                    if current_time - last_data_time > no_data_timeout:
-                        logger.warning(f"No data received for {no_data_timeout} seconds")
-                        if packet_count == 0:
-                            logger.error("No packets captured at all")
-                        break
-                    
-                    # Try multiple ways to read data
-                    data_received = False
-                    
+                    # Attempt to read stdout
                     if channel.recv_ready():
                         data = channel.recv(4096).decode('utf-8', errors='ignore')
                         if data:
                             buffer += data
-                            data_received = True
                             last_data_time = current_time
-                    
-                    # Check stderr
+
+                    # Attempt to read stderr
                     if channel.recv_stderr_ready():
-                        stderr_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
-                        if stderr_data:
-                            logger.debug(f"STDERR: {stderr_data[:200]}")
-                            # Some tcpdump versions output to stderr
-                            buffer += stderr_data
-                            data_received = True
+                        err_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                        if err_data:
+                            buffer += err_data
                             last_data_time = current_time
-                    
-                    if not data_received:
-                        # No data available, check if process exited
-                        if channel.exit_status_ready():
-                            exit_status = channel.recv_exit_status()
-                            logger.info(f"tcpdump process exited with status: {exit_status}")
-                            break
-                        continue
-                    
+
                     # Process complete lines
                     while '\n' in buffer:
                         line, buffer = buffer.split('\n', 1)
                         line = line.strip()
-                        line_count += 1
-                        
-                        # Better filtering and logging
                         if not line:
                             continue
-                        
-                        # Log first few lines for debugging
-                        if line_count <= 5:
-                            logger.info(f"Line {line_count}: {line[:150]}")
-                        
-                        # Skip tcpdump meta-output
+
+                        # Ignore meta lines
                         if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
-                            logger.debug(f"Meta line: {line[:100]}")
                             continue
-                        
-                        # This should be an actual packet line
+
+                        line_count += 1
                         packet_count += 1
-                        
-                        # Parse the tcpdump line and create flow
+
                         flow = self.parse_tcpdump_line(line, packet_count)
-                        
                         if flow:
-                            # Add to buffer
                             live_flows_buffer.append(flow)
-                            
-                            # Update stats
                             classification = flow.get('classification', 'benign')
+
                             if classification == 'malicious':
                                 flow_stats['malicious'] += 1
-
                                 attack_type = flow.get('attack_type', 'Unknown')
                                 target_ip = flow.get('src_ip', 'Unknown')
 
-                                logger.info(f"Malicious flow detected: {attack_type} from {target_ip}")
-                    
-                                # Apply mitigation in background thread
-                                mitigation_thread = threading.Thread(
+                                logger.info(f"[ALERT] Malicious flow detected: {attack_type} from {target_ip}")
+
+                                threading.Thread(
                                     target=self._apply_mitigation_async,
                                     args=(attack_type, target_ip, flow),
                                     daemon=True
-                                )
-                                mitigation_thread.start()
+                                ).start()
 
                             elif classification == 'suspicious':
                                 flow_stats['suspicious'] += 1
                             else:
                                 flow_stats['benign'] += 1
-                            
-                            # Log every 10th packet to avoid spam
-                            if packet_count % 10 == 0:
-                                logger.info(f"Captured {packet_count} packets, buffer size: {len(live_flows_buffer)}")
-                        else:
-                            # Log parsing failures for first few packets
-                            if packet_count <= 10:
-                                logger.warning(f"Failed to parse line {packet_count}: {line[:100]}")
-                
+
+                        if packet_count % 10 == 0:
+                            logger.info(f"[MONITOR] {packet_count} packets, Stats={flow_stats}")
+
+                    # Check for idle timeout
+                    if current_time - last_data_time > idle_timeout:
+                        logger.warning("[MONITOR] No data received for a while — reconnecting tcpdump...")
+                        break  # Exit to reconnect loop
+
+                    # Check if tcpdump exited
+                    if channel.exit_status_ready():
+                        exit_status = channel.recv_exit_status()
+                        logger.warning(f"[MONITOR] tcpdump exited with status {exit_status}")
+                        break
+
+                    time.sleep(0.2)
+
                 except socket.timeout:
                     continue
                 except Exception as e:
-                    logger.error(f"Error reading packet: {e}")
+                    logger.error(f"[MONITOR] Error reading packet: {e}")
                     import traceback
                     logger.error(traceback.format_exc())
                     break
-            
-            # Cleanup
+
+            # Cleanup connection
             try:
                 channel.close()
             except:
                 pass
-            
             ssh.close()
-            logger.info(f"Live monitoring stopped. Total packets captured: {packet_count}, Flows created: {len(live_flows_buffer)}")
-            
+            logger.info(f"[MONITOR] Live monitoring stopped. Total packets: {packet_count}")
+
+            # Auto-reconnect if monitoring should continue
+            if capture_active and self.live_monitoring:
+                logger.info(f"[MONITOR] Restarting monitoring after {reconnect_delay}s delay...")
+                time.sleep(reconnect_delay)
+                self.live_monitor_packets()
+
         except Exception as e:
-            logger.error(f"Error during live monitoring: {e}")
+            logger.error(f"[MONITOR] Fatal error during live monitoring: {e}")
             import traceback
             logger.error(traceback.format_exc())
-        
         finally:
             capture_active = False
             self.live_monitoring = False
-            logger.info("Live monitoring cleanup complete")
+            logger.info("[MONITOR] Cleanup complete")
 
     def parse_tcpdump_line(self, line, packet_count):
         try:
@@ -1737,6 +1705,19 @@ class AIMitigation:
                 mitigation_stats['failed'] += 1
             
             return f"Mitigation failed: {str(e)}"
+    
+    # Apply mitigation asynchronously to avoid blocking packet capture
+    def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
+        try:
+            mitigator = AIMitigation(
+                host='100.65.52.69',
+                username='ran',
+                password='mmuzte123'
+            )
+            mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
+            logger.info(f"Mitigation result: {mitigation_result}")
+        except Exception as e:
+            logger.error(f"Error applying mitigation: {e}")
 
 # Add API endpoint to get mitigation flows
 @require_http_methods(["GET"])
@@ -1786,19 +1767,6 @@ def reset_mitigation_stats(request):
         'status': 'success',
         'message': 'Mitigation statistics reset'
     })
-
-# Apply mitigation asynchronously to avoid blocking packet capture
-def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
-    try:
-        mitigator = AIMitigation(
-            host='100.65.52.69',
-            username='ran',
-            password='mmuzte123'
-        )
-        mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
-        logger.info(f"Mitigation result: {mitigation_result}")
-    except Exception as e:
-        logger.error(f"Error applying mitigation: {e}")
         
 def get_automation_status(request):
     if request.method == "GET":
