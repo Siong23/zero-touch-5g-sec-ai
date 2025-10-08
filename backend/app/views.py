@@ -68,6 +68,7 @@ attack_type = None
 mitigation = None
 capture_thread = None
 capture_active = False
+capture_mode = None
 latest_capture_file = None
 
 class AutomationManager:
@@ -153,7 +154,7 @@ class NetworkTrafficCapture:
 
     # Start live monitoring without saving to file
     def start_live_monitoring_only(self):
-        global capture_active, live_flows_buffer, flow_stats
+        global capture_active, live_flows_buffer, flow_stats, capture_mode
 
         if capture_active:
             logger.warning("Capture already running")
@@ -162,53 +163,47 @@ class NetworkTrafficCapture:
         try:
             # Pre-flight checks
             logger.info("Starting live monitoring pre-flight checks...")
+
+            test_ssh = paramiko.client.SSHClient()
+            test_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            test_ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=10)
             
-            # Test SSH connection first
-            try:
-                test_ssh = paramiko.client.SSHClient()
-                test_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                test_ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=10)
-                
-                # Test if tcpdump is available
-                stdin, stdout, stderr = test_ssh.exec_command("which tcpdump")
-                tcpdump_path = stdout.read().decode('utf-8').strip()
-                
-                if not tcpdump_path:
-                    logger.error("tcpdump not found on remote system")
-                    test_ssh.close()
-                    return False
-                
-                logger.info(f"tcpdump found at: {tcpdump_path}")
-                
-                # Test interface
-                stdin, stdout, stderr = test_ssh.exec_command(f"sudo ip link show {self.capture_interface}")
-                output = stdout.read().decode('utf-8')
-                error = stderr.read().decode('utf-8')
-                
-                if error or 'does not exist' in output.lower():
-                    logger.error(f"Interface {self.capture_interface} not found: {error}")
-                    test_ssh.close()
-                    return False
-                
-                logger.info(f"Interface {self.capture_interface} is available")
+            # Test if tcpdump is available
+            stdin, stdout, stderr = test_ssh.exec_command("which tcpdump")
+            tcpdump_path = stdout.read().decode('utf-8').strip()
+            
+            if not tcpdump_path:
+                logger.error("tcpdump not found on remote system")
                 test_ssh.close()
-                
-            except Exception as e:
-                logger.error(f"Pre-flight check failed: {e}")
                 return False
             
+            logger.info(f"tcpdump found at: {tcpdump_path}")
+            
+            # Test interface
+            stdin, stdout, stderr = test_ssh.exec_command(f"sudo ip link show {self.capture_interface}")
+            output = stdout.read().decode('utf-8')
+            error = stderr.read().decode('utf-8')
+            
+            if error or 'does not exist' in output.lower():
+                logger.error(f"Interface {self.capture_interface} not found: {error}")
+                test_ssh.close()
+                return False
+            
+            logger.info(f"Interface {self.capture_interface} is available")
+            test_ssh.close()
+
+            capture_mode = 'live_monitoring'
             capture_active = True
             self.live_monitoring = True
 
-            # Clear previous data
             live_flows_buffer.clear()
             flow_stats['benign'] = 0
             flow_stats['suspicious'] = 0
             flow_stats['malicious'] = 0
-            
+
             logger.info(f"Starting live monitor thread on interface {self.capture_interface}")
             
-            # Start monitoring in a separate thread
+                        # Start monitoring in a separate thread
             monitor_thread = threading.Thread(
                 target=self.live_monitor_packets, 
                 daemon=True,
@@ -227,14 +222,16 @@ class NetworkTrafficCapture:
                 logger.error("[FAILED] Monitor thread died immediately")
                 capture_active = False
                 self.live_monitoring = False
+                capture_mode = None
                 return False
-            
+
         except Exception as e:
             logger.error(f"[ERROR] Error starting live monitoring: {e}")
             import traceback
             logger.error(traceback.format_exc())
             capture_active = False
             self.live_monitoring = False
+            capture_mode = None
             return False
     
     # Monitor packets in real time without saving
@@ -264,7 +261,6 @@ class NetworkTrafficCapture:
             logger.info(f"Interface check passed: {test_output[:100]}")
             
             # Use unbuffered tcpdump with explicit packet count for testing
-            # Remove -l (line buffering) and add -U (unbuffered), add packet limit for testing
             tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
             
             logger.info(f"Executing: {tcpdump_cmd}")
@@ -299,15 +295,18 @@ class NetworkTrafficCapture:
             while capture_active and self.live_monitoring:
                 try:
                     current_time = time.time()
+
+                    # Log status every 10 seconds
+                    if packet_count > 0 and packet_count % 100 == 0:
+                        logger.info(f"[MONITOR] Status check - Active: {capture_active}, Live: {self.live_monitoring}")
+                        logger.info(f"[MONITOR] Packets: {packet_count}, Buffer size: {len(live_flows_buffer)}")
+                        logger.info(f"[MONITOR] Stats: {flow_stats}")
                     
                     # Check if have gone too long without data
                     if current_time - last_data_time > no_data_timeout:
                         logger.warning(f"No data received for {no_data_timeout} seconds")
                         if packet_count == 0:
-                            logger.error("No packets captured at all - possible issues:")
-                            logger.error("1. No traffic on interface")
-                            logger.error("2. Permission issues with tcpdump")
-                            logger.error("3. Interface not in promiscuous mode")
+                            logger.error("No packets captured at all")
                         break
                     
                     # Try multiple ways to read data
@@ -590,22 +589,25 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error starting packet capture: {e}")
             capture_active = False
-            self.live_monitoring = False
             return False, None
 
     def _capture_with_analysis(self, duration, filepath, attack_type, target_ip):
         # Start packet capture and analysis
-        global capture_active, live_flows_buffer, flow_stats
+        global capture_active, live_flows_buffer, flow_stats, captture_mode
 
         ssh = None
         channel = None
         success = False
 
         try:
-            live_flows_buffer.clear()
-            flow_stats['benign'] = 0
-            flow_stats['malicious'] = 0
-            flow_stats['suspicious'] = 0
+            if capture_mode == 'dedicated_capture':
+                live_flows_buffer.clear()
+                flow_stats['benign'] = 0
+                flow_stats['malicious'] = 0
+                flow_stats['suspicious'] = 0
+                logger.info("Buffer cleared for dedicated capture")
+            else:
+                logger.info("Preserving buffer - live monitoring mode active")
 
             capture_filter = self._get_capture_filter(attack_type, target_ip)
 
@@ -741,8 +743,9 @@ class NetworkTrafficCapture:
             success = False
         
         finally:
-            capture_active = False
-            self.live_monitoring = False
+            if capture_mode == 'dedicated_capture':
+                capture_active = False
+                self.live_monitoring = False
             logger.info(f"Capture cleanup complete. Total flows in buffer: {len(live_flows_buffer)}")
 
     def _get_capture_filter(self, attack_type, target_ip):
@@ -1113,7 +1116,11 @@ def get_live_flows(request):
     try:
         flows_list = list(live_flows_buffer)
 
-        logger.debug(f"Flows buffer size: {len(flows_list)}, Stats: {flow_stats}")
+        logger.debug(f"[FLOWS API] Request received")
+        logger.debug(f"[FLOWS API] Buffer size: {len(flows_list)}")
+        logger.debug(f"[FLOWS API] Stats: {flow_stats}")
+        logger.debug(f"[FLOWS API] Capture active: {capture_active}")
+        logger.debug(f"[FLOWS API] Connection status: {connection_status}")
 
         # Display most recent 20 flows
         recent_flows = flows_list[-20:] if len(flows_list)>20 else flows_list
@@ -1126,13 +1133,20 @@ def get_live_flows(request):
         else:
             logger.warning("No flows available to return")
 
+        response_data = {
+                    'status': 'success',
+                    'flows': recent_flows,
+                    'stats': flow_stats,
+                    'total_flows': len(flows_list),
+                    'connection_status': connection_status,
+                    'capture_active': capture_active,
+                    'timestamp': datetime.now().isoformat()
+                }
 
-        return JsonResponse({'status':'success',
-                            'flows': recent_flows,
-                            'stats': flow_stats,
-                            'total_flows': len(flows_list),
-                            'connection_status': connection_status})
-    
+        logger.debug(f"[FLOWS API] Response: {len(recent_flows)} flows, stats={flow_stats}")
+
+        return JsonResponse(response_data)
+
     except Exception as e:
         logging.error(f"Error fetching live flows: {e}")
         import traceback
@@ -1141,7 +1155,8 @@ def get_live_flows(request):
                              'message': str(e),
                              'flows': [],
                              'stats': flow_stats,
-                             'connection_status': connection_status})
+                             'connection_status': connection_status,
+                             'capture_active': False})
     
 # Check if network monitoring is active or not
 @require_http_methods(["GET"])
@@ -1695,18 +1710,21 @@ def start_attack(request):
         # Check if live monitoring is active
         if capture_active and network_capture.live_monitoring:
             logger.info("Live monitoring is active. Using existing capture session for attack simulation.")
+
+            capture_mode = 'live_monitoring'
             
             # Don't start a new capture, just use the live monitoring
-            # Mark that we're now in "attack mode"
             cache.set('attack_simulation_active', {
                 'attack_type': attack_type,
                 'target_ip': target_ip,
-                'start_time': datetime.now().isoformat()
+                'start_time': datetime.now().isoformat(),
+                'mode': 'live_monitoring'
             }, timeout=300)
             
             automation_manager.complete_step('packet_capture', {
                 'status': 'Using live monitoring',
-                'file_path': 'live_monitoring'
+                'file_path': 'live_monitoring',
+                'mode': 'live_monitoring'
             })
             
             # Start attack simulation
@@ -1731,6 +1749,8 @@ def start_attack(request):
             # Original behavior: Start dedicated capture for attack
             logger.info("Starting dedicated packet capture for attack simulation...")
             
+            capture_mode = 'dedicated_capture'
+
             capture_success, capture_file = network_capture.start_capture_with_auto_analysis(
                 duration=60, 
                 attack_type=attack_type, 
@@ -1739,7 +1759,7 @@ def start_attack(request):
 
             if capture_success:
                 logger.info("Packet capture thread started.")
-                automation_manager.complete_step('packet_capture', {'file_path': capture_file})
+                automation_manager.complete_step('packet_capture', {'file_path': capture_file, 'mode': 'dedicated_capture'})
                 time.sleep(10)
             
                 # Start attack simulation
@@ -1753,7 +1773,8 @@ def start_attack(request):
                         'attack_type': attack_type,
                         'target_ip': target_ip,
                         'timestamp': datetime.now().isoformat(),
-                        'automation_id': id(automation_manager.current_task)
+                        'automation_id': id(automation_manager.current_task),
+                        'mode': 'dedicated_capture'
                     }, timeout=7200)
 
                     # Schedule ML automation
