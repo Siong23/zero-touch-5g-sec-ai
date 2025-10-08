@@ -787,7 +787,7 @@
                     <i class="fas fa-check-circle"></i> Ready for simulation
                 </span>
 
-                <form method="post" action="{% url 'start_attack' %}">
+                <form id="attack-simulation-form" method="post" action="{% url 'start_attack' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="attack_type">Choose preferred attack type:</label>
@@ -1525,6 +1525,90 @@
                 }, false);
             });
         });
+
+        // Handle attack simulation form submission WITHOUT page reload
+        document.addEventListener('DOMContentLoaded', function() {
+            const attackForm = document.getElementById('attack-simulation-form');
+            
+            if (attackForm) {
+                attackForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // CRITICAL: Prevent page reload
+                    
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    
+                    // Disable button and show loading state
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Attack...';
+                    }
+                    
+                    // Send AJAX request
+                    fetch('/start_attack/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            showNotification(data.message || 'Attack simulation started successfully', 'success');
+                            
+                            // Check monitoring mode
+                            if (data.mode === 'live_monitoring') {
+                                console.log('Using live monitoring mode');
+                            } else {
+                                console.log('Using dedicated capture mode');
+                            }
+                        } else {
+                            showNotification(data.message || 'Failed to start attack simulation', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Failed to start attack simulation', 'error');
+                    })
+                    .finally(() => {
+                        // Re-enable button
+                        if (submitBtn) {
+                            setTimeout(() => {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<i class="fas fa-play"></i> Start Attack Simulation';
+                            }, 2000);
+                        }
+                    });
+                });
+            }
+            
+            // Helper function to get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            // Helper function to show notifications
+            function showNotification(message, type = 'success') {
+                // Use your existing showNotification if available, or create a simple one
+                if (window.trafficMonitor && window.trafficMonitor.showNotification) {
+                    window.trafficMonitor.showNotification(message, type);
+                } else {
+                    alert(message);
+                }
+            }
+        });
+
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>

@@ -1600,6 +1600,9 @@ class AIMitigation:
     
     def apply_mitigation(self, attack_type, target_ip):
         try:
+            # Normalize attack type (remove spaces and make consistent)
+            attack_type_normalized = attack_type.replace(' ', '').replace('Attack', '')
+
             ssh = paramiko.client.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(self.host, username=self.username, password=self.password)
@@ -1615,26 +1618,58 @@ class AIMitigation:
                 'SlowrateDoS': ("sudo iptables -I INPUT 2 -j prohibited_traffic", "Block IP source temporarily" )
             }
 
-            command, mitigation = mitigation_commands.get(attack_type, (None, "No mitigation strategy available"))
+                        # Try to find matching command with normalized attack type
+            command = None
+            mitigation = None
+            
+            # Direct match
+            if attack_type_normalized in mitigation_commands:
+                command, mitigation = mitigation_commands[attack_type_normalized]
+            else:
+                # Fuzzy match - check if any key is contained in attack_type
+                for key in mitigation_commands.keys():
+                    if key.lower() in attack_type.lower().replace(' ', ''):
+                        command, mitigation = mitigation_commands[key]
+                        logger.info(f"Fuzzy matched '{attack_type}' to '{key}'")
+                        break
 
-            if command:
-                stdin, stdout, stderr = ssh.exec_command(command)
-                output = stdout.readlines()
+            if not command:
+                logger.warning(f"No mitigation strategy found for attack type: {attack_type}")
                 ssh.close()
+                return f"No mitigation strategy available for {attack_type}"
+            
+            logger.info(f"Executing mitigation command: {command}")
+
+            # Execute the command
+            stdin, stdout, stderr = ssh.exec_command(command)
+            
+            # Wait for command to complete
+            exit_status = stdout.channel.recv_exit_status()
+            output = stdout.read().decode('utf-8')
+            error = stderr.read().decode('utf-8')
+            
+            ssh.close()
+            
+            if exit_status == 0:
+                logger.info(f"Mitigation applied successfully: {mitigation}")
                 return mitigation
             else:
-                ssh.close()
-                return mitigation
+                logger.error(f"Mitigation command failed: {error}")
+                return f"Mitigation attempted but failed: {error[:100]}"
 
         except paramiko.AuthenticationException:
             logger.error("SSH Authentication failed for mitigation.")
-            return "SSH Authentication failed."
+            return "Mitigation failed: SSH Authentication error"
+        
         except paramiko.SSHException as e:
             logger.error(f"SSH connection error for mitigation: {e}")
-            return "SSH connection error."
+            return f"Mitigation failed: SSH connection error - {str(e)}"
+        
         except Exception as e:
             logger.error(f"Mitigation error: {e}")
-            return f"Mitigation error: {str(e)}"
+            import traceback
+            logger.error(traceback.format_exc())
+            return f"Mitigation failed: {str(e)}"
         
 def get_automation_status(request):
     if request.method == "GET":
@@ -1740,10 +1775,23 @@ def start_attack(request):
                     args=(attack_type, target_ip, 60),  # 60 second duration
                     daemon=True
                 ).start()
+
+                return JsonResponse({
+                    'status': 'success',
+                    'message': attack_status,
+                    'attack_type': attack_type,
+                    'target_ip': target_ip,
+                    'mode': 'live_monitoring'
+                })
+            
             else:
                 attack_status = "Failed to inject attack"
                 automation_manager.status = "Failed"
                 logger.error("Attack simulation failed.")
+                return JsonResponse({
+                    'status': 'error',
+                    'message': attack_status
+                })
         
         else:
             # Original behavior: Start dedicated capture for attack
@@ -1783,16 +1831,37 @@ def start_attack(request):
                         args=(capture_file, attack_type, target_ip),
                         daemon=True
                     ).start()
+
+                    return JsonResponse({
+                        'status': 'success',
+                        'message': attack_status,
+                        'attack_type': attack_type,
+                        'target_ip': target_ip,
+                        'capture_file': capture_file,
+                        'mode': 'dedicated_capture'
+                    })
+                
                 else:
                     attack_status = "Failed to inject attack"
                     automation_manager.status = "Failed"
                     logger.error("Attack simulation failed.")
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': attack_status
+                    })
             else:
                 attack_status = "Failed to start packet capture"
                 automation_manager.status = "Failed"
                 logger.error("Failed to initialize packet capture.")
+                return JsonResponse({
+                        'status': 'error',
+                        'message': attack_status
+                    })
 
-    return HttpResponseRedirect(reverse('home'))
+    return JsonResponse({
+                        'status': 'error',
+                        'message': 'nvalid request method'
+                    })
 
 # ML automation that works with live monitoring data instead of capture file
 def schedule_ml_automation_from_live(attack_type, target_ip, duration):
@@ -1883,6 +1952,7 @@ def schedule_ml_automation_from_live(attack_type, target_ip, duration):
         if detection == "Benign" or detection == "Normal Traffic":
             mitigation = "No action needed"
         else:
+            logger.info(f"Applying mitigation for {detection} on target {target_ip}")
             mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
             mitigation = mitigator.apply_mitigation(detection, target_ip)
         
@@ -2099,6 +2169,7 @@ def auto_analyze_captured_data(capture_file, attack_type, target_ip):
             mitigation = "No action needed"
 
         else:  
+            logger.info(f"Applying mitigation for {detection} on target {target_ip}")
             mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
             mitigation = mitigator.apply_mitigation(detection, target_ip='192.168.1.1')
 
