@@ -14,3 +14,408 @@ ERROR 2025-09-22 03:14:29,559 views 7 132981726641024 Error loading model: Could
 ERROR 2025-09-22 03:27:12,126 views 19 132981726641024 API data processing error: timed out
 ERROR 2025-09-22 03:31:17,278 views 9 126780123024256 Error loading model: Could not interpret initializer identifier: {'module': 'keras.initializers', 'class_name': 'Orthogonal', 'config': {'seed': None, 'gain': 1.0}, 'registered_name': None, 'shared_object_id': 139100332595728}
 ERROR 2025-09-22 03:31:37,272 views 17 126780123024256 Error loading model: Could not interpret initializer identifier: {'module': 'keras.initializers', 'class_name': 'Orthogonal', 'config': {'seed': None, 'gain': 1.0}, 'registered_name': None, 'shared_object_id': 139100332595728}
+ERROR 2025-10-08 21:57:25,171 views 15 133520357828288 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,171 views 15 133520349435584 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,177 views 15 133520349435584 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,177 views 15 133520357828288 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,429 views 15 133518235522752 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,430 views 15 133518738822848 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,431 views 15 133518780786368 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,432 views 15 133519275693760 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,434 views 15 133518235522752 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,434 views 15 133518772393664 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:57:25,435 views 15 133518738822848 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,436 views 15 133518780786368 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,437 views 15 133519275693760 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:57:25,439 views 15 133518772393664 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,230 views 13 136454558688960 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,231 views 13 136453501732544 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,231 views 13 136454567081664 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,233 views 13 136454130890432 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,233 views 13 136453526910656 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,235 views 13 136454114105024 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:13,246 views 13 136454558688960 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,248 views 13 136454567081664 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,248 views 13 136453501732544 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,249 views 13 136454130890432 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,250 views 13 136453526910656 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:13,253 views 13 136454114105024 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 21:59:33,477 views 13 136455171061440 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 21:59:33,479 views 13 136455171061440 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
+ERROR 2025-10-08 22:00:11,103 views 13 136454088926912 Mitigation error: Error reading SSH protocol banner
+ERROR 2025-10-08 22:00:11,105 views 13 136454088926912 Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2363, in _check_banner
+    buf = self.packetizer.readline(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 395, in readline
+    buf += self._read_timeout(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/paramiko/packet.py", line 665, in _read_timeout
+    raise EOFError()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/app/views.py", line 1622, in apply_mitigation
+    ssh.connect(self.host, username=self.username, password=self.password)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/client.py", line 449, in connect
+    t.start_client(timeout=timeout)
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 768, in start_client
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2179, in run
+    self._check_banner()
+  File "/usr/local/lib/python3.11/site-packages/paramiko/transport.py", line 2367, in _check_banner
+    raise SSHException(
+paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+
