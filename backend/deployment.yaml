@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegis5g-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aegis5g
+  template:
+    metadata:
+      labels:
+        app: aegis5g
+    spec:
+      containers:
+      - name: aegis5g
+        image: prawnfairy/aegis5g-app:latest
+        ports:
+        - containerPort: 8000
