@@ -1021,6 +1021,19 @@ class NetworkTrafficCapture:
         except Exception as e:
             logger.error(f"Error analyzing capture file: {e}")
             return None
+        
+    # Apply mitigation asynchronously to avoid blocking packet capture
+    def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
+        try:
+            mitigator = AIMitigation(
+                host='100.65.52.69',
+                username='ran',
+                password='mmuzte123'
+            )
+            mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
+            logger.info(f"Mitigation result: {mitigation_result}")
+        except Exception as e:
+            logger.error(f"Error applying mitigation: {e}")
 
 def chrome_devtools_json(request):
     return JsonResponse({}, status=200)   
@@ -1705,19 +1718,6 @@ class AIMitigation:
                 mitigation_stats['failed'] += 1
             
             return f"Mitigation failed: {str(e)}"
-    
-    # Apply mitigation asynchronously to avoid blocking packet capture
-    def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
-        try:
-            mitigator = AIMitigation(
-                host='100.65.52.69',
-                username='ran',
-                password='mmuzte123'
-            )
-            mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
-            logger.info(f"Mitigation result: {mitigation_result}")
-        except Exception as e:
-            logger.error(f"Error applying mitigation: {e}")
 
 # Add API endpoint to get mitigation flows
 @require_http_methods(["GET"])
@@ -2179,32 +2179,85 @@ def auto_load_ml_model():
         model_file_found = False
         actual_model_path = None
 
+        logger.info(f"Looking for model at primary path: {model_path}")
+        logger.info(f"Primary path exists: {os.path.exists(model_path)}")
+
         if os.path.exists(model_path):
             model_file_found = True
             actual_model_path = model_path
+            logger.info(f"Found model at primary path: {model_path}")
         
         else:
-            for alt_path in alternative_path:
+            logger.warning(f"Model not found at primary path: {model_path}")
+            logger.info(f"Checking {len(alternative_path)} alternative path...")
+            for i, alt_path in enumerate(alternative_path):
+                logger.info(f"  Checking path {i+1}: {alt_path}")
+                logger.info(f"  Path exists: {os.path.exists(alt_path)}")
+
                 if os.path.exists(alt_path):
                     model_file_found = True
                     actual_model_path = alt_path
+                    logger.info(f"Found model at alternative path: {alt_path}")
                     break
 
         if model_file_found:
-            model = joblib.load(actual_model_path)
+            logger.info(f"Loading model from: {actual_model_path}")
+            loaded_model = joblib.load(actual_model_path)
+
+            if loaded_model is None:
+                logger.error("Model loaded but is None!")
+                ml_status = "Failed to load ML model (model is None)."
+                model = None
+                return False
+
+            model = loaded_model
+
+            logger.info(f"Model loaded successfully!")
+            logger.info(f"Model type: {type(model)}")
+            logger.info(f"Model has predict method: {hasattr(model, 'predict')}")
+
             logger.info("Model loaded successfully!")
             ml_status = "ML model is available and ready to be used."
             accuracy = "91.01%"
             return True
         
         else:
-            logger.error(f"Error loading model: {e}")
-            ml_status = "Failed to load ML model."
+            logger.error(f"Model file not found in any location. Searched paths:")
+            logger.error(f"  - {model_path}")
+
+            for alt_path in alternative_path:
+                logger.error(f"  - {alt_path}")
+            
+            try:
+                app_dir = os.path.join(settings.BASE_DIR, 'app')
+                model_dir = os.path.join(app_dir, 'model')
+                
+                logger.error(f"Contents of {app_dir}:")
+                if os.path.exists(app_dir):
+                    for item in os.listdir(app_dir):
+                        logger.error(f"  - {item}")
+                else:
+                    logger.error("  Directory doesn't exist!")
+                
+                logger.error(f"Contents of {model_dir}:")
+                if os.path.exists(model_dir):
+                    for item in os.listdir(model_dir):
+                        logger.error(f"  - {item}")
+                else:
+                    logger.error("  Directory doesn't exist!")
+            except Exception as list_error:
+                logger.error(f"Error listing directories: {list_error}")
+            
+            ml_status = "Failed to load ML model (file not found)."
+            model = None
             return False
 
     except Exception as e:
         logger.error(f"Error loading model: {e}")
-        ml_status = "Failed to load ML model."
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        ml_status = f"Failed to load ML model: {str(e)}"
+        model = None
         return False
 
 def auto_analyze_captured_data(capture_file, attack_type, target_ip):
@@ -2497,24 +2550,44 @@ def home(request):
 
                         os.makedirs(os.path.dirname(temp_path), exist_ok=True)
 
-                        with open(temp_filename, "wb") as f:
+                        with open(temp_path, "wb") as f:
                             f.write(file_content)
 
                         try:
-
+                            logger.info(f"Reading PCAP file {temp_path}")
                             packets = rdpcap(temp_path)
 
-                            if not isinstance(packets, (list, scapy.PacketList)):
-                                raise ValueError("PCAP file did not return a list of packets.")
+                            if packets is None:
+                                raise ValueError("PCAP file could not be read.")
 
-                            if len(packets) == 0:
+                            total_packets = len(packets)
+                            logger.info(f"Total packets in file: {total_packets}")
+
+                            if total_packets == 0:
                                 detection = "Error: No packets of data found."
                                 attack_level = "N/A"
                                 accuracy = "N/A"
                                 mitigation = "N/A"
+
+                                if os.path.exists(temp_path):
+                                    os.remove(temp_path)
+
                                 return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
                             
-                            packet = packets[0]
+                            logger.info("Searching for first valid IP packet...")
+                            packet = None
+
+                            # Try first 100 packets to find a valid IP packet
+                            for i, pkt in enumerate(packets[:100]):
+                                if pkt.haslayer(IP):
+                                    packet = pkt
+                                    logger.info(f"Found valid IP packet at index {i}")
+                                    break
+                            
+                            if packet is None:
+                                raise ValueError("No valid IP packets found in first 100 packets")
+                            
+                            logger.info("Extracting features from packet...")
                             
                             capture_instance = NetworkTrafficCapture()
                             features = capture_instance.extract_features(packet)
@@ -2549,18 +2622,25 @@ def home(request):
                                 data = data[:14]
                                 while len(data) < 14:
                                     data.append(0.0)
+
+                                logger.info(f"Features extracted successfully: {len(data)} features")
+
                             else:
                                 raise ValueError("Could not extract feature")
 
                             if os.path.exists(temp_path):
                                 os.remove(temp_path)
+                                logger.info(f"Cleaned up temp file: {temp_path}")
            
                         except Exception as e:
                             logger.error(f"Error processing PCAP file: {e}")
+                            import traceback
+                            logger.error(traceback.format_exc())
                             detection = f"Error: Processing file failed - {str(e)}"
                             attack_level = "N/A"
                             accuracy = "N/A"
                             mitigation = "N/A"
+
                             if os.path.exists(temp_path):
                                 os.remove(temp_path)
                             return render(request, 'index.html', {'form': form, 'detection': detection, 'attack_level': attack_level, 'accuracy': accuracy, 'mitigation': mitigation, 'connection_status': connection_status, 'attack_status': attack_status, 'ml_status': ml_status, 'attack_type': attack_type})
@@ -2620,6 +2700,7 @@ def home(request):
                 logger.debug(f"Data array dtype: {data_array.dtype}")
 
                 # Make prediction
+                
                 prediction = model.predict(data_array)
                 logger.debug(f"Model prediction: {prediction}")
 
