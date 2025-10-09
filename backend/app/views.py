@@ -2490,6 +2490,30 @@ def home(request):
     if request.method == 'POST':
         form = CapturedDataForm(request.POST, request.FILES)
         if form.is_valid():
+            if model is None:
+                logger.info("Model not loaded. Attempting to auto-load model...")
+                model_loaded = auto_load_ml_model()
+                if not model_loaded:
+                    logger.error("Failed to load model for manual upload")
+                    messages.error(request, "ML model is not loaded. Please start the ML model first.")
+                    detection = "Error: ML model not loaded!"
+                    attack_level = "N/A"
+                    accuracy = "N/A"
+                    mitigation = "N/A"
+                    return render(request, 'index.html', {
+                        'form': form, 
+                        'detection': detection, 
+                        'attack_level': attack_level, 
+                        'accuracy': accuracy, 
+                        'mitigation': mitigation,
+                        'connection_status': connection_status, 
+                        'attack_status': attack_status, 
+                        'ml_status': ml_status, 
+                        'attack_type': attack_type
+                    })
+                else:
+                    logger.info("Model loaded successfully for manual upload")
+
             uploaded_file = request.FILES.get('captured_data')
             captured_text = form.cleaned_data.get('captured_text', '').strip()
             data = None
@@ -2700,7 +2724,7 @@ def home(request):
                 logger.debug(f"Data array dtype: {data_array.dtype}")
 
                 # Make prediction
-                
+
                 prediction = model.predict(data_array)
                 logger.debug(f"Model prediction: {prediction}")
 
