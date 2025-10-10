@@ -12,9 +12,11 @@ services:
       - ./db.sqlite3:/app/db.sqlite3
       # Mount ML model directory
       - ./app/model:/app/app/model
+      - ./app/model/vanilla_lstm_model.pkl:/app/app/model/vanilla_lstm_model.pkl
     environment:
       - DJANGO_SETTINGS_MODULE=detection.production_settings
     restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
     
   # Optional: Add Nginx reverse proxy
   nginx:
