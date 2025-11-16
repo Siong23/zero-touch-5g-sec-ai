@@ -1327,6 +1327,8 @@
                 try {
                     this.updateConnectionStatus('Connecting...', false, true);
 
+                    this.showNotification('Establishing connection to 5G Network...', 'info');
+
                     const response = await fetch('/start_live_monitoring/', {
                         method: 'POST',
                         headers: {
@@ -1337,7 +1339,7 @@
 
                     const data = await response.json();
 
-                    if (data.status === 'success') {
+                    if (response.ok && data.status === 'success') {
                         this.isMonitoring = true;
                         
                         const startBtn = document.getElementById('btn-start-detection');
@@ -1354,7 +1356,7 @@
                         const connectionStatus = data.connection_status || 'Connected to 5G Network';
                         this.updateConnectionStatus(connectionStatus, true, false);
                         
-                        this.showNotification('Network monitoring started', 'success');
+                        this.showNotification(`[OK] Network monitoring started on interface ${data.interface || 'ens18'}`, 'success');
                         this.poll();
                     } else {
                         throw new Error(data.message || 'Unknown error');
@@ -1362,8 +1364,127 @@
                 } catch (error) {
                     console.error('Error starting monitoring', error);
                     this.updateConnectionStatus('Connection failed', false, false);
-                    this.showNotification('Failed to start monitoring: ' + error.message, 'error');
+        
+                    // Enhanced error message based on error type
+                    let errorMessage = 'Failed to start monitoring';
+                    let errorDetails = error.message;
+                    
+                    if (error.message.includes('SSH server is not responding')) {
+                        errorMessage = 'SSH Server Not Responding';
+                        errorDetails = 'The 5G network server is not responding to SSH connections. Please verify:\n' +
+                                    '• Server is powered on and running\n' +
+                                    '• Network connectivity to 100.65.52.69\n' +
+                                    '• SSH service is running on the server';
+                    } else if (error.message.includes('timeout')) {
+                        errorMessage = 'Connection Timeout';
+                        errorDetails = 'Connection to the server timed out. Check network connectivity and firewall settings.';
+                    } else if (error.message.includes('authentication')) {
+                        errorMessage = 'Authentication Failed';
+                        errorDetails = 'SSH credentials are incorrect. Please verify username and password.';
+                    } else if (error.message.includes('banner')) {
+                        errorMessage = 'SSH Protocol Error';
+                        errorDetails = 'SSH handshake failed. The server may be:\n' +
+                                    '• Under heavy load\n' +
+                                    '• Restarting SSH service\n' +
+                                    '• Blocking connections\n\n' +
+                                    'Try again in a few moments.';
+                    }
+
+                    this.showDetailedErrorNotification(errorMessage, errorDetails);
                 }
+            }
+
+            // Add new method for detailed error notifications
+            showDetailedErrorNotification(title, details) {
+                const existing = document.querySelector('.error-notification-detailed');
+                if (existing) {
+                    existing.remove();
+                }
+
+                const notification = document.createElement('div');
+                notification.className = 'error-notification-detailed';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    color: #721c24;
+                    padding: 25px;
+                    border-radius: 12px;
+                    border: 2px solid #dc3545;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+                    z-index: 10001;
+                    max-width: 500px;
+                    width: 90%;
+                    animation: fadeInScale 0.3s ease-out;
+                `;
+                
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 36px; color: #dc3545;"></i>
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0 0 10px 0; color: #721c24; font-size: 18px;">
+                                ${title}
+                            </h3>
+                            <p style="margin: 0; font-size: 14px; line-height: 1.6; white-space: pre-line; color: #495057;">
+                                ${details}
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                        <button onclick="this.parentElement.parentElement.remove()" 
+                                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            Close
+                        </button>
+                        <button onclick="location.reload()" 
+                                style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            Retry Connection
+                        </button>
+                    </div>
+                `;
+                
+                // Add backdrop
+                const backdrop = document.createElement('div');
+                backdrop.className = 'error-notification-backdrop';
+                backdrop.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 10000;
+                    animation: fadeIn 0.3s ease-out;
+                `;
+                backdrop.onclick = () => {
+                    backdrop.remove();
+                    notification.remove();
+                };
+                
+                // Add animations
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fadeInScale {
+                        from {
+                            opacity: 0;
+                            transform: translate(-50%, -50%) scale(0.9);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translate(-50%, -50%) scale(1);
+                        }
+                    }
+                    
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+
+                document.body.appendChild(backdrop);
+                document.body.appendChild(notification);
             }
 
             async stopMonitoring() {
@@ -1702,11 +1823,20 @@
                 });
             }
 
-            showNotification(message, type = 'success') {
+            showNotification(message, type = 'success', duration = 5000) {
                 const existing = document.querySelector('.notification');
                 if (existing) {
                     existing.remove();
                 }
+
+                const colors = {
+                    success: { bg: '#d4edda', text: '#155724', border: '#28a745', icon: 'fa-check-circle' },
+                    error: { bg: '#f8d7da', text: '#721c24', border: '#dc3545', icon: 'fa-exclamation-triangle' },
+                    warning: { bg: '#fff3cd', text: '#856404', border: '#ffc107', icon: 'fa-info-circle' },
+                    info: { bg: '#d1ecf1', text: '#0c5460', border: '#17a2b8', icon: 'fa-info-circle' }
+                };
+                
+                const color = colors[type] || colors.info;
 
                 const notification = document.createElement('div');
                 notification.className = `notification ${type}`;
@@ -1714,22 +1844,21 @@
                     position: fixed;
                     top: 80px;
                     right: 20px;
-                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#fff3cd'};
-                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#856404'};
+                    background: ${color.bg};
+                    color: ${color.text};
                     padding: 15px 20px;
                     border-radius: 8px;
-                    border-left: 4px solid ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#ffc107'};
+                    border-left: 4px solid ${color.border};
                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                     z-index: 10000;
                     display: flex;
                     align-items: center;
                     gap: 10px;
                     animation: slideInRight 0.3s ease-out;
+                    max-width: 400px;
                 `;
                 notification.innerHTML = `
-                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
-                                    type === 'error' ? 'fa-exclamation-triangle' : 
-                                    'fa-info-circle'}"></i>
+                    <i class="fas ${color.icon}"></i>
                     <span>${message}</span>
                     <button onclick="this.parentElement.remove()" 
                             style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto; font-size: 18px;">
@@ -1739,10 +1868,12 @@
 
                 document.body.appendChild(notification);
 
-                setTimeout(() => {
-                    notification.style.animation = 'slideOutRight 0.3s ease-out';
-                    setTimeout(() => notification.remove(), 300);
-                }, 5000);
+                if (duration > 0) {
+                    setTimeout(() => {
+                        notification.style.animation = 'slideOutRight 0.3s ease-out';
+                        setTimeout(() => notification.remove(), 300);
+                    }, duration);
+                }
             }
 
             getCookie(name) {
@@ -1760,6 +1891,215 @@
                 return cookieValue;
             }
         }
+
+        class AttackSimulationMonitor {
+            constructor() {
+                this.checkInterval = 2000; // Check every 2 seconds
+                this.timer = null;
+                this.isActive = false;
+                this.init();
+            }
+        
+            init() {
+                this.startMonitoring();
+            }
+        
+            startMonitoring() {
+                if (this.timer) return;
+                
+                this.timer = setInterval(() => {
+                    this.checkAttackSimulationStatus();
+                }, this.checkInterval);
+                
+                // Initial check
+                this.checkAttackSimulationStatus();
+            }
+        
+            stopMonitoring() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+            }
+        
+            async checkAttackSimulationStatus() {
+                try {
+                    const response = await fetch('/get_automation_status/');
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Check if attack simulation is active
+                        const isSimActive = data.status && 
+                                        data.status.status === 'Running' &&
+                                        data.status.current_task &&
+                                        data.status.current_task.attack_type;
+                        
+                        if (isSimActive && !this.isActive) {
+                            this.isActive = true;
+                            this.showAttackSimulationBanner(data.status.current_task);
+                        } else if (!isSimActive && this.isActive) {
+                            this.isActive = false;
+                            this.hideAttackSimulationBanner();
+                        }
+                    }
+                } catch (error) {
+                    console.debug('Attack simulation status check:', error);
+                }
+            }
+        
+            showAttackSimulationBanner(taskInfo) {
+                // Create banner if it doesn't exist
+                let banner = document.getElementById('attack-simulation-banner');
+                
+                if (!banner) {
+                    banner = document.createElement('div');
+                    banner.id = 'attack-simulation-banner';
+                    banner.style.cssText = `
+                        position: fixed;
+                        top: 70px;
+                        left: 0;
+                        right: 0;
+                        background: linear-gradient(135deg, #ff5722 0%, #f44336 100%);
+                        color: white;
+                        padding: 15px 30px;
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 16px;
+                        z-index: 9999;
+                        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+                        animation: slideDownBanner 0.3s ease-out;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 15px;
+                    `;
+                    
+                    banner.innerHTML = `
+                        <i class="fas fa-shield-alt" style="font-size: 24px; animation: pulse 2s infinite;"></i>
+                        <div>
+                            <div style="font-size: 18px; margin-bottom: 3px;">
+                                ⚠️ ATTACK SIMULATION ACTIVE ⚠️
+                            </div>
+                            <div style="font-size: 13px; opacity: 0.9;">
+                                <span id="sim-attack-type">${taskInfo.attack_type}</span> on 
+                                <span id="sim-target-ip">${taskInfo.target_ip}</span>
+                                | Only traffic from this target will be flagged as malicious
+                            </div>
+                        </div>
+                        <i class="fas fa-exclamation-triangle" style="font-size: 24px; animation: pulse 2s infinite;"></i>
+                    `;
+                    
+                    document.body.insertBefore(banner, document.body.firstChild);
+                    
+                    // Add CSS for animations
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes slideDownBanner {
+                            from {
+                                transform: translateY(-100%);
+                                opacity: 0;
+                            }
+                            to {
+                                transform: translateY(0);
+                                opacity: 1;
+                            }
+                        }
+                        
+                        @keyframes pulse {
+                            0%, 100% { opacity: 1; transform: scale(1); }
+                            50% { opacity: 0.7; transform: scale(1.1); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    // Adjust page content to avoid overlap
+                    const statsContainer = document.querySelector('.stats-container');
+                    if (statsContainer) {
+                        statsContainer.style.marginTop = '80px';
+                    }
+                } else {
+                    // Update existing banner
+                    document.getElementById('sim-attack-type').textContent = taskInfo.attack_type;
+                    document.getElementById('sim-target-ip').textContent = taskInfo.target_ip;
+                }
+                
+                // Add glow effect to stats cards during attack
+                this.highlightStatsCards(true);
+            }
+        
+            hideAttackSimulationBanner() {
+                const banner = document.getElementById('attack-simulation-banner');
+                if (banner) {
+                    banner.style.animation = 'slideUpBanner 0.3s ease-out';
+                    setTimeout(() => {
+                        banner.remove();
+                        
+                        // Reset page layout
+                        const statsContainer = document.querySelector('.stats-container');
+                        if (statsContainer) {
+                            statsContainer.style.marginTop = '';
+                        }
+                    }, 300);
+                    
+                    // Add slideUp animation
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes slideUpBanner {
+                            from {
+                                transform: translateY(0);
+                                opacity: 1;
+                            }
+                            to {
+                                transform: translateY(-100%);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                // Remove glow effect
+                this.highlightStatsCards(false);
+            }
+        
+            highlightStatsCards(highlight) {
+                const statsContainer = document.querySelector('.stats-container');
+                if (!statsContainer) return;
+                
+                if (highlight) {
+                    statsContainer.style.border = '3px solid #ff5722';
+                    statsContainer.style.boxShadow = '0 0 30px rgba(255, 87, 34, 0.5)';
+                    statsContainer.style.borderRadius = '12px';
+                    statsContainer.style.padding = '27px';
+                    statsContainer.style.transition = 'all 0.3s ease';
+                } else {
+                    statsContainer.style.border = '';
+                    statsContainer.style.boxShadow = '';
+                    statsContainer.style.borderRadius = '';
+                    statsContainer.style.padding = '';
+                }
+            }
+        }
+
+        // Initialize attack simulation monitor
+        const attackSimulationMonitor = new AttackSimulationMonitor();
+
+        // Add notification when attack simulation starts
+        document.addEventListener('DOMContentLoaded', function() {
+            const attackForm = document.getElementById('attack-simulation-form');
+            
+            if (attackForm) {
+                attackForm.addEventListener('submit', function(e) {
+                    setTimeout(() => {
+                        showNotification(
+                            '🎯 Attack simulation started! Only traffic from the target IP will be flagged as malicious.',
+                            'warning',
+                            8000
+                        );
+                    }, 1000);
+                });
+            }
+        });
 
         // Initialize the monitor when DOM is ready
         if (document.readyState === 'loading') {
@@ -2164,13 +2504,48 @@
             }
             
             // Helper function to show notifications
-            function showNotification(message, type = 'success') {
-                // Use your existing showNotification if available, or create a simple one
-                if (window.trafficMonitor && window.trafficMonitor.showNotification) {
-                    window.trafficMonitor.showNotification(message, type);
-                } else {
-                    alert(message);
+            function showNotification(message, type = 'success', duration = 5000) {
+                const existing = document.querySelector('.notification');
+                if (existing) {
+                    existing.remove();
                 }
+
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#fff3cd'};
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#856404'};
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    border-left: 4px solid ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#ffc107'};
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    animation: slideInRight 0.3s ease-out;
+                    max-width: 400px;
+                `;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                                    type === 'error' ? 'fa-exclamation-triangle' : 
+                                    'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.remove()" 
+                            style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto; font-size: 18px;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, duration);
             }
         });
 

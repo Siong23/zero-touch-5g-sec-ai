@@ -141,7 +141,138 @@ class NetworkTrafficCapture:
         self.live_monitoring = False
         self.ssh_client = None
         self.capture_process = None
-    
+
+    # Create SSH connection with retry logic and proper error handling.
+    def create_ssh_connection(self, max_retries=3, retry_delay=2):
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"[SSH] Connection attempt {attempt + 1}/{max_retries}")
+                
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                
+                # Configure connection with proper timeouts
+                ssh.connect(
+                    '100.65.52.69',
+                    username='ran',
+                    password='mmuzte123',
+                    timeout=15,  # Connection timeout
+                    banner_timeout=20,  # Banner read timeout
+                    auth_timeout=15,  # Authentication timeout
+                    look_for_keys=False,  # Don't look for SSH keys
+                    allow_agent=False,  # Don't use SSH agent
+                    compress=False  # Disable compression for better performance
+                )
+                
+                # Test connection with a simple command
+                stdin, stdout, stderr = ssh.exec_command('echo "Connection test"', timeout=5)
+                test_result = stdout.read().decode('utf-8').strip()
+                
+                if "Connection test" in test_result:
+                    logger.info(f"[SSH] Connection established successfully on attempt {attempt + 1}")
+                    return ssh
+                else:
+                    logger.warning(f"[SSH] Connection test failed on attempt {attempt + 1}")
+                    ssh.close()
+                    
+            except paramiko.ssh_exception.SSHException as e:
+                logger.error(f"[SSH] SSH error on attempt {attempt + 1}: {e}")
+                if "Error reading SSH protocol banner" in str(e):
+                    logger.error("[SSH] Banner read error - server may be busy or unreachable")
+            except socket.timeout as e:
+                logger.error(f"[SSH] Timeout on attempt {attempt + 1}: {e}")
+            except socket.error as e:
+                logger.error(f"[SSH] Socket error on attempt {attempt + 1}: {e}")
+            except Exception as e:
+                logger.error(f"[SSH] Unexpected error on attempt {attempt + 1}: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
+            
+            # Close any failed connection attempts
+            try:
+                if 'ssh' in locals():
+                    ssh.close()
+            except:
+                pass
+            
+            # Wait before retrying (except on last attempt)
+            if attempt < max_retries - 1:
+                logger.info(f"[SSH] Waiting {retry_delay} seconds before retry...")
+                time.sleep(retry_delay)
+        
+        logger.error(f"[SSH] Failed to establish connection after {max_retries} attempts")
+        return None
+
+    # Verify that the network interface exists and is accessible.
+    def verify_interface_exists(self, ssh):
+        try:
+            logger.info(f"[SSH] Verifying interface {self.capture_interface}")
+            
+            # Check if interface exists
+            stdin, stdout, stderr = ssh.exec_command(
+                f"ip link show {self.capture_interface}",
+                timeout=10
+            )
+            
+            output = stdout.read().decode('utf-8')
+            error = stderr.read().decode('utf-8')
+            
+            if error and 'does not exist' in error.lower():
+                logger.error(f"[SSH] Interface {self.capture_interface} does not exist")
+                logger.error(f"[SSH] Error: {error}")
+                return False
+            
+            if 'does not exist' in output.lower():
+                logger.error(f"[SSH] Interface {self.capture_interface} not found")
+                return False
+            
+            # Check if interface is up
+            if 'state UP' in output or 'UP' in output:
+                logger.info(f"[SSH] Interface {self.capture_interface} is UP and accessible")
+                return True
+            else:
+                logger.warning(f"[SSH] Interface {self.capture_interface} exists but may be DOWN")
+                logger.info(f"[SSH] Interface status: {output}")
+                return True  # Still return True as interface exists
+                
+        except Exception as e:
+            logger.error(f"[SSH] Error verifying interface: {e}")
+            return False
+
+    # Test if tcpdump is available and accessible.
+    def test_tcpdump_availability(self, ssh):
+        try:
+            logger.info("[SSH] Testing tcpdump availability")
+            
+            # Check if tcpdump exists
+            stdin, stdout, stderr = ssh.exec_command("which tcpdump", timeout=10)
+            tcpdump_path = stdout.read().decode('utf-8').strip()
+            
+            if not tcpdump_path:
+                logger.error("[SSH] tcpdump not found in PATH")
+                return False
+            
+            logger.info(f"[SSH] tcpdump found at: {tcpdump_path}")
+            
+            # Check if user can run tcpdump with sudo
+            stdin, stdout, stderr = ssh.exec_command(
+                f"sudo -n {tcpdump_path} --version 2>&1 | head -1",
+                timeout=10
+            )
+            
+            version_output = stdout.read().decode('utf-8')
+            
+            if "tcpdump version" in version_output.lower():
+                logger.info(f"[SSH] tcpdump accessible: {version_output.strip()}")
+                return True
+            else:
+                logger.warning("[SSH] tcpdump may require password for sudo")
+                return True  # Still return True, password will be provided later
+                
+        except Exception as e:
+            logger.error(f"[SSH] Error testing tcpdump: {e}")
+            return False
+        
     def get_active_interface(self):
         try:
             # Get the configured interface from settings
@@ -164,48 +295,58 @@ class NetworkTrafficCapture:
         
         try:
             # Pre-flight checks
-            logger.info("Starting live monitoring pre-flight checks...")
+            logger.info("=" * 70)
+            logger.info("[PREFLIGHT] Starting live monitoring pre-flight checks...")
+            logger.info("=" * 70)
 
-            test_ssh = paramiko.client.SSHClient()
-            test_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            test_ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=10)
-            
-            # Test if tcpdump is available
-            stdin, stdout, stderr = test_ssh.exec_command("which tcpdump")
-            tcpdump_path = stdout.read().decode('utf-8').strip()
-            
-            if not tcpdump_path:
-                logger.error("tcpdump not found on remote system")
-                test_ssh.close()
+            # Step 1: Establish SSH connection with retry logic
+            logger.info("[PREFLIGHT] Step 1/3: Establishing SSH connection...")
+            ssh = self.create_ssh_connection(max_retries=3, retry_delay=3)
+
+            if ssh is None:
+                logger.error("[PREFLIGHT] Failed to establish SSH connection")
+                return False
+        
+            logger.info("[PREFLIGHT] ✓ SSH connection established")
+
+            # Step 2: Verify network interface
+            logger.info(f"[PREFLIGHT] Step 2/3: Verifying interface {self.capture_interface}...")
+            if not self.verify_interface_exists(ssh):
+                logger.error(f"[PREFLIGHT] Interface {self.capture_interface} verification failed")
+                ssh.close()
                 return False
             
-            logger.info(f"tcpdump found at: {tcpdump_path}")
-            
-            # Test interface
-            stdin, stdout, stderr = test_ssh.exec_command(f"sudo ip link show {self.capture_interface}")
-            output = stdout.read().decode('utf-8')
-            error = stderr.read().decode('utf-8')
-            
-            if error or 'does not exist' in output.lower():
-                logger.error(f"Interface {self.capture_interface} not found: {error}")
-                test_ssh.close()
+            logger.info("[PREFLIGHT] ✓ Network interface verified")
+
+            # Step 3: Test tcpdump availability
+            logger.info("[PREFLIGHT] Step 3/3: Testing tcpdump availability...")
+            if not self.test_tcpdump_availability(ssh):
+                logger.error("[PREFLIGHT] tcpdump not available or not accessible")
+                ssh.close()
                 return False
             
-            logger.info(f"Interface {self.capture_interface} is available")
-            test_ssh.close()
+            logger.info("[PREFLIGHT] ✓ tcpdump is available")
 
+            ssh.close()
+
+            logger.info("=" * 70)
+            logger.info("[PREFLIGHT] All checks passed! Starting live monitoring...")
+            logger.info("=" * 70)
+
+            # Set monitoring flags
             capture_mode = 'live_monitoring'
             capture_active = True
             self.live_monitoring = True
 
+            # Clear buffers and stats
             live_flows_buffer.clear()
             flow_stats['benign'] = 0
             flow_stats['suspicious'] = 0
             flow_stats['malicious'] = 0
 
-            logger.info(f"Starting live monitor thread on interface {self.capture_interface}")
+            logger.info(f"[MONITOR] Starting live monitor thread on interface {self.capture_interface}")
             
-                        # Start monitoring in a separate thread
+            # Start monitoring in a separate thread
             monitor_thread = threading.Thread(
                 target=self.live_monitor_packets, 
                 daemon=True,
@@ -240,159 +381,261 @@ class NetworkTrafficCapture:
     def live_monitor_packets(self):
         global capture_active, live_flows_buffer, flow_stats, mitigation_flows_buffer
 
-        try:
-            import asyncio
-            # Ensure async features can work in this thread
+        max_reconnect_attempts = 5
+        reconnect_attempt = 0
+        reconnect_delay = 5
+
+        while capture_active and self.live_monitoring and reconnect_attempt < max_reconnect_attempts:
+            ssh = None
+            channel = None
+            
             try:
-                asyncio.set_event_loop(asyncio.new_event_loop())
-            except Exception:
-                pass
+                if reconnect_attempt > 0:
+                    logger.info(f"[MONITOR] Reconnection attempt {reconnect_attempt}/{max_reconnect_attempts}")
+                    time.sleep(reconnect_delay)
+                
+                # Check attack simulation status at start
+                attack_info = cache.get('attack_simulation_active')
+                if attack_info:
+                    logger.info("=" * 80)
+                    logger.info(f"[MONITOR] Attack simulation is ACTIVE")
+                    logger.info(f"[MONITOR] Target: {attack_info.get('attack_type')} on {attack_info.get('target_ip')}")
+                    logger.info("=" * 80)
+                else:
+                    logger.info("[MONITOR] No active attack simulation")
+                
+                # Establish SSH connection
+                logger.info(f"[MONITOR] Connecting to SSH server...")
+                ssh = self.create_ssh_connection(max_retries=2, retry_delay=2)
+                
+                if ssh is None:
+                    logger.error("[MONITOR] Failed to establish SSH connection")
+                    reconnect_attempt += 1
+                    continue
+                
+                logger.info(f"[MONITOR] Starting tcpdump on {self.capture_interface}")
 
-            logger.info(f"[MONITOR] Starting live monitoring on {self.capture_interface}")
+                # Start tcpdump
+                tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
+                logger.info(f"[MONITOR] Executing: {tcpdump_cmd}")
 
-            ssh = paramiko.client.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect('100.65.52.69', username='ran', password='mmuzte123', timeout=30)
+                transport = ssh.get_transport()
+                channel = transport.open_session()
+                channel.get_pty(term='vt100', width=200, height=24)
+                channel.exec_command(tcpdump_cmd)
 
-            # Verify interface availability
-            test_cmd = f"sudo ip link show {self.capture_interface}"
-            stdin, stdout, stderr = ssh.exec_command(test_cmd)
-            test_output = stdout.read().decode('utf-8')
-            test_error = stderr.read().decode('utf-8')
-            if test_error or 'does not exist' in test_output.lower():
-                logger.error(f"Interface {self.capture_interface} not found or not accessible")
-                ssh.close()
-                return
+                # Send sudo password
+                time.sleep(0.5)
+                if channel.recv_ready():
+                    prompt = channel.recv(1024).decode('utf-8', errors='ignore')
+                    if '[sudo]' in prompt or 'password' in prompt.lower():
+                        channel.send('mmuzte123\n')
+                        time.sleep(1)
 
-            # Start tcpdump (unbuffered, continuous output)
-            tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
-            logger.info(f"[MONITOR] Executing: {tcpdump_cmd}")
+                packet_count = 0
+                flows_created = 0
+                malicious_detected = 0
+                suspicious_detected = 0
+                benign_detected = 0
+                buffer = ""
+                last_data_time = time.time()
+                last_stats_log = time.time()
+                idle_timeout = 60
+                
+                channel.settimeout(2.0)
 
-            transport = ssh.get_transport()
-            channel = transport.open_session()
-            channel.get_pty(term='vt100', width=200, height=24)
-            channel.exec_command(tcpdump_cmd)
+                logger.info("[MONITOR] Monitoring started - reading packets...")
 
-            # Send sudo password if prompted
-            time.sleep(0.5)
-            if channel.recv_ready():
-                prompt = channel.recv(1024).decode('utf-8', errors='ignore')
-                if '[sudo]' in prompt or 'password' in prompt.lower():
-                    channel.send('mmuzte123\n')
-                    time.sleep(1)
+                # Main monitoring loop
+                while capture_active and self.live_monitoring:
+                    try:
+                        current_time = time.time()
 
-            packet_count = 0
-            buffer = ""
-            line_count = 0
-            last_data_time = time.time()
-            idle_timeout = 60  # seconds before considering it idle
-            reconnect_delay = 5
+                        # Read stdout
+                        if channel.recv_ready():
+                            data = channel.recv(4096).decode('utf-8', errors='ignore')
+                            if data:
+                                buffer += data
+                                last_data_time = current_time
 
-            channel.settimeout(2.0)  # longer read timeout
+                        # Read stderr
+                        if channel.recv_stderr_ready():
+                            err_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                            if err_data:
+                                buffer += err_data
+                                last_data_time = current_time
 
-            logger.info("[MONITOR] Reading tcpdump output...")
+                        # Process complete lines
+                        while '\n' in buffer:
+                            line, buffer = buffer.split('\n', 1)
+                            line = line.strip()
+                            if not line:
+                                continue
 
-            while capture_active and self.live_monitoring:
-                try:
-                    current_time = time.time()
+                            # Ignore meta lines
+                            if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
+                                continue
 
-                    # Attempt to read stdout
-                    if channel.recv_ready():
-                        data = channel.recv(4096).decode('utf-8', errors='ignore')
-                        if data:
-                            buffer += data
-                            last_data_time = current_time
+                            packet_count += 1
 
-                    # Attempt to read stderr
-                    if channel.recv_stderr_ready():
-                        err_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
-                        if err_data:
-                            buffer += err_data
-                            last_data_time = current_time
-
-                    # Process complete lines
-                    while '\n' in buffer:
-                        line, buffer = buffer.split('\n', 1)
-                        line = line.strip()
-                        if not line:
-                            continue
-
-                        # Ignore meta lines
-                        if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
-                            continue
-
-                        line_count += 1
-                        packet_count += 1
-
-                        flow = self.parse_tcpdump_line(line, packet_count)
-                        if flow:
-                            live_flows_buffer.append(flow)
-                            classification = flow.get('classification', 'benign')
-
-                            if classification == 'malicious':
-                                flow_stats['malicious'] += 1
+                            # Parse the line
+                            flow = self.parse_tcpdump_line(line, packet_count)
+                            
+                            if flow:
+                                flows_created += 1
+                                
+                                # Add to buffer BEFORE classification check
+                                live_flows_buffer.append(flow)
+                                
+                                classification = flow.get('classification', 'benign')
                                 attack_type = flow.get('attack_type', 'Unknown')
-                                target_ip = flow.get('src_ip', 'Unknown')
+                                src_ip = flow.get('src_ip', 'Unknown')
+                                dst_ip = flow.get('dst_ip', 'Unknown')
 
-                                logger.info(f"[ALERT] Malicious flow detected: {attack_type} from {target_ip}")
+                                # Log flow creation
+                                if classification != 'benign' or packet_count % 100 == 0:
+                                    logger.info(f"[MONITOR] Flow created: {classification.upper()} | {attack_type} | {src_ip}->{dst_ip}")
 
-                                threading.Thread(
-                                    target=self._apply_mitigation_async,
-                                    args=(attack_type, target_ip, flow),
-                                    daemon=True
-                                ).start()
+                                # Check for attack simulation
+                                attack_info = cache.get('attack_simulation_active')
+                                
+                                if classification == 'malicious':
+                                    malicious_detected += 1
+                                    
+                                    if attack_info:
+                                        flow_stats['malicious'] += 1
+                                        simulated_target = attack_info.get('target_ip')
+                                        
+                                        logger.warning("=" * 80)
+                                        logger.warning(f"[MONITOR] MALICIOUS FLOW DETECTED!")
+                                        logger.warning(f"[MONITOR] Type: {attack_type}")
+                                        logger.warning(f"[MONITOR] Source: {src_ip}")
+                                        logger.warning(f"[MONITOR] Target IP (simulated): {simulated_target}")
+                                        logger.warning(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
+                                        logger.warning(f"[MONITOR] Stats: {flow_stats}")
+                                        logger.warning("=" * 80)
+                                        
+                                        if src_ip == simulated_target or dst_ip == simulated_target:
+                                            logger.info(f"[MONITOR] IP matches target - triggering mitigation")
 
-                            elif classification == 'suspicious':
-                                flow_stats['suspicious'] += 1
-                            else:
-                                flow_stats['benign'] += 1
+                                            # Trigger mitigation in separate thread
+                                            threading.Thread(
+                                                target=self._apply_mitigation_async,
+                                                args=(attack_type, simulated_target, flow),
+                                                daemon=True
+                                            ).start()
+                                        else:
+                                            logger.warning(f"[MONITOR] IP mismatch - src:{src_ip}, dst:{dst_ip}, target:{simulated_target}")
+                                            flow['classification'] = 'suspicious'
+                                            flow_stats['malicious'] -= 1
+                                            flow_stats['suspicious'] += 1
+                                    else:
+                                        logger.error(f"[MONITOR] Malicious flow without active simulation!")
+                                        logger.error(f"[MONITOR] Reclassifying to benign")
+                                        flow['classification'] = 'benign'
+                                        flow['attack_type'] = 'Normal Traffic'
+                                        flow_stats['benign'] += 1
 
-                        if packet_count % 10 == 0:
-                            logger.info(f"[MONITOR] {packet_count} packets, Stats={flow_stats}")
+                                elif classification == 'suspicious':
+                                    suspicious_detected += 1
+                                    flow_stats['suspicious'] += 1
+                                    
+                                    if attack_info:
+                                        logger.info(f"[MONITOR] Suspicious flow: {attack_type} | {src_ip}->{dst_ip}")
+                                
+                                else:  # benign
+                                    benign_detected += 1
+                                    flow_stats['benign'] += 1
 
-                    # Check for idle timeout
-                    if current_time - last_data_time > idle_timeout:
-                        logger.warning("[MONITOR] No data received for a while — reconnecting tcpdump...")
-                        break  # Exit to reconnect loop
+                            # Periodic status logging
+                            if current_time - last_stats_log > 10:  # Every 10 seconds
+                                logger.info("=" * 80)
+                                logger.info(f"[MONITOR] Status Update")
+                                logger.info(f"[MONITOR] Packets processed: {packet_count}")
+                                logger.info(f"[MONITOR] Flows created: {flows_created}")
+                                logger.info(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
+                                logger.info(f"[MONITOR] Stats: {flow_stats}")
+                                logger.info(f"[MONITOR] Session: Malicious={malicious_detected}, Suspicious={suspicious_detected}, Benign={benign_detected}")
+                                
+                                attack_info = cache.get('attack_simulation_active')
+                                if attack_info:
+                                    logger.info(f"[MONITOR] Attack sim: {attack_info.get('attack_type')} on {attack_info.get('target_ip')}")
+                                else:
+                                    logger.info(f"[MONITOR] No active attack simulation")
+                                logger.info("=" * 80)
+                                last_stats_log = current_time
 
-                    # Check if tcpdump exited
-                    if channel.exit_status_ready():
-                        exit_status = channel.recv_exit_status()
-                        logger.warning(f"[MONITOR] tcpdump exited with status {exit_status}")
+                        # Check for idle timeout
+                        if current_time - last_data_time > idle_timeout:
+                            logger.warning("[MONITOR] No data received - connection may be stale")
+                            break
+
+                        # Check if tcpdump exited
+                        if channel.exit_status_ready():
+                            exit_status = channel.recv_exit_status()
+                            logger.warning(f"[MONITOR] tcpdump exited with status {exit_status}")
+                            break
+
+                        time.sleep(0.2)
+
+                    except socket.timeout:
+                        continue
+                    except EOFError as e:
+                        logger.error(f"[MONITOR] Connection lost (EOFError): {e}")
+                        break
+                    except Exception as e:
+                        logger.error(f"[MONITOR] Error in monitoring loop: {e}")
+                        import traceback
+                        logger.error(traceback.format_exc())
                         break
 
-                    time.sleep(0.2)
+                # Session summary
+                logger.info("=" * 80)
+                logger.info(f"[MONITOR] Session Summary")
+                logger.info(f"[MONITOR] Total packets: {packet_count}")
+                logger.info(f"[MONITOR] Flows created: {flows_created}")
+                logger.info(f"[MONITOR] Malicious: {malicious_detected}")
+                logger.info(f"[MONITOR] Suspicious: {suspicious_detected}")
+                logger.info(f"[MONITOR] Benign: {benign_detected}")
+                logger.info(f"[MONITOR] Final buffer size: {len(live_flows_buffer)}")
+                logger.info(f"[MONITOR] Final stats: {flow_stats}")
+                logger.info("=" * 80)
+                
+                # Reset reconnection counter if we processed packets successfully
+                if packet_count > 0:
+                    reconnect_attempt = 0
+                else:
+                    reconnect_attempt += 1
 
-                except socket.timeout:
-                    continue
-                except Exception as e:
-                    logger.error(f"[MONITOR] Error reading packet: {e}")
-                    import traceback
-                    logger.error(traceback.format_exc())
-                    break
-
-            # Cleanup connection
-            try:
-                channel.close()
-            except:
-                pass
-            ssh.close()
-            logger.info(f"[MONITOR] Live monitoring stopped. Total packets: {packet_count}")
-
-            # Auto-reconnect if monitoring should continue
-            if capture_active and self.live_monitoring:
-                logger.info(f"[MONITOR] Restarting monitoring after {reconnect_delay}s delay...")
-                time.sleep(reconnect_delay)
-                self.live_monitor_packets()
-
-        except Exception as e:
-            logger.error(f"[MONITOR] Fatal error during live monitoring: {e}")
-            import traceback
-            logger.error(traceback.format_exc())
-        finally:
-            capture_active = False
-            self.live_monitoring = False
-            logger.info("[MONITOR] Cleanup complete")
+            except Exception as e:
+                logger.error(f"[MONITOR] Fatal error: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
+                reconnect_attempt += 1
+            
+            finally:
+                # Cleanup
+                try:
+                    if channel:
+                        channel.close()
+                except:
+                    pass
+                
+                try:
+                    if ssh:
+                        ssh.close()
+                except:
+                    pass
+                
+                logger.info("[MONITOR] Connection cleanup complete")
+        
+        # Final cleanup
+        if reconnect_attempt >= max_reconnect_attempts:
+            logger.error(f"[MONITOR] Max reconnection attempts ({max_reconnect_attempts}) reached")
+        
+        capture_active = False
+        self.live_monitoring = False
+        logger.info("[MONITOR] Monitoring stopped") 
 
     def parse_tcpdump_line(self, line, packet_count):
         try:
@@ -459,53 +702,148 @@ class NetworkTrafficCapture:
                     else:
                         dst_ip = dst.rstrip(':')
             
-            # Determine protocol and attack type
-            line_lower = line.lower()
+            # Check if attack simulation is active
+            attack_simulation_active = False
+            simulated_target_ip = None
+            simulated_attack_type = None
 
+            attack_info = cache.get('attack_simulation_active')
+            if attack_info:
+                attack_simulation_active = True
+                simulated_target_ip = attack_info.get('target_ip')
+                simulated_attack_type = attack_info.get('attack_type')
+
+                if packet_count % 20 == 0:
+                    logger.debug(f"Attack simulation active: {simulated_attack_type} on {simulated_target_ip}")
+                    logger.debug(f"Current packet: {src_ip} -> {dst_ip}")
+
+            # Only proceed with attack detection is simulation is active
+            if not attack_simulation_active:
+                # No attack simulation - mark all traffic as benign
+                return {
+                    'timestamp': datetime.now().isoformat(),
+                    'classification': 'benign',
+                    'attack_type': 'Normal Traffic',
+                    'src_ip': src_ip,
+                    'src_port': src_port,
+                    'dst_ip': dst_ip,
+                    'dst_port': dst_port,
+                    'protocol': 'TCP',
+                    'bytes': packet_size,
+                    'packets': 1,
+                    'confidence': 0.0,
+                    'packet_rate': 0.0
+                }    
+            
+            # Check if this packet is related to the simulated attack
+            # Only flag packets involving the target IP
+            is_related_to_attack = (src_ip == simulated_target_ip or dst_ip == simulated_target_ip)
+            
+            if not is_related_to_attack:
+                # Traffic not involving attack target - mark as benign
+                return {
+                    'timestamp': datetime.now().isoformat(),
+                    'classification': 'benign',
+                    'attack_type': 'Normal Traffic',
+                    'src_ip': src_ip,
+                    'src_port': src_port,
+                    'dst_ip': dst_ip,
+                    'dst_port': dst_port,
+                    'protocol': protocol if protocol != 'Other' else 'TCP',
+                    'bytes': packet_size,
+                    'packets': 1,
+                    'confidence': 0.0,
+                    'packet_rate': 0.0
+                }
+            
+            logger.info(f"[PARSE] Attack-related packet: {src_ip} -> {dst_ip}")
+
+            # Calculate packet rate for this flow
             cache_key = f"packet_rate_{src_ip}_{dst_ip}"
             packet_history = cache.get(cache_key, [])
             packet_history.append(time.time())
 
-            cutoff = time.time() - 10
+            cutoff = time.time() - 10  # Last 10 seconds
             packet_history = [t for t in packet_history if t > cutoff]
             cache.set(cache_key, packet_history, timeout=60)
 
-            packet_rate = len(packet_history) / 10.0
+            packet_rate = len(packet_history) / 10.0  # Packets per second
+                    
+            # Determine protocol and attack type based on rate
+            line_lower = line.lower()
             
+            # Adjust thresholds based on attack type
             if 'icmp' in line_lower:
                 protocol = 'ICMP'
-                if packet_count > 10:  # High rate detection
-                    attack_type = 'ICMP Flood Attack'
-                    classification = 'malicious'
-                elif packet_count > 5:
-                    attack_type = "Possible ICMP Flood"
-                    classification = 'suspicious'
+                if 'ICMP' in simulated_attack_type or 'ICMPFlood' in simulated_attack_type:
+                    if packet_rate> 5:  # High rate detection
+                        attack_type = 'ICMP Flood Attack'
+                        classification = 'malicious'
+                        logger.warning(f"[DETECT] ICMP Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 2:
+                        attack_type = "Possible ICMP Flood"
+                        classification = 'suspicious'
+                        logger.warning(f"[DETECT] Suspicious ICMP traffic detected: Rate={packet_rate:.2f} pps")
+                    else:
+                        attack_type = 'ICMP Traffic'
+                        classification = 'benign'
                 else:
-                    attack_type = 'ICMP Traffic'
+                        attack_type = 'ICMP Traffic'
+                        classification = 'benign'
 
             elif '[S]' in line and '[.]' not in line:
                 protocol = 'TCP'
-                if packet_count > 20:  # High rate detection
-                    attack_type = 'SYN Flood Attack'
-                    classification = 'malicious'
-                elif packet_count > 10:
-                    attack_type = "Possible SYN Scan"
-                    classification = 'suspicious'
+                if 'SYN' in simulated_attack_type:
+                    if packet_rate > 10:  # High rate detection
+                        attack_type = 'SYN Flood Attack'
+                        classification = 'malicious'
+                        logger.warning(f"[DETECT] SYN Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 5:
+                        attack_type = "Possible SYN Scan"
+                        classification = 'suspicious'
+                        logger.warning(f"[DETECT] Suspicious SYN traffic detected: Rate={packet_rate:.2f} pps")
+                    else:
+                        attack_type = 'SYN Packet'
+                        classification = 'benign'
                 else:
-                    attack_type = 'SYN Packet'
+                        attack_type = 'SYN Packet'
+                        classification = 'benign'
+
             elif 'udp' in line_lower:
                 protocol = 'UDP'
-                if packet_count > 50:  # High rate detection
-                    attack_type = 'UDP Flood Attack'
-                    classification = 'malicious'
-                elif packet_count > 25:
-                    attack_type = "Possible UDP Flood"
-                    classification = 'suspicious'
+                if 'UDP' in simulated_attack_type:
+                    if packet_rate > 20:  # High rate detection
+                        attack_type = 'UDP Flood Attack'
+                        classification = 'malicious'
+                        logger.warning(f"[DETECT] UDP Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 10:
+                        attack_type = "Possible UDP Flood"
+                        classification = 'suspicious'
+                        logger.warning(f"[DETECT] Suspicious UDP traffic detected: Rate={packet_rate:.2f} pps")
+                    else:
+                        attack_type = 'UDP Traffic'
+                        classification = 'benign'
                 else:
-                    attack_type = 'UDPTraffic'
+                        attack_type = 'UDP Traffic'
+                        classification = 'benign'
+
             elif 'tcp' in line_lower or '[.]' in line or '[P]' in line or '[F]' in line:
                 protocol = 'TCP'
-                attack_type = 'TCP Traffic'
+                if 'HTTP' in simulated_attack_type or 'Slowrate' in simulated_attack_type:
+                    if packet_rate> 10:  # High rate detection
+                        attack_type = 'HTTP Flood Attack'
+                        classification = 'malicious'
+                        logger.warning(f"[DETECT] HTTP Flood detected: Rate={packet_rate:.2f} pps") 
+                    elif packet_rate > 5:
+                        attack_type = "Possible HTTP Flood"
+                        classification = 'suspicious'
+                        logger.warning(f"[DETECT] Suspicious HTTP traffic detected: Rate={packet_rate:.2f} pps")
+                    else:
+                        attack_type = 'TCP Traffic'
+                        classification = 'benign'
+                else:
+                    attack_type = 'TCP Traffic'
+                    classification = 'benign'
             
             # Extract packet size if present
             try:
@@ -518,8 +856,14 @@ class NetworkTrafficCapture:
             except:
                 pass
             
-            confidence = 90.0 if classification == 'malicious' else (75.0 if classification == 'suspicious' else 60.0)
-            
+            # Calculate confidence based on classification
+            if classification == 'malicious':
+                confidence = min(85.0 + (packet_rate * 2), 99.9)
+            elif classification == 'suspicious':
+                confidence = min(65.0 + (packet_rate * 2), 84.0)
+            else:
+                confidence = 50.0
+
             return {
                 'timestamp': datetime.now().isoformat(),
                 'classification': classification,
@@ -531,10 +875,13 @@ class NetworkTrafficCapture:
                 'protocol': protocol,
                 'bytes': packet_size,
                 'packets': 1,
-                'confidence': confidence,
+                'confidence': round(confidence, 1),
                 'packet_rate': round(packet_rate, 2)
             }
         
+            if classification != 'benign':
+                logger.info(f"[PARSE]  Flow classified as {classification.upper()}: {attack_type}")
+       
         except Exception as e:
             logger.debug(f"Parse error: {e} | Line: {line[:100]}")
             return None
@@ -1025,15 +1372,34 @@ class NetworkTrafficCapture:
     # Apply mitigation asynchronously to avoid blocking packet capture
     def _apply_mitigation_async(self, attack_type, target_ip, flow_data):
         try:
+            logger.info("=" * 80)
+            logger.info(f"[MITIGATION] Starting mitigation process")
+            logger.info(f"[MITIGATION] Attack Type: {attack_type}")
+            logger.info(f"[MITIGATION] Target IP: {target_ip}")
+            logger.info(f"[MITIGATION] Flow Data: {flow_data}")
+            logger.info("=" * 80)
+            
             mitigator = AIMitigation(
                 host='100.65.52.69',
                 username='ran',
                 password='mmuzte123'
             )
+            
             mitigation_result = mitigator.apply_mitigation(attack_type, target_ip, flow_data)
-            logger.info(f"Mitigation result: {mitigation_result}")
+            
+            logger.info("=" * 80)
+            logger.info(f"[MITIGATION] Mitigation completed")
+            logger.info(f"[MITIGATION] Result: {mitigation_result}")
+            logger.info(f"[MITIGATION] Mitigation stats: {mitigation_stats}")
+            logger.info("=" * 80)
+        
         except Exception as e:
-            logger.error(f"Error applying mitigation: {e}")
+            logger.error("=" * 80)
+            logger.error(f"[MITIGATION] Mitigation failed")
+            logger.error(f"[MITIGATION] Error: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
+            logger.error("=" * 80)
 
 def chrome_devtools_json(request):
     return JsonResponse({}, status=200)   
@@ -1045,36 +1411,131 @@ network_capture = NetworkTrafficCapture()
 @require_http_methods(["POST"])
 def start_live_monitoring(request):
     global network_capture, connection_status
+    
     try:
-        ssh = paramiko.client.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        logger.info("[API] Received request to start live monitoring")
+        
+        # Pre-connection test
+        logger.info("[API] Testing SSH connectivity...")
+        
+        try:
+            # Quick connectivity test
+            test_ssh = paramiko.SSHClient()
+            test_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            
+            # Test with shorter timeout
+            test_ssh.connect(
+                '100.65.52.69',
+                username='ran',
+                password='mmuzte123',
+                timeout=10,
+                banner_timeout=15,
+                auth_timeout=10,
+                look_for_keys=False,
+                allow_agent=False
+            )
+            
+            # Quick test command
+            stdin, stdout, stderr = test_ssh.exec_command('echo test', timeout=5)
+            test_result = stdout.read().decode('utf-8').strip()
+            test_ssh.close()
+            
+            if test_result != 'test':
+                raise Exception("SSH connection test failed")
+            
+            logger.info("[API] SSH connectivity test passed")
+            connection_status = "Connected to 5G Network"
+            
+        except paramiko.ssh_exception.SSHException as e:
+            error_msg = str(e)
+            logger.error(f"[API] SSH error during connectivity test: {error_msg}")
+            
+            if "Error reading SSH protocol banner" in error_msg:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'SSH server is not responding. Please check if the server is reachable and SSH service is running.',
+                    'details': 'Banner read timeout - server may be busy or unreachable',
+                    'connection_status': 'Connection failed - SSH banner error'
+                }, status=503)
+            
+            elif "Authentication failed" in error_msg:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'SSH authentication failed. Please check credentials.',
+                    'details': error_msg,
+                    'connection_status': 'Connection failed - Authentication error'
+                }, status=401)
+            
+            else:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f'SSH connection error: {error_msg}',
+                    'details': error_msg,
+                    'connection_status': 'Connection failed - SSH error'
+                }, status=503)
+        
+        except socket.timeout:
+            logger.error("[API] Connection timeout")
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Connection timeout. Server is not reachable.',
+                'details': 'Network timeout - check if server IP is correct and reachable',
+                'connection_status': 'Connection timeout'
+            }, status=504)
+        
+        except socket.error as e:
+            logger.error(f"[API] Socket error: {e}")
+            return JsonResponse({
+                'status': 'error',
+                'message': f'Network error: {str(e)}',
+                'details': 'Cannot reach server - check network connectivity',
+                'connection_status': 'Connection failed - Network error'
+            }, status=503)
+        
+        except Exception as e:
+            logger.error(f"[API] Unexpected error during connectivity test: {e}")
+            import traceback
+            logger.error(traceback.format_exc())
+            return JsonResponse({
+                'status': 'error',
+                'message': f'Connection test failed: {str(e)}',
+                'details': str(e),
+                'connection_status': 'Connection test failed'
+            }, status=500)
 
-        # Modify the (HOST, USERNAME, PASSWORD) as needed to connect to the server
-        ssh.connect('100.65.52.69', username='ran', password='mmuzte123')
-        connection_status = "Connected to 5G Network"
-
+        # Start monitoring
+        logger.info("[API] Starting live monitoring...")
         success = network_capture.start_live_monitoring_only()
 
         if success:
+            logger.info("[API] Live monitoring started successfully")
             return JsonResponse({
                 'status': 'success',
-                'message': 'Live monitoring started',
-                'connection_status': connection_status
+                'message': 'Live monitoring started successfully',
+                'connection_status': connection_status,
+                'interface': network_capture.capture_interface
             }, status=200)
         
         else:
+            logger.error("[API] Failed to start monitoring")
+            connection_status = "Monitoring failed to start"
             return JsonResponse({
                 'status': 'error',
-                'message': 'Failed to start monitoring',
-                'connection_status': connection_status
+                'message': 'Failed to start live monitoring. Check server logs for details.',
+                'connection_status': connection_status,
+                'details': 'Monitoring initialization failed - check interface and tcpdump availability'
             }, status=500)
-
         
     except Exception as e:
-        logger.error(f"Error starting live monitoring: {e}")
+        logger.error(f"[API] Error in start_live_monitoring: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
+        connection_status = f"Error: {str(e)}"
         return JsonResponse({
             'status': 'error',
-            'message': str(e)
+            'message': f'Failed to start monitoring: {str(e)}',
+            'connection_status': connection_status,
+            'details': traceback.format_exc()
         }, status=500)
 
 # Create API endpoint to stop live traffic network monitoring
@@ -1822,6 +2283,21 @@ def start_attack(request):
         attack_type = request.POST.get('attack_type')
         target_ip = request.POST.get('target_ip', '192.168.1.1')
 
+        cache.set('attack_simulation_active', {
+            'attack_type': attack_type,
+            'target_ip': target_ip,
+            'start_time': datetime.now().isoformat(),
+            'duration': 90,
+            'mode': 'live_monitoring' if (capture_active and network_capture.live_monitoring) else 'dedicated_capture'
+        }, timeout=120)  # 120 seconds (2 minutes)
+        
+        logger.info("=" * 80)
+        logger.info(f"[ATTACK SIM] Attack simulation tracking activated")
+        logger.info(f"[ATTACK SIM] Type: {attack_type}")
+        logger.info(f"[ATTACK SIM] Target IP: {target_ip}")
+        logger.info(f"[ATTACK SIM] Mode: {'live_monitoring' if capture_active else 'dedicated_capture'}")
+        logger.info("=" * 80)
+
         automation_manager = AutomationManager()
         automation_manager.start_automation(attack_type, target_ip)
 
@@ -1830,9 +2306,10 @@ def start_attack(request):
         except socket.error:
             attack_status = "Invalid target IP address"
             messages.error(request, "Invalid target IP address.")
+            cache.delete('attack_simulation_active')
             return JsonResponse({'status': 'error', 'message': 'Invalid IP address'})
 
-        logger.info(f"Starting attack simulation: {attack_type} on {target_ip}")
+        logger.info(f"[ATTACK SIM] Starting attack simulation: {attack_type} on {target_ip}")
 
         host = RAN5G_CONFIG.get('HOST', '100.65.52.69')
         username = RAN5G_CONFIG.get('USERNAME', 'ran')
@@ -1844,14 +2321,6 @@ def start_attack(request):
             logger.info("Live monitoring is active. Using existing capture session for attack simulation.")
 
             capture_mode = 'live_monitoring'
-            
-            # Don't start a new capture, just use the live monitoring
-            cache.set('attack_simulation_active', {
-                'attack_type': attack_type,
-                'target_ip': target_ip,
-                'start_time': datetime.now().isoformat(),
-                'mode': 'live_monitoring'
-            }, timeout=300)
             
             automation_manager.complete_step('packet_capture', {
                 'status': 'Using live monitoring',
@@ -1865,11 +2334,12 @@ def start_attack(request):
                 automation_manager.complete_step('attack_simulation', {'status': 'success'})
                 
                 logger.info("Attack injected. Waiting for detection in live monitoring...")
+                logger.info("Monitoring live flows for attack detection...")
                 
                 # Schedule ML analysis to run after attack duration
                 threading.Thread(
                     target=schedule_ml_automation_from_live,
-                    args=(attack_type, target_ip, 60),  # 60 second duration
+                    args=(attack_type, target_ip, 90),  # 90 second duration
                     daemon=True
                 ).start()
 
@@ -1884,6 +2354,7 @@ def start_attack(request):
             else:
                 attack_status = "Failed to inject attack"
                 automation_manager.status = "Failed"
+                cache.delete('attack_simulation_active')
                 logger.error("Attack simulation failed.")
                 return JsonResponse({
                     'status': 'error',
@@ -1941,6 +2412,7 @@ def start_attack(request):
                 else:
                     attack_status = "Failed to inject attack"
                     automation_manager.status = "Failed"
+                    cache.delete('attack_simulation_active')
                     logger.error("Attack simulation failed.")
                     return JsonResponse({
                         'status': 'error',
@@ -1949,6 +2421,7 @@ def start_attack(request):
             else:
                 attack_status = "Failed to start packet capture"
                 automation_manager.status = "Failed"
+                cache.delete('attack_simulation_active')
                 logger.error("Failed to initialize packet capture.")
                 return JsonResponse({
                         'status': 'error',
@@ -1960,61 +2433,109 @@ def start_attack(request):
                         'message': 'nvalid request method'
                     })
 
+# Start tracking an attack simulation session.
+# This sets a flag that enables malicious detection and mitigation.
+def start_attack_simulation_tracking(attack_type, target_ip, duration=90):
+    cache.set('attack_simulation_active', {
+        'attack_type': attack_type,
+        'target_ip': target_ip,
+        'start_time': datetime.now().isoformat(),
+        'duration': duration,
+        'mode': 'live_monitoring' if capture_active else 'dedicated_capture'
+    }, timeout=duration + 30)  # Extra 30 seconds buffer
+    
+    logger.info(f"[SIMULATION] Attack tracking started: {attack_type} on {target_ip} for {duration}s")
+    return True
+
+# Stop tracking attack simulation.
+# This disables malicious detection and mitigation.
+def stop_attack_simulation_tracking():
+    attack_info = cache.get('attack_simulation_active')
+    if attack_info:
+        logger.info(f"[SIMULATION] Attack tracking stopped: {attack_info['attack_type']} on {attack_info['target_ip']}")
+        cache.delete('attack_simulation_active')
+        return True
+    return False
+
+# Check if attack simulation is currently active.
+def is_attack_simulation_active():
+    attack_info = cache.get('attack_simulation_active')
+    if not attack_info:
+        return False, None
+    
+    # Check if simulation has expired based on duration
+    start_time = datetime.fromisoformat(attack_info['start_time'])
+    duration = attack_info.get('duration', 90)
+    elapsed = (datetime.now() - start_time).total_seconds()
+    
+    if elapsed > duration:
+        logger.info(f"[SIMULATION] Attack simulation expired (elapsed: {elapsed}s, duration: {duration}s)")
+        cache.delete('attack_simulation_active')
+        return False, None
+    
+    return True, attack_info
+
 # ML automation that works with live monitoring data instead of capture file
 def schedule_ml_automation_from_live(attack_type, target_ip, duration):
     global model, ml_status, automation_manager, live_flows_buffer
     global detection, attack_level, attack_severity_num, accuracy, mitigation, analysis_report
 
     try:
+        # Start attack simulation tracking
+        start_attack_simulation_tracking(attack_type, target_ip, duration)
+
         # Wait for attack to generate traffic
-        logger.info(f"Waiting {duration} seconds for attack traffic...")
+        logger.info(f"[AUTOMATION] Waiting {duration} seconds for attack traffic...")
         time.sleep(duration)
+
+        # Stop attack simulation tracking
+        stop_attack_simulation_tracking()
         
         # Check if we're still in attack mode
         attack_info = cache.get('attack_simulation_active')
         if not attack_info:
-            logger.warning("Attack simulation info not found in cache")
-            return
+            logger.warning("[AUTOMATION] Attack simulation info not found in cache")
 
         # Load ML model if needed
         if model is None:
-            logger.info("Loading ML model for automation...")
+            logger.info("[AUTOMATION] Loading ML model for automation...")
             model_loaded = auto_load_ml_model()
             if model_loaded:
                 automation_manager.complete_step('ml_loading', {'status': 'Model loaded'})
-                logger.info("ML model auto-loaded successfully.")
+                logger.info("[AUTOMATION] ML model auto-loaded successfully.")
             else:
                 automation_manager.status = "Failed"
-                logger.error("Failed to auto-load ML model.")
+                logger.error("[AUTOMATION] Failed to auto-load ML model.")
                 return
         else:
             automation_manager.complete_step('ml_loading', {'status': 'Model already loaded'})
 
         # Analyze flows from live buffer
-        logger.info("Analyzing flows from live monitoring buffer...")
+        logger.info("[AUTOMATION] Analyzing flows from live monitoring buffer...")
         
         # Get flows from the buffer
         flows_to_analyze = list(live_flows_buffer)
         
         if len(flows_to_analyze) == 0:
-            logger.warning("No flows available for analysis")
+            logger.warning("[AUTOMATION] No flows available for analysis")
             automation_manager.status = "no_data"
             return
         
         # Filter flows related to attack (suspicious/malicious only)
         attack_flows = [f for f in flows_to_analyze 
-                       if f.get('classification') in ['suspicious', 'malicious']]
-        
+                       if f.get('classification') in ['suspicious', 'malicious']
+                       and (f.get('src_ip') == target_ip or f.get('dst_ip') == target_ip)]
+                    
         if len(attack_flows) == 0:
-            logger.warning("No suspicious/malicious flows detected during attack")
+            logger.warning("[AUTOMATION] No suspicious/malicious flows detected during attack")
             # Use any flows for analysis
-            attack_flows = flows_to_analyze[-10:]  # Last 10 flows
+            attack_flows = [f for f in flows_to_analyze if f.get('src_ip') == target_ip or f.get('dst_ip') == target_ip]
+            attack_flows = attack_flows[-10:] if len(attack_flows) > 10 else attack_flows
         
-        logger.info(f"Found {len(attack_flows)} attack-related flows for analysis")
+        logger.info(f"[AUTOMATION] Found {len(attack_flows)} attack-related flows for analysis")
         
         # Perform detection on flows
         detection_counts = {}
-        severity_scores = []
         
         for flow in attack_flows[:10]:  # Analyze up to 10 flows
             # Extract the attack type detected in real-time
@@ -2049,7 +2570,7 @@ def schedule_ml_automation_from_live(attack_type, target_ip, duration):
         if detection == "Benign" or detection == "Normal Traffic":
             mitigation = "No action needed"
         else:
-            logger.info(f"Applying mitigation for {detection} on target {target_ip}")
+            logger.info(f"[AUTOMATION] Applying mitigation for {detection} on target {target_ip}")
             mitigator = AIMitigation(host='100.65.52.69', username='ran', password='mmuzte123')
             mitigation = mitigator.apply_mitigation(detection, target_ip)
         
@@ -2094,16 +2615,16 @@ def schedule_ml_automation_from_live(attack_type, target_ip, duration):
         
         cache.set('results_ready', True, timeout=14400)
         
-        # Clear attack mode flag
-        cache.delete('attack_simulation_active')
-        
-        logger.info(f"Live monitoring analysis completed: {detection} ({attack_level})")
+        logger.info(f"[AUTOMATION] Live monitoring analysis completed: {detection} ({attack_level})")
         
     except Exception as e:
         automation_manager.status = "Error"
-        logger.error(f"Live monitoring automation error: {e}")
+        logger.error(f"[AUTOMATION] Live monitoring automation error: {e}")
         import traceback
         logger.error(traceback.format_exc())
+    finally:
+        # Stop attack simulation tracking
+        stop_attack_simulation_tracking()
 
 def schedule_ml_automation(capture_file, attack_type, target_ip):
     global model, ml_status, automation_manager
