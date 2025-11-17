@@ -500,11 +500,15 @@ class NetworkTrafficCapture:
                                 attack_info = cache.get('attack_simulation_active')
                                 
                                 if classification == 'malicious':
+                                    flow_stats['malicious'] += 1
                                     malicious_detected += 1
+
+                                    # Only trigger mitigation for malicious flows during active attack simulation
+                                    attack_info = cache.get('attack_simulation_active')
                                     
                                     if attack_info:
-                                        flow_stats['malicious'] += 1
                                         simulated_target = attack_info.get('target_ip')
+                                        simulated_attack_type = attack_info.get('attack_type')  # Get the actual attack type
                                         
                                         logger.warning("=" * 80)
                                         logger.warning(f"[MONITOR] MALICIOUS FLOW DETECTED!")
@@ -515,31 +519,31 @@ class NetworkTrafficCapture:
                                         logger.warning(f"[MONITOR] Stats: {flow_stats}")
                                         logger.warning("=" * 80)
                                         
-                                        if src_ip == simulated_target or dst_ip == simulated_target:
-                                            logger.info(f"[MONITOR] IP matches target - triggering mitigation")
+                                        if (src_ip == simulated_target or dst_ip == simulated_target):
+                                            mitigation_attack_type = simulated_attack_type
 
-                                            # Trigger mitigation in separate thread
-                                            threading.Thread(
-                                                target=self._apply_mitigation_async,
-                                                args=(attack_type, simulated_target, flow),
-                                                daemon=True
-                                            ).start()
+                                            # Validate attack type is not benign/normal/unknown
+                                            if mitigation_attack_type and mitigation_attack_type not in ['Benign', 'Normal Traffic', 'Unknown']:
+                                                logger.info(f"[MONITOR] IP matches target - triggering mitigation for {mitigation_attack_type}")
+
+                                                # Trigger mitigation in separate thread
+                                                threading.Thread(
+                                                    target=self._apply_mitigation_async,
+                                                    args=(attack_type, simulated_target, flow),
+                                                    daemon=True
+                                                ).start()
+                                            else:
+                                                logger.warning(f"[MONITOR] Invalid attack type for mitigation: {mitigation_attack_type}")
                                         else:
                                             logger.warning(f"[MONITOR] IP mismatch - src:{src_ip}, dst:{dst_ip}, target:{simulated_target}")
-                                            flow['classification'] = 'suspicious'
-                                            flow_stats['malicious'] -= 1
-                                            flow_stats['suspicious'] += 1
                                     else:
-                                        logger.error(f"[MONITOR] Malicious flow without active simulation!")
-                                        logger.error(f"[MONITOR] Reclassifying to benign")
-                                        flow['classification'] = 'benign'
-                                        flow['attack_type'] = 'Normal Traffic'
-                                        flow_stats['benign'] += 1
-
+                                        logger.error(f"[MONITOR] Malicious flow detected without active simulation!")
                                 elif classification == 'suspicious':
-                                    suspicious_detected += 1
                                     flow_stats['suspicious'] += 1
+                                    suspicious_detected += 1
                                     
+                                    # Log suspicious flows but don't trigger mitigation
+                                    attack_info = cache.get('attack_simulation_active')
                                     if attack_info:
                                         logger.info(f"[MONITOR] Suspicious flow: {attack_type} | {src_ip}->{dst_ip}")
                                 
@@ -648,7 +652,7 @@ class NetworkTrafficCapture:
                 return None
             
             # Initialize defaults
-            protocol = 'Other'
+            protocol = 'TCP'
             src_ip = 'Unknown'
             dst_ip = 'Unknown'
             src_port = 0
@@ -671,7 +675,6 @@ class NetworkTrafficCapture:
             if ip_idx + 1 < len(parts):
                 src = parts[ip_idx + 1]
                 if '.' in src or ':' in src:
-                    # Handle IP.port or IP:port format
                     if src.count('.') > 3:  # Has port
                         src_parts = src.rsplit('.', 1)
                         src_ip = src_parts[0]
@@ -702,148 +705,14 @@ class NetworkTrafficCapture:
                     else:
                         dst_ip = dst.rstrip(':')
             
-            # Check if attack simulation is active
-            attack_simulation_active = False
-            simulated_target_ip = None
-            simulated_attack_type = None
-
-            attack_info = cache.get('attack_simulation_active')
-            if attack_info:
-                attack_simulation_active = True
-                simulated_target_ip = attack_info.get('target_ip')
-                simulated_attack_type = attack_info.get('attack_type')
-
-                if packet_count % 20 == 0:
-                    logger.debug(f"Attack simulation active: {simulated_attack_type} on {simulated_target_ip}")
-                    logger.debug(f"Current packet: {src_ip} -> {dst_ip}")
-
-            # Only proceed with attack detection is simulation is active
-            if not attack_simulation_active:
-                # No attack simulation - mark all traffic as benign
-                return {
-                    'timestamp': datetime.now().isoformat(),
-                    'classification': 'benign',
-                    'attack_type': 'Normal Traffic',
-                    'src_ip': src_ip,
-                    'src_port': src_port,
-                    'dst_ip': dst_ip,
-                    'dst_port': dst_port,
-                    'protocol': 'TCP',
-                    'bytes': packet_size,
-                    'packets': 1,
-                    'confidence': 0.0,
-                    'packet_rate': 0.0
-                }    
-            
-            # Check if this packet is related to the simulated attack
-            # Only flag packets involving the target IP
-            is_related_to_attack = (src_ip == simulated_target_ip or dst_ip == simulated_target_ip)
-            
-            if not is_related_to_attack:
-                # Traffic not involving attack target - mark as benign
-                return {
-                    'timestamp': datetime.now().isoformat(),
-                    'classification': 'benign',
-                    'attack_type': 'Normal Traffic',
-                    'src_ip': src_ip,
-                    'src_port': src_port,
-                    'dst_ip': dst_ip,
-                    'dst_port': dst_port,
-                    'protocol': protocol if protocol != 'Other' else 'TCP',
-                    'bytes': packet_size,
-                    'packets': 1,
-                    'confidence': 0.0,
-                    'packet_rate': 0.0
-                }
-            
-            logger.info(f"[PARSE] Attack-related packet: {src_ip} -> {dst_ip}")
-
-            # Calculate packet rate for this flow
-            cache_key = f"packet_rate_{src_ip}_{dst_ip}"
-            packet_history = cache.get(cache_key, [])
-            packet_history.append(time.time())
-
-            cutoff = time.time() - 10  # Last 10 seconds
-            packet_history = [t for t in packet_history if t > cutoff]
-            cache.set(cache_key, packet_history, timeout=60)
-
-            packet_rate = len(packet_history) / 10.0  # Packets per second
-                    
-            # Determine protocol and attack type based on rate
+            # Determine protocol from line content
             line_lower = line.lower()
-            
-            # Adjust thresholds based on attack type
             if 'icmp' in line_lower:
                 protocol = 'ICMP'
-                if 'ICMP' in simulated_attack_type or 'ICMPFlood' in simulated_attack_type:
-                    if packet_rate> 5:  # High rate detection
-                        attack_type = 'ICMP Flood Attack'
-                        classification = 'malicious'
-                        logger.warning(f"[DETECT] ICMP Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 2:
-                        attack_type = "Possible ICMP Flood"
-                        classification = 'suspicious'
-                        logger.warning(f"[DETECT] Suspicious ICMP traffic detected: Rate={packet_rate:.2f} pps")
-                    else:
-                        attack_type = 'ICMP Traffic'
-                        classification = 'benign'
-                else:
-                        attack_type = 'ICMP Traffic'
-                        classification = 'benign'
-
-            elif '[S]' in line and '[.]' not in line:
-                protocol = 'TCP'
-                if 'SYN' in simulated_attack_type:
-                    if packet_rate > 10:  # High rate detection
-                        attack_type = 'SYN Flood Attack'
-                        classification = 'malicious'
-                        logger.warning(f"[DETECT] SYN Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 5:
-                        attack_type = "Possible SYN Scan"
-                        classification = 'suspicious'
-                        logger.warning(f"[DETECT] Suspicious SYN traffic detected: Rate={packet_rate:.2f} pps")
-                    else:
-                        attack_type = 'SYN Packet'
-                        classification = 'benign'
-                else:
-                        attack_type = 'SYN Packet'
-                        classification = 'benign'
-
             elif 'udp' in line_lower:
                 protocol = 'UDP'
-                if 'UDP' in simulated_attack_type:
-                    if packet_rate > 20:  # High rate detection
-                        attack_type = 'UDP Flood Attack'
-                        classification = 'malicious'
-                        logger.warning(f"[DETECT] UDP Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 10:
-                        attack_type = "Possible UDP Flood"
-                        classification = 'suspicious'
-                        logger.warning(f"[DETECT] Suspicious UDP traffic detected: Rate={packet_rate:.2f} pps")
-                    else:
-                        attack_type = 'UDP Traffic'
-                        classification = 'benign'
-                else:
-                        attack_type = 'UDP Traffic'
-                        classification = 'benign'
-
-            elif 'tcp' in line_lower or '[.]' in line or '[P]' in line or '[F]' in line:
+            elif 'tcp' in line_lower or '[S]' in line or '[.]' in line or '[P]' in line or '[F]' in line:
                 protocol = 'TCP'
-                if 'HTTP' in simulated_attack_type or 'Slowrate' in simulated_attack_type:
-                    if packet_rate> 10:  # High rate detection
-                        attack_type = 'HTTP Flood Attack'
-                        classification = 'malicious'
-                        logger.warning(f"[DETECT] HTTP Flood detected: Rate={packet_rate:.2f} pps") 
-                    elif packet_rate > 5:
-                        attack_type = "Possible HTTP Flood"
-                        classification = 'suspicious'
-                        logger.warning(f"[DETECT] Suspicious HTTP traffic detected: Rate={packet_rate:.2f} pps")
-                    else:
-                        attack_type = 'TCP Traffic'
-                        classification = 'benign'
-                else:
-                    attack_type = 'TCP Traffic'
-                    classification = 'benign'
             
             # Extract packet size if present
             try:
@@ -856,14 +725,102 @@ class NetworkTrafficCapture:
             except:
                 pass
             
-            # Calculate confidence based on classification
-            if classification == 'malicious':
-                confidence = min(85.0 + (packet_rate * 2), 99.9)
-            elif classification == 'suspicious':
-                confidence = min(65.0 + (packet_rate * 2), 84.0)
-            else:
-                confidence = 50.0
+            # Calculate packet rate for this flow
+            cache_key = f"packet_rate_{src_ip}_{dst_ip}"
+            packet_history = cache.get(cache_key, [])
+            packet_history.append(time.time())
 
+            cutoff = time.time() - 10  # Last 10 seconds
+            packet_history = [t for t in packet_history if t > cutoff]
+            cache.set(cache_key, packet_history, timeout=60)
+
+            packet_rate = len(packet_history) / 10.0  # Packets per second
+            
+            # Check if attack simulation is active
+            attack_simulation_active = False
+            simulated_target_ip = None
+            simulated_attack_type = None
+
+            attack_info = cache.get('attack_simulation_active')
+            if attack_info:
+                attack_simulation_active = True
+                simulated_target_ip = attack_info.get('target_ip')
+                simulated_attack_type = attack_info.get('attack_type')
+
+                if packet_count % 50 == 0:
+                    logger.debug(f"Attack simulation active: {simulated_attack_type} on {simulated_target_ip}")
+
+            # Check if this packet is related to the simulated attack
+            is_related_to_attack = attack_simulation_active and (
+                src_ip == simulated_target_ip or dst_ip == simulated_target_ip
+            )
+            
+            # Always create and return a flow object, even for benign traffic
+            confidence = 50.0
+            
+            # Only perform attack detection if simulation is active AND packet is related
+            if is_related_to_attack:
+                logger.info(f"[PARSE] Attack-related packet: {src_ip} -> {dst_ip}")
+                
+                # Adjust thresholds based on attack type
+                if protocol == 'ICMP' and ('ICMP' in simulated_attack_type or 'ICMPFlood' in simulated_attack_type):
+                    if packet_rate > 5:
+                        attack_type = 'ICMP Flood Attack'
+                        classification = 'malicious'
+                        confidence = min(85.0 + (packet_rate * 2), 99.9)
+                        logger.warning(f"[DETECT] ICMP Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 2:
+                        attack_type = "Possible ICMP Flood"
+                        classification = 'suspicious'
+                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                        logger.warning(f"[DETECT] Suspicious ICMP traffic: Rate={packet_rate:.2f} pps")
+                    else:
+                        attack_type = 'ICMP Traffic'
+                        classification = 'benign'
+
+                elif '[S]' in line and '[.]' not in line and 'SYN' in simulated_attack_type:
+                    if packet_rate > 10:
+                        attack_type = 'SYN Flood Attack'
+                        classification = 'malicious'
+                        confidence = min(85.0 + (packet_rate * 2), 99.9)
+                        logger.warning(f"[DETECT] SYN Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 5:
+                        attack_type = "Possible SYN Scan"
+                        classification = 'suspicious'
+                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                    else:
+                        attack_type = 'SYN Packet'
+                        classification = 'benign'
+
+                elif protocol == 'UDP' and 'UDP' in simulated_attack_type:
+                    if packet_rate > 20:
+                        attack_type = 'UDP Flood Attack'
+                        classification = 'malicious'
+                        confidence = min(85.0 + (packet_rate * 2), 99.9)
+                        logger.warning(f"[DETECT] UDP Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 10:
+                        attack_type = "Possible UDP Flood"
+                        classification = 'suspicious'
+                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                    else:
+                        attack_type = 'UDP Traffic'
+                        classification = 'benign'
+
+                elif protocol == 'TCP' and ('HTTP' in simulated_attack_type or 'Slowrate' in simulated_attack_type):
+                    if packet_rate > 10:
+                        attack_type = 'HTTP Flood Attack'
+                        classification = 'malicious'
+                        confidence = min(85.0 + (packet_rate * 2), 99.9)
+                        logger.warning(f"[DETECT] HTTP Flood detected: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 5:
+                        attack_type = "Possible HTTP Flood"
+                        classification = 'suspicious'
+                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                    else:
+                        attack_type = 'TCP Traffic'
+                        classification = 'benign'
+            
+            # Return flow object for ALL traffic
             return {
                 'timestamp': datetime.now().isoformat(),
                 'classification': classification,
@@ -878,14 +835,11 @@ class NetworkTrafficCapture:
                 'confidence': round(confidence, 1),
                 'packet_rate': round(packet_rate, 2)
             }
-        
-            if classification != 'benign':
-                logger.info(f"[PARSE]  Flow classified as {classification.upper()}: {attack_type}")
-       
+    
         except Exception as e:
             logger.debug(f"Parse error: {e} | Line: {line[:100]}")
             return None
-
+    
     # Start capturing packets from Open5Gs network (Current - Stop automatically after 30s)
     def start_capture_with_auto_analysis(self, duration=60, attack_type=None, target_ip=None):
 
