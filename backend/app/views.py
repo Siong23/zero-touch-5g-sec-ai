@@ -20,6 +20,7 @@ import glob
 import time
 import tensorflow as tf
 import psutil
+import re
 
 from datetime import datetime, timedelta
 from collections import deque, defaultdict
@@ -27,6 +28,7 @@ from collections import deque, defaultdict
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import Ether
 from scapy.all import *
+from scapy.utils import rdpcap
 
 from django import forms
 from django.shortcuts import render
