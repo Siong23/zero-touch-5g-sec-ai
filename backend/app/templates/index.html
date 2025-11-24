@@ -1098,34 +1098,40 @@
                 this.init();
             }
 
-            init() {
+            init() 
+            {
+                console.log('[MONITOR] Initializing NetworkTrafficMonitor');
                 const startBtn = document.getElementById('btn-start-detection');
                 const stopBtn = document.getElementById('btn-stop-detection');
                 const resetBtn = document.getElementById('btn-reset');
 
                 if (startBtn) {
-                    startBtn.addEventListener('click', () => this.startMonitoring());
+                    startBtn.addEventListener('click', () => {
+                        console.log('[MONITOR] Start button clicked');
+                        this.startMonitoring();
+                    });
                 }
                 if (stopBtn) {
-                    stopBtn.addEventListener('click', () => this.stopMonitoring());
+                    stopBtn.addEventListener('click', () => {
+                        console.log('[MONITOR] Stop button clicked');
+                        this.stopMonitoring();
+                    });
                 }
                 if (resetBtn) {
-                    resetBtn.addEventListener('click', () => this.resetMonitor());
+                    resetBtn.addEventListener('click', () => {
+                        console.log('[MONITOR] Reset button clicked');
+                        this.resetMonitor();
+                    });
                 }
 
-                // Listen for attack simulation events
                 this.setupAttackSimulationListener();
                 this.checkInitialStatus();
+                
+                console.log('[MONITOR] Initialization complete');
             }
 
-            setupAttackSimulationListener() {
-                // Monitor for attack simulation status
-                setInterval(() => {
-                    this.checkAttackSimulationStatus();
-                }, 2000);
-            }
-
-            async checkAttackSimulationStatus() {
+            async checkAttackSimulationStatus() 
+            {
                 try {
                     const response = await fetch('/get_automation_status/');
                     if (response.ok) {
@@ -1600,7 +1606,8 @@
                 }
             }
 
-            async poll() {
+            async poll() 
+            {
                 if (!this.isMonitoring) return;
 
                 try {
@@ -1614,12 +1621,16 @@
                     if (response.ok) {
                         const data = await response.json();
                         
+                        // CRITICAL: Always update flows if available
                         if (data.flows && data.flows.length > 0) {
                             this.totalFlowsReceived += data.flows.length;
+                            console.log(`[POLL] Received ${data.flows.length} flows, total: ${this.totalFlowsReceived}`);
                             this.updateFlows(data.flows);
                         }
                         
+                        // CRITICAL: Always update stats
                         if (data.stats) {
+                            console.log('[POLL] Updating stats:', data.stats);
                             this.updateStats(
                                 data.stats.benign || 0,
                                 data.stats.suspicious || 0,
@@ -1631,6 +1642,7 @@
                             this.updateConnectionStatus(data.connection_status, true, false);
                         }
                     } else {
+                        console.error('[POLL] Response not OK:', response.status);
                         this.updateConnectionStatus('Connection lost', false, false);
                     }
 
@@ -1640,10 +1652,12 @@
                         const mitigationData = await mitigationResponse.json();
                         
                         if (mitigationData.flows && mitigationData.flows.length > 0) {
+                            console.log(`[POLL] Received ${mitigationData.flows.length} mitigation flows`);
                             this.updateMitigationFlows(mitigationData.flows);
                         }
                         
                         if (mitigationData.stats) {
+                            console.log('[POLL] Updating mitigation stats:', mitigationData.stats);
                             this.updateMitigationStats(
                                 mitigationData.stats.applied || 0,
                                 mitigationData.stats.pending || 0,
@@ -1652,10 +1666,11 @@
                         }
                     }
                 } catch (error) {
-                    console.error('Error fetching flows:', error);
+                    console.error('[POLL] Error fetching flows:', error);
                     this.updateConnectionStatus('Connection error', false, false);
                 }
 
+                // Poll faster during active monitoring
                 this.pollTimer = setTimeout(() => this.poll(), this.pollInterval);
             }
 
@@ -1664,19 +1679,28 @@
                 const placeholder = this.flowListElement.querySelector('.flow-item:first-child');
                 if (placeholder && placeholder.textContent.includes('Waiting for traffic')) {
                     this.flowListElement.innerHTML = '';
+                    console.log('[FLOWS] Cleared placeholder');
                 }
 
                 const newFlows = flows.slice(0, Math.min(5, flows.length));
+                console.log(`[FLOWS] Adding ${newFlows.length} flows to display`);
 
-                newFlows.forEach(flow => {
+                newFlows.forEach((flow, index) => {
                     const flowElement = this.createFlowElement(flow);
                     this.flowListElement.insertBefore(flowElement, this.flowListElement.firstChild);
+                    
+                    // Log malicious/suspicious flows
+                    if (flow.classification === 'malicious' || flow.classification === 'suspicious') {
+                        console.log(`[FLOWS] 🚨 ${flow.classification.toUpperCase()} flow added:`, flow);
+                    }
                 });
 
+                // Keep max flows
                 while (this.flowListElement.children.length > this.maxFlows) {
                     this.flowListElement.removeChild(this.flowListElement.lastChild);
                 }
 
+                // Scroll to top to show newest flows
                 const panelContent = this.flowListElement.closest('.panel-content');
                 if (panelContent) {
                     panelContent.scrollTop = 0;
@@ -1746,7 +1770,8 @@
                 this.animateValue(document.getElementById('stat-mitigation-failed'), failed);
             }
 
-            createFlowElement(flow) {
+            createFlowElement(flow) 
+            {
                 const flowDiv = document.createElement('div');
                 const flowType = flow.classification || 'benign';
                 const isMalicious = flowType.toLowerCase() === 'malicious';
@@ -1755,11 +1780,28 @@
                 flowDiv.className = `flow-item ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}`;
                 flowDiv.style.animation = 'slideInFlow 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
                 
+                // Add extra highlighting for malicious flows
+                if (isMalicious) {
+                    flowDiv.style.borderLeft = '6px solid #dc3545';
+                    flowDiv.style.boxShadow = '0 0 15px rgba(220, 53, 69, 0.3)';
+                } else if (isSuspicious) {
+                    flowDiv.style.borderLeft = '6px solid #ffc107';
+                    flowDiv.style.boxShadow = '0 0 10px rgba(255, 193, 7, 0.2)';
+                }
+                
+                const icon = isMalicious ? 'fa-exclamation-circle' : 
+                            isSuspicious ? 'fa-exclamation-triangle' : 
+                            'fa-check-circle';
+                
+                const badgeText = isMalicious ? 'MALICIOUS' : 
+                                isSuspicious ? 'SUSPICIOUS' : 
+                                'Benign';
+                
                 flowDiv.innerHTML = `
                     <div class="flow-header">
                         <span class="flow-badge ${isMalicious ? 'malicious' : isSuspicious ? 'suspicious' : 'benign'}">
-                            <i class="fas ${isMalicious ? 'fa-exclamation-circle' : isSuspicious ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
-                            ${isMalicious ? 'Malicious' : isSuspicious ? 'Suspicious' : 'Benign'}
+                            <i class="fas ${icon}"></i>
+                            ${badgeText}
                         </span>
                         <span class="flow-time">${this.formatTime(flow.timestamp)}</span>
                     </div>
@@ -1782,11 +1824,17 @@
                 this.animateValue(document.getElementById('stat-malicious'), malicious);
             }
 
-            animateValue(element, endValue) {
-                if (!element) return;
+            animateValue(element, endValue) 
+            {
+                if (!element) {
+                    console.warn('[STATS] Element not found for animation');
+                    return;
+                }
                 
                 const startValue = parseInt(element.textContent) || 0;
                 if (startValue === endValue) return;
+                
+                console.log(`[STATS] Animating ${element.id}: ${startValue} -> ${endValue}`);
                 
                 const duration = 500;
                 const range = endValue - startValue;
@@ -1798,6 +1846,12 @@
                     if ((increment > 0 && current >= endValue) || (increment < 0 && current <= endValue)) {
                         element.textContent = endValue;
                         clearInterval(timer);
+                        
+                        // Add visual feedback for stat changes
+                        element.parentElement.parentElement.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            element.parentElement.parentElement.style.transform = 'scale(1)';
+                        }, 200);
                     } else {
                         element.textContent = Math.round(current);
                     }
@@ -3782,46 +3836,57 @@
             }
             
             // Form submission handler
-            function handleFormSubmission(event) {
-                if (isAutomationRunning) {
-                    event.preventDefault();
-                    alert('Automation is already running. Please wait for it to complete.');
-                    return false;
-                }
-                
-                // For AJAX submission
+            function handleFormSubmission(event) 
+            {
                 event.preventDefault();
+                console.log('[ATTACK] Form submitted');
                 
-                const formData = new FormData(elements.attackForm);
+                const formData = new FormData(this);
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const attackType = formData.get('attack_type');
                 
-                // Clear previous results
-                addLogEntry('Starting new attack simulation...');
+                console.log('[ATTACK] Attack type:', attackType);
                 
-                // Start polling
-                startAutomationPolling();
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Starting Attack...';
+                }
                 
                 fetch('/start_attack/', {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
-                    },
-                    credentials: 'same-origin'
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('[ATTACK] Response:', data);
                     if (data.status === 'success') {
-                        addLogEntry(data.message || 'Attack simulation started successfully');
+                        showNotification(data.message || 'Attack simulation started successfully', 'success');
+                        console.log('[ATTACK] Mode:', data.mode);
+                        
+                        // Show attack simulation notification
+                        showNotification(
+                            `🎯 Attack simulation started! Monitoring for ${attackType} attack on ${data.target_ip}`,
+                            'warning',
+                            8000
+                        );
                     } else {
-                        addLogEntry(`Error: ${data.message || 'Failed to start attack simulation'}`);
-                        stopAutomationPolling();
+                        showNotification(data.message || 'Failed to start attack simulation', 'error');
                     }
                 })
                 .catch(error => {
-                    console.error('Error starting attack:', error);
-                    addLogEntry('Error: Failed to start attack simulation');
-                    stopAutomationPolling();
+                    console.error('[ATTACK] Error:', error);
+                    showNotification('Failed to start attack simulation', 'error');
+                })
+                .finally(() => {
+                    if (submitBtn) {
+                        setTimeout(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-play"></i> Start Attack Simulation';
+                        }, 2000);
+                    }
                 });
             }
             

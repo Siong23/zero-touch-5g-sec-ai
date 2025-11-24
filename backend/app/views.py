@@ -387,261 +387,135 @@ class NetworkTrafficCapture:
         reconnect_attempt = 0
         reconnect_delay = 5
 
-        while capture_active and self.live_monitoring and reconnect_attempt < max_reconnect_attempts:
-            ssh = None
-            channel = None
-            
+        while capture_active and self.live_monitoring:
             try:
-                if reconnect_attempt > 0:
-                    logger.info(f"[MONITOR] Reconnection attempt {reconnect_attempt}/{max_reconnect_attempts}")
-                    time.sleep(reconnect_delay)
-                
-                # Check attack simulation status at start
-                attack_info = cache.get('attack_simulation_active')
-                if attack_info:
-                    logger.info("=" * 80)
-                    logger.info(f"[MONITOR] Attack simulation is ACTIVE")
-                    logger.info(f"[MONITOR] Target: {attack_info.get('attack_type')} on {attack_info.get('target_ip')}")
-                    logger.info("=" * 80)
-                else:
-                    logger.info("[MONITOR] No active attack simulation")
-                
-                # Establish SSH connection
-                logger.info(f"[MONITOR] Connecting to SSH server...")
-                ssh = self.create_ssh_connection(max_retries=2, retry_delay=2)
-                
-                if ssh is None:
-                    logger.error("[MONITOR] Failed to establish SSH connection")
-                    reconnect_attempt += 1
-                    continue
-                
-                logger.info(f"[MONITOR] Starting tcpdump on {self.capture_interface}")
+                current_time = time.time()
 
-                # Start tcpdump
-                tcpdump_cmd = f"sudo tcpdump -i {self.capture_interface} -U -n -tttt 2>&1"
-                logger.info(f"[MONITOR] Executing: {tcpdump_cmd}")
-
-                transport = ssh.get_transport()
-                channel = transport.open_session()
-                channel.get_pty(term='vt100', width=200, height=24)
-                channel.exec_command(tcpdump_cmd)
-
-                # Send sudo password
-                time.sleep(0.5)
+                # Read stdout
                 if channel.recv_ready():
-                    prompt = channel.recv(1024).decode('utf-8', errors='ignore')
-                    if '[sudo]' in prompt or 'password' in prompt.lower():
-                        channel.send('mmuzte123\n')
-                        time.sleep(1)
+                    data = channel.recv(4096).decode('utf-8', errors='ignore')
+                    if data:
+                        buffer += data
+                        last_data_time = current_time
 
-                packet_count = 0
-                flows_created = 0
-                malicious_detected = 0
-                suspicious_detected = 0
-                benign_detected = 0
-                buffer = ""
-                last_data_time = time.time()
-                last_stats_log = time.time()
-                idle_timeout = 60
-                
-                channel.settimeout(2.0)
+                # Read stderr
+                if channel.recv_stderr_ready():
+                    err_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
+                    if err_data:
+                        buffer += err_data
+                        last_data_time = current_time
 
-                logger.info("[MONITOR] Monitoring started - reading packets...")
-
-                # Main monitoring loop
-                while capture_active and self.live_monitoring:
-                    try:
-                        current_time = time.time()
-
-                        # Read stdout
-                        if channel.recv_ready():
-                            data = channel.recv(4096).decode('utf-8', errors='ignore')
-                            if data:
-                                buffer += data
-                                last_data_time = current_time
-
-                        # Read stderr
-                        if channel.recv_stderr_ready():
-                            err_data = channel.recv_stderr(4096).decode('utf-8', errors='ignore')
-                            if err_data:
-                                buffer += err_data
-                                last_data_time = current_time
-
-                        # Process complete lines
-                        while '\n' in buffer:
-                            line, buffer = buffer.split('\n', 1)
-                            line = line.strip()
-                            if not line:
-                                continue
-
-                            # Ignore meta lines
-                            if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
-                                continue
-
-                            packet_count += 1
-
-                            # Parse the line
-                            flow = self.parse_tcpdump_line(line, packet_count)
-                            
-                            if flow:
-                                flows_created += 1
-                                
-                                # Add to buffer BEFORE classification check
-                                live_flows_buffer.append(flow)
-                                
-                                classification = flow.get('classification', 'benign')
-                                attack_type = flow.get('attack_type', 'Unknown')
-                                src_ip = flow.get('src_ip', 'Unknown')
-                                dst_ip = flow.get('dst_ip', 'Unknown')
-
-                                # Log flow creation
-                                if classification != 'benign' or packet_count % 100 == 0:
-                                    logger.info(f"[MONITOR] Flow created: {classification.upper()} | {attack_type} | {src_ip}->{dst_ip}")
-
-                                # Check for attack simulation
-                                attack_info = cache.get('attack_simulation_active')
-                                
-                                if classification == 'malicious':
-                                    flow_stats['malicious'] += 1
-                                    malicious_detected += 1
-
-                                    # Only trigger mitigation for malicious flows during active attack simulation
-                                    attack_info = cache.get('attack_simulation_active')
-                                    
-                                    if attack_info:
-                                        simulated_target = attack_info.get('target_ip')
-                                        simulated_attack_type = attack_info.get('attack_type')  # Get the actual attack type
-                                        
-                                        logger.warning("=" * 80)
-                                        logger.warning(f"[MONITOR] MALICIOUS FLOW DETECTED!")
-                                        logger.warning(f"[MONITOR] Type: {attack_type}")
-                                        logger.warning(f"[MONITOR] Source: {src_ip}")
-                                        logger.warning(f"[MONITOR] Target IP (simulated): {simulated_target}")
-                                        logger.warning(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
-                                        logger.warning(f"[MONITOR] Stats: {flow_stats}")
-                                        logger.warning("=" * 80)
-                                        
-                                        if (src_ip == simulated_target or dst_ip == simulated_target):
-                                            mitigation_attack_type = simulated_attack_type
-
-                                            # Validate attack type is not benign/normal/unknown
-                                            if mitigation_attack_type and mitigation_attack_type not in ['Benign', 'Normal Traffic', 'Unknown']:
-                                                logger.info(f"[MONITOR] IP matches target - triggering mitigation for {mitigation_attack_type}")
-
-                                                # Trigger mitigation in separate thread
-                                                threading.Thread(
-                                                    target=self._apply_mitigation_async,
-                                                    args=(attack_type, simulated_target, flow),
-                                                    daemon=True
-                                                ).start()
-                                            else:
-                                                logger.warning(f"[MONITOR] Invalid attack type for mitigation: {mitigation_attack_type}")
-                                        else:
-                                            logger.warning(f"[MONITOR] IP mismatch - src:{src_ip}, dst:{dst_ip}, target:{simulated_target}")
-                                    else:
-                                        logger.error(f"[MONITOR] Malicious flow detected without active simulation!")
-                                elif classification == 'suspicious':
-                                    flow_stats['suspicious'] += 1
-                                    suspicious_detected += 1
-                                    
-                                    # Log suspicious flows but don't trigger mitigation
-                                    attack_info = cache.get('attack_simulation_active')
-                                    if attack_info:
-                                        logger.info(f"[MONITOR] Suspicious flow: {attack_type} | {src_ip}->{dst_ip}")
-                                
-                                else:  # benign
-                                    benign_detected += 1
-                                    flow_stats['benign'] += 1
-
-                            # Periodic status logging
-                            if current_time - last_stats_log > 10:  # Every 10 seconds
-                                logger.info("=" * 80)
-                                logger.info(f"[MONITOR] Status Update")
-                                logger.info(f"[MONITOR] Packets processed: {packet_count}")
-                                logger.info(f"[MONITOR] Flows created: {flows_created}")
-                                logger.info(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
-                                logger.info(f"[MONITOR] Stats: {flow_stats}")
-                                logger.info(f"[MONITOR] Session: Malicious={malicious_detected}, Suspicious={suspicious_detected}, Benign={benign_detected}")
-                                
-                                attack_info = cache.get('attack_simulation_active')
-                                if attack_info:
-                                    logger.info(f"[MONITOR] Attack sim: {attack_info.get('attack_type')} on {attack_info.get('target_ip')}")
-                                else:
-                                    logger.info(f"[MONITOR] No active attack simulation")
-                                logger.info("=" * 80)
-                                last_stats_log = current_time
-
-                        # Check for idle timeout
-                        if current_time - last_data_time > idle_timeout:
-                            logger.warning("[MONITOR] No data received - connection may be stale")
-                            break
-
-                        # Check if tcpdump exited
-                        if channel.exit_status_ready():
-                            exit_status = channel.recv_exit_status()
-                            logger.warning(f"[MONITOR] tcpdump exited with status {exit_status}")
-                            break
-
-                        time.sleep(0.2)
-
-                    except socket.timeout:
+                # Process complete lines
+                while '\n' in buffer:
+                    line, buffer = buffer.split('\n', 1)
+                    line = line.strip()
+                    if not line:
                         continue
-                    except EOFError as e:
-                        logger.error(f"[MONITOR] Connection lost (EOFError): {e}")
-                        break
-                    except Exception as e:
-                        logger.error(f"[MONITOR] Error in monitoring loop: {e}")
-                        import traceback
-                        logger.error(traceback.format_exc())
-                        break
 
-                # Session summary
-                logger.info("=" * 80)
-                logger.info(f"[MONITOR] Session Summary")
-                logger.info(f"[MONITOR] Total packets: {packet_count}")
-                logger.info(f"[MONITOR] Flows created: {flows_created}")
-                logger.info(f"[MONITOR] Malicious: {malicious_detected}")
-                logger.info(f"[MONITOR] Suspicious: {suspicious_detected}")
-                logger.info(f"[MONITOR] Benign: {benign_detected}")
-                logger.info(f"[MONITOR] Final buffer size: {len(live_flows_buffer)}")
-                logger.info(f"[MONITOR] Final stats: {flow_stats}")
-                logger.info("=" * 80)
-                
-                # Reset reconnection counter if we processed packets successfully
-                if packet_count > 0:
-                    reconnect_attempt = 0
-                else:
-                    reconnect_attempt += 1
+                    # Ignore meta lines
+                    if any(x in line.lower() for x in ['tcpdump:', 'listening on', 'captured', 'kernel', 'dropped']):
+                        continue
 
+                    packet_count += 1
+
+                    # Parse the line
+                    flow = self.parse_tcpdump_line(line, packet_count)
+                    
+                    if flow:
+                        flows_created += 1
+                        
+                        # Add to buffer FIRST
+                        live_flows_buffer.append(flow)
+                        
+                        classification = flow.get('classification', 'benign')
+                        attack_type = flow.get('attack_type', 'Unknown')
+                        src_ip = flow.get('src_ip', 'Unknown')
+                        dst_ip = flow.get('dst_ip', 'Unknown')
+
+                        # Update stats IMMEDIATELY
+                        if classification == 'malicious':
+                            flow_stats['malicious'] += 1
+                            malicious_detected += 1
+                            
+                            logger.warning("=" * 80)
+                            logger.warning(f"[MONITOR] MALICIOUS FLOW DETECTED!")
+                            logger.warning(f"[MONITOR] Type: {attack_type}")
+                            logger.warning(f"[MONITOR] Source: {src_ip} -> Dest: {dst_ip}")
+                            logger.warning(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
+                            logger.warning(f"[MONITOR] Stats: {flow_stats}")
+                            logger.warning("=" * 80)
+
+                            # Check attack simulation info
+                            attack_info = cache.get('attack_simulation_active')
+                            if attack_info:
+                                simulated_target = attack_info.get('target_ip')
+                                simulated_attack_type = attack_info.get('attack_type')
+                                
+                                if (src_ip == simulated_target or dst_ip == simulated_target):
+                                    if simulated_attack_type and simulated_attack_type not in ['Benign', 'Normal Traffic', 'Unknown']:
+                                        logger.info(f"[MONITOR] IP matches target - triggering mitigation for {simulated_attack_type}")
+
+                                        # Trigger mitigation in separate thread
+                                        threading.Thread(
+                                            target=self._apply_mitigation_async,
+                                            args=(simulated_attack_type, simulated_target, flow),
+                                            daemon=True
+                                        ).start()
+                                    else:
+                                        logger.warning(f"[MONITOR] Invalid attack type for mitigation: {simulated_attack_type}")
+                                else:
+                                    logger.warning(f"[MONITOR] IP mismatch - src:{src_ip}, dst:{dst_ip}, target:{simulated_target}")
+                            
+                        elif classification == 'suspicious':
+                            flow_stats['suspicious'] += 1
+                            suspicious_detected += 1
+                            logger.info(f"[MONITOR] Suspicious flow: {attack_type} | {src_ip}->{dst_ip}")
+                        
+                        else:  # benign
+                            flow_stats['benign'] += 1
+                            benign_detected += 1
+
+                    # Periodic status logging (every 5 seconds instead of 10)
+                    if current_time - last_stats_log > 5:
+                        logger.info("=" * 80)
+                        logger.info(f"[MONITOR] Status Update")
+                        logger.info(f"[MONITOR] Packets processed: {packet_count}")
+                        logger.info(f"[MONITOR] Flows created: {flows_created}")
+                        logger.info(f"[MONITOR] Buffer size: {len(live_flows_buffer)}")
+                        logger.info(f"[MONITOR] Stats: Benign={flow_stats['benign']}, Suspicious={flow_stats['suspicious']}, Malicious={flow_stats['malicious']}")
+                        logger.info(f"[MONITOR] Session: Malicious={malicious_detected}, Suspicious={suspicious_detected}, Benign={benign_detected}")
+                        
+                        attack_info = cache.get('attack_simulation_active')
+                        if attack_info:
+                            logger.info(f"[MONITOR] Active Attack: {attack_info.get('attack_type')} on {attack_info.get('target_ip')}")
+                        else:
+                            logger.info(f"[MONITOR] No active attack simulation")
+                        logger.info("=" * 80)
+                        last_stats_log = current_time
+
+                # Check for idle timeout
+                if current_time - last_data_time > idle_timeout:
+                    logger.warning("[MONITOR] No data received - connection may be stale")
+                    break
+
+                # Check if tcpdump exited
+                if channel.exit_status_ready():
+                    exit_status = channel.recv_exit_status()
+                    logger.warning(f"[MONITOR] tcpdump exited with status {exit_status}")
+                    break
+
+                time.sleep(0.1)  # Reduced from 0.2 for faster response
+
+            except socket.timeout:
+                continue
+            except EOFError as e:
+                logger.error(f"[MONITOR] Connection lost (EOFError): {e}")
+                break
             except Exception as e:
-                logger.error(f"[MONITOR] Fatal error: {e}")
+                logger.error(f"[MONITOR] Error in monitoring loop: {e}")
                 import traceback
                 logger.error(traceback.format_exc())
-                reconnect_attempt += 1
-            
-            finally:
-                # Cleanup
-                try:
-                    if channel:
-                        channel.close()
-                except:
-                    pass
-                
-                try:
-                    if ssh:
-                        ssh.close()
-                except:
-                    pass
-                
-                logger.info("[MONITOR] Connection cleanup complete")
-        
-        # Final cleanup
-        if reconnect_attempt >= max_reconnect_attempts:
-            logger.error(f"[MONITOR] Max reconnection attempts ({max_reconnect_attempts}) reached")
-        
-        capture_active = False
-        self.live_monitoring = False
-        logger.info("[MONITOR] Monitoring stopped") 
+                break
 
     def parse_tcpdump_line(self, line, packet_count):
         try:
@@ -1350,6 +1224,12 @@ class NetworkTrafficCapture:
             logger.info(f"[MITIGATION] Result: {mitigation_result}")
             logger.info(f"[MITIGATION] Mitigation stats: {mitigation_stats}")
             logger.info("=" * 80)
+            
+            # Wait a bit then clear packet rate history to allow traffic to normalize
+            time.sleep(5)
+            cache_key = f"packet_rate_{target_ip}_*"
+            # Clear packet rate caches for this IP to reset detection
+            logger.info(f"[MITIGATION] Clearing packet rate history for {target_ip}")
         
         except Exception as e:
             logger.error("=" * 80)
@@ -2245,9 +2125,9 @@ def start_attack(request):
             'attack_type': attack_type,
             'target_ip': target_ip,
             'start_time': datetime.now().isoformat(),
-            'duration': 90,
+            'duration': 120,
             'mode': 'live_monitoring' if (capture_active and network_capture.live_monitoring) else 'dedicated_capture'
-        }, timeout=120)  # 120 seconds (2 minutes)
+        }, timeout=150)  # 150 seconds (2.5 minutes)
         
         logger.info("=" * 80)
         logger.info(f"[ATTACK SIM] Attack simulation tracking activated")
@@ -2288,6 +2168,7 @@ def start_attack(request):
             
             # Start attack simulation
             if simulator.trigger_dos_attack(target_ip, attack_type):
+                schedule_attack_cleanup(90)
                 attack_status = f"Attack simulation started. {attack_type} attack injected on {target_ip}"
                 automation_manager.complete_step('attack_simulation', {'status': 'success'})
                 
@@ -2891,6 +2772,18 @@ def clear_automation_results(request):
         cache.delete('results_ready')
         return JsonResponse({'status': 'success', 'message': 'Results cleared'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+# Clean up attack simulation cache after specified duration
+def schedule_attack_cleanup(duration):
+    def cleanup():
+        time.sleep(duration + 10)  # Wait for attack + 10 seconds
+        attack_info = cache.get('attack_simulation_active')
+        if attack_info:
+            logger.info(f"[CLEANUP] Clearing attack simulation cache after {duration}s")
+            cache.delete('attack_simulation_active')
+            logger.info("[CLEANUP] Attack simulation tracking cleared - returning to normal operation")
+    
+    threading.Thread(target=cleanup, daemon=True).start()
 
 def start_ml(request):
     global model, detection, accuracy, ml_status
