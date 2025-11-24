@@ -749,78 +749,80 @@ class NetworkTrafficCapture:
                 simulated_target_ip = attack_info.get('target_ip')
                 simulated_attack_type = attack_info.get('attack_type')
 
-                if packet_count % 50 == 0:
-                    logger.debug(f"Attack simulation active: {simulated_attack_type} on {simulated_target_ip}")
-
             # Check if this packet is related to the simulated attack
             is_related_to_attack = attack_simulation_active and (
                 src_ip == simulated_target_ip or dst_ip == simulated_target_ip
             )
             
-            # Always create and return a flow object, even for benign traffic
+            # Default confidence
             confidence = 50.0
             
             # Only perform attack detection if simulation is active AND packet is related
             if is_related_to_attack:
-                logger.info(f"[PARSE] Attack-related packet: {src_ip} -> {dst_ip}")
+                logger.info(f"[PARSE] Attack-related packet detected: {src_ip} -> {dst_ip}, Protocol: {protocol}, Rate: {packet_rate:.2f}")
                 
-                # Adjust thresholds based on attack type
+                # CRITICAL FIX: More aggressive detection thresholds
                 if protocol == 'ICMP' and ('ICMP' in simulated_attack_type or 'ICMPFlood' in simulated_attack_type):
-                    if packet_rate > 5:
+                    # Lower threshold for ICMP to trigger malicious classification
+                    if packet_rate > 3:  # Reduced from 5
                         attack_type = 'ICMP Flood Attack'
                         classification = 'malicious'
-                        confidence = min(85.0 + (packet_rate * 2), 99.9)
-                        logger.warning(f"[DETECT] ICMP Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 2:
+                        confidence = min(85.0 + (packet_rate * 3), 99.9)
+                        logger.warning(f"[DETECT] ICMP FLOOD MALICIOUS: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 1.5:  # Reduced from 2
                         attack_type = "Possible ICMP Flood"
                         classification = 'suspicious'
-                        confidence = min(65.0 + (packet_rate * 2), 84.0)
-                        logger.warning(f"[DETECT] Suspicious ICMP traffic: Rate={packet_rate:.2f} pps")
+                        confidence = min(65.0 + (packet_rate * 3), 84.0)
+                        logger.warning(f"[DETECT] ICMP SUSPICIOUS: Rate={packet_rate:.2f} pps")
                     else:
                         attack_type = 'ICMP Traffic'
                         classification = 'benign'
 
                 elif '[S]' in line and '[.]' not in line and 'SYN' in simulated_attack_type:
-                    if packet_rate > 10:
+                    if packet_rate > 5:  # Reduced from 10
                         attack_type = 'SYN Flood Attack'
                         classification = 'malicious'
-                        confidence = min(85.0 + (packet_rate * 2), 99.9)
-                        logger.warning(f"[DETECT] SYN Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 5:
+                        confidence = min(85.0 + (packet_rate * 3), 99.9)
+                        logger.warning(f"[DETECT] SYN FLOOD MALICIOUS: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 2.5:  # Reduced from 5
                         attack_type = "Possible SYN Scan"
                         classification = 'suspicious'
-                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                        confidence = min(65.0 + (packet_rate * 3), 84.0)
                     else:
                         attack_type = 'SYN Packet'
                         classification = 'benign'
 
                 elif protocol == 'UDP' and 'UDP' in simulated_attack_type:
-                    if packet_rate > 20:
+                    if packet_rate > 10:  # Reduced from 20
                         attack_type = 'UDP Flood Attack'
                         classification = 'malicious'
-                        confidence = min(85.0 + (packet_rate * 2), 99.9)
-                        logger.warning(f"[DETECT] UDP Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 10:
+                        confidence = min(85.0 + (packet_rate * 3), 99.9)
+                        logger.warning(f"[DETECT] UDP FLOOD MALICIOUS: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 5:  # Reduced from 10
                         attack_type = "Possible UDP Flood"
                         classification = 'suspicious'
-                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                        confidence = min(65.0 + (packet_rate * 3), 84.0)
                     else:
                         attack_type = 'UDP Traffic'
                         classification = 'benign'
 
                 elif protocol == 'TCP' and ('HTTP' in simulated_attack_type or 'Slowrate' in simulated_attack_type):
-                    if packet_rate > 10:
+                    if packet_rate > 5:  # Reduced from 10
                         attack_type = 'HTTP Flood Attack'
                         classification = 'malicious'
-                        confidence = min(85.0 + (packet_rate * 2), 99.9)
-                        logger.warning(f"[DETECT] HTTP Flood detected: Rate={packet_rate:.2f} pps")
-                    elif packet_rate > 5:
+                        confidence = min(85.0 + (packet_rate * 3), 99.9)
+                        logger.warning(f"[DETECT] HTTP FLOOD MALICIOUS: Rate={packet_rate:.2f} pps")
+                    elif packet_rate > 2.5:  # Reduced from 5
                         attack_type = "Possible HTTP Flood"
                         classification = 'suspicious'
-                        confidence = min(65.0 + (packet_rate * 2), 84.0)
+                        confidence = min(65.0 + (packet_rate * 3), 84.0)
                     else:
                         attack_type = 'TCP Traffic'
                         classification = 'benign'
+                
+                # Log detection result
+                if classification in ['malicious', 'suspicious']:
+                    logger.warning(f"[DETECT] {classification.upper()}: {attack_type} | {src_ip}->{dst_ip} | Rate: {packet_rate:.2f} pps")
             
             # Return flow object for ALL traffic
             return {
@@ -837,7 +839,7 @@ class NetworkTrafficCapture:
                 'confidence': round(confidence, 1),
                 'packet_rate': round(packet_rate, 2)
             }
-    
+
         except Exception as e:
             logger.debug(f"Parse error: {e} | Line: {line[:100]}")
             return None
